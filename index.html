@@ -3,42 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>河崎海斗 | Official Site</title>
-<meta name="description" content="河崎海斗 オフィシャルサイト">
+<title>河﨑海斗 | KOGEI REALISM — 工芸リアリズム</title>
+<meta name="description" content="金工作家・河﨑海斗のオフィシャルサイト。工芸リアリズムとは、存在の条件をつくるリアリズムである。">
+<meta property="og:title" content="河﨑海斗 | KOGEI REALISM">
+<meta property="og:description" content="工芸リアリズムとは、存在の条件をつくるリアリズムである。">
+<meta property="og:type" content="website">
 <style>
 /* ============ tokens ============ */
 :root{
-  --paper:#F8F5EE;        /* 和紙 */
-  --ink:#1C1F24;          /* 墨 */
-  --ink-soft:#5A5B58;
-  --shu:#D8432A;          /* 朱 */
-  --shu-deep:#B23320;
-  --ruri:#2C4A73;         /* 瑠璃 */
-  --line:#DDD6C8;
-  --card:#FFFDF8;
-  --water:#0C1220;        /* 導入の水底 — テーマ固定 */
+  --paper:#F7F4EC;         /* 和紙 */
+  --ink:#1C1E22;           /* 墨 */
+  --ink-soft:#5C5C57;
+  --hido:#9C3B22;          /* 緋銅赤（デザイントークン確定値） */
+  --hido-deep:#7E2E1A;
+  --brass:#9A7B3F;         /* 真鍮 */
+  --line:#DCD5C6;
+  --card:#FFFDF7;
+  --water:#0C1220;         /* 導入の水底 — テーマ固定 */
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --paper:#14181D;
-    --ink:#EAE5DA;
-    --ink-soft:#9C9C94;
-    --shu:#E85A3C;
-    --shu-deep:#F07B5A;
-    --ruri:#7FA3D0;
-    --line:#2C3138;
-    --card:#1B2026;
+    --paper:#14171C;
+    --ink:#E9E4D9;
+    --ink-soft:#9C9C93;
+    --hido:#CE6A4A;
+    --hido-deep:#E08767;
+    --brass:#C2A05C;
+    --line:#2B3037;
+    --card:#1B1F25;
   }
 }
 :root[data-theme="light"]{
-  --paper:#F8F5EE; --ink:#1C1F24; --ink-soft:#5A5B58;
-  --shu:#D8432A; --shu-deep:#B23320; --ruri:#2C4A73;
-  --line:#DDD6C8; --card:#FFFDF8;
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#5C5C57;
+  --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
+  --line:#DCD5C6; --card:#FFFDF7;
 }
 :root[data-theme="dark"]{
-  --paper:#14181D; --ink:#EAE5DA; --ink-soft:#9C9C94;
-  --shu:#E85A3C; --shu-deep:#F07B5A; --ruri:#7FA3D0;
-  --line:#2C3138; --card:#1B2026;
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#9C9C93;
+  --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+  --line:#2B3037; --card:#1B1F25;
 }
 
 /* ============ base ============ */
@@ -53,10 +56,9 @@ body{
   letter-spacing:0.04em;
   -webkit-font-smoothing:antialiased;
 }
-.serif{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
 a{ color:inherit; }
-img{ max-width:100%; }
-:focus-visible{ outline:2px solid var(--shu); outline-offset:3px; }
+:focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
 
 /* ============ intro overlay ============ */
 #intro{
@@ -94,17 +96,14 @@ img{ max-width:100%; }
 .intro-skip:hover{ border-color:rgba(244,239,228,.8); color:#F4EFE4; }
 
 /* ============ ambient fish ============ */
-#ambient{
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  width:100%; height:100%;
-}
+#ambient{ position:fixed; inset:0; z-index:0; pointer-events:none; width:100%; height:100%; }
 
 /* ============ nav ============ */
 header{
   position:fixed; top:0; left:0; right:0; z-index:20;
   display:flex; align-items:center; justify-content:space-between;
   padding:1rem clamp(1.2rem, 4vw, 3rem);
-  background:color-mix(in srgb, var(--paper) 82%, transparent);
+  background:color-mix(in srgb, var(--paper) 84%, transparent);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
 }
@@ -112,13 +111,13 @@ header{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.05rem; letter-spacing:.3em; text-decoration:none; font-weight:600;
 }
-nav ul{ display:flex; gap:clamp(1rem,3vw,2.2rem); list-style:none; }
+nav ul{ display:flex; gap:clamp(1rem,2.6vw,2.2rem); list-style:none; }
 nav a{
-  text-decoration:none; font-size:.8rem; letter-spacing:.18em;
+  text-decoration:none; font-size:.8rem; letter-spacing:.16em;
   color:var(--ink-soft); transition:color .25s;
 }
-nav a:hover{ color:var(--shu); }
-@media (max-width:640px){ nav{ display:none; } }
+nav a:hover{ color:var(--hido); }
+@media (max-width:720px){ nav{ display:none; } }
 
 /* ============ hero ============ */
 main{ position:relative; z-index:1; }
@@ -126,30 +125,36 @@ main{ position:relative; z-index:1; }
   min-height:100svh;
   display:flex; align-items:center; justify-content:space-between;
   padding:6rem clamp(1.4rem,6vw,5rem) 4rem;
-  gap:2rem;
+  gap:2rem; position:relative;
 }
-.hero-side{ max-width:34rem; }
-.hero-eyebrow{
-  color:var(--shu); font-size:.75rem; letter-spacing:.5em;
-  margin-bottom:1.6rem;
+.hero-side{ max-width:38rem; }
+.hero-latin{
+  font-family:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;
+  font-size:clamp(2.6rem, 6.4vw, 5rem);
+  font-weight:500; letter-spacing:.08em; line-height:1.1;
+  text-wrap:balance;
 }
-.hero-copy{
+.hero-ja{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.25rem, 2.4vw, 1.7rem);
-  line-height:2.3; font-weight:500; text-wrap:balance;
+  font-size:clamp(1.1rem, 2.4vw, 1.5rem);
+  letter-spacing:.5em; margin-top:.9rem; color:var(--ink-soft);
 }
-.hero-sub{ margin-top:1.8rem; color:var(--ink-soft); font-size:.9rem; max-width:26rem; }
+.hero-thesis{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.05rem, 2vw, 1.3rem);
+  line-height:2.3; margin-top:2.4rem; text-wrap:balance;
+}
+.hero-thesis em{ font-style:normal; color:var(--hido); }
 .hero-name{
   writing-mode:vertical-rl;
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(4.2rem, 12vw, 8rem);
+  font-size:clamp(3.8rem, 10vw, 7rem);
   font-weight:600; letter-spacing:.18em; line-height:1;
-  color:var(--ink);
 }
 .hero-name small{
   writing-mode:horizontal-tb; display:block; margin-top:1.2rem;
   font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
-  font-size:.68rem; letter-spacing:.42em; color:var(--ink-soft);
+  font-size:.66rem; letter-spacing:.42em; color:var(--ink-soft);
 }
 .scroll-cue{
   position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%);
@@ -161,111 +166,172 @@ main{ position:relative; z-index:1; }
 }
 @media (max-width:760px){
   .hero{ flex-direction:column-reverse; align-items:flex-start; justify-content:center; }
-  .hero-name{ align-self:flex-end; font-size:clamp(3.6rem,17vw,5.5rem); }
+  .hero-name{ align-self:flex-end; font-size:clamp(3.2rem,15vw,5rem); }
 }
 
 /* reveal on intro end */
 .rise{ opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
 body.revealed .rise{ opacity:1; transform:none; }
-body.revealed .rise:nth-child(2){ transition-delay:.15s; }
-.hero .rise:nth-of-type(2){ transition-delay:.2s; }
+.hero .rise:nth-of-type(2){ transition-delay:.18s; }
 
 /* ============ sections ============ */
 section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 .sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
 .sec-head h2{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:600; letter-spacing:.22em;
+  font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
 }
-.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--shu); }
+.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
 .sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
 
-/* about */
-.about-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.6fr); gap:3rem; max-width:64rem; }
-@media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
-.about-photo{
-  aspect-ratio:3/4; border-radius:2px; position:relative; overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 118%, color-mix(in srgb, var(--shu) 26%, transparent) 0%, transparent 55%),
-    repeating-radial-gradient(circle at 50% 130%, transparent 0 38px, color-mix(in srgb, var(--ruri) 22%, transparent) 38px 40px),
-    var(--card);
-  border:1px solid var(--line);
-  display:flex; align-items:flex-end; justify-content:center; padding-bottom:1rem;
+/* realism: 思想3セクション */
+.realism-list{ max-width:44rem; margin:0 auto; display:grid; gap:clamp(3rem,7vw,5.5rem); }
+.realism-list li{ list-style:none; }
+.realism-list .no{
+  font-family:"Didot","Bodoni 72",Georgia,serif;
+  font-size:.85rem; letter-spacing:.3em; color:var(--hido); display:block; margin-bottom:1rem;
 }
-.about-photo em{ font-style:normal; font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft); }
-.about-text p + p{ margin-top:1.2em; }
-.about-text .lede{
+.realism-list p{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.15rem; line-height:2.2;
+  font-size:clamp(1.2rem, 2.6vw, 1.6rem); line-height:2.2; text-wrap:balance;
 }
-.about-facts{
-  margin-top:2rem; border-top:1px solid var(--line);
-  font-size:.88rem;
-}
-.about-facts div{
-  display:grid; grid-template-columns:7.5em 1fr; gap:1rem;
-  padding:.8em 0; border-bottom:1px solid var(--line);
-}
-.about-facts dt{ color:var(--ink-soft); letter-spacing:.1em; }
 
 /* works */
+.works-lede{
+  max-width:40rem; margin-bottom:4rem;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; line-height:2.3;
+}
+.chapter{ margin-bottom:clamp(3.5rem,7vw,5.5rem); }
+.chapter-head{ margin-bottom:1.8rem; display:flex; flex-wrap:wrap; align-items:baseline; gap:1rem; }
+.chapter-head h3{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.15rem,2.4vw,1.45rem); font-weight:600; letter-spacing:.14em;
+}
+.chapter-head span{ font-size:.68rem; letter-spacing:.3em; color:var(--ink-soft); }
 .works-grid{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1.6rem; max-width:72rem;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1.6rem;
 }
 .work{
   background:var(--card); border:1px solid var(--line); border-radius:2px;
-  overflow:hidden; text-decoration:none; display:block;
-  transition:transform .35s ease, box-shadow .35s ease;
+  overflow:hidden; display:flex; flex-direction:column;
 }
-.work:hover{ transform:translateY(-4px); box-shadow:0 14px 32px -18px rgba(0,0,0,.35); }
 .work-visual{
   aspect-ratio:16/10; position:relative;
+  display:flex; align-items:center; justify-content:center;
   background:
-    repeating-radial-gradient(circle at 30% 140%, transparent 0 30px, color-mix(in srgb, var(--ruri) 18%, transparent) 30px 32px),
-    linear-gradient(160deg, color-mix(in srgb, var(--ruri) 14%, var(--card)), var(--card));
+    radial-gradient(90% 130% at 50% 120%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 60%),
+    linear-gradient(165deg, color-mix(in srgb, var(--ink) 6%, var(--card)), var(--card));
   border-bottom:1px solid var(--line);
 }
-.work-visual::after{
-  content:"金"; position:absolute; right:.7rem; bottom:.4rem;
+.work-visual .kanji{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:2.6rem; color:color-mix(in srgb, var(--shu) 55%, transparent);
+  font-size:3.2rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
+  letter-spacing:.1em;
 }
-.work-body{ padding:1.1rem 1.2rem 1.3rem; }
-.work-body h3{
+.work-visual .en{
+  position:absolute; left:.9rem; bottom:.6rem;
+  font-size:.6rem; letter-spacing:.24em; color:var(--ink-soft); text-transform:uppercase;
+}
+.work-body{ padding:1.1rem 1.2rem 1.3rem; display:flex; flex-direction:column; gap:.7rem; flex:1; }
+.work-body h4{
   font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.05rem; font-weight:600; letter-spacing:.08em;
+  font-size:1.12rem; font-weight:600; letter-spacing:.08em;
 }
-.work-body p{ font-size:.82rem; color:var(--ink-soft); margin-top:.4em; }
-.work-tag{ font-size:.68rem; letter-spacing:.26em; color:var(--shu); }
+.work-body h4 small{ font-weight:400; font-size:.72rem; color:var(--ink-soft); margin-left:.6em; letter-spacing:.1em; }
+.work-award{
+  font-size:.7rem; letter-spacing:.12em; color:var(--hido);
+  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  border-radius:999px; padding:.15em .9em; align-self:flex-start;
+}
+.work-body p{ font-size:.85rem; line-height:1.9; }
+.work-specs{ margin-top:auto; font-size:.75rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:.7rem; }
+.work-specs div{ display:flex; gap:.8em; }
+.work-specs dt{ min-width:3.5em; letter-spacing:.1em; }
 
-/* news */
-.news-list{ list-style:none; max-width:56rem; }
-.news-list li{
-  display:grid; grid-template-columns:8.5em 1fr; gap:1.4rem;
-  padding:1.1em 0; border-bottom:1px solid var(--line);
-  font-size:.92rem;
+/* artist */
+.artist-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.7fr); gap:3rem; max-width:70rem; }
+@media (max-width:820px){ .artist-grid{ grid-template-columns:1fr; } }
+.artist-photo{
+  aspect-ratio:3/4; border-radius:2px; border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 118%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 55%),
+    repeating-radial-gradient(circle at 50% 130%, transparent 0 38px, color-mix(in srgb, var(--ink) 10%, transparent) 38px 39px),
+    var(--card);
+  display:flex; align-items:flex-end; justify-content:center; padding-bottom:1rem;
 }
-.news-list time{
-  color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.08em;
+.artist-photo em{ font-style:normal; font-size:.68rem; letter-spacing:.3em; color:var(--ink-soft); }
+.artist-lede{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.15rem,2.2vw,1.4rem); line-height:2.2; margin-bottom:1.6rem; text-wrap:balance;
 }
-@media (max-width:560px){ .news-list li{ grid-template-columns:1fr; gap:.2rem; } }
+.artist-text p + p{ margin-top:1.1em; }
+.artist-text > p{ font-size:.95rem; }
+.cv{ margin-top:2.4rem; display:grid; gap:2rem; }
+.cv h3{
+  font-size:.78rem; letter-spacing:.3em; color:var(--hido); font-weight:600; margin-bottom:.8rem;
+}
+.cv ul{ list-style:none; font-size:.87rem; }
+.cv li{
+  display:grid; grid-template-columns:4.2em 1fr; gap:1.2em;
+  padding:.5em 0; border-bottom:1px solid var(--line);
+}
+.cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+.galleries{ font-size:.85rem; color:var(--ink-soft); }
+
+/* exhibitions */
+.exhi-note{
+  max-width:44rem; margin-bottom:2.6rem;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.02rem; line-height:2.2;
+  border-left:2px solid var(--hido); padding-left:1.4rem;
+}
+.exhi-group{ margin-bottom:2.8rem; }
+.exhi-group h3{ font-size:.78rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
+.exhi-list{ list-style:none; max-width:60rem; }
+.exhi-list li{
+  display:grid; grid-template-columns:11.5em 1fr; gap:1.4rem;
+  padding:1.05em 0; border-bottom:1px solid var(--line); font-size:.92rem;
+}
+.exhi-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
+.exhi-list strong{ font-weight:600; }
+.exhi-list .venue{ display:block; font-size:.82rem; color:var(--ink-soft); }
+@media (max-width:600px){ .exhi-list li{ grid-template-columns:1fr; gap:.2rem; } }
+
+/* manifesto */
+.manifesto{
+  text-align:center;
+  background:color-mix(in srgb, var(--ink) 4%, var(--paper));
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.manifesto-lines{ list-style:none; display:grid; gap:2.6rem; max-width:46rem; margin:0 auto; }
+.manifesto-lines li{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.15rem,2.6vw,1.55rem); line-height:2.1; text-wrap:balance;
+}
+.manifesto-en{
+  margin-top:3rem; font-size:.7rem; letter-spacing:.4em; color:var(--ink-soft); text-transform:uppercase;
+}
 
 /* contact */
 .contact{ text-align:center; }
-.contact p{ max-width:34rem; margin:0 auto 2.2rem; color:var(--ink-soft); font-size:.92rem; }
-.contact-btn{
-  display:inline-block; text-decoration:none;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1rem; letter-spacing:.3em; text-indent:.3em;
-  color:var(--paper); background:var(--shu);
-  padding:1em 3.2em; border-radius:999px;
-  transition:background .3s;
+.contact-p{ max-width:34rem; margin:0 auto 1.8rem; color:var(--ink-soft); font-size:.92rem; }
+.contact-tags{ display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin-bottom:2.6rem; }
+.contact-tags span{
+  font-size:.72rem; letter-spacing:.16em; color:var(--ink-soft);
+  border:1px solid var(--line); border-radius:999px; padding:.3em 1.1em;
 }
-.contact-btn:hover{ background:var(--shu-deep); }
-.sns{ margin-top:2rem; display:flex; justify-content:center; gap:2rem; }
-.sns a{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); text-decoration:none; }
-.sns a:hover{ color:var(--shu); }
+.sns-btns{ display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; }
+.sns-btn{
+  display:inline-block; text-decoration:none;
+  font-size:.8rem; letter-spacing:.24em; text-indent:.24em;
+  padding:.9em 2.6em; border-radius:999px;
+  border:1px solid var(--ink); transition:all .3s;
+}
+.sns-btn:hover{ background:var(--hido); border-color:var(--hido); color:var(--paper); }
+.sns-btn.primary{ background:var(--hido); border-color:var(--hido); color:var(--paper); }
+.sns-btn.primary:hover{ background:var(--hido-deep); border-color:var(--hido-deep); }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -290,8 +356,8 @@ footer{
 <div id="intro" aria-hidden="true">
   <canvas id="introCanvas"></canvas>
   <div class="intro-name">
-    <h1>河崎海斗</h1>
-    <p>Kaito Kawasaki — Official Site</p>
+    <h1>河﨑海斗</h1>
+    <p>Kogei Realism — Kaito Kawasaki</p>
   </div>
   <button class="intro-skip" id="skipBtn" type="button">SKIP</button>
 </div>
@@ -299,12 +365,13 @@ footer{
 <canvas id="ambient" aria-hidden="true"></canvas>
 
 <header>
-  <a class="brand serif" href="#top">河崎海斗</a>
+  <a class="brand" href="#top">河﨑海斗</a>
   <nav aria-label="メイン">
     <ul>
-      <li><a href="#about">プロフィール</a></li>
+      <li><a href="#realism">工芸リアリズム</a></li>
       <li><a href="#works">作品</a></li>
-      <li><a href="#news">お知らせ</a></li>
+      <li><a href="#artist">河﨑海斗</a></li>
+      <li><a href="#exhibitions">展示</a></li>
       <li><a href="#contact">コンタクト</a></li>
     </ul>
   </nav>
@@ -312,68 +379,267 @@ footer{
 
 <main id="top">
 
+  <!-- First View: KOGEI REALISM（構成案どおり） -->
   <section class="hero" aria-label="ヒーロー">
     <div class="hero-side">
-      <p class="hero-eyebrow rise">KAITO KAWASAKI OFFICIAL</p>
-      <!-- ▼ コピーは仮です。差し替えてください -->
-      <p class="hero-copy rise">泳ぎつづける、<br>つくりつづける。</p>
-      <p class="hero-sub rise">水の中を自由に泳ぐ金魚のように、ジャンルの境界を越えて表現を続けるクリエイター、河崎海斗のオフィシャルサイトです。</p>
+      <p class="hero-latin rise">KOGEI<br>REALISM</p>
+      <p class="hero-ja rise">工芸リアリズム</p>
+      <p class="hero-thesis rise">工芸リアリズムとは、<em>存在の条件</em>をつくるリアリズムである。</p>
     </div>
-    <h1 class="hero-name rise">河崎海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
+    <h1 class="hero-name rise">河﨑海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
   </section>
 
-  <section id="about" class="io">
-    <div class="sec-head"><h2>プロフィール</h2><span>ABOUT</span></div>
-    <div class="about-grid">
-      <div class="about-photo"><em>PHOTO</em></div>
-      <div class="about-text">
-        <!-- ▼ プロフィール文は仮です。実際の経歴に差し替えてください -->
-        <p class="lede">河崎海斗（かわさき かいと）。映像・音楽・デザインを横断して活動するクリエイター。</p>
-        <p>ここにプロフィール本文が入ります。経歴、活動内容、受賞歴、これまでの主な仕事などを記載してください。</p>
-        <dl class="about-facts">
-          <div><dt>名前</dt><dd>河崎海斗</dd></div>
-          <div><dt>活動領域</dt><dd>（例）映像制作 / 音楽 / デザイン</dd></div>
-          <div><dt>拠点</dt><dd>（例）東京</dd></div>
-        </dl>
+  <!-- 思想3セクション -->
+  <section id="realism" class="io">
+    <div class="sec-head"><h2>工芸リアリズム</h2><span>KOGEI REALISM</span></div>
+    <ul class="realism-list">
+      <li><span class="no">I</span>
+        <p>工芸とは、人間を含めた生態系を表現する営みである。</p></li>
+      <li><span class="no">II</span>
+        <p>素材・環境・身体・知覚の関係のなかで、何かが現に立ち上がる。その「現れ」をつくる。</p></li>
+      <li><span class="no">III</span>
+        <p>それは技巧による写実ではない。存在の条件そのものを組み直す態度である。</p></li>
+    </ul>
+  </section>
+
+  <!-- 作品：存在は、◯◯の中で変化する -->
+  <section id="works" class="io">
+    <div class="sec-head"><h2>作品</h2><span>WORKS</span></div>
+    <p class="works-lede">河﨑海斗は、金魚をつくっているのではない。金魚が金魚として存在するための――水、光、器、素材、見る者の記憶を組み直している。</p>
+
+    <div class="chapter">
+      <div class="chapter-head"><h3>存在は、水の中で変化する</h3><span>金魚 — GOLDFISH</span></div>
+      <div class="works-grid">
+        <article class="work">
+          <div class="work-visual"><span class="kanji">朱</span><span class="en">Vermilion Wakin</span></div>
+          <div class="work-body">
+            <h4>朱色和金<small>2025</small></h4>
+            <span class="work-award">第19回 藝大アートプラザ・アートアワード 小学館賞</span>
+            <p>純銅を1,040度まで熱し、急冷する。表面に生じる赤い酸化皮膜——江戸時代の技法「緋銅」。赤は塗られるのではなく、内部から現れる。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>真鍮・銅・銀・樹脂</dd></div>
+              <div><dt>技法</dt><dd>鋳金・緋銅</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="work">
+          <div class="work-visual"><span class="kanji">黒</span><span class="en">Black Chotengan</span></div>
+          <div class="work-body">
+            <h4>黒頂天眼<small>2024</small></h4>
+            <span class="work-award">第18回 藝大アートプラザ・アートアワード 審査員特別賞</span>
+            <p>上を向いて泳ぐ金魚「頂天眼」。緋銅の赤とは別の、黒という色の条件を金属に問うた作品。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>真鍮・樹脂</dd></div>
+              <div><dt>サイズ</dt><dd>25 × 17.5 × 6 cm</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="work">
+          <div class="work-visual"><span class="kanji">鯉</span><span class="en">Nishikigoi</span></div>
+          <div class="work-body">
+            <h4>錦鯉<small>2026 / 修了作品</small></h4>
+            <span class="work-award">サロン・ド・プランタン賞</span>
+            <p>金魚作品の100倍を超える、現時点での最大作品。金属鋳造の物理的な限界と交渉しながら立ち上げられた。</p>
+            <dl class="work-specs">
+              <div><dt>技法</dt><dd>鋳金</dd></div>
+              <div><dt>展示</dt><dd>「MATSURI INORU」新丸ビル（〜8/2）</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="work">
+          <div class="work-visual"><span class="kanji">蘭</span><span class="en">Hakomono: Ranchu</span></div>
+          <div class="work-body">
+            <h4>箱物 蘭鋳<small>2022</small></h4>
+            <p>水の外に出た金魚は、同じ姿を保っていても、別の存在へと移行する。失われるのはかたちではなく、条件である。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>真鍮・樹脂・紙</dd></div>
+              <div><dt>サイズ</dt><dd>10 × 10 × 10 cm</dd></div>
+            </dl>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><h3>存在は、関係の中で変化する</h3><span>カエル — FROG</span></div>
+      <div class="works-grid">
+        <article class="work">
+          <div class="work-visual"><span class="kanji">雨</span><span class="en">Rain Frog: The Fox's Wedding</span></div>
+          <div class="work-body">
+            <h4>雨ノ蛙「狐の嫁入り」<small>2025</small></h4>
+            <p>ガラス、光、色、背景。その条件のなかで、カエルは別の存在として立ち上がる。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>銅・真鍮・樹脂・ガラス</dd></div>
+              <div><dt>サイズ</dt><dd>15 × 5 × 20 cm</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="work">
+          <div class="work-visual"><span class="kanji">狂</span><span class="en">Gakkyo no Kaeru</span></div>
+          <div class="work-body">
+            <h4>画狂乃蛙<small>2025–2026</small></h4>
+            <p>葛飾北斎「蛙とゆきのした」に描かれた蛙を、北斎と同じ江戸時代の技法で立体に起こす。タイトルは北斎の号「画狂人」との掛け言葉。</p>
+            <dl class="work-specs">
+              <div><dt>技法</dt><dd>鋳金・緋銅</dd></div>
+              <div><dt>展示</dt><dd>北斎館 個展（2026年9月〜）</dd></div>
+            </dl>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><h3>存在は、環境の中で変化する</h3><span>タコ — OCTOPUS</span></div>
+      <div class="works-grid">
+        <article class="work">
+          <div class="work-visual"><span class="kanji">溶</span><span class="en">Yokai Henge</span></div>
+          <div class="work-body">
+            <h4>溶解変化<small>2022</small></h4>
+            <p>殻、隙間、重さ、身を隠す場所。その条件のなかで、タコは別の存在として立ち上がる。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>青銅・貝殻</dd></div>
+              <div><dt>サイズ</dt><dd>7 × 5 × 5 cm</dd></div>
+            </dl>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><h3>存在は、時間の中で変化する</h3><span>バナナの皮 / 紅葉 — TIME</span></div>
+      <div class="works-grid">
+        <article class="work">
+          <div class="work-visual"><span class="kanji">蕉</span><span class="en">Banana Peel</span></div>
+          <div class="work-body">
+            <h4>甘蕉ノ皮<small>2020</small></h4>
+            <p>壁、重力、腐敗、投げつけられた瞬間。その条件のなかで、バナナの皮は別の存在として立ち上がる。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>青銅</dd></div>
+              <div><dt>サイズ</dt><dd>10 × 10 × 10 cm</dd></div>
+            </dl>
+          </div>
+        </article>
+        <article class="work">
+          <div class="work-visual"><span class="kanji">紅</span><span class="en">Autumn Leaves</span></div>
+          <div class="work-body">
+            <h4>紅葉<small>2025</small></h4>
+            <span class="work-award">第20回 藝大アートプラザ・アートアワード 入選</span>
+            <p>銅を紅葉の形に鋳造し、赤を生成させる。葉が色づく秋の一瞬という時間が、金属の中に留められている。</p>
+            <dl class="work-specs">
+              <div><dt>素材</dt><dd>銅・真鍮</dd></div>
+              <div><dt>サイズ</dt><dd>10 × 10 × 10 cm</dd></div>
+            </dl>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section id="works" class="io">
-    <div class="sec-head"><h2>作品</h2><span>WORKS</span></div>
-    <div class="works-grid">
-      <!-- ▼ 作品カードは仮です。実際の作品に差し替えてください -->
-      <a class="work" href="#"><div class="work-visual"></div>
-        <div class="work-body"><span class="work-tag">WORK 01</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
-      <a class="work" href="#"><div class="work-visual"></div>
-        <div class="work-body"><span class="work-tag">WORK 02</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
-      <a class="work" href="#"><div class="work-visual"></div>
-        <div class="work-body"><span class="work-tag">WORK 03</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
+  <!-- 河﨑海斗 -->
+  <section id="artist" class="io">
+    <div class="sec-head"><h2>河﨑海斗</h2><span>KAITO KAWASAKI</span></div>
+    <div class="artist-grid">
+      <div class="artist-photo"><em>PORTRAIT</em></div>
+      <div class="artist-text">
+        <p class="artist-lede">河﨑海斗は、生命を模倣する作家ではない。生命が立ち上がる場を、工芸によってつくる作家である。</p>
+        <p>2000年、広島県呉市生まれ。金工作家（鋳金）。2026年、東京藝術大学大学院美術研究科工芸専攻鋳金研究分野 修士課程修了。東京を拠点に制作する。</p>
+        <p>鋳造した金魚をアクリル樹脂の内部に置く。樹脂は付加された素材でも、保護のための外殻でもない。それは環境として機能する——すなわち、水のもうひとつの形態である。磨き、加熱、酸素、温度。それらの条件を精密に調整することで、色は生成される。</p>
+
+        <div class="cv">
+          <div>
+            <h3>受賞歴（抜粋）</h3>
+            <ul>
+              <li><b>2022</b><span>東京藝術大学奨学金制度 安宅賞</span></li>
+              <li><b>2024</b><span>第18回 藝大アートプラザ・アートアワード 審査員特別賞（黒頂天眼）</span></li>
+              <li><b>2024</b><span>平成芸術賞（卒業作品「金魚」）</span></li>
+              <li><b>2025</b><span>第19回 藝大アートプラザ・アートアワード 小学館賞（朱色和金）</span></li>
+              <li><b>2026</b><span>サロン・ド・プランタン賞（修了作品「錦鯉」）</span></li>
+              <li><b>2026</b><span>第20回 藝大アートプラザ・アートアワード 入選（紅葉）</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>主な展示（抜粋）</h3>
+            <ul>
+              <li><b>2024</b><span>ART FAIR TOKYO（東京国際フォーラム）／ KIAF SEOUL（韓国・ソウル）／ artKYOTO（京都・渉成園）／ 個展「宮原ノ色」（広島・呉）</span></li>
+              <li><b>2025</b><span>ART FAIR TOKYO ／ 大阪・関西万博「にっぽんの宝物祭り」／ 個展「カエルハジメテナク」（東京・恵比寿）</span></li>
+              <li><b>2026</b><span>ART FAIR PHILIPPINES（マカティ）／ ART FAIR TOKYO ／ 3人展「工芸生態系 ─ A World in Kogei ─」（藝大アートプラザ）／ 3人展「MATSURI INORU」（Spiral Garden 新丸ビル）</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>取り扱いギャラリー</h3>
+            <p class="galleries">GALLERY KOGURE ／ GALLERY OPET ／ 藝大アートプラザ ／ 桐美会</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="news" class="io">
-    <div class="sec-head"><h2>お知らせ</h2><span>NEWS</span></div>
-    <ul class="news-list">
-      <li><time datetime="2026-07-07">2026.07.07</time><span>オフィシャルサイトを公開しました。</span></li>
-      <li><time>COMING SOON</time><span>お知らせがここに入ります。</span></li>
-    </ul>
+  <!-- 展示スケジュール -->
+  <section id="exhibitions" class="io">
+    <div class="sec-head"><h2>展示</h2><span>EXHIBITIONS</span></div>
+    <p class="exhi-note">2026年7月22日から28日にかけて、恵比寿・丸の内・新宿——東京の3会場で、同時に作品を見ることができる。</p>
+
+    <div class="exhi-group">
+      <h3>開催中</h3>
+      <ul class="exhi-list">
+        <li>
+          <time>5.30 — 7.30</time>
+          <div><strong>個展「出藍の誉」</strong><span class="venue">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></div>
+        </li>
+        <li>
+          <time>6.8 — 8.2</time>
+          <div><strong>3人展「MATSURI INORU」</strong><span class="venue">Spiral Garden 新丸ビル（東京・丸の内）— 修了作品「錦鯉」を展示</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="exhi-group">
+      <h3>今後の予定</h3>
+      <ul class="exhi-list">
+        <li>
+          <time>7.22 — 7.28</time>
+          <div><strong>河﨑海斗展</strong><span class="venue">新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展。朱色和金・紅葉ほか。在廊：7/22・7/28</span></div>
+        </li>
+        <li>
+          <time>9.4 — 10.20</time>
+          <div><strong>個展</strong><span class="venue">北斎館（長野・小布施）— 画狂乃蛙をメインに。入場無料</span></div>
+        </li>
+        <li>
+          <time>12.11 — 12.22</time>
+          <div><strong>個展</strong><span class="venue">MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）— 年間の集大成</span></div>
+        </li>
+      </ul>
+    </div>
   </section>
 
+  <!-- Manifesto -->
+  <section class="manifesto io" aria-label="マニフェスト">
+    <ul class="manifesto-lines">
+      <li>工芸リアリズムとは、存在の条件をつくるリアリズムである。</li>
+      <li>工芸とは、人間を含めた生態系を表現する営みである。</li>
+      <li>生命を模倣するのではない。生命が現れる場をつくる。</li>
+    </ul>
+    <p class="manifesto-en">Kogei Realism</p>
+  </section>
+
+  <!-- Contact -->
   <section id="contact" class="contact io">
     <div class="sec-head"><h2>コンタクト</h2><span>CONTACT</span></div>
-    <p>出演・制作のご依頼、お問い合わせは下記よりご連絡ください。</p>
-    <!-- ▼ メールアドレス・SNSリンクを設定してください -->
-    <a class="contact-btn" href="mailto:contact@example.com">お問い合わせ</a>
-    <div class="sns">
-      <a href="#">X</a><a href="#">INSTAGRAM</a><a href="#">YOUTUBE</a>
+    <p class="contact-p">展覧会・作品・取材・共同プロジェクトに関するお問い合わせは、SNSよりご連絡ください。</p>
+    <div class="contact-tags">
+      <span>展覧会のご依頼</span><span>作品のお問い合わせ</span><span>取材</span><span>共同プロジェクト</span><span>海外展開</span>
     </div>
+    <div class="sns-btns">
+      <a class="sns-btn primary" href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">INSTAGRAM @kkchaki</a>
+      <a class="sns-btn" href="https://x.com/kkchaki" target="_blank" rel="noopener">X @kkchaki</a>
+    </div>
+    <!-- ▼ お問い合わせ用メールアドレスが確定したらボタンを追加してください -->
   </section>
 
 </main>
 
-<footer>© 2026 KAITO KAWASAKI</footer>
+<footer>© 2026 KAITO KAWASAKI — KOGEI REALISM</footer>
 
 <script>
 (function(){
@@ -426,7 +692,7 @@ footer{
     traceBody(ctx);
     ctx.fill();
 
-    // 更紗（白地に朱の頭）
+    // 更紗（白地に緋銅の頭）
     if (variant.crown){
       ctx.save();
       traceBody(ctx);
@@ -448,12 +714,13 @@ footer{
     ctx.restore();
   }
 
+  // 緋銅・銅・真鍮・更紗・黒頂天眼 — 作品の素材に対応した色
   var VARIANTS = [
-    { body:'#E0472B', fin:'rgba(224,71,43,0.6)' },                       // 朱
-    { body:'#F06A38', fin:'rgba(240,106,56,0.6)' },                      // 橙
-    { body:'#F6F1E6', fin:'rgba(246,241,230,0.55)', crown:'#DD4530' },   // 更紗
-    { body:'#E0472B', fin:'rgba(224,71,43,0.6)' },
-    { body:'#2B2E36', fin:'rgba(43,46,54,0.6)', eye:'#C9C4B8' }          // 黒出目金（レア）
+    { body:'#A63E22', fin:'rgba(166,62,34,0.6)' },                        // 緋銅
+    { body:'#C2552D', fin:'rgba(194,85,45,0.6)' },                        // 銅朱
+    { body:'#F4EEE1', fin:'rgba(244,238,225,0.55)', crown:'#A63E22' },    // 更紗
+    { body:'#C29A4B', fin:'rgba(194,154,75,0.55)' },                      // 真鍮
+    { body:'#2B2E36', fin:'rgba(43,46,54,0.6)', eye:'#C9C4B8' }           // 黒頂天眼
   ];
 
   function fitCanvas(canvas){
