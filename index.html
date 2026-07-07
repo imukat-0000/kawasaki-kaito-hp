@@ -1065,6 +1065,29 @@ footer{
           }
         }
 
+        // 分離: 近くの金魚から離れる方向を混ぜて、重なりを防ぐ
+        var sepX = 0, sepY = 0;
+        for (var n = 0; n < swimmers.length; n++){
+          if (n === m) continue;
+          var o = swimmers[n];
+          var ox = sw.x - o.x, oy = sw.y - o.y;
+          var od = Math.hypot(ox, oy);
+          var minD = (sw.size + o.size) * 1.2;
+          if (od > 0.001 && od < minD){
+            var push = (minD - od) / minD;
+            sepX += (ox / od) * push;
+            sepY += (oy / od) * push;
+          }
+        }
+        if (sepX !== 0 || sepY !== 0){
+          var vx = Math.cos(targetHeading) + sepX * 1.7;
+          var vy = Math.sin(targetHeading) + sepY * 1.7;
+          targetHeading = Math.atan2(vy, vx);
+          // 触れそうな距離ではその場でもゆっくり離れる
+          sw.x += sepX * 30 * dt;
+          sw.y += sepY * 30 * dt;
+        }
+
         // 進行方向と速度をなめらかに補間（急旋回しない）
         var dh = targetHeading - sw.heading;
         dh = ((dh + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
