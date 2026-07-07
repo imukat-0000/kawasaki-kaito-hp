@@ -858,6 +858,40 @@ footer{
       aw = amb.clientWidth; ah = amb.clientHeight;
     });
 
+    /* ポインターに合わせた波紋（マウス移動＝小 / クリック・タップ＝大） */
+    var pointerRipples = [];
+    var lastRX = -9999, lastRY = -9999, lastRT = 0;
+    function inkColor(){
+      var m = getComputedStyle(document.body).color.match(/\d+/g);
+      return m ? (m[0] + ',' + m[1] + ',' + m[2]) : '90,100,120';
+    }
+    function addRipple(x, y, big){
+      var col = inkColor();
+      var n = big ? 3 : 1;
+      for (var i = 0; i < n; i++){
+        pointerRipples.push({
+          x: x, y: y,
+          born: performance.now() / 1000 + i * 0.13,
+          life: big ? 1.4 : 0.9,
+          max: big ? 74 + i * 36 : 34,
+          a0: big ? 0.4 : 0.2,
+          col: col
+        });
+      }
+      if (pointerRipples.length > 80) pointerRipples.splice(0, pointerRipples.length - 80);
+    }
+    window.addEventListener('pointermove', function(e){
+      if (e.pointerType !== 'mouse') return;
+      var now = performance.now();
+      var dx = e.clientX - lastRX, dy = e.clientY - lastRY;
+      if (dx * dx + dy * dy < 784 || now - lastRT < 50) return;   // 28px・50ms間隔で間引き
+      lastRX = e.clientX; lastRY = e.clientY; lastRT = now;
+      addRipple(e.clientX, e.clientY, false);
+    }, { passive: true });
+    window.addEventListener('pointerdown', function(e){
+      addRipple(e.clientX, e.clientY, true);
+    }, { passive: true });
+
     var last = performance.now();
     (function ambFrame(now){
       var dt = Math.min((now - last) / 1000, 0.05);
@@ -876,6 +910,20 @@ footer{
         if ((sw.dir === 1 && sw.x > aw + 90) || (sw.dir === -1 && sw.x < -90)){
           swimmers[m] = spawnSwimmer(false);
         }
+      }
+      // 波紋の描画
+      for (var q = pointerRipples.length - 1; q >= 0; q--){
+        var pr = pointerRipples[q];
+        var age = t - pr.born;
+        if (age > pr.life){ pointerRipples.splice(q, 1); continue; }
+        if (age < 0) continue;
+        var k = age / pr.life;
+        var er = 1 - Math.pow(1 - k, 2);
+        actx.strokeStyle = 'rgba(' + pr.col + ',' + (pr.a0 * (1 - k)).toFixed(3) + ')';
+        actx.lineWidth = 1.4 * (1 - k) + 0.4;
+        actx.beginPath();
+        actx.arc(pr.x, pr.y, 4 + er * pr.max, 0, Math.PI * 2);
+        actx.stroke();
       }
       requestAnimationFrame(ambFrame);
     })(last);
