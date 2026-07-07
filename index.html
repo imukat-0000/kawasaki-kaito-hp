@@ -242,7 +242,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 .works-feature .ph{
   aspect-ratio:21/9; overflow:hidden; border-radius:2px; border:1px solid var(--line);
 }
-.works-feature img{ width:100%; height:100%; object-fit:cover; display:block; }
+.works-feature img, .works-feature video{ width:100%; height:100%; object-fit:cover; display:block; }
 .works-feature figcaption{ font-size:.72rem; color:var(--ink-soft); letter-spacing:.08em; margin-top:.6rem; }
 @media (max-width:640px){ .works-feature .ph{ aspect-ratio:16/10; } }
 
@@ -253,10 +253,12 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
   aspect-ratio:4/3; overflow:hidden; border-radius:2px;
   border:1px solid var(--line); background:var(--card);
 }
-.gallery-grid img{
+.gallery-grid img, .gallery-grid video{
   width:100%; height:100%; object-fit:cover; display:block;
   transition:transform .6s ease;
 }
+/* 動画を追加する場合はギャラリーのfigure内で以下の形式を使う:
+   <div class="ph"><video src="videos/xxx.mp4" autoplay muted loop playsinline></video></div> */
 .gallery-grid figure:hover img{ transform:scale(1.03); }
 .gallery-grid figcaption{ font-size:.72rem; color:var(--ink-soft); letter-spacing:.08em; margin-top:.5rem; }
 .gallery-grid .wide{ grid-column:1 / -1; }
