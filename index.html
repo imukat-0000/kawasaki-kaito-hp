@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>河崎海斗 | Official Site</title>
+<meta name="description" content="河崎海斗 オフィシャルサイト">
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#F8F5EE;        /* 和紙 */
+  --ink:#1C1F24;          /* 墨 */
+  --ink-soft:#5A5B58;
+  --shu:#D8432A;          /* 朱 */
+  --shu-deep:#B23320;
+  --ruri:#2C4A73;         /* 瑠璃 */
+  --line:#DDD6C8;
+  --card:#FFFDF8;
+  --water:#0C1220;        /* 導入の水底 — テーマ固定 */
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14181D;
+    --ink:#EAE5DA;
+    --ink-soft:#9C9C94;
+    --shu:#E85A3C;
+    --shu-deep:#F07B5A;
+    --ruri:#7FA3D0;
+    --line:#2C3138;
+    --card:#1B2026;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F8F5EE; --ink:#1C1F24; --ink-soft:#5A5B58;
+  --shu:#D8432A; --shu-deep:#B23320; --ruri:#2C4A73;
+  --line:#DDD6C8; --card:#FFFDF8;
+}
+:root[data-theme="dark"]{
+  --paper:#14181D; --ink:#EAE5DA; --ink-soft:#9C9C94;
+  --shu:#E85A3C; --shu-deep:#F07B5A; --ruri:#7FA3D0;
+  --line:#2C3138; --card:#1B2026;
+}
+
+/* ============ base ============ */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";
+  line-height:1.9;
+  letter-spacing:0.04em;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
+a{ color:inherit; }
+img{ max-width:100%; }
+:focus-visible{ outline:2px solid var(--shu); outline-offset:3px; }
+
+/* ============ intro overlay ============ */
+#intro{
+  position:fixed; inset:0; z-index:100;
+  background:radial-gradient(120% 90% at 50% 42%, #16223A 0%, var(--water) 62%, #070B14 100%);
+  transition:opacity .9s ease;
+  cursor:pointer;
+}
+#intro.done{ opacity:0; pointer-events:none; }
+#introCanvas{ position:absolute; inset:0; width:100%; height:100%; }
+.intro-name{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:1.1rem; color:#F4EFE4; text-align:center;
+  opacity:0; animation:nameIn 1.4s ease .25s forwards;
+  pointer-events:none;
+}
+.intro-name h1{
+  font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  font-size:clamp(2.4rem, 7vw, 4.6rem);
+  font-weight:600; letter-spacing:0.34em; text-indent:0.34em;
+}
+.intro-name p{
+  font-size:.78rem; letter-spacing:0.52em; text-indent:0.52em;
+  color:rgba(244,239,228,.62); text-transform:uppercase;
+}
+@keyframes nameIn{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none;} }
+#intro.done .intro-name{ transition:opacity .5s ease; opacity:0; }
+.intro-skip{
+  position:absolute; right:1.4rem; bottom:1.3rem;
+  background:none; border:1px solid rgba(244,239,228,.35); border-radius:999px;
+  color:rgba(244,239,228,.75); font-size:.72rem; letter-spacing:.28em; text-indent:.28em;
+  padding:.5em 1.4em; cursor:pointer;
+}
+.intro-skip:hover{ border-color:rgba(244,239,228,.8); color:#F4EFE4; }
+
+/* ============ ambient fish ============ */
+#ambient{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  width:100%; height:100%;
+}
+
+/* ============ nav ============ */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem clamp(1.2rem, 4vw, 3rem);
+  background:color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.brand{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; letter-spacing:.3em; text-decoration:none; font-weight:600;
+}
+nav ul{ display:flex; gap:clamp(1rem,3vw,2.2rem); list-style:none; }
+nav a{
+  text-decoration:none; font-size:.8rem; letter-spacing:.18em;
+  color:var(--ink-soft); transition:color .25s;
+}
+nav a:hover{ color:var(--shu); }
+@media (max-width:640px){ nav{ display:none; } }
+
+/* ============ hero ============ */
+main{ position:relative; z-index:1; }
+.hero{
+  min-height:100svh;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6rem clamp(1.4rem,6vw,5rem) 4rem;
+  gap:2rem;
+}
+.hero-side{ max-width:34rem; }
+.hero-eyebrow{
+  color:var(--shu); font-size:.75rem; letter-spacing:.5em;
+  margin-bottom:1.6rem;
+}
+.hero-copy{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height:2.3; font-weight:500; text-wrap:balance;
+}
+.hero-sub{ margin-top:1.8rem; color:var(--ink-soft); font-size:.9rem; max-width:26rem; }
+.hero-name{
+  writing-mode:vertical-rl;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(4.2rem, 12vw, 8rem);
+  font-weight:600; letter-spacing:.18em; line-height:1;
+  color:var(--ink);
+}
+.hero-name small{
+  writing-mode:horizontal-tb; display:block; margin-top:1.2rem;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.68rem; letter-spacing:.42em; color:var(--ink-soft);
+}
+.scroll-cue{
+  position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%);
+  font-size:.65rem; letter-spacing:.4em; color:var(--ink-soft);
+}
+.scroll-cue::after{
+  content:""; display:block; width:1px; height:2.6rem; margin:.7rem auto 0;
+  background:linear-gradient(var(--ink-soft), transparent);
+}
+@media (max-width:760px){
+  .hero{ flex-direction:column-reverse; align-items:flex-start; justify-content:center; }
+  .hero-name{ align-self:flex-end; font-size:clamp(3.6rem,17vw,5.5rem); }
+}
+
+/* reveal on intro end */
+.rise{ opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
+body.revealed .rise{ opacity:1; transform:none; }
+body.revealed .rise:nth-child(2){ transition-delay:.15s; }
+.hero .rise:nth-of-type(2){ transition-delay:.2s; }
+
+/* ============ sections ============ */
+section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
+.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
+.sec-head h2{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.6rem,3.4vw,2.2rem); font-weight:600; letter-spacing:.22em;
+}
+.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--shu); }
+.sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+/* about */
+.about-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.6fr); gap:3rem; max-width:64rem; }
+@media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+.about-photo{
+  aspect-ratio:3/4; border-radius:2px; position:relative; overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 118%, color-mix(in srgb, var(--shu) 26%, transparent) 0%, transparent 55%),
+    repeating-radial-gradient(circle at 50% 130%, transparent 0 38px, color-mix(in srgb, var(--ruri) 22%, transparent) 38px 40px),
+    var(--card);
+  border:1px solid var(--line);
+  display:flex; align-items:flex-end; justify-content:center; padding-bottom:1rem;
+}
+.about-photo em{ font-style:normal; font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft); }
+.about-text p + p{ margin-top:1.2em; }
+.about-text .lede{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.15rem; line-height:2.2;
+}
+.about-facts{
+  margin-top:2rem; border-top:1px solid var(--line);
+  font-size:.88rem;
+}
+.about-facts div{
+  display:grid; grid-template-columns:7.5em 1fr; gap:1rem;
+  padding:.8em 0; border-bottom:1px solid var(--line);
+}
+.about-facts dt{ color:var(--ink-soft); letter-spacing:.1em; }
+
+/* works */
+.works-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.6rem; max-width:72rem;
+}
+.work{
+  background:var(--card); border:1px solid var(--line); border-radius:2px;
+  overflow:hidden; text-decoration:none; display:block;
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.work:hover{ transform:translateY(-4px); box-shadow:0 14px 32px -18px rgba(0,0,0,.35); }
+.work-visual{
+  aspect-ratio:16/10; position:relative;
+  background:
+    repeating-radial-gradient(circle at 30% 140%, transparent 0 30px, color-mix(in srgb, var(--ruri) 18%, transparent) 30px 32px),
+    linear-gradient(160deg, color-mix(in srgb, var(--ruri) 14%, var(--card)), var(--card));
+  border-bottom:1px solid var(--line);
+}
+.work-visual::after{
+  content:"金"; position:absolute; right:.7rem; bottom:.4rem;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:2.6rem; color:color-mix(in srgb, var(--shu) 55%, transparent);
+}
+.work-body{ padding:1.1rem 1.2rem 1.3rem; }
+.work-body h3{
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; font-weight:600; letter-spacing:.08em;
+}
+.work-body p{ font-size:.82rem; color:var(--ink-soft); margin-top:.4em; }
+.work-tag{ font-size:.68rem; letter-spacing:.26em; color:var(--shu); }
+
+/* news */
+.news-list{ list-style:none; max-width:56rem; }
+.news-list li{
+  display:grid; grid-template-columns:8.5em 1fr; gap:1.4rem;
+  padding:1.1em 0; border-bottom:1px solid var(--line);
+  font-size:.92rem;
+}
+.news-list time{
+  color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.08em;
+}
+@media (max-width:560px){ .news-list li{ grid-template-columns:1fr; gap:.2rem; } }
+
+/* contact */
+.contact{ text-align:center; }
+.contact p{ max-width:34rem; margin:0 auto 2.2rem; color:var(--ink-soft); font-size:.92rem; }
+.contact-btn{
+  display:inline-block; text-decoration:none;
+  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1rem; letter-spacing:.3em; text-indent:.3em;
+  color:var(--paper); background:var(--shu);
+  padding:1em 3.2em; border-radius:999px;
+  transition:background .3s;
+}
+.contact-btn:hover{ background:var(--shu-deep); }
+.sns{ margin-top:2rem; display:flex; justify-content:center; gap:2rem; }
+.sns a{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); text-decoration:none; }
+.sns a:hover{ color:var(--shu); }
+
+footer{
+  padding:2.5rem; text-align:center;
+  font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+
+/* scroll-in */
+.io{ opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s ease; }
+.io.in{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .rise,.io{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .intro-name{ animation:none; opacity:1; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ オープニング ============ -->
+<div id="intro" aria-hidden="true">
+  <canvas id="introCanvas"></canvas>
+  <div class="intro-name">
+    <h1>河崎海斗</h1>
+    <p>Kaito Kawasaki — Official Site</p>
+  </div>
+  <button class="intro-skip" id="skipBtn" type="button">SKIP</button>
+</div>
+
+<canvas id="ambient" aria-hidden="true"></canvas>
+
+<header>
+  <a class="brand serif" href="#top">河崎海斗</a>
+  <nav aria-label="メイン">
+    <ul>
+      <li><a href="#about">プロフィール</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#news">お知らせ</a></li>
+      <li><a href="#contact">コンタクト</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-label="ヒーロー">
+    <div class="hero-side">
+      <p class="hero-eyebrow rise">KAITO KAWASAKI OFFICIAL</p>
+      <!-- ▼ コピーは仮です。差し替えてください -->
+      <p class="hero-copy rise">泳ぎつづける、<br>つくりつづける。</p>
+      <p class="hero-sub rise">水の中を自由に泳ぐ金魚のように、ジャンルの境界を越えて表現を続けるクリエイター、河崎海斗のオフィシャルサイトです。</p>
+    </div>
+    <h1 class="hero-name rise">河崎海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
+    <p class="scroll-cue" aria-hidden="true">SCROLL</p>
+  </section>
+
+  <section id="about" class="io">
+    <div class="sec-head"><h2>プロフィール</h2><span>ABOUT</span></div>
+    <div class="about-grid">
+      <div class="about-photo"><em>PHOTO</em></div>
+      <div class="about-text">
+        <!-- ▼ プロフィール文は仮です。実際の経歴に差し替えてください -->
+        <p class="lede">河崎海斗（かわさき かいと）。映像・音楽・デザインを横断して活動するクリエイター。</p>
+        <p>ここにプロフィール本文が入ります。経歴、活動内容、受賞歴、これまでの主な仕事などを記載してください。</p>
+        <dl class="about-facts">
+          <div><dt>名前</dt><dd>河崎海斗</dd></div>
+          <div><dt>活動領域</dt><dd>（例）映像制作 / 音楽 / デザイン</dd></div>
+          <div><dt>拠点</dt><dd>（例）東京</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="works" class="io">
+    <div class="sec-head"><h2>作品</h2><span>WORKS</span></div>
+    <div class="works-grid">
+      <!-- ▼ 作品カードは仮です。実際の作品に差し替えてください -->
+      <a class="work" href="#"><div class="work-visual"></div>
+        <div class="work-body"><span class="work-tag">WORK 01</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
+      <a class="work" href="#"><div class="work-visual"></div>
+        <div class="work-body"><span class="work-tag">WORK 02</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
+      <a class="work" href="#"><div class="work-visual"></div>
+        <div class="work-body"><span class="work-tag">WORK 03</span><h3>作品タイトル</h3><p>作品の簡単な説明が入ります。</p></div></a>
+    </div>
+  </section>
+
+  <section id="news" class="io">
+    <div class="sec-head"><h2>お知らせ</h2><span>NEWS</span></div>
+    <ul class="news-list">
+      <li><time datetime="2026-07-07">2026.07.07</time><span>オフィシャルサイトを公開しました。</span></li>
+      <li><time>COMING SOON</time><span>お知らせがここに入ります。</span></li>
+    </ul>
+  </section>
+
+  <section id="contact" class="contact io">
+    <div class="sec-head"><h2>コンタクト</h2><span>CONTACT</span></div>
+    <p>出演・制作のご依頼、お問い合わせは下記よりご連絡ください。</p>
+    <!-- ▼ メールアドレス・SNSリンクを設定してください -->
+    <a class="contact-btn" href="mailto:contact@example.com">お問い合わせ</a>
+    <div class="sns">
+      <a href="#">X</a><a href="#">INSTAGRAM</a><a href="#">YOUTUBE</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 KAITO KAWASAKI</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  /* ---------- 金魚の描画（共通） ---------- */
+  // ローカル座標系: 進行方向 = +x、体長 ≒ 2ユニット。size でスケール。
+  function traceBody(ctx){
+    ctx.beginPath();
+    ctx.moveTo(1.1, 0);
+    ctx.bezierCurveTo(0.95, -0.5, 0.15, -0.55, -0.55, -0.18);
+    ctx.bezierCurveTo(-0.8, -0.07, -0.8, 0.07, -0.55, 0.18);
+    ctx.bezierCurveTo(0.15, 0.55, 0.95, 0.5, 1.1, 0);
+    ctx.closePath();
+  }
+  function drawFish(ctx, x, y, heading, size, variant, sway, alpha){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(heading);
+    ctx.scale(size, size);
+    ctx.globalAlpha = alpha;
+
+    var body = variant.body, fin = variant.fin;
+
+    // 尾びれ（流れるベール尾・2枚）
+    ctx.fillStyle = fin;
+    ctx.beginPath();
+    ctx.moveTo(-0.5, 0);
+    ctx.bezierCurveTo(-1.05, -0.22 + sway*0.28, -1.65, -0.72 + sway*0.55, -2.05, -0.38 + sway*0.65);
+    ctx.quadraticCurveTo(-1.45, -0.04 + sway*0.28, -1.15, 0.02 + sway*0.12);
+    ctx.bezierCurveTo(-1.55, 0.24 + sway*0.40, -1.95, 0.78 + sway*0.5, -2.1, 0.42 + sway*0.55);
+    ctx.quadraticCurveTo(-1.3, 0.14 + sway*0.18, -0.5, 0);
+    ctx.closePath();
+    ctx.fill();
+
+    // 胸びれ
+    ctx.beginPath();
+    ctx.moveTo(0.32, -0.3);
+    ctx.quadraticCurveTo(0.1, -0.66 - sway*0.1, -0.18, -0.5);
+    ctx.quadraticCurveTo(0.02, -0.3, 0.32, -0.3);
+    ctx.moveTo(0.32, 0.3);
+    ctx.quadraticCurveTo(0.1, 0.66 + sway*0.1, -0.18, 0.5);
+    ctx.quadraticCurveTo(0.02, 0.3, 0.32, 0.3);
+    ctx.fill();
+
+    // 体
+    ctx.fillStyle = body;
+    traceBody(ctx);
+    ctx.fill();
+
+    // 更紗（白地に朱の頭）
+    if (variant.crown){
+      ctx.save();
+      traceBody(ctx);
+      ctx.clip();
+      ctx.fillStyle = variant.crown;
+      ctx.beginPath();
+      ctx.ellipse(0.72, 0, 0.42, 0.5, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // 目
+    ctx.fillStyle = variant.eye || '#141519';
+    ctx.beginPath();
+    ctx.arc(0.68, -0.17, 0.065, 0, Math.PI*2);
+    ctx.arc(0.68, 0.17, 0.065, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  var VARIANTS = [
+    { body:'#E0472B', fin:'rgba(224,71,43,0.6)' },                       // 朱
+    { body:'#F06A38', fin:'rgba(240,106,56,0.6)' },                      // 橙
+    { body:'#F6F1E6', fin:'rgba(246,241,230,0.55)', crown:'#DD4530' },   // 更紗
+    { body:'#E0472B', fin:'rgba(224,71,43,0.6)' },
+    { body:'#2B2E36', fin:'rgba(43,46,54,0.6)', eye:'#C9C4B8' }          // 黒出目金（レア）
+  ];
+
+  function fitCanvas(canvas){
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = w * DPR; canvas.height = h * DPR;
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    return ctx;
+  }
+
+  /* ---------- オープニング ---------- */
+  var intro = document.getElementById('intro');
+  var skipBtn = document.getElementById('skipBtn');
+  var finished = false;
+
+  function finishIntro(){
+    if (finished) return;
+    finished = true;
+    intro.classList.add('done');
+    document.body.classList.add('revealed');
+    setTimeout(function(){ intro.remove(); }, 1000);
+  }
+
+  if (reduced){
+    intro.remove();
+    document.body.classList.add('revealed');
+  } else {
+    var canvas = document.getElementById('introCanvas');
+    var ctx = fitCanvas(canvas);
+    var W = canvas.clientWidth, H = canvas.clientHeight;
+    var start = performance.now();
+    var fishes = [], ripples = [];
+    var FISH_N = 16;
+    var travelBase = Math.hypot(W, H) * 0.65 + 160;
+
+    for (var i = 0; i < FISH_N; i++){
+      var a = Math.random() * Math.PI * 2;
+      fishes.push({
+        angle: a,
+        born: 0.85 + Math.random() * 0.9,           // 出発時刻(s)
+        dur: 2.0 + Math.random() * 0.9,             // 泳ぎ切る時間(s)
+        size: 14 + Math.random() * 20,
+        travel: travelBase * (0.9 + Math.random() * 0.3),
+        wamp: 10 + Math.random() * 22,
+        wfreq: 5 + Math.random() * 4,
+        phase: Math.random() * Math.PI * 2,
+        tailFreq: 9 + Math.random() * 4,
+        variant: VARIANTS[Math.floor(Math.random() * VARIANTS.length)]
+      });
+    }
+    for (var r = 0; r < 3; r++) ripples.push({ born: 0.75 + r * 0.28 });
+
+    var onResize = function(){
+      ctx = fitCanvas(canvas);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+    };
+    window.addEventListener('resize', onResize);
+
+    function frame(now){
+      if (finished) return;
+      var t = (now - start) / 1000;
+      var cx = W / 2, cy = H / 2;
+      ctx.clearRect(0, 0, W, H);
+
+      // 波紋
+      for (var j = 0; j < ripples.length; j++){
+        var rp = ripples[j], rt = t - rp.born;
+        if (rt < 0) continue;
+        var rad = rt * 260;
+        var ra = Math.max(0, 0.35 - rt * 0.22);
+        if (ra <= 0) continue;
+        ctx.strokeStyle = 'rgba(214,222,240,' + ra.toFixed(3) + ')';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // 金魚
+      var allGone = t > 1.8;
+      for (var k = 0; k < fishes.length; k++){
+        var f = fishes[k];
+        var u = (t - f.born) / f.dur;
+        if (u < 0){ allGone = false; continue; }
+        if (u > 1.15) continue;
+        if (u <= 1) allGone = false;
+        var eased = Math.pow(Math.min(u, 1.15), 1.6);
+        var d = eased * f.travel;
+        var wob = Math.sin(u * f.wfreq + f.phase) * f.wamp * Math.min(u * 2, 1);
+        var x = cx + Math.cos(f.angle) * d - Math.sin(f.angle) * wob;
+        var y = cy + Math.sin(f.angle) * d + Math.cos(f.angle) * wob;
+        var heading = f.angle + Math.cos(u * f.wfreq + f.phase) * 0.22;
+        var sway = Math.sin(t * f.tailFreq + f.phase);
+        var alpha = Math.min(1, u * 6);              // 中央でふっと現れる
+        drawFish(ctx, x, y, heading, f.size, f.variant, sway, alpha);
+      }
+
+      if (t > 4.4 || (allGone && t > 3.2)) { finishIntro(); return; }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    intro.addEventListener('click', finishIntro);
+    skipBtn.addEventListener('click', function(e){ e.stopPropagation(); finishIntro(); });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' || e.key === 'Enter') finishIntro();
+    });
+  }
+
+  /* ---------- 背景の回遊金魚 ---------- */
+  if (!reduced){
+    var amb = document.getElementById('ambient');
+    var actx = fitCanvas(amb);
+    var aw = amb.clientWidth, ah = amb.clientHeight;
+    var swimmers = [];
+
+    function spawnSwimmer(initial){
+      var fromLeft = Math.random() < 0.5;
+      return {
+        x: initial ? Math.random() * aw : (fromLeft ? -80 : aw + 80),
+        y: ah * (0.15 + Math.random() * 0.7),
+        dir: fromLeft ? 1 : -1,
+        speed: 18 + Math.random() * 22,
+        size: 16 + Math.random() * 14,
+        drift: 0.25 + Math.random() * 0.4,
+        phase: Math.random() * Math.PI * 2,
+        tailFreq: 5 + Math.random() * 2,
+        variant: VARIANTS[Math.floor(Math.random() * VARIANTS.length)]
+      };
+    }
+    for (var s = 0; s < 3; s++) swimmers.push(spawnSwimmer(true));
+
+    window.addEventListener('resize', function(){
+      actx = fitCanvas(amb);
+      aw = amb.clientWidth; ah = amb.clientHeight;
+    });
+
+    var last = performance.now();
+    (function ambFrame(now){
+      var dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      actx.clearRect(0, 0, aw, ah);
+      var t = now / 1000;
+      for (var m = 0; m < swimmers.length; m++){
+        var sw = swimmers[m];
+        sw.x += sw.dir * sw.speed * dt;
+        var yy = sw.y + Math.sin(t * sw.drift + sw.phase) * 26;
+        var heading = sw.dir === 1
+          ? Math.cos(t * sw.drift + sw.phase) * 0.12
+          : Math.PI - Math.cos(t * sw.drift + sw.phase) * 0.12;
+        var sway = Math.sin(t * sw.tailFreq + sw.phase);
+        drawFish(actx, sw.x, yy, heading, sw.size, sw.variant, sway, 0.13);
+        if ((sw.dir === 1 && sw.x > aw + 90) || (sw.dir === -1 && sw.x < -90)){
+          swimmers[m] = spawnSwimmer(false);
+        }
+      }
+      requestAnimationFrame(ambFrame);
+    })(last);
+  }
+
+  /* ---------- スクロールで現れるセクション ---------- */
+  var ios = document.querySelectorAll('.io');
+  if ('IntersectionObserver' in window && !reduced){
+    var ob = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); ob.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    ios.forEach(function(el){ ob.observe(el); });
+  } else {
+    ios.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
