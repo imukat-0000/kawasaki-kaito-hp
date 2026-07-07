@@ -692,14 +692,14 @@ footer{
     traceBody(ctx);
     ctx.fill();
 
-    // 更紗（白地に緋銅の頭）
+    // 更紗（白地に丹頂のような丸い頭の紅）
     if (variant.crown){
       ctx.save();
       traceBody(ctx);
       ctx.clip();
       ctx.fillStyle = variant.crown;
       ctx.beginPath();
-      ctx.ellipse(0.72, 0, 0.42, 0.5, 0, 0, Math.PI*2);
+      ctx.ellipse(0.52, 0, 0.3, 0.36, 0, 0, Math.PI*2);
       ctx.fill();
       ctx.restore();
     }
@@ -715,12 +715,13 @@ footer{
   }
 
   // 緋銅・銅・真鍮・更紗・黒頂天眼 — 作品の素材に対応した色
+  // lightHidden/darkHidden: 背景と同化して形が崩れて見えるテーマでは出さない
   var VARIANTS = [
-    { body:'#A63E22', fin:'rgba(166,62,34,0.6)' },                        // 緋銅
-    { body:'#C2552D', fin:'rgba(194,85,45,0.6)' },                        // 銅朱
-    { body:'#F4EEE1', fin:'rgba(244,238,225,0.55)', crown:'#A63E22' },    // 更紗
-    { body:'#C29A4B', fin:'rgba(194,154,75,0.55)' },                      // 真鍮
-    { body:'#2B2E36', fin:'rgba(43,46,54,0.6)', eye:'#C9C4B8' }           // 黒頂天眼
+    { body:'#A63E22', fin:'rgba(166,62,34,0.6)' },                                          // 緋銅
+    { body:'#C2552D', fin:'rgba(194,85,45,0.6)' },                                          // 銅朱
+    { body:'#F4EEE1', fin:'rgba(244,238,225,0.55)', crown:'#A63E22', lightHidden:true },    // 更紗
+    { body:'#C29A4B', fin:'rgba(194,154,75,0.55)' },                                        // 真鍮
+    { body:'#2B2E36', fin:'rgba(43,46,54,0.6)', eye:'#C9C4B8', darkHidden:true }            // 黒頂天眼
   ];
 
   function fitCanvas(canvas){
@@ -837,6 +838,28 @@ footer{
     var aw = amb.clientWidth, ah = amb.clientHeight;
     var swimmers = [];
 
+    /* テーマに合わせて見える色の金魚だけを泳がせる */
+    var darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+    function isDarkTheme(){
+      var forced = document.documentElement.getAttribute('data-theme');
+      if (forced === 'dark') return true;
+      if (forced === 'light') return false;
+      return darkMq.matches;
+    }
+    function ambVariant(){
+      var dark = isDarkTheme();
+      var pool = VARIANTS.filter(function(v){ return dark ? !v.darkHidden : !v.lightHidden; });
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+    function rerollVariants(){
+      for (var i = 0; i < swimmers.length; i++) swimmers[i].variant = ambVariant();
+    }
+    if (darkMq.addEventListener) darkMq.addEventListener('change', rerollVariants);
+    if ('MutationObserver' in window){
+      new MutationObserver(rerollVariants)
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
+
     function spawnSwimmer(){
       return {
         x: Math.random() * aw,
@@ -852,7 +875,7 @@ footer{
         orbit: 26 + Math.random() * 46,          // 餌の周りを旋回する半径
         orbitDir: Math.random() < 0.5 ? -1 : 1,
         glow: 0,
-        variant: VARIANTS[Math.floor(Math.random() * VARIANTS.length)]
+        variant: ambVariant()
       };
     }
     for (var s = 0; s < 6; s++) swimmers.push(spawnSwimmer());
