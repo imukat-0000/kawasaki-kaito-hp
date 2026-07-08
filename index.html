@@ -8,13 +8,56 @@
 <meta property="og:title" content="河﨑海斗 | KOGEI REALISM">
 <meta property="og:description" content="工芸リアリズムとは、存在の条件をつくるリアリズムである。">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://imukat-0000.github.io/kawasaki-kaito-hp/">
+<meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://imukat-0000.github.io/kawasaki-kaito-hp/img/feature_kingyo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://imukat-0000.github.io/kawasaki-kaito-hp/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "河﨑海斗",
+  "alternateName": ["河崎海斗", "かわさき かいと", "Kaito Kawasaki", "KAITO KAWASAKI"],
+  "url": "https://imukat-0000.github.io/kawasaki-kaito-hp/",
+  "image": "https://imukat-0000.github.io/kawasaki-kaito-hp/img/feature_kingyo.jpg",
+  "jobTitle": "金工作家（鋳金）",
+  "birthPlace": "広島県呉市",
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "東京藝術大学大学院美術研究科工芸専攻鋳金研究分野"
+  },
+  "award": [
+    "第18回 藝大アートプラザ・アートアワード 審査員特別賞（2024）",
+    "平成芸術賞（2024）",
+    "第19回 藝大アートプラザ・アートアワード 小学館賞（2025）",
+    "サロン・ド・プランタン賞（2026）"
+  ],
+  "sameAs": [
+    "https://www.instagram.com/kkchaki",
+    "https://x.com/kkchaki"
+  ]
+}
+</script>
 <style>
+/* P0-02: Android等に和文明朝が無い環境向けのサブセット同梱フォント */
+@font-face{
+  font-family:"Noto Serif JP";
+  src:url("fonts/NotoSerifJP-sub.woff2") format("woff2");
+  font-weight:200 900;
+  font-display:swap;
+}
+
 /* ============ tokens ============ */
 :root{
   --paper:#F7F4EC;         /* 和紙 */
   --ink:#1C1E22;           /* 墨 */
-  --ink-soft:#5C5C57;
+  --ink-soft:#4C4D48;      /* P1-07: 可読基準まで一段濃く */
   --hido:#9C3B22;          /* 緋銅赤（デザイントークン確定値） */
   --hido-deep:#7E2E1A;
   --brass:#9A7B3F;         /* 真鍮 */
@@ -26,7 +69,7 @@
   :root{
     --paper:#14171C;
     --ink:#E9E4D9;
-    --ink-soft:#9C9C93;
+    --ink-soft:#ABABA1;
     --hido:#CE6A4A;
     --hido-deep:#E08767;
     --brass:#C2A05C;
@@ -35,21 +78,21 @@
   }
 }
 :root[data-theme="light"]{
-  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#5C5C57;
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#4C4D48;
   --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
   --line:#DCD5C6; --card:#FFFDF7;
 }
 :root[data-theme="dark"]{
-  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#9C9C93;
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
   --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
   --line:#2B3037; --card:#1B1F25;
 }
 
 /* ============ base ============ */
 *{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; background:var(--paper); }
 body{
-  background:var(--paper);
+  background:transparent;   /* P0-04: 金魚canvas(z-index:-1)を透かすため地色はhtml側 */
   color:var(--ink);
   font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
   font-feature-settings:"palt";
@@ -59,7 +102,7 @@ body{
 }
 a{ color:inherit; }
 :focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
-.mincho{ font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
+.mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
 
 /* ============ intro overlay ============ */
 #intro{
@@ -78,7 +121,7 @@ a{ color:inherit; }
   pointer-events:none;
 }
 .intro-name h1{
-  font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
   font-size:clamp(2.4rem, 7vw, 4.6rem);
   font-weight:600; letter-spacing:0.34em; text-indent:0.34em;
 }
@@ -97,7 +140,8 @@ a{ color:inherit; }
 .intro-skip:hover{ border-color:rgba(244,239,228,.8); color:#F4EFE4; }
 
 /* ============ ambient fish ============ */
-#ambient{ position:fixed; inset:0; z-index:0; pointer-events:none; width:100%; height:100%; }
+/* P0-04: 文字より背面に敷く(どの位置でも文字と重ならない) */
+#ambient{ position:fixed; inset:0; z-index:-1; pointer-events:none; width:100%; height:100%; }
 
 /* ============ nav ============ */
 header{
@@ -109,7 +153,7 @@ header{
   border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
 }
 .brand{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.05rem; letter-spacing:.3em; text-decoration:none; font-weight:600;
 }
 nav ul{ display:flex; gap:clamp(1rem,2.6vw,2.2rem); list-style:none; }
@@ -118,7 +162,13 @@ nav a{
   color:var(--ink-soft); transition:color .25s;
 }
 nav a:hover{ color:var(--hido); }
-@media (max-width:720px){ nav{ display:none; } }
+/* P1-01: モバイルでもナビを出す(主要3項目に絞って折返し) */
+@media (max-width:720px){
+  header{ flex-direction:column; gap:.3rem; padding:.7rem 1rem; }
+  nav ul{ gap:1.1rem; }
+  nav a{ font-size:.72rem; letter-spacing:.1em; }
+  nav .sub{ display:none; }
+}
 
 /* ============ hero ============ */
 main{ position:relative; z-index:1; }
@@ -136,19 +186,19 @@ main{ position:relative; z-index:1; }
   text-wrap:balance;
 }
 .hero-ja{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.1rem, 2.4vw, 1.5rem);
   letter-spacing:.5em; margin-top:.9rem; color:var(--ink-soft);
 }
 .hero-thesis{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.05rem, 2vw, 1.3rem);
   line-height:2.3; margin-top:2.4rem; text-wrap:balance;
 }
 .hero-thesis em{ font-style:normal; color:var(--hido); }
 .hero-name{
   writing-mode:vertical-rl;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(3.8rem, 10vw, 7rem);
   font-weight:600; letter-spacing:.18em; line-height:1;
 }
@@ -176,10 +226,10 @@ body.revealed .rise{ opacity:1; transform:none; }
 .hero .rise:nth-of-type(2){ transition-delay:.18s; }
 
 /* ============ sections ============ */
-section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
+section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白約3割減 */
 .sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
 .sec-head h2{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
 }
 .sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
@@ -193,20 +243,20 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
   font-size:.85rem; letter-spacing:.3em; color:var(--hido); display:block; margin-bottom:1rem;
 }
 .realism-list p{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.2rem, 2.6vw, 1.6rem); line-height:2.2; text-wrap:balance;
 }
 
 /* works */
 .works-lede{
   max-width:40rem; margin-bottom:4rem;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.05rem; line-height:2.3;
 }
 .chapter{ margin-bottom:clamp(3.5rem,7vw,5.5rem); }
 .chapter-head{ margin-bottom:1.8rem; display:flex; flex-wrap:wrap; align-items:baseline; gap:1rem; }
 .chapter-head h3{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.15rem,2.4vw,1.45rem); font-weight:600; letter-spacing:.14em;
 }
 .chapter-head span{ font-size:.68rem; letter-spacing:.3em; color:var(--ink-soft); }
@@ -227,7 +277,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
   border-bottom:1px solid var(--line);
 }
 .work-visual .kanji{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:3.2rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
   letter-spacing:.1em;
 }
@@ -266,7 +316,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 @media (max-width:640px){ .gallery-grid .wide .ph{ aspect-ratio:16/10; } }
 .work-body{ padding:1.1rem 1.2rem 1.3rem; display:flex; flex-direction:column; gap:.7rem; flex:1; }
 .work-body h4{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.12rem; font-weight:600; letter-spacing:.08em;
 }
 .work-body h4 small{ font-weight:400; font-size:.72rem; color:var(--ink-soft); margin-left:.6em; letter-spacing:.1em; }
@@ -298,7 +348,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
   object-fit:cover; object-position:30% 50%;
 }
 .artist-lede{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.15rem,2.2vw,1.4rem); line-height:2.2; margin-bottom:1.6rem; text-wrap:balance;
 }
 .artist-text p + p{ margin-top:1.1em; }
@@ -318,7 +368,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 /* exhibitions */
 .exhi-note{
   max-width:44rem; margin-bottom:2.6rem;
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.02rem; line-height:2.2;
   border-left:2px solid var(--hido); padding-left:1.4rem;
 }
@@ -326,7 +376,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 .exhi-group h3{ font-size:.78rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
 .exhi-list{ list-style:none; max-width:60rem; }
 .exhi-list li{
-  display:grid; grid-template-columns:11.5em 1fr; gap:1.4rem;
+  display:grid; grid-template-columns:13em 1fr; gap:1.4rem;
   padding:1.05em 0; border-bottom:1px solid var(--line); font-size:.92rem;
 }
 .exhi-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
@@ -342,7 +392,7 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 }
 .manifesto-lines{ list-style:none; display:grid; gap:2.6rem; max-width:46rem; margin:0 auto; }
 .manifesto-lines li{
-  font-family:"Hiragino Mincho ProN","Yu Mincho",serif;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.15rem,2.6vw,1.55rem); line-height:2.1; text-wrap:balance;
 }
 .manifesto-en{
@@ -353,10 +403,12 @@ section{ padding:clamp(4rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem); }
 .contact{ text-align:center; }
 .contact-p{ max-width:34rem; margin:0 auto 1.8rem; color:var(--ink-soft); font-size:.92rem; }
 .contact-tags{ display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin-bottom:2.6rem; }
-.contact-tags span{
+.contact-tags span, .contact-tags a{
   font-size:.72rem; letter-spacing:.16em; color:var(--ink-soft);
   border:1px solid var(--line); border-radius:999px; padding:.3em 1.1em;
+  text-decoration:none;
 }
+.contact-tags a:hover{ color:var(--hido); border-color:var(--hido); }
 .sns-btns{ display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; }
 .sns-btn{
   display:inline-block; text-decoration:none;
@@ -374,8 +426,8 @@ footer{
   border-top:1px solid var(--line);
 }
 
-/* scroll-in */
-.io{ opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s ease; }
+/* scroll-in — P0-05: 発火を早く・移動量小さく・短く(読書を待たせない) */
+.io{ opacity:0; transform:translateY(10px); transition:opacity .45s ease, transform .45s ease; }
 .io.in{ opacity:1; transform:none; }
 
 @media (prefers-reduced-motion: reduce){
@@ -403,10 +455,10 @@ footer{
   <a class="brand" href="#top">河﨑海斗</a>
   <nav aria-label="メイン">
     <ul>
-      <li><a href="#realism">工芸リアリズム</a></li>
+      <li class="sub"><a href="#realism">工芸リアリズム</a></li>
       <li><a href="#works">作品</a></li>
-      <li><a href="#artist">河﨑海斗</a></li>
-      <li><a href="#gallery">ギャラリー</a></li>
+      <li class="sub"><a href="#artist">河﨑海斗</a></li>
+      <li class="sub"><a href="#gallery">ギャラリー</a></li>
       <li><a href="#exhibitions">展示</a></li>
       <li><a href="#contact">コンタクト</a></li>
     </ul>
@@ -589,6 +641,15 @@ footer{
 
         <div class="cv">
           <div>
+            <h3>略歴</h3>
+            <ul>
+              <li><b>2000</b><span>広島県呉市に生まれる</span></li>
+              <li><b>2024</b><span>東京藝術大学 美術学部 工芸科 鋳金専攻 卒業</span></li>
+              <li><b>2026</b><span>東京藝術大学大学院 美術研究科 工芸専攻 鋳金研究分野 修士課程 修了</span></li>
+              <li><b>現在</b><span>東京を拠点に制作。GALLERY KOGURE、GALLERY OPET、藝大アートプラザ、桐美会で作品を取り扱い</span></li>
+            </ul>
+          </div>
+          <div>
             <h3>受賞歴（抜粋）</h3>
             <ul>
               <li><b>2022</b><span>東京藝術大学奨学金制度 安宅賞</span></li>
@@ -669,11 +730,11 @@ footer{
       <h3>開催中</h3>
       <ul class="exhi-list">
         <li>
-          <time>5.30 — 7.30</time>
+          <time>2026.5.30 — 7.30</time>
           <div><strong>個展「出藍の誉」</strong><span class="venue">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></div>
         </li>
         <li>
-          <time>6.8 — 8.2</time>
+          <time>2026.6.8 — 8.2</time>
           <div><strong>3人展「MATSURI INORU」</strong><span class="venue">Spiral Garden 新丸ビル（東京・丸の内）— 修了作品「錦鯉」を展示</span></div>
         </li>
       </ul>
@@ -683,15 +744,15 @@ footer{
       <h3>今後の予定</h3>
       <ul class="exhi-list">
         <li>
-          <time>7.22 — 7.28</time>
+          <time>2026.7.22 — 7.28</time>
           <div><strong>河﨑海斗展</strong><span class="venue">新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展。朱色和金・紅葉ほか。在廊：7/22・7/28</span></div>
         </li>
         <li>
-          <time>9.4 — 10.20</time>
+          <time>2026.9.4 — 10.20</time>
           <div><strong>個展</strong><span class="venue">北斎館（長野・小布施）— 画狂乃蛙をメインに。入場無料</span></div>
         </li>
         <li>
-          <time>12.11 — 12.22</time>
+          <time>2026.12.11 — 12.22</time>
           <div><strong>個展</strong><span class="venue">MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）— 年間の集大成</span></div>
         </li>
       </ul>
@@ -724,7 +785,7 @@ footer{
 
 </main>
 
-<footer>© 2026 KAITO KAWASAKI — KOGEI REALISM</footer>
+<footer>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</footer>
 
 <script>
 (function(){
@@ -830,10 +891,15 @@ footer{
     setTimeout(function(){ intro.remove(); }, 1000);
   }
 
-  if (reduced){
+  // P0-06: イントロは初回のみ。ハッシュ付き直リンク時もスキップ
+  var introSeen = false;
+  try { introSeen = sessionStorage.getItem('introSeen') === '1'; } catch(e){}
+
+  if (reduced || introSeen || location.hash){
     intro.remove();
     document.body.classList.add('revealed');
   } else {
+    try { sessionStorage.setItem('introSeen', '1'); } catch(e){}
     var canvas = document.getElementById('introCanvas');
     var ctx = fitCanvas(canvas);
     var W = canvas.clientWidth, H = canvas.clientHeight;
@@ -963,7 +1029,7 @@ footer{
         variant: ambVariant()
       };
     }
-    for (var s = 0; s < 6; s++) swimmers.push(spawnSwimmer());
+    for (var s = 0; s < 3; s++) swimmers.push(spawnSwimmer());   // P0-04: 半減。少ないほど1匹の「現れ」が効く
 
     /* 餌ポイント: マウスはカーソル追従、タッチはタップ地点に8秒間 */
     var attract = { x: 0, y: 0, until: 0, mouse: false, dot: false };
@@ -1122,6 +1188,37 @@ footer{
     })(last);
   }
 
+  /* ---------- P0-03: 問い合わせメール導線 ---------- */
+  // アドレスが確定したら下の1行に設定するだけで、チップが件名プリセット付き
+  // メールリンクになり、EMAILボタンも現れる。
+  var CONTACT_EMAIL = '';   // 例: 'contact@kaito-kawasaki.jp'
+  if (CONTACT_EMAIL){
+    document.querySelectorAll('.contact-tags span').forEach(function(chip){
+      var a = document.createElement('a');
+      a.href = 'mailto:' + CONTACT_EMAIL + '?subject=' +
+               encodeURIComponent('【' + chip.textContent + '】公式サイトより');
+      a.textContent = chip.textContent;
+      chip.replaceWith(a);
+    });
+    var btns = document.querySelector('.sns-btns');
+    var mail = document.createElement('a');
+    mail.className = 'sns-btn primary';
+    mail.href = 'mailto:' + CONTACT_EMAIL;
+    mail.textContent = 'EMAIL';
+    var ig = btns.querySelector('.primary');
+    if (ig) ig.classList.remove('primary');
+    btns.insertBefore(mail, btns.firstChild);
+    var note = document.querySelector('.contact-p');
+    if (note) note.textContent = '展覧会・作品・取材・共同プロジェクトに関するお問い合わせは、メールまたはSNSよりご連絡ください。';
+  }
+
+  /* ©年の自動更新 */
+  var yEl = document.getElementById('cpyear');
+  if (yEl){
+    var y = new Date().getFullYear();
+    if (y > 2026) yEl.textContent = '2026–' + y;
+  }
+
   /* ---------- スクロールで現れるセクション ---------- */
   var ios = document.querySelectorAll('.io');
   if ('IntersectionObserver' in window && !reduced){
@@ -1129,7 +1226,7 @@ footer{
       entries.forEach(function(en){
         if (en.isIntersecting){ en.target.classList.add('in'); ob.unobserve(en.target); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.05, rootMargin: '0px 0px -5% 0px' });   // P0-05: 早めに発火
     ios.forEach(function(el){ ob.observe(el); });
   } else {
     ios.forEach(function(el){ el.classList.add('in'); });
