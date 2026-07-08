@@ -1596,7 +1596,7 @@ footer{
       }
       splashAt(px, py, 0.6);
       if (!target) return;                        // 水だけ：ポイは残る
-      var r = Math.random();
+      var r = 0.99;   // ★確認用：すくえるパターンだけに固定（通常は Math.random()）
       if (r < 0.34){
         // ① ポイが破ける
         fx.push({ type: 'tear', x: px, y: py, t: 0 });
