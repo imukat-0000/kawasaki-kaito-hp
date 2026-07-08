@@ -143,6 +143,27 @@ a{ color:inherit; }
 /* P0-04: 文字より背面に敷く(どの位置でも文字と重ならない) */
 #ambient{ position:fixed; inset:0; z-index:-1; pointer-events:none; width:100%; height:100%; }
 
+/* ============ 隠し要素ゲーム（餌・ポイ・成長する金魚） ============ */
+#gamefx{ position:fixed; inset:0; z-index:14; pointer-events:none; width:100%; height:100%; }
+.kg-food, .kg-poi{
+  position:absolute; z-index:8; border:0; background:transparent; padding:0;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+.kg-food{
+  width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:50%;
+  background:radial-gradient(circle at 38% 34%, #8a5a32, #4d3016 72%);
+  opacity:.9; animation:kgpulse 2.6s ease-in-out infinite;
+}
+.kg-food:focus-visible, .kg-poi:focus-visible{ outline:2px solid var(--hido); outline-offset:4px; }
+@keyframes kgpulse{
+  0%,100%{ box-shadow:0 0 0 3px rgba(156,59,34,.18); }
+  50%{ box-shadow:0 0 0 10px rgba(156,59,34,0); }
+}
+.kg-poi{ width:46px; height:62px; margin:-30px 0 0 -23px; opacity:.85; }
+.kg-poi svg{ display:block; width:100%; height:100%; }
+body.kg-scoop, body.kg-scoop *{ cursor:none !important; }
+@media (prefers-reduced-motion: reduce){ .kg-food, .kg-poi{ display:none !important; } }
+
 /* ============ nav ============ */
 header{
   position:fixed; top:0; left:0; right:0; z-index:20;
@@ -450,6 +471,7 @@ footer{
 </div>
 
 <canvas id="ambient" aria-hidden="true"></canvas>
+<canvas id="gamefx" aria-hidden="true"></canvas>
 
 <header>
   <a class="brand" href="#top">河﨑海斗</a>
@@ -838,6 +860,26 @@ footer{
     traceBody(ctx);
     ctx.fill();
 
+    // 金色の腹（豪華な金魚）
+    if (variant.belly){
+      ctx.save(); traceBody(ctx); ctx.clip();
+      ctx.fillStyle = variant.belly;
+      ctx.beginPath(); ctx.ellipse(0.1, 0.34, 0.95, 0.34, 0, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+    // 更紗の斑（白斑など）
+    if (variant.patches){
+      ctx.save(); traceBody(ctx); ctx.clip();
+      for (var pi = 0; pi < variant.patches.length; pi++){
+        var pc = variant.patches[pi];
+        ctx.fillStyle = pc.color;
+        ctx.beginPath();
+        ctx.ellipse(pc.x, pc.y, pc.rx, pc.ry, pc.rot || 0, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
     // 更紗（白地に丹頂のような丸い頭の紅）
     if (variant.crown){
       ctx.save();
@@ -857,6 +899,154 @@ footer{
     ctx.arc(0.68, 0.17, 0.065, 0, Math.PI*2);
     ctx.fill();
 
+    // 豪華な金魚のきらめき
+    if (variant.sparkle){
+      ctx.fillStyle = 'rgba(255,250,235,0.9)';
+      ctx.beginPath(); ctx.arc(0.42, -0.28, 0.05, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(-0.12, -0.3, 0.035, 0, Math.PI*2); ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  /* ---------- 成長した姿の描画（鯉・龍） ---------- */
+  // 鯉：金魚より細長い紡錘形＋ランダムな紅白／三色の斑
+  function drawKoi(ctx, x, y, heading, size, pet, sway){
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(heading); ctx.scale(size, size);
+    function koiBody(){
+      ctx.beginPath();
+      ctx.moveTo(1.4, 0);
+      ctx.bezierCurveTo(1.18, -0.44, 0.2, -0.5, -0.72, -0.34);
+      ctx.bezierCurveTo(-1.18, -0.26, -1.18, 0.26, -0.72, 0.34);
+      ctx.bezierCurveTo(0.2, 0.5, 1.18, 0.44, 1.4, 0);
+      ctx.closePath();
+    }
+    // 尾びれ
+    ctx.fillStyle = 'rgba(240,238,230,0.5)';
+    ctx.beginPath();
+    ctx.moveTo(-0.72, 0);
+    ctx.bezierCurveTo(-1.2, -0.2 + sway*0.2, -1.7, -0.5 + sway*0.42, -1.98, -0.2 + sway*0.5);
+    ctx.quadraticCurveTo(-1.4, -0.02 + sway*0.2, -1.2, 0.02);
+    ctx.bezierCurveTo(-1.6, 0.22 + sway*0.3, -1.9, 0.62 + sway*0.42, -2.0, 0.28 + sway*0.5);
+    ctx.quadraticCurveTo(-1.3, 0.12 + sway*0.16, -0.72, 0);
+    ctx.closePath(); ctx.fill();
+    // 胸びれ
+    ctx.beginPath();
+    ctx.moveTo(0.45, -0.32); ctx.quadraticCurveTo(0.12, -0.72 - sway*0.1, -0.22, -0.5);
+    ctx.quadraticCurveTo(0.05, -0.3, 0.45, -0.32);
+    ctx.moveTo(0.45, 0.32); ctx.quadraticCurveTo(0.12, 0.72 + sway*0.1, -0.22, 0.5);
+    ctx.quadraticCurveTo(0.05, 0.3, 0.45, 0.32); ctx.fill();
+    // 白地
+    ctx.fillStyle = '#F3EFE6';
+    koiBody(); ctx.fill();
+    // 斑（紅白・三色）
+    ctx.save(); koiBody(); ctx.clip();
+    for (var i = 0; i < pet.koiPattern.length; i++){
+      var b = pet.koiPattern[i];
+      ctx.fillStyle = b.color;
+      ctx.beginPath(); ctx.ellipse(b.x, b.y, b.rx, b.ry, b.rot, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.restore();
+    // 輪郭（白地が明るい背景に沈まないように）
+    ctx.strokeStyle = 'rgba(120,108,92,0.4)'; ctx.lineWidth = 0.022;
+    koiBody(); ctx.stroke();
+    // ひげ
+    ctx.strokeStyle = 'rgba(90,70,50,0.6)'; ctx.lineWidth = 0.03; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(1.35, -0.05); ctx.quadraticCurveTo(1.56, -0.16, 1.6, -0.02);
+    ctx.moveTo(1.35, 0.05); ctx.quadraticCurveTo(1.56, 0.16, 1.6, 0.02); ctx.stroke();
+    // 目
+    ctx.fillStyle = '#20242B';
+    ctx.beginPath(); ctx.arc(0.98, -0.2, 0.07, 0, Math.PI*2); ctx.arc(0.98, 0.2, 0.07, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  // ポイ（金魚すくいの網）。cursor用にも演出用にも使う
+  var POI_R = 16;
+  function drawPoi(ctx, x, y, s, opts){
+    opts = opts || {};
+    ctx.save();
+    ctx.translate(x, y); if (opts.rot) ctx.rotate(opts.rot);
+    // 柄
+    ctx.strokeStyle = '#8a6d4a'; ctx.lineWidth = 3 * s; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, POI_R * s); ctx.lineTo(0, (POI_R + 20) * s); ctx.stroke();
+    // 紙（半透明）
+    var tear = opts.tear || 0;
+    ctx.fillStyle = 'rgba(247,244,236,' + (opts.paper != null ? opts.paper : 0.34) + ')';
+    if (tear <= 0){
+      ctx.beginPath(); ctx.arc(0, 0, POI_R * s * 0.9, 0, Math.PI*2); ctx.fill();
+    } else {
+      // 破れた2枚
+      ctx.save(); ctx.beginPath();
+      ctx.arc(-tear * 10 * s, 0, POI_R * s * 0.9, Math.PI*0.5, Math.PI*1.5); ctx.fill();
+      ctx.beginPath();
+      ctx.arc(tear * 10 * s, 0, POI_R * s * 0.9, -Math.PI*0.5, Math.PI*0.5); ctx.fill();
+      ctx.restore();
+    }
+    // 枠
+    ctx.strokeStyle = '#b9895a'; ctx.lineWidth = 2.4 * s;
+    ctx.beginPath(); ctx.arc(0, 0, POI_R * s, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
+  // 龍：軌跡に沿ってしなる蛇体＋角・ひげ・鬣。ホームページ上を飛び回る
+  function drawDragon(ctx, pet, t){
+    var tr = pet.trail; if (tr.length < 3) return;
+    var s = pet.size * (1 + 0.3 * (pet.grow || 0));
+    var w0 = s * 0.62;
+    var left = [], right = [], mid = [];
+    for (var i = 0; i < tr.length; i++){
+      var p = tr[i];
+      var a;
+      if (i < tr.length - 1) a = Math.atan2(tr[i+1].y - p.y, tr[i+1].x - p.x);
+      else a = Math.atan2(p.y - tr[i-1].y, p.x - tr[i-1].x);
+      var nx = -Math.sin(a), ny = Math.cos(a);
+      var taper = 1 - i / tr.length;
+      var w = w0 * (0.18 + 0.82 * Math.pow(taper, 0.65)) * (0.9 + 0.1 * Math.sin(i * 0.6 + t * 5));
+      left.push({ x: p.x + nx*w, y: p.y + ny*w });
+      right.push({ x: p.x - nx*w, y: p.y - ny*w });
+      mid.push(p);
+    }
+    // 胴
+    ctx.beginPath();
+    ctx.moveTo(left[0].x, left[0].y);
+    for (var i = 1; i < left.length; i++) ctx.lineTo(left[i].x, left[i].y);
+    for (var i = right.length - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
+    ctx.closePath();
+    var g = ctx.createLinearGradient(tr[0].x, tr[0].y, tr[tr.length-1].x, tr[tr.length-1].y);
+    g.addColorStop(0, pet.dark ? '#D06A3A' : '#B23A1E');
+    g.addColorStop(1, '#7E2E17');
+    ctx.fillStyle = g; ctx.fill();
+    // 背の金の鬣
+    ctx.strokeStyle = 'rgba(231,178,60,0.85)'; ctx.lineWidth = s * 0.16; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    for (var i = 2; i < left.length - 2; i++){
+      var lx = mid[i].x + (left[i].x - mid[i].x) * 1.28;
+      var ly = mid[i].y + (left[i].y - mid[i].y) * 1.28;
+      if (i === 2) ctx.moveTo(lx, ly); else ctx.lineTo(lx, ly);
+    }
+    ctx.stroke();
+    // 頭
+    var h = tr[0];
+    var ha = Math.atan2(tr[0].y - tr[1].y, tr[0].x - tr[1].x);
+    ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(ha);
+    ctx.fillStyle = pet.dark ? '#C85A2E' : '#A5361B';
+    ctx.beginPath(); ctx.ellipse(0.18*s, 0, 0.6*s, 0.44*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0.62*s, 0.02*s, 0.3*s, 0.26*s, 0, 0, Math.PI*2); ctx.fill();
+    // 角
+    ctx.strokeStyle = 'rgba(234,223,205,0.95)'; ctx.lineWidth = 0.1*s; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(-0.1*s, -0.24*s); ctx.quadraticCurveTo(-0.75*s, -0.4*s, -0.92*s, -0.78*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-0.1*s, 0.24*s); ctx.quadraticCurveTo(-0.75*s, 0.4*s, -0.92*s, 0.78*s); ctx.stroke();
+    // ひげ（金・長い・波打つ）
+    ctx.strokeStyle = 'rgba(231,178,60,0.9)'; ctx.lineWidth = 0.055*s;
+    var ww = Math.sin(t*3) * 0.18*s;
+    ctx.beginPath(); ctx.moveTo(0.78*s, -0.12*s); ctx.quadraticCurveTo(1.5*s, -0.46*s + ww, 2.15*s, -0.08*s + ww); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0.78*s, 0.12*s); ctx.quadraticCurveTo(1.5*s, 0.46*s - ww, 2.15*s, 0.08*s - ww); ctx.stroke();
+    // 目
+    ctx.fillStyle = '#F7E7C8';
+    ctx.beginPath(); ctx.ellipse(0.12*s, -0.18*s, 0.13*s, 0.1*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#20242B';
+    ctx.beginPath(); ctx.arc(0.16*s, -0.18*s, 0.055*s, 0, Math.PI*2); ctx.fill();
     ctx.restore();
   }
 
@@ -1033,11 +1223,19 @@ footer{
 
     /* 餌ポイント: マウスはカーソル追従、タッチはタップ地点に8秒間 */
     var attract = { x: 0, y: 0, until: 0, mouse: false, dot: false };
-    function attractActive(nowMs){ return attract.mouse || nowMs < attract.until; }
+    function attractActive(nowMs){ return carrying || attract.mouse || nowMs < attract.until; }
+
+    /* 隠し要素ゲームの状態（詳細は下部で定義。ここで宣言だけ先出し） */
+    var pet = null, carrying = false, carriedEl = null, foodPt = { x: 0, y: 0 };
+    var gcur = { x: -99, y: -99, type: 'mouse' }, needFilter = false;
+
+    var gamefx = document.getElementById('gamefx');
+    var gctx = fitCanvas(gamefx);
 
     window.addEventListener('resize', function(){
       actx = fitCanvas(amb);
       aw = amb.clientWidth; ah = amb.clientHeight;
+      gctx = fitCanvas(gamefx);
     });
 
     /* ポインターに合わせた波紋（マウス移動＝小 / クリック・タップ＝大） */
@@ -1063,6 +1261,8 @@ footer{
       if (pointerRipples.length > 80) pointerRipples.splice(0, pointerRipples.length - 80);
     }
     window.addEventListener('pointermove', function(e){
+      gcur.x = e.clientX; gcur.y = e.clientY; gcur.type = e.pointerType;
+      if (carrying && e.pointerType === 'mouse'){ foodPt.x = e.clientX; foodPt.y = e.clientY; }
       if (e.pointerType !== 'mouse') return;
       attract.x = e.clientX; attract.y = e.clientY;
       attract.mouse = true; attract.dot = false;
@@ -1090,7 +1290,17 @@ footer{
       last = now;
       actx.clearRect(0, 0, aw, ah);
       var t = now / 1000;
+      if (carrying){ attract.x = foodPt.x; attract.y = foodPt.y; }
       var active = attractActive(now);
+      // 餌を運んでいてまだペットがいないとき、最寄りの1匹が食べに来る
+      var eaterIdx = -1;
+      if (carrying && !pet){
+        var bestD = 1e9;
+        for (var ei = 0; ei < swimmers.length; ei++){
+          var ed0 = Math.hypot(swimmers[ei].x - foodPt.x, swimmers[ei].y - foodPt.y);
+          if (ed0 < bestD){ bestD = ed0; eaterIdx = ei; }
+        }
+      }
 
       // 餌ポイントの表示（タッチ時のみ・小さな点が明滅して残り時間とともに消える）
       if (active && attract.dot){
@@ -1133,6 +1343,16 @@ footer{
           }
         }
 
+        // 餌を運んでいるとき、最寄りの1匹が餌に直進して食べる（成長の起点）
+        if (carrying && !pet && m === eaterIdx){
+          var edx = foodPt.x - sw.x, edy = foodPt.y - sw.y, ed = Math.hypot(edx, edy);
+          targetHeading = Math.atan2(edy, edx);
+          targetSpeed = Math.min(150, 50 + ed * 0.4);
+          if (ed < sw.size * 1.2 + 7){ makePetFromFish(sw); }
+        }
+        // すくいから逃げる
+        if (sw.flee > 0){ sw.flee -= dt; targetSpeed = 178; }
+
         // 分離: 近くの金魚から離れる方向を混ぜて、重なりを防ぐ
         var sepX = 0, sepY = 0;
         for (var n = 0; n < swimmers.length; n++){
@@ -1170,6 +1390,7 @@ footer{
         sw.glow += ((active ? 1 : 0) - sw.glow) * Math.min(1, dt * 2);
         drawFish(actx, sw.x, sw.y, sw.heading, sw.size, sw.variant, Math.sin(sw.tailPhase), 0.13 + 0.07 * sw.glow);
       }
+      if (needFilter){ swimmers = swimmers.filter(function(s){ return !s.eaten; }); needFilter = false; }
       // 波紋の描画
       for (var q = pointerRipples.length - 1; q >= 0; q--){
         var pr = pointerRipples[q];
@@ -1186,6 +1407,291 @@ footer{
       }
       requestAnimationFrame(ambFrame);
     })(last);
+
+    /* ========== 隠し要素ゲーム本体 ========== */
+    var fx = [];                       // 演出（水しぶき・破れ・すくい）
+    var poiMode = false, poiSince = 0; // ポイ（すくい）モード
+
+    function splashAt(x, y, scale){
+      fx.push({ type: 'splash', x: x, y: y, t: 0, scale: scale || 1 });
+    }
+    function consumeCarried(){
+      if (carriedEl && carriedEl.parentNode) carriedEl.parentNode.removeChild(carriedEl);
+      carriedEl = null; carrying = false;
+      document.body.style.cursor = '';
+    }
+    function makeKoiPattern(){
+      var arr = [], colors = ['#C0392B', '#C0392B', '#23262C'];
+      var n = 3 + Math.floor(Math.random() * 3);
+      for (var i = 0; i < n; i++){
+        arr.push({
+          x: -0.5 + Math.random() * 1.5, y: -0.3 + Math.random() * 0.6,
+          rx: 0.18 + Math.random() * 0.24, ry: 0.15 + Math.random() * 0.18,
+          rot: Math.random() * Math.PI, color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+      return arr;
+    }
+    function gorgeousVariant(){
+      return {
+        body: '#D42B1A', fin: 'rgba(212,60,40,0.5)', belly: '#E7B23C', sparkle: true,
+        patches: [
+          { x: 0.15, y: -0.12, rx: 0.34, ry: 0.26, color: '#F6F0E2' },
+          { x: -0.28, y: 0.16, rx: 0.24, ry: 0.19, color: '#F6F0E2' }
+        ]
+      };
+    }
+    // 金魚が餌を食べてペット（豪華な金魚）になる
+    function makePetFromFish(sw){
+      pet = {
+        x: sw.x, y: sw.y, heading: sw.heading, speed: sw.speed, size: 24, stage: 1,
+        tailPhase: sw.tailPhase || 0, phase: Math.random() * 6.28,
+        trail: [], koiPattern: [], grow: 1, flee: 0, fleeAng: 0,
+        dark: isDarkTheme(), variant: gorgeousVariant(), wp: null, wpT: 0
+      };
+      sw.eaten = true; needFilter = true;
+      splashAt(pet.x, pet.y, 1.1);
+      consumeCarried();
+    }
+    // 餌を1つ食べるたびに1段階成長：豪華金魚→鯉→龍
+    function growPet(){
+      splashAt(pet.x, pet.y, 1.1);
+      consumeCarried();
+      pet.grow = 1;
+      pet.stage++;
+      if (pet.stage === 2){ pet.size = 20; pet.koiPattern = makeKoiPattern(); }
+      if (pet.stage >= 3){ pet.stage = 3; pet.size = 17; pet.trail = []; }
+    }
+
+    function angDiff(a, b){ return ((a - b + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI; }
+    function clampv(v, lo, hi){ return v < lo ? lo : v > hi ? hi : v; }
+
+    function updatePet(dt, t){
+      if (!pet) return;
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var tx, ty, tspeed;
+      if (pet.flee > 0){
+        pet.flee -= dt;
+        tx = pet.x + Math.cos(pet.fleeAng) * 200; ty = pet.y + Math.sin(pet.fleeAng) * 200;
+        tspeed = 210;
+      } else if (pet.stage >= 3){
+        // 龍：ホームページ上を自由に飛び回る
+        if (!pet.wp || Math.hypot(pet.x - pet.wp.x, pet.y - pet.wp.y) < 80 || (pet.wpT -= dt) <= 0){
+          pet.wp = { x: 60 + Math.random() * (vw - 120), y: 70 + Math.random() * (vh - 140) };
+          pet.wpT = 2 + Math.random() * 2.5;
+        }
+        tx = pet.wp.x; ty = pet.wp.y; tspeed = 135;
+      } else if (carrying){
+        tx = foodPt.x; ty = foodPt.y; tspeed = 145;
+      } else {
+        // 豪華金魚・鯉：カーソルを少し遅れてついて回る
+        tx = gcur.x; ty = gcur.y;
+        tspeed = Math.hypot(pet.x - gcur.x, pet.y - gcur.y) > 72 ? 95 : 22;
+      }
+      var desired = Math.atan2(ty - pet.y, tx - pet.x);
+      if (pet.stage >= 3 && pet.flee <= 0) desired += Math.sin(t * 2.2 + pet.phase) * 0.5;
+      var maxTurn = (pet.stage >= 3 ? 2.4 : 3.0) * dt;
+      pet.heading += clampv(angDiff(desired, pet.heading), -maxTurn, maxTurn);
+      pet.speed += (tspeed - pet.speed) * Math.min(1, dt * 2.5);
+      pet.x += Math.cos(pet.heading) * pet.speed * dt;
+      pet.y += Math.sin(pet.heading) * pet.speed * dt;
+      pet.x = clampv(pet.x, 16, vw - 16); pet.y = clampv(pet.y, 16, vh - 16);
+      pet.tailPhase += (0.7 + pet.speed / 70) * (pet.stage >= 3 ? 7 : 5) * dt;
+      if (pet.grow > 0) pet.grow = Math.max(0, pet.grow - dt * 2);
+      // 龍の軌跡
+      if (pet.stage >= 3){
+        if (!pet.trail.length){ for (var i = 0; i < 26; i++) pet.trail.push({ x: pet.x, y: pet.y }); }
+        var head = pet.trail[0];
+        if (Math.hypot(pet.x - head.x, pet.y - head.y) > pet.size * 0.3){
+          pet.trail.unshift({ x: pet.x, y: pet.y });
+          if (pet.trail.length > 28) pet.trail.pop();
+        } else { head.x = pet.x; head.y = pet.y; }
+      }
+      // 食べる判定（餌を運んでいて近づいたら成長）
+      if (carrying && Math.hypot(pet.x - foodPt.x, pet.y - foodPt.y) < pet.size * 1.1 + 8){ growPet(); }
+    }
+
+    function drawPetOn(ctx, t){
+      if (!pet) return;
+      var gs = 1 + 0.3 * (pet.grow || 0);
+      if (pet.stage === 1) drawFish(ctx, pet.x, pet.y, pet.heading, pet.size * gs, pet.variant, Math.sin(pet.tailPhase), 1);
+      else if (pet.stage === 2) drawKoi(ctx, pet.x, pet.y, pet.heading, pet.size * gs, pet, Math.sin(pet.tailPhase));
+      else drawDragon(ctx, pet, t);
+    }
+
+    function drawFoodPellet(ctx, x, y, t){
+      var b = Math.sin(t * 4) * 1.5;
+      ctx.strokeStyle = 'rgba(156,59,34,0.4)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(x, y + b, 12 + Math.sin(t * 3) * 2, 0, Math.PI * 2); ctx.stroke();
+      var g = ctx.createRadialGradient(x - 2, y - 2 + b, 1, x, y + b, 7);
+      g.addColorStop(0, '#8a5a32'); g.addColorStop(1, '#4d3016');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x, y + b, 7, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function inkRGB(){
+      var m = getComputedStyle(document.body).color.match(/\d+/g);
+      return m ? (m[0] + ',' + m[1] + ',' + m[2]) : '90,100,120';
+    }
+    function drawFx(ctx, dt, t){
+      for (var i = fx.length - 1; i >= 0; i--){
+        var f = fx[i]; f.t += dt;
+        if (f.type === 'splash'){
+          var life = 0.55, k = f.t / life;
+          if (k >= 1){ fx.splice(i, 1); continue; }
+          var sc = f.scale || 1;
+          ctx.strokeStyle = 'rgba(' + inkRGB() + ',' + (0.4 * (1 - k)).toFixed(3) + ')';
+          ctx.lineWidth = 1.4 * (1 - k) + 0.3;
+          ctx.beginPath(); ctx.arc(f.x, f.y, (6 + (1 - Math.pow(1 - k, 2)) * 34) * sc, 0, Math.PI * 2); ctx.stroke();
+          for (var d = 0; d < 5; d++){
+            var a = d / 5 * Math.PI * 2, dd = k * 26 * sc;
+            ctx.fillStyle = 'rgba(' + inkRGB() + ',' + (0.5 * (1 - k)).toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.arc(f.x + Math.cos(a) * dd, f.y + Math.sin(a) * dd - k * 8, 1.6 * (1 - k) + 0.4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else if (f.type === 'tear'){
+          var life = 0.85, k = f.t / life;
+          if (k >= 1){ fx.splice(i, 1); continue; }
+          ctx.globalAlpha = 1 - k;
+          drawPoi(ctx, f.x, f.y + k * 26, 1, { tear: k, paper: 0.34 * (1 - k), rot: k * 0.3 });
+          ctx.globalAlpha = 1;
+        } else if (f.type === 'scoop'){
+          var life = 1.5, k = f.t / life;
+          if (k >= 1){ fx.splice(i, 1); continue; }
+          var yy = f.y - Math.min(k, 0.6) * 10;
+          var fade = k < 0.7 ? 1 : 1 - (k - 0.7) / 0.3;
+          var shr = k < 0.7 ? 1 : 1 - (k - 0.7) / 0.3 * 0.6;
+          ctx.globalAlpha = fade;
+          drawPoi(ctx, f.x, yy, 1, {});
+          // ポイの上で暴れる魚
+          var flop = Math.sin(k * 40) * 0.5;
+          var fish = f.fish;
+          if (fish.stage === 2) drawKoi(ctx, f.x, yy - 6, flop, fish.size * 0.7 * shr, { koiPattern: fish.koiPattern || [] }, Math.sin(k * 40));
+          else drawFish(ctx, f.x, yy - 6, flop, fish.size * (fish.stage === 1 ? 0.9 : 1) * shr, fish.variant, Math.sin(k * 40), 1);
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+
+    // ポイの終了（破れ・すくい成功で消費）
+    function endPoi(){
+      poiMode = false;
+      document.body.classList.remove('kg-scoop');
+    }
+    // すくいの判定：3パターン
+    function attemptScoop(px, py){
+      var nowp = performance.now();
+      if (nowp - poiSince < 250) return;
+      gcur.x = px; gcur.y = py;
+      var target = null, tIsPet = false, best = 1e9;
+      if (pet){
+        var d = Math.hypot(pet.x - px, pet.y - py);
+        var rr = pet.size * (pet.stage >= 3 ? 4 : 1.7) + 30;
+        if (d < rr && d < best){ best = d; target = pet; tIsPet = true; }
+      }
+      for (var i = 0; i < swimmers.length; i++){
+        var s = swimmers[i], d2 = Math.hypot(s.x - px, s.y - py), rr2 = s.size * 1.7 + 26;
+        if (d2 < rr2 && d2 < best){ best = d2; target = s; tIsPet = false; }
+      }
+      splashAt(px, py, 0.6);
+      if (!target) return;                        // 水だけ：ポイは残る
+      var r = Math.random();
+      if (r < 0.34){
+        // ① ポイが破ける
+        fx.push({ type: 'tear', x: px, y: py, t: 0 });
+        endPoi();
+      } else if (r < 0.67){
+        // ② 金魚が逃げる（ポイは残るので再挑戦できる）
+        var tp = tIsPet ? pet : target;
+        var ang = Math.atan2(tp.y - py, tp.x - px);
+        if (tIsPet){ pet.flee = 1.2; pet.fleeAng = ang; }
+        else { target.flee = 1.3; target.heading = ang; target.speed = 178; }
+        splashAt(px, py, 1.0);
+      } else {
+        // ③ すくえて、ポイの上でパタパタ暴れてポイと一緒に消える
+        var tp2 = tIsPet ? pet : target;
+        fx.push({ type: 'scoop', x: px, y: py, t: 0, fish: {
+          stage: tIsPet ? pet.stage : 0, size: tp2.size, variant: tp2.variant, koiPattern: tIsPet ? pet.koiPattern : null
+        }});
+        if (tIsPet) pet = null; else { target.eaten = true; needFilter = true; }
+        endPoi();
+      }
+    }
+
+    /* ---- 餌×3・ポイ×1 をページ全体にランダム配置（リロードごとに変わる） ---- */
+    var poiSVG = '<svg viewBox="0 0 46 62" xmlns="http://www.w3.org/2000/svg">' +
+      '<line x1="23" y1="30" x2="23" y2="58" stroke="#8a6d4a" stroke-width="3" stroke-linecap="round"/>' +
+      '<circle cx="23" cy="16" r="13.5" fill="rgba(247,244,236,0.5)"/>' +
+      '<circle cx="23" cy="16" r="14.5" fill="none" stroke="#b9895a" stroke-width="2.4"/></svg>';
+
+    function placeItems(){
+      var docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      var vw = window.innerWidth;
+      // 3つの餌は上・中・下の帯にひとつずつ（探す楽しさ）＋ポイはランダムな帯
+      var bands = [[0.12, 0.35], [0.38, 0.62], [0.65, 0.9]];
+      for (var i = 0; i < 3; i++){
+        var el = document.createElement('button');
+        el.className = 'kg-food'; el.type = 'button';
+        el.setAttribute('aria-hidden', 'true'); el.tabIndex = -1;
+        el.style.left = (40 + Math.random() * (vw - 90)) + 'px';
+        el.style.top = (docH * (bands[i][0] + Math.random() * (bands[i][1] - bands[i][0]))) + 'px';
+        el.addEventListener('click', onFoodClick);
+        document.body.appendChild(el);
+      }
+      var poi = document.createElement('button');
+      poi.className = 'kg-poi'; poi.type = 'button';
+      poi.setAttribute('aria-hidden', 'true'); poi.tabIndex = -1;
+      poi.innerHTML = poiSVG;
+      var pb = bands[Math.floor(Math.random() * 3)];
+      poi.style.left = (50 + Math.random() * (vw - 110)) + 'px';
+      poi.style.top = (docH * (pb[0] + Math.random() * (pb[1] - pb[0]))) + 'px';
+      poi.addEventListener('click', function(e){ onPoiClick(e, poi); });
+      document.body.appendChild(poi);
+    }
+    function onFoodClick(e){
+      if (carrying || poiMode) return;
+      var el = e.currentTarget;
+      carrying = true; carriedEl = el;
+      var r = el.getBoundingClientRect();
+      foodPt.x = r.left + r.width / 2; foodPt.y = r.top + r.height / 2;
+      gcur.x = foodPt.x; gcur.y = foodPt.y;
+      el.style.display = 'none';
+      if (e.pointerType !== 'touch') document.body.style.cursor = 'grabbing';
+    }
+    function onPoiClick(e, poi){
+      if (carrying || poiMode) return;
+      poiMode = true; poiSince = performance.now();
+      gcur.x = e.clientX; gcur.y = e.clientY;
+      poi.style.display = 'none';
+      document.body.classList.add('kg-scoop');
+    }
+    // すくいモード中のクリックを横取り（リンクを発火させない）
+    window.addEventListener('pointerdown', function(e){
+      if (poiMode){ e.preventDefault(); e.stopPropagation(); attemptScoop(e.clientX, e.clientY); }
+    }, true);
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){
+        if (poiMode) endPoi();
+        if (carrying) consumeCarried();
+      }
+    });
+    if (document.readyState === 'complete') placeItems();
+    else window.addEventListener('load', placeItems);
+
+    /* ---- ゲーム描画ループ（前面キャンバス） ---- */
+    var glast = performance.now();
+    (function gameFrame(now){
+      var dt = Math.min((now - glast) / 1000, 0.05); glast = now;
+      var t = now / 1000;
+      gctx.clearRect(0, 0, gamefx.clientWidth, gamefx.clientHeight);
+      updatePet(dt, t);
+      if (carrying) drawFoodPellet(gctx, foodPt.x, foodPt.y, t);
+      drawPetOn(gctx, t);
+      if (poiMode) drawPoi(gctx, gcur.x, gcur.y, 1, {});
+      drawFx(gctx, dt, t);
+      requestAnimationFrame(gameFrame);
+    })(glast);
   }
 
   /* ---------- P0-03: 問い合わせメール導線 ---------- */
