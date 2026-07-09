@@ -909,176 +909,26 @@ footer{
     ctx.restore();
   }
 
-  /* ---------- 成長した姿の描画（鯉・龍） ---------- */
-  // 鯉：金魚より細長い紡錘形＋ランダムな紅白／三色の斑
-  function drawKoi(ctx, x, y, heading, size, pet, sway){
+  /* ---------- 成長した姿（豪華な金魚・鯉・龍）は提供アートワークで描く ---------- */
+  // 各画像は「体の長軸が画像ローカル座標でどの角度を向いているか」を
+  // 目視較正した offset(ラジアン)ぶん引いて回転させ、heading=進行方向に揃える。
+  var PET_IMG = {
+    1: { img: new Image(), src: 'img/pets/goldfish.png', offset: 97  * Math.PI / 180, len: 78  },
+    2: { img: new Image(), src: 'img/pets/koi.png',      offset: 92  * Math.PI / 180, len: 122 },
+    3: { img: new Image(), src: 'img/pets/dragon.png',   offset: 287 * Math.PI / 180, len: 240 }
+  };
+  Object.keys(PET_IMG).forEach(function(k){ PET_IMG[k].img.src = PET_IMG[k].src; });
+
+  function drawPetImage(ctx, stage, x, y, heading, lenPx, alpha){
+    var cfg = PET_IMG[stage], img = cfg.img;
+    if (!img.naturalWidth) return;               // 読み込み待ち：このフレームは描かず次回に委ねる
+    var sc = lenPx / Math.max(img.naturalWidth, img.naturalHeight);
+    var w = img.naturalWidth * sc, h = img.naturalHeight * sc;
     ctx.save();
-    ctx.translate(x, y); ctx.rotate(heading); ctx.scale(size, size);
-    function koiBody(){
-      ctx.beginPath();
-      ctx.moveTo(1.4, 0);
-      ctx.bezierCurveTo(1.18, -0.44, 0.2, -0.5, -0.72, -0.34);
-      ctx.bezierCurveTo(-1.18, -0.26, -1.18, 0.26, -0.72, 0.34);
-      ctx.bezierCurveTo(0.2, 0.5, 1.18, 0.44, 1.4, 0);
-      ctx.closePath();
-    }
-    // 尾びれ
-    ctx.fillStyle = 'rgba(240,238,230,0.5)';
-    ctx.beginPath();
-    ctx.moveTo(-0.72, 0);
-    ctx.bezierCurveTo(-1.2, -0.2 + sway*0.2, -1.7, -0.5 + sway*0.42, -1.98, -0.2 + sway*0.5);
-    ctx.quadraticCurveTo(-1.4, -0.02 + sway*0.2, -1.2, 0.02);
-    ctx.bezierCurveTo(-1.6, 0.22 + sway*0.3, -1.9, 0.62 + sway*0.42, -2.0, 0.28 + sway*0.5);
-    ctx.quadraticCurveTo(-1.3, 0.12 + sway*0.16, -0.72, 0);
-    ctx.closePath(); ctx.fill();
-    // 胸びれ
-    ctx.beginPath();
-    ctx.moveTo(0.45, -0.32); ctx.quadraticCurveTo(0.12, -0.72 - sway*0.1, -0.22, -0.5);
-    ctx.quadraticCurveTo(0.05, -0.3, 0.45, -0.32);
-    ctx.moveTo(0.45, 0.32); ctx.quadraticCurveTo(0.12, 0.72 + sway*0.1, -0.22, 0.5);
-    ctx.quadraticCurveTo(0.05, 0.3, 0.45, 0.32); ctx.fill();
-    // 白地
-    ctx.fillStyle = '#F3EFE6';
-    koiBody(); ctx.fill();
-    // 斑（紅白・三色）
-    ctx.save(); koiBody(); ctx.clip();
-    for (var i = 0; i < pet.koiPattern.length; i++){
-      var b = pet.koiPattern[i];
-      ctx.fillStyle = b.color;
-      ctx.beginPath(); ctx.ellipse(b.x, b.y, b.rx, b.ry, b.rot, 0, Math.PI*2); ctx.fill();
-    }
-    ctx.restore();
-    // 輪郭（白地が明るい背景に沈まないように）
-    ctx.strokeStyle = 'rgba(120,108,92,0.4)'; ctx.lineWidth = 0.022;
-    koiBody(); ctx.stroke();
-    // ひげ
-    ctx.strokeStyle = 'rgba(90,70,50,0.6)'; ctx.lineWidth = 0.03; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(1.35, -0.05); ctx.quadraticCurveTo(1.56, -0.16, 1.6, -0.02);
-    ctx.moveTo(1.35, 0.05); ctx.quadraticCurveTo(1.56, 0.16, 1.6, 0.02); ctx.stroke();
-    // 目
-    ctx.fillStyle = '#20242B';
-    ctx.beginPath(); ctx.arc(0.98, -0.2, 0.07, 0, Math.PI*2); ctx.arc(0.98, 0.2, 0.07, 0, Math.PI*2); ctx.fill();
-    ctx.restore();
-  }
-
-  // ポイ（金魚すくいの網）。cursor用にも演出用にも使う
-  var POI_R = 16;
-  function drawPoi(ctx, x, y, s, opts){
-    opts = opts || {};
-    ctx.save();
-    ctx.translate(x, y); if (opts.rot) ctx.rotate(opts.rot);
-    // 柄
-    ctx.strokeStyle = '#8a6d4a'; ctx.lineWidth = 3 * s; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(0, POI_R * s); ctx.lineTo(0, (POI_R + 20) * s); ctx.stroke();
-    // 紙（半透明）
-    var tear = opts.tear || 0;
-    ctx.fillStyle = 'rgba(247,244,236,' + (opts.paper != null ? opts.paper : 0.34) + ')';
-    if (tear <= 0){
-      ctx.beginPath(); ctx.arc(0, 0, POI_R * s * 0.9, 0, Math.PI*2); ctx.fill();
-    } else {
-      // 破れた2枚
-      ctx.save(); ctx.beginPath();
-      ctx.arc(-tear * 10 * s, 0, POI_R * s * 0.9, Math.PI*0.5, Math.PI*1.5); ctx.fill();
-      ctx.beginPath();
-      ctx.arc(tear * 10 * s, 0, POI_R * s * 0.9, -Math.PI*0.5, Math.PI*0.5); ctx.fill();
-      ctx.restore();
-    }
-    // 枠
-    ctx.strokeStyle = '#b9895a'; ctx.lineWidth = 2.4 * s;
-    ctx.beginPath(); ctx.arc(0, 0, POI_R * s, 0, Math.PI*2); ctx.stroke();
-    ctx.restore();
-  }
-
-  // 龍：軌跡を等間隔に取り直し、うねりを重ねてしなる蛇体に。角・ひげ・鬣つき
-  function drawDragon(ctx, pet, t){
-    var tr = pet.trail; if (tr.length < 3) return;
-    var s = pet.size * (1 + 0.3 * (pet.grow || 0));
-    var M = 26;                          // 背骨のサンプル数（頭→尾）
-    var seg = (s * 8.5) / (M - 1);       // 等間隔の間隔
-
-    // 軌跡を等間隔にリサンプル（詰まり・自己交差を防ぐ）
-    var spine = [{ x: tr[0].x, y: tr[0].y }];
-    var idx = 0, cx = tr[0].x, cy = tr[0].y;
-    while (spine.length < M){
-      var need = seg;
-      while (need > 0){
-        if (idx >= tr.length - 1){
-          var ax = tr.length >= 2 ? tr[tr.length-1].x - tr[tr.length-2].x : -1;
-          var ay = tr.length >= 2 ? tr[tr.length-1].y - tr[tr.length-2].y : 0;
-          var am = Math.hypot(ax, ay) || 1;
-          cx += ax / am * need; cy += ay / am * need; need = 0;
-        } else {
-          var dx = tr[idx+1].x - cx, dy = tr[idx+1].y - cy, dseg = Math.hypot(dx, dy);
-          if (dseg >= need){ cx += dx / dseg * need; cy += dy / dseg * need; need = 0; }
-          else { cx = tr[idx+1].x; cy = tr[idx+1].y; idx++; need -= dseg; }
-        }
-      }
-      spine.push({ x: cx, y: cy });
-    }
-
-    // うねり（進行波）を法線方向に重ねる。尾ほど大きく振れる
-    var u = [];
-    for (var i = 0; i < M; i++){
-      var pa = spine[Math.max(0, i-1)], pb = spine[Math.min(M-1, i+1)];
-      var a = Math.atan2(pb.y - pa.y, pb.x - pa.x);
-      var nx = -Math.sin(a), ny = Math.cos(a);
-      var fr = i / (M - 1);
-      var amp = s * 1.15 * Math.pow(fr, 0.75) * (1 - 0.15 * fr);
-      var off = Math.sin(i * 0.5 - t * 6.5) * amp;
-      u.push({ x: spine[i].x + nx * off, y: spine[i].y + ny * off });
-    }
-
-    // うねった背骨から胴のリボンを作る
-    var left = [], right = [], w0 = s * 0.6;
-    for (var i = 0; i < M; i++){
-      var pa2 = u[Math.max(0, i-1)], pb2 = u[Math.min(M-1, i+1)];
-      var a2 = Math.atan2(pb2.y - pa2.y, pb2.x - pa2.x);
-      var nx2 = -Math.sin(a2), ny2 = Math.cos(a2);
-      var fr2 = i / (M - 1);
-      // 頭側は太く、尾へ細く。頭の直後を一番太く
-      var w = w0 * (0.14 + 0.86 * Math.pow(1 - fr2, 0.55)) * (fr2 < 0.06 ? 0.7 + fr2 / 0.06 * 0.3 : 1);
-      left.push({ x: u[i].x + nx2 * w, y: u[i].y + ny2 * w });
-      right.push({ x: u[i].x - nx2 * w, y: u[i].y - ny2 * w });
-    }
-
-    // 胴
-    ctx.beginPath();
-    ctx.moveTo(left[0].x, left[0].y);
-    for (var i = 1; i < M; i++) ctx.lineTo(left[i].x, left[i].y);
-    for (var i = M - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
-    ctx.closePath();
-    var g = ctx.createLinearGradient(u[0].x, u[0].y, u[M-1].x, u[M-1].y);
-    g.addColorStop(0, pet.dark ? '#D06A3A' : '#B23A1E');
-    g.addColorStop(1, '#7E2E17');
-    ctx.fillStyle = g; ctx.fill();
-
-    // 背の金の鬣（背骨に沿ったなめらかな線）
-    ctx.strokeStyle = 'rgba(231,178,60,0.8)'; ctx.lineWidth = s * 0.12;
-    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.beginPath();
-    for (var i = 1; i < M - 1; i++){ if (i === 1) ctx.moveTo(u[i].x, u[i].y); else ctx.lineTo(u[i].x, u[i].y); }
-    ctx.stroke();
-
-    // 頭（背骨の先端の向きに合わせる）
-    var ha = Math.atan2(u[0].y - u[1].y, u[0].x - u[1].x);
-    ctx.save(); ctx.translate(u[0].x, u[0].y); ctx.rotate(ha);
-    ctx.fillStyle = pet.dark ? '#C85A2E' : '#A5361B';
-    ctx.beginPath(); ctx.ellipse(0.2*s, 0, 0.62*s, 0.46*s, 0, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(0.66*s, 0.02*s, 0.32*s, 0.27*s, 0, 0, Math.PI*2); ctx.fill();
-    // 角
-    ctx.strokeStyle = 'rgba(234,223,205,0.95)'; ctx.lineWidth = 0.1*s; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(-0.1*s, -0.26*s); ctx.quadraticCurveTo(-0.78*s, -0.42*s, -0.95*s, -0.82*s); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-0.1*s, 0.26*s); ctx.quadraticCurveTo(-0.78*s, 0.42*s, -0.95*s, 0.82*s); ctx.stroke();
-    // ひげ（金・長い・波打つ）
-    ctx.strokeStyle = 'rgba(231,178,60,0.9)'; ctx.lineWidth = 0.055*s;
-    var ww = Math.sin(t*3) * 0.2*s;
-    ctx.beginPath(); ctx.moveTo(0.82*s, -0.14*s); ctx.quadraticCurveTo(1.55*s, -0.5*s + ww, 2.25*s, -0.06*s + ww); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0.82*s, 0.14*s); ctx.quadraticCurveTo(1.55*s, 0.5*s - ww, 2.25*s, 0.06*s - ww); ctx.stroke();
-    // 目
-    ctx.fillStyle = '#F7E7C8';
-    ctx.beginPath(); ctx.ellipse(0.14*s, -0.2*s, 0.14*s, 0.11*s, 0, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#20242B';
-    ctx.beginPath(); ctx.arc(0.18*s, -0.2*s, 0.06*s, 0, Math.PI*2); ctx.fill();
+    if (alpha != null) ctx.globalAlpha = alpha;
+    ctx.translate(x, y);
+    ctx.rotate(heading - cfg.offset);
+    ctx.drawImage(img, -w / 2, -h / 2, w, h);
     ctx.restore();
   }
 
@@ -1452,34 +1302,11 @@ footer{
       carriedEl = null; carrying = false;
       document.body.style.cursor = '';
     }
-    function makeKoiPattern(){
-      var arr = [], colors = ['#C0392B', '#C0392B', '#23262C'];
-      var n = 3 + Math.floor(Math.random() * 3);
-      for (var i = 0; i < n; i++){
-        arr.push({
-          x: -0.5 + Math.random() * 1.5, y: -0.3 + Math.random() * 0.6,
-          rx: 0.18 + Math.random() * 0.24, ry: 0.15 + Math.random() * 0.18,
-          rot: Math.random() * Math.PI, color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-      return arr;
-    }
-    function gorgeousVariant(){
-      return {
-        body: '#D42B1A', fin: 'rgba(212,60,40,0.5)', belly: '#E7B23C', sparkle: true,
-        patches: [
-          { x: 0.15, y: -0.12, rx: 0.34, ry: 0.26, color: '#F6F0E2' },
-          { x: -0.28, y: 0.16, rx: 0.24, ry: 0.19, color: '#F6F0E2' }
-        ]
-      };
-    }
     // 金魚が餌を食べてペット（豪華な金魚）になる
     function makePetFromFish(sw){
       pet = {
-        x: sw.x, y: sw.y, heading: sw.heading, speed: sw.speed, size: 24, stage: 1,
-        tailPhase: sw.tailPhase || 0, phase: Math.random() * 6.28,
-        trail: [], koiPattern: [], grow: 1, flee: 0, fleeAng: 0,
-        dark: isDarkTheme(), variant: gorgeousVariant(), wp: null, wpT: 0
+        x: sw.x, y: sw.y, heading: sw.heading, speed: sw.speed, size: 27, stage: 1,
+        phase: Math.random() * 6.28, grow: 1, flee: 0, fleeAng: 0, wp: null, wpT: 0
       };
       sw.eaten = true; needFilter = true;
       splashAt(pet.x, pet.y, 1.1);
@@ -1491,8 +1318,8 @@ footer{
       consumeCarried();
       pet.grow = 1;
       pet.stage++;
-      if (pet.stage === 2){ pet.size = 20; pet.koiPattern = makeKoiPattern(); }
-      if (pet.stage >= 3){ pet.stage = 3; pet.size = 17; pet.trail = []; }
+      if (pet.stage === 2) pet.size = 42;
+      if (pet.stage >= 3){ pet.stage = 3; pet.size = 80; }
     }
 
     function angDiff(a, b){ return ((a - b + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI; }
@@ -1512,7 +1339,7 @@ footer{
           pet.wp = { x: 60 + Math.random() * (vw - 120), y: 70 + Math.random() * (vh - 140) };
           pet.wpT = 2 + Math.random() * 2.5;
         }
-        tx = pet.wp.x; ty = pet.wp.y; tspeed = 135;
+        tx = pet.wp.x; ty = pet.wp.y; tspeed = 150;
       } else if (carrying){
         tx = foodPt.x; ty = foodPt.y; tspeed = 145;
       } else {
@@ -1528,27 +1355,15 @@ footer{
       pet.x += Math.cos(pet.heading) * pet.speed * dt;
       pet.y += Math.sin(pet.heading) * pet.speed * dt;
       pet.x = clampv(pet.x, 16, vw - 16); pet.y = clampv(pet.y, 16, vh - 16);
-      pet.tailPhase += (0.7 + pet.speed / 70) * (pet.stage >= 3 ? 7 : 5) * dt;
       if (pet.grow > 0) pet.grow = Math.max(0, pet.grow - dt * 2);
-      // 龍の軌跡
-      if (pet.stage >= 3){
-        if (!pet.trail.length){ for (var i = 0; i < 26; i++) pet.trail.push({ x: pet.x, y: pet.y }); }
-        var head = pet.trail[0];
-        if (Math.hypot(pet.x - head.x, pet.y - head.y) > pet.size * 0.3){
-          pet.trail.unshift({ x: pet.x, y: pet.y });
-          if (pet.trail.length > 28) pet.trail.pop();
-        } else { head.x = pet.x; head.y = pet.y; }
-      }
       // 食べる判定（餌を運んでいて近づいたら成長）
       if (carrying && Math.hypot(pet.x - foodPt.x, pet.y - foodPt.y) < pet.size * 1.1 + 8){ growPet(); }
     }
 
     function drawPetOn(ctx, t){
       if (!pet) return;
-      var gs = 1 + 0.3 * (pet.grow || 0);
-      if (pet.stage === 1) drawFish(ctx, pet.x, pet.y, pet.heading, pet.size * gs, pet.variant, Math.sin(pet.tailPhase), 1);
-      else if (pet.stage === 2) drawKoi(ctx, pet.x, pet.y, pet.heading, pet.size * gs, pet, Math.sin(pet.tailPhase));
-      else drawDragon(ctx, pet, t);
+      var gs = 1 + 0.16 * (pet.grow || 0);
+      drawPetImage(ctx, pet.stage, pet.x, pet.y, pet.heading, PET_IMG[pet.stage].len * gs);
     }
 
     function drawFoodPellet(ctx, x, y, t){
@@ -1599,8 +1414,8 @@ footer{
           // ポイの上で暴れる魚
           var flop = Math.sin(k * 40) * 0.5;
           var fish = f.fish;
-          if (fish.stage === 2) drawKoi(ctx, f.x, yy - 6, flop, fish.size * 0.7 * shr, { koiPattern: fish.koiPattern || [] }, Math.sin(k * 40));
-          else drawFish(ctx, f.x, yy - 6, flop, fish.size * (fish.stage === 1 ? 0.9 : 1) * shr, fish.variant, Math.sin(k * 40), 1);
+          if (fish.stage >= 1) drawPetImage(ctx, fish.stage, f.x, yy - 6, flop, PET_IMG[fish.stage].len * 0.85 * shr);
+          else drawFish(ctx, f.x, yy - 6, flop, fish.size * shr, fish.variant, Math.sin(k * 40), 1);
           ctx.globalAlpha = 1;
         }
       }
@@ -1644,7 +1459,7 @@ footer{
         // ③ すくえて、ポイの上でパタパタ暴れてポイと一緒に消える
         var tp2 = tIsPet ? pet : target;
         fx.push({ type: 'scoop', x: px, y: py, t: 0, fish: {
-          stage: tIsPet ? pet.stage : 0, size: tp2.size, variant: tp2.variant, koiPattern: tIsPet ? pet.koiPattern : null
+          stage: tIsPet ? pet.stage : 0, size: tp2.size, variant: tIsPet ? null : target.variant
         }});
         if (tIsPet) pet = null; else { target.eaten = true; needFilter = true; }
         endPoi();
