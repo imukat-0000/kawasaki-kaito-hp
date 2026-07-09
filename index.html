@@ -916,24 +916,29 @@ footer{
   // headAtBottom : 画像内で頭がどちら側にあるか（金魚・鯉=下／龍=上）
   // rigidFrac    : 頭側から見て歪ませず固定する範囲（顔・目・龍はタテガミの輪と前脚まで＝
   //                折り返して自分の体に重なっている部分。ここを歪ませると絵が壊れるため丸ごと固定する）
-  // 残りの領域（体〜ヒレ〜尾）は薄い帯にスライスし、帯ごとに進行波の横ずれ量(dx)を与えて
-  // 「flag wave」式にうねらせる。尾先ほど振幅が大きく、さらに先端だけ細かい追加の震え(ヒレの震え)を足す。
+  // 残りの領域（体〜ヒレ〜尾）は薄い帯にスライスして描く。実際に泳いでいる／飛んでいる間は
+  // 「直前に実際に通った軌跡」に沿って体を追従させる（trailLateral）ので、直進中はほぼまっすぐ、
+  // 旋回したときだけ自然にしなる＝進行方向と体の形が矛盾しない。装飾用の合成波(wagAmpFrac)は
+  // 「完全に硬直して見えない程度」のごく小さい量だけ重ねる。
+  // flopAmpFrac は軌跡を持たない場面（ポイですくわれてパタパタ暴れる演出）専用の、より大きな振幅。
   var PET_IMG = {
     1: { img: new Image(), src: 'img/pets/goldfish.png', offset: 97  * Math.PI / 180, len: 78,
-         headAtBottom: true, rigidFrac: 0.14, strips: 34, ampFrac: 0.14, waveCount: 0.65,
-         baseSpeed: 4.5, tipFrac: 0.20, tipAmpFrac: 0.05, tipFreqMul: 1.8 },
+         headAtBottom: true, rigidFrac: 0.14, strips: 34, trailGain: 1.0,
+         wagAmpFrac: 0.035, flopAmpFrac: 0.14, waveCount: 0.65, baseSpeed: 4.5,
+         tipFrac: 0.20, tipAmpFrac: 0.025, tipFreqMul: 1.8 },
     2: { img: new Image(), src: 'img/pets/koi.png',      offset: 92  * Math.PI / 180, len: 122,
-         headAtBottom: true, rigidFrac: 0.14, strips: 32, ampFrac: 0.15, waveCount: 0.7,
-         baseSpeed: 4.0, tipFrac: 0.18, tipAmpFrac: 0.05, tipFreqMul: 1.7 },
+         headAtBottom: true, rigidFrac: 0.14, strips: 32, trailGain: 1.0,
+         wagAmpFrac: 0.035, flopAmpFrac: 0.15, waveCount: 0.7, baseSpeed: 4.0,
+         tipFrac: 0.18, tipAmpFrac: 0.025, tipFreqMul: 1.7 },
     3: { img: new Image(), src: 'img/pets/dragon.png',   offset: 287 * Math.PI / 180, len: 240,
-         headAtBottom: false, rigidFrac: 0.38, strips: 40, ampFrac: 0.42, waveCount: 1.3,
-         baseSpeed: 3.0, tipFrac: 0.14, tipAmpFrac: 0.12, tipFreqMul: 2.0,
-         headSwayDeg: 4, headSwayFreq: 1.6 }
+         headAtBottom: false, rigidFrac: 0.38, strips: 40, trailGain: 0.85,
+         wagAmpFrac: 0.04, flopAmpFrac: 0.42, waveCount: 1.3, baseSpeed: 3.0,
+         tipFrac: 0.14, tipAmpFrac: 0.03, tipFreqMul: 2.0 }
   };
   Object.keys(PET_IMG).forEach(function(k){ PET_IMG[k].img.src = PET_IMG[k].src; });
 
   // s: 0(体との境界)〜1(尾・ヒレの先端)。尾に近いほど大きく振れ、先端だけ細かい震えを重ねる
-  function finWave(s, t, phaseSpeed, cfg, amp){
+  function wagOffset(s, t, phaseSpeed, cfg, amp){
     var main = amp * Math.pow(s, 1.3) * Math.sin(t * phaseSpeed - s * cfg.waveCount * Math.PI * 2);
     var tip = 0;
     if (s > 1 - cfg.tipFrac){
@@ -943,7 +948,28 @@ footer{
     return main + tip;
   }
 
-  function drawPetImage(ctx, stage, x, y, heading, lenPx, t, vig, alpha){
+  // 実際に通った軌跡(pet.hist)から、頭より画面上で arcDist px 手前の点を求め、
+  // 「現在の進行方向を基準にした左右のずれ」を返す（cosR,sinR は heading-offset の回転）。
+  // 直進していれば軌跡はほぼ一直線＝ずれはほぼ0。旋回した分だけ自然に体がしなる。
+  function trailLateral(pet, arcDist, cosR, sinR){
+    var hist = pet.hist;
+    if (!hist || hist.length < 2) return 0;
+    var acc = 0, px = pet.x, py = pet.y, wx = px, wy = py;
+    for (var i = 0; i < hist.length; i++){
+      var hp = hist[i];
+      var seg = Math.hypot(hp.x - px, hp.y - py);
+      if (acc + seg >= arcDist){
+        var k = seg > 1e-6 ? (arcDist - acc) / seg : 0;
+        wx = px + (hp.x - px) * k; wy = py + (hp.y - py) * k;
+        acc = arcDist;
+        break;
+      }
+      acc += seg; px = hp.x; py = hp.y; wx = px; wy = py;
+    }
+    return (wx - pet.x) * cosR + (wy - pet.y) * sinR;
+  }
+
+  function drawPetImage(ctx, stage, x, y, heading, lenPx, t, vig, alpha, pet){
     var cfg = PET_IMG[stage], img = cfg.img;
     if (!img.naturalWidth) return;               // 読み込み待ち：このフレームは描かず次回に委ねる
     vig = vig == null ? 1 : vig;
@@ -951,14 +977,28 @@ footer{
     var sc = lenPx / ih, w = iw * sc, h = ih * sc;
     var rigidPx = ih * cfg.rigidFrac;
     var bendPx = ih - rigidPx;
-    var amp = iw * cfg.ampFrac * (0.4 + 0.6 * vig);
+    var bendLenPx = lenPx * (1 - cfg.rigidFrac);   // 画面上でのうねり部分の長さ
+    var wagAmp = iw * cfg.wagAmpFrac * (0.5 + 0.5 * vig);
+    var flopAmp = iw * cfg.flopAmpFrac * (0.4 + 0.6 * vig);
     var phaseSpeed = cfg.baseSpeed * (0.55 + 0.45 * vig);
     var N = cfg.strips;
+    var R = heading - cfg.offset, cosR = Math.cos(R), sinR = Math.sin(R);
+    var maxDx = lenPx * 0.6;   // 画面端でのクランプ等による軌跡の飛びを暴走させない安全上限
+
+    function dxAt(s){
+      if (pet && pet.hist){
+        var lat = trailLateral(pet, s * bendLenPx, cosR, sinR) * cfg.trailGain;
+        lat = lat < -maxDx ? -maxDx : lat > maxDx ? maxDx : lat;
+        return lat + wagOffset(s, t, phaseSpeed, cfg, wagAmp);
+      }
+      // 軌跡が無い場面（ポイの上で暴れる等）：大きめの合成波で派手に
+      return wagOffset(s, t, phaseSpeed, cfg, flopAmp);
+    }
 
     ctx.save();
     if (alpha != null) ctx.globalAlpha = alpha;
     ctx.translate(x, y);
-    ctx.rotate(heading - cfg.offset);
+    ctx.rotate(R);
     ctx.translate(-w / 2, -h / 2);   // 以降はローカル座標 (0,0)〜(w,h) で作業
 
     if (cfg.headAtBottom){
@@ -968,24 +1008,16 @@ footer{
       for (var i = 0; i < N; i++){
         var sy0 = bendPx * i / N, sy1 = bendPx * (i + 1) / N;
         var s = 1 - (sy0 + sy1) / 2 / bendPx;
-        var dx = finWave(s, t, phaseSpeed, cfg, amp);
-        ctx.drawImage(img, 0, sy0, iw, sy1 - sy0 + 1, dx, sy0 * sc, w, (sy1 - sy0) * sc + 2);
+        ctx.drawImage(img, 0, sy0, iw, sy1 - sy0 + 1, dxAt(s), sy0 * sc, w, (sy1 - sy0) * sc + 2);
       }
     } else {
       // 剛体部（頭＋タテガミの輪＋前脚。自分の体に重なるため分割しない）は上側に1回で描く
-      var sway = (cfg.headSwayDeg || 0) * Math.PI / 180 * Math.sin(t * (cfg.headSwayFreq || 1.5));
-      ctx.save();
-      ctx.translate(w / 2, rigidPx * sc / 2);
-      ctx.rotate(sway);
-      ctx.translate(-w / 2, -rigidPx * sc / 2);
       ctx.drawImage(img, 0, 0, iw, rigidPx, 0, 0, w, rigidPx * sc + 2);
-      ctx.restore();
       // うねる部（体〜尾）：s=0(頭との境界)→1(尾先)
       for (var j = 0; j < N; j++){
         var sy0b = rigidPx + bendPx * j / N, sy1b = rigidPx + bendPx * (j + 1) / N;
         var sb = ((sy0b + sy1b) / 2 - rigidPx) / bendPx;
-        var dxb = finWave(sb, t, phaseSpeed, cfg, amp);
-        ctx.drawImage(img, 0, sy0b, iw, sy1b - sy0b + 1, dxb, sy0b * sc, w, (sy1b - sy0b) * sc + 2);
+        ctx.drawImage(img, 0, sy0b, iw, sy1b - sy0b + 1, dxAt(sb), sy0b * sc, w, (sy1b - sy0b) * sc + 2);
       }
     }
     ctx.restore();
@@ -1365,7 +1397,7 @@ footer{
     function makePetFromFish(sw){
       pet = {
         x: sw.x, y: sw.y, heading: sw.heading, speed: sw.speed, size: 27, stage: 1,
-        phase: Math.random() * 6.28, grow: 1, flee: 0, fleeAng: 0, wp: null, wpT: 0
+        phase: Math.random() * 6.28, grow: 1, flee: 0, fleeAng: 0, wp: null, wpT: 0, hist: []
       };
       sw.eaten = true; needFilter = true;
       splashAt(pet.x, pet.y, 1.1);
@@ -1415,6 +1447,9 @@ footer{
       pet.y += Math.sin(pet.heading) * pet.speed * dt;
       pet.x = clampv(pet.x, 16, vw - 16); pet.y = clampv(pet.y, 16, vh - 16);
       if (pet.grow > 0) pet.grow = Math.max(0, pet.grow - dt * 2);
+      // 実際に通った軌跡を記録（体の帯はこれに沿って描く。旋回時だけ自然にしなる）
+      pet.hist.unshift({ x: pet.x, y: pet.y });
+      if (pet.hist.length > 200) pet.hist.length = 200;
       // 食べる判定（餌を運んでいて近づいたら成長）
       if (carrying && Math.hypot(pet.x - foodPt.x, pet.y - foodPt.y) < pet.size * 1.1 + 8){ growPet(); }
     }
@@ -1423,7 +1458,7 @@ footer{
       if (!pet) return;
       var gs = 1 + 0.16 * (pet.grow || 0);
       var vig = Math.min(1, 0.35 + pet.speed / 140);   // 速く泳ぐ／飛ぶほど体のうねりも大きく速く
-      drawPetImage(ctx, pet.stage, pet.x, pet.y, pet.heading, PET_IMG[pet.stage].len * gs, t, vig);
+      drawPetImage(ctx, pet.stage, pet.x, pet.y, pet.heading, PET_IMG[pet.stage].len * gs, t, vig, null, pet);
     }
 
     function drawFoodPellet(ctx, x, y, t){
