@@ -989,64 +989,96 @@ footer{
     ctx.restore();
   }
 
-  // 龍：軌跡に沿ってしなる蛇体＋角・ひげ・鬣。ホームページ上を飛び回る
+  // 龍：軌跡を等間隔に取り直し、うねりを重ねてしなる蛇体に。角・ひげ・鬣つき
   function drawDragon(ctx, pet, t){
     var tr = pet.trail; if (tr.length < 3) return;
     var s = pet.size * (1 + 0.3 * (pet.grow || 0));
-    var w0 = s * 0.62;
-    var left = [], right = [], mid = [];
-    for (var i = 0; i < tr.length; i++){
-      var p = tr[i];
-      var a;
-      if (i < tr.length - 1) a = Math.atan2(tr[i+1].y - p.y, tr[i+1].x - p.x);
-      else a = Math.atan2(p.y - tr[i-1].y, p.x - tr[i-1].x);
-      var nx = -Math.sin(a), ny = Math.cos(a);
-      var taper = 1 - i / tr.length;
-      var w = w0 * (0.18 + 0.82 * Math.pow(taper, 0.65)) * (0.9 + 0.1 * Math.sin(i * 0.6 + t * 5));
-      left.push({ x: p.x + nx*w, y: p.y + ny*w });
-      right.push({ x: p.x - nx*w, y: p.y - ny*w });
-      mid.push(p);
+    var M = 26;                          // 背骨のサンプル数（頭→尾）
+    var seg = (s * 8.5) / (M - 1);       // 等間隔の間隔
+
+    // 軌跡を等間隔にリサンプル（詰まり・自己交差を防ぐ）
+    var spine = [{ x: tr[0].x, y: tr[0].y }];
+    var idx = 0, cx = tr[0].x, cy = tr[0].y;
+    while (spine.length < M){
+      var need = seg;
+      while (need > 0){
+        if (idx >= tr.length - 1){
+          var ax = tr.length >= 2 ? tr[tr.length-1].x - tr[tr.length-2].x : -1;
+          var ay = tr.length >= 2 ? tr[tr.length-1].y - tr[tr.length-2].y : 0;
+          var am = Math.hypot(ax, ay) || 1;
+          cx += ax / am * need; cy += ay / am * need; need = 0;
+        } else {
+          var dx = tr[idx+1].x - cx, dy = tr[idx+1].y - cy, dseg = Math.hypot(dx, dy);
+          if (dseg >= need){ cx += dx / dseg * need; cy += dy / dseg * need; need = 0; }
+          else { cx = tr[idx+1].x; cy = tr[idx+1].y; idx++; need -= dseg; }
+        }
+      }
+      spine.push({ x: cx, y: cy });
     }
+
+    // うねり（進行波）を法線方向に重ねる。尾ほど大きく振れる
+    var u = [];
+    for (var i = 0; i < M; i++){
+      var pa = spine[Math.max(0, i-1)], pb = spine[Math.min(M-1, i+1)];
+      var a = Math.atan2(pb.y - pa.y, pb.x - pa.x);
+      var nx = -Math.sin(a), ny = Math.cos(a);
+      var fr = i / (M - 1);
+      var amp = s * 1.15 * Math.pow(fr, 0.75) * (1 - 0.15 * fr);
+      var off = Math.sin(i * 0.5 - t * 6.5) * amp;
+      u.push({ x: spine[i].x + nx * off, y: spine[i].y + ny * off });
+    }
+
+    // うねった背骨から胴のリボンを作る
+    var left = [], right = [], w0 = s * 0.6;
+    for (var i = 0; i < M; i++){
+      var pa2 = u[Math.max(0, i-1)], pb2 = u[Math.min(M-1, i+1)];
+      var a2 = Math.atan2(pb2.y - pa2.y, pb2.x - pa2.x);
+      var nx2 = -Math.sin(a2), ny2 = Math.cos(a2);
+      var fr2 = i / (M - 1);
+      // 頭側は太く、尾へ細く。頭の直後を一番太く
+      var w = w0 * (0.14 + 0.86 * Math.pow(1 - fr2, 0.55)) * (fr2 < 0.06 ? 0.7 + fr2 / 0.06 * 0.3 : 1);
+      left.push({ x: u[i].x + nx2 * w, y: u[i].y + ny2 * w });
+      right.push({ x: u[i].x - nx2 * w, y: u[i].y - ny2 * w });
+    }
+
     // 胴
     ctx.beginPath();
     ctx.moveTo(left[0].x, left[0].y);
-    for (var i = 1; i < left.length; i++) ctx.lineTo(left[i].x, left[i].y);
-    for (var i = right.length - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
+    for (var i = 1; i < M; i++) ctx.lineTo(left[i].x, left[i].y);
+    for (var i = M - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
     ctx.closePath();
-    var g = ctx.createLinearGradient(tr[0].x, tr[0].y, tr[tr.length-1].x, tr[tr.length-1].y);
+    var g = ctx.createLinearGradient(u[0].x, u[0].y, u[M-1].x, u[M-1].y);
     g.addColorStop(0, pet.dark ? '#D06A3A' : '#B23A1E');
     g.addColorStop(1, '#7E2E17');
     ctx.fillStyle = g; ctx.fill();
-    // 背の金の鬣
-    ctx.strokeStyle = 'rgba(231,178,60,0.85)'; ctx.lineWidth = s * 0.16; ctx.lineJoin = 'round';
+
+    // 背の金の鬣（背骨に沿ったなめらかな線）
+    ctx.strokeStyle = 'rgba(231,178,60,0.8)'; ctx.lineWidth = s * 0.12;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     ctx.beginPath();
-    for (var i = 2; i < left.length - 2; i++){
-      var lx = mid[i].x + (left[i].x - mid[i].x) * 1.28;
-      var ly = mid[i].y + (left[i].y - mid[i].y) * 1.28;
-      if (i === 2) ctx.moveTo(lx, ly); else ctx.lineTo(lx, ly);
-    }
+    for (var i = 1; i < M - 1; i++){ if (i === 1) ctx.moveTo(u[i].x, u[i].y); else ctx.lineTo(u[i].x, u[i].y); }
     ctx.stroke();
-    // 頭
-    var h = tr[0];
-    var ha = Math.atan2(tr[0].y - tr[1].y, tr[0].x - tr[1].x);
-    ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(ha);
+
+    // 頭（背骨の先端の向きに合わせる）
+    var ha = Math.atan2(u[0].y - u[1].y, u[0].x - u[1].x);
+    ctx.save(); ctx.translate(u[0].x, u[0].y); ctx.rotate(ha);
     ctx.fillStyle = pet.dark ? '#C85A2E' : '#A5361B';
-    ctx.beginPath(); ctx.ellipse(0.18*s, 0, 0.6*s, 0.44*s, 0, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(0.62*s, 0.02*s, 0.3*s, 0.26*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0.2*s, 0, 0.62*s, 0.46*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0.66*s, 0.02*s, 0.32*s, 0.27*s, 0, 0, Math.PI*2); ctx.fill();
     // 角
     ctx.strokeStyle = 'rgba(234,223,205,0.95)'; ctx.lineWidth = 0.1*s; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(-0.1*s, -0.24*s); ctx.quadraticCurveTo(-0.75*s, -0.4*s, -0.92*s, -0.78*s); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(-0.1*s, 0.24*s); ctx.quadraticCurveTo(-0.75*s, 0.4*s, -0.92*s, 0.78*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-0.1*s, -0.26*s); ctx.quadraticCurveTo(-0.78*s, -0.42*s, -0.95*s, -0.82*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-0.1*s, 0.26*s); ctx.quadraticCurveTo(-0.78*s, 0.42*s, -0.95*s, 0.82*s); ctx.stroke();
     // ひげ（金・長い・波打つ）
     ctx.strokeStyle = 'rgba(231,178,60,0.9)'; ctx.lineWidth = 0.055*s;
-    var ww = Math.sin(t*3) * 0.18*s;
-    ctx.beginPath(); ctx.moveTo(0.78*s, -0.12*s); ctx.quadraticCurveTo(1.5*s, -0.46*s + ww, 2.15*s, -0.08*s + ww); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0.78*s, 0.12*s); ctx.quadraticCurveTo(1.5*s, 0.46*s - ww, 2.15*s, 0.08*s - ww); ctx.stroke();
+    var ww = Math.sin(t*3) * 0.2*s;
+    ctx.beginPath(); ctx.moveTo(0.82*s, -0.14*s); ctx.quadraticCurveTo(1.55*s, -0.5*s + ww, 2.25*s, -0.06*s + ww); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0.82*s, 0.14*s); ctx.quadraticCurveTo(1.55*s, 0.5*s - ww, 2.25*s, 0.06*s - ww); ctx.stroke();
     // 目
     ctx.fillStyle = '#F7E7C8';
-    ctx.beginPath(); ctx.ellipse(0.12*s, -0.18*s, 0.13*s, 0.1*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0.14*s, -0.2*s, 0.14*s, 0.11*s, 0, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = '#20242B';
-    ctx.beginPath(); ctx.arc(0.16*s, -0.18*s, 0.055*s, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(0.18*s, -0.2*s, 0.06*s, 0, Math.PI*2); ctx.fill();
     ctx.restore();
   }
 
