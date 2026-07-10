@@ -1027,6 +1027,34 @@ footer{
     ctx.restore();
   }
 
+  // ポイ（金魚すくいの網）。すくいモードのカーソル表示にも、破れ・すくい演出にも使う
+  var POI_R = 16;
+  function drawPoi(ctx, x, y, s, opts){
+    opts = opts || {};
+    ctx.save();
+    ctx.translate(x, y); if (opts.rot) ctx.rotate(opts.rot);
+    // 柄
+    ctx.strokeStyle = '#8a6d4a'; ctx.lineWidth = 3 * s; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(0, POI_R * s); ctx.lineTo(0, (POI_R + 20) * s); ctx.stroke();
+    // 紙（半透明）
+    var tear = opts.tear || 0;
+    ctx.fillStyle = 'rgba(247,244,236,' + (opts.paper != null ? opts.paper : 0.34) + ')';
+    if (tear <= 0){
+      ctx.beginPath(); ctx.arc(0, 0, POI_R * s * 0.9, 0, Math.PI*2); ctx.fill();
+    } else {
+      // 破れた2枚
+      ctx.save(); ctx.beginPath();
+      ctx.arc(-tear * 10 * s, 0, POI_R * s * 0.9, Math.PI*0.5, Math.PI*1.5); ctx.fill();
+      ctx.beginPath();
+      ctx.arc(tear * 10 * s, 0, POI_R * s * 0.9, -Math.PI*0.5, Math.PI*0.5); ctx.fill();
+      ctx.restore();
+    }
+    // 枠
+    ctx.strokeStyle = '#b9895a'; ctx.lineWidth = 2.4 * s;
+    ctx.beginPath(); ctx.arc(0, 0, POI_R * s, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+  }
+
   // 龍：実際に飛んだ軌跡(pet.hist)を等間隔でリサンプルした背骨に、進行波のうねりを重ねてしなる
   // 蛇体にする。宝石のような深い藍黒の胴＋金の背筋・角・爪＋朱のひげ。
   // 単色の黒灰では「土」のように鈍く見えるため、藍を効かせた黒にグローを重ねて特別感を出す。
