@@ -931,41 +931,55 @@ footer{
     };
   }
 
+  // 錦鯉の柄：紅白(紅)・墨の2色。1斑を2つの楕円を重ねた「墨のにじみ」風の
+  // 不定形にして、単純な楕円より本物の柄に近い縁取りにする
   function makeKoiPattern(){
-    var arr = [], colors = ['#E6491A', '#E6491A', '#453E34'];
+    var arr = [], colors = ['#E6491A', '#E6491A', '#2B2620'];
     var n = 3 + Math.floor(Math.random() * 3);
     for (var i = 0; i < n; i++){
+      var cx = -0.55 + Math.random() * 1.55, cy = -0.3 + Math.random() * 0.6;
+      var rx = 0.16 + Math.random() * 0.2, ry = 0.13 + Math.random() * 0.16;
+      var rot = Math.random() * Math.PI;
+      var color = colors[Math.floor(Math.random() * colors.length)];
       arr.push({
-        x: -0.5 + Math.random() * 1.5, y: -0.3 + Math.random() * 0.6,
-        rx: 0.18 + Math.random() * 0.24, ry: 0.15 + Math.random() * 0.18,
-        rot: Math.random() * Math.PI, color: colors[Math.floor(Math.random() * colors.length)]
+        x: cx, y: cy, rx: rx, ry: ry, rot: rot, color: color,
+        x2: cx + (Math.random() - 0.5) * rx * 0.9, y2: cy + (Math.random() - 0.5) * ry * 0.9,
+        rx2: rx * 0.6, ry2: ry * 0.55, rot2: Math.random() * Math.PI
       });
     }
     return arr;
   }
 
-  // 鯉：金魚より細長い紡錘形＋ランダムな朱・墨の斑（河﨑さんの緋色・焦茶を実測して使用）
+  // 鯉：実物の特徴（魚雷型の体・背びれ・2対のひげ・控えめな叉状の尾びれ）を
+  // 参考に設計。金魚のような流れる尾ではなく、錦鯉らしい引き締まった尾にする。
   function drawKoi(ctx, x, y, heading, size, pet, sway){
     ctx.save();
     ctx.translate(x, y); ctx.rotate(heading); ctx.scale(size, size);
     function koiBody(){
       ctx.beginPath();
-      ctx.moveTo(1.4, 0);
-      ctx.bezierCurveTo(1.18, -0.44, 0.2, -0.5, -0.72, -0.34);
-      ctx.bezierCurveTo(-1.18, -0.26, -1.18, 0.26, -0.72, 0.34);
-      ctx.bezierCurveTo(0.2, 0.5, 1.18, 0.44, 1.4, 0);
+      ctx.moveTo(1.42, 0);
+      ctx.bezierCurveTo(1.2, -0.46, 0.25, -0.52, -0.68, -0.36);
+      ctx.bezierCurveTo(-1.05, -0.28, -1.05, 0.28, -0.68, 0.36);
+      ctx.bezierCurveTo(0.25, 0.52, 1.2, 0.46, 1.42, 0);
       ctx.closePath();
     }
-    // 尾びれ
-    ctx.fillStyle = 'rgba(240,238,230,0.5)';
+    // 尾びれ（叉状・控えめ。金魚のような大きく流れる尾にはしない）
+    ctx.fillStyle = 'rgba(216,203,183,0.55)';
     ctx.beginPath();
-    ctx.moveTo(-0.72, 0);
-    ctx.bezierCurveTo(-1.2, -0.2 + sway*0.2, -1.7, -0.5 + sway*0.42, -1.98, -0.2 + sway*0.5);
-    ctx.quadraticCurveTo(-1.4, -0.02 + sway*0.2, -1.2, 0.02);
-    ctx.bezierCurveTo(-1.6, 0.22 + sway*0.3, -1.9, 0.62 + sway*0.42, -2.0, 0.28 + sway*0.5);
-    ctx.quadraticCurveTo(-1.3, 0.12 + sway*0.16, -0.72, 0);
+    ctx.moveTo(-0.62, -0.03);
+    ctx.quadraticCurveTo(-1.05, -0.4 + sway*0.22, -1.55, -0.48 + sway*0.4);
+    ctx.quadraticCurveTo(-1.32, -0.14 + sway*0.15, -1.12, 0);
+    ctx.quadraticCurveTo(-1.32, 0.14 - sway*0.15, -1.55, 0.48 - sway*0.4);
+    ctx.quadraticCurveTo(-1.05, 0.4 - sway*0.22, -0.62, 0.03);
     ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(120,100,80,0.3)'; ctx.lineWidth = 0.012;
+    ctx.beginPath();
+    ctx.moveTo(-0.65, -0.02); ctx.lineTo(-1.4, -0.36 + sway*0.32);
+    ctx.moveTo(-0.65, 0); ctx.lineTo(-1.5, -0.05 + sway*0.1);
+    ctx.moveTo(-0.65, 0.02); ctx.lineTo(-1.4, 0.36 - sway*0.32);
+    ctx.stroke();
     // 胸びれ
+    ctx.fillStyle = 'rgba(216,203,183,0.55)';
     ctx.beginPath();
     ctx.moveTo(0.45, -0.32); ctx.quadraticCurveTo(0.12, -0.72 - sway*0.1, -0.22, -0.5);
     ctx.quadraticCurveTo(0.05, -0.3, 0.45, -0.32);
@@ -974,21 +988,39 @@ footer{
     // 生成り地
     ctx.fillStyle = '#FCEAD9';
     koiBody(); ctx.fill();
-    // 斑（朱・墨）
+    // 斑（紅・墨）
     ctx.save(); koiBody(); ctx.clip();
     for (var i = 0; i < pet.koiPattern.length; i++){
       var b = pet.koiPattern[i];
       ctx.fillStyle = b.color;
       ctx.beginPath(); ctx.ellipse(b.x, b.y, b.rx, b.ry, b.rot, 0, Math.PI*2); ctx.fill();
+      if (b.x2 != null){
+        ctx.beginPath(); ctx.ellipse(b.x2, b.y2, b.rx2, b.ry2, b.rot2, 0, Math.PI*2); ctx.fill();
+      }
     }
     ctx.restore();
+    // 背びれ（真上から見ると背骨に沿った薄い帯として見える）
+    ctx.fillStyle = 'rgba(190,178,160,0.42)';
+    ctx.beginPath();
+    ctx.moveTo(0.52, -0.015);
+    ctx.quadraticCurveTo(0.05, -0.1 - sway*0.05, -0.38, -0.02);
+    ctx.quadraticCurveTo(0.05, 0.1 + sway*0.05, 0.52, 0.015);
+    ctx.closePath(); ctx.fill();
     // 輪郭（生成り地が明るい背景に沈まないように）
     ctx.strokeStyle = 'rgba(120,108,92,0.4)'; ctx.lineWidth = 0.022;
     koiBody(); ctx.stroke();
-    // ひげ
-    ctx.strokeStyle = 'rgba(90,70,50,0.6)'; ctx.lineWidth = 0.03; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(1.35, -0.05); ctx.quadraticCurveTo(1.56, -0.16, 1.6, -0.02);
-    ctx.moveTo(1.35, 0.05); ctx.quadraticCurveTo(1.56, 0.16, 1.6, 0.02); ctx.stroke();
+    // ひげ（口ひげ＋やや短い一対、計2対）
+    ctx.strokeStyle = 'rgba(90,70,50,0.6)'; ctx.lineCap = 'round';
+    ctx.lineWidth = 0.03;
+    ctx.beginPath();
+    ctx.moveTo(1.35, -0.05); ctx.quadraticCurveTo(1.56, -0.16, 1.6, -0.02);
+    ctx.moveTo(1.35, 0.05); ctx.quadraticCurveTo(1.56, 0.16, 1.6, 0.02);
+    ctx.stroke();
+    ctx.lineWidth = 0.024;
+    ctx.beginPath();
+    ctx.moveTo(1.26, -0.13); ctx.quadraticCurveTo(1.4, -0.26, 1.36, -0.36);
+    ctx.moveTo(1.26, 0.13); ctx.quadraticCurveTo(1.4, 0.26, 1.36, 0.36);
+    ctx.stroke();
     // 目
     ctx.fillStyle = '#20242B';
     ctx.beginPath(); ctx.arc(0.98, -0.2, 0.07, 0, Math.PI*2); ctx.arc(0.98, 0.2, 0.07, 0, Math.PI*2); ctx.fill();
@@ -996,7 +1028,8 @@ footer{
   }
 
   // 龍：実際に飛んだ軌跡(pet.hist)を等間隔でリサンプルした背骨に、進行波のうねりを重ねてしなる
-  // 蛇体にする。墨のような黒灰の胴＋金の背筋と角＋朱のひげ（河﨑さんの龍イラストを実測して配色）。
+  // 蛇体にする。宝石のような深い藍黒の胴＋金の背筋・角・爪＋朱のひげ。
+  // 単色の黒灰では「土」のように鈍く見えるため、藍を効かせた黒にグローを重ねて特別感を出す。
   function drawDragon(ctx, pet, t){
     var tr = pet.hist; if (!tr || tr.length < 3) return;
     var s = pet.size * (1 + 0.3 * (pet.grow || 0));
@@ -1047,32 +1080,73 @@ footer{
       right.push({ x: u[i].x - nx2 * w, y: u[i].y - ny2 * w });
     }
 
-    // 胴（墨のような黒灰のグラデーション）
+    // 胴（藍を効かせた黒のグラデーション＝宝石のような深みを出す）
     ctx.beginPath();
     ctx.moveTo(left[0].x, left[0].y);
     for (var i = 1; i < M; i++) ctx.lineTo(left[i].x, left[i].y);
     for (var i = M - 1; i >= 0; i--) ctx.lineTo(right[i].x, right[i].y);
     ctx.closePath();
     var g = ctx.createLinearGradient(u[0].x, u[0].y, u[M-1].x, u[M-1].y);
-    g.addColorStop(0, pet.dark ? '#5B5B5E' : '#46464A');
-    g.addColorStop(1, '#1E1E20');
+    g.addColorStop(0, pet.dark ? '#3E3E74' : '#2C2C58');
+    g.addColorStop(1, '#0F0F1E');
     ctx.fillStyle = g; ctx.fill();
 
-    // 背の金の筋
-    ctx.strokeStyle = 'rgba(181,126,40,0.85)'; ctx.lineWidth = s * 0.12;
+    // 爪（前脚・後脚。胴の途中2箇所から外向きに）
+    function drawClaw(px, py, ang, sign){
+      ctx.save(); ctx.translate(px, py); ctx.rotate(ang);
+      // 脚（体色より明るい藍にして輪郭線も足し、シルエットに溶け込ませない）
+      ctx.fillStyle = pet.dark ? '#4E4E8C' : '#3A3A72';
+      ctx.beginPath();
+      ctx.moveTo(0, -0.2*s);
+      ctx.quadraticCurveTo(0.85*s*sign, -0.1*s, 1.25*s*sign, 0.2*s);
+      ctx.quadraticCurveTo(0.8*s*sign, 0.16*s, 0, 0.2*s);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = 'rgba(15,15,30,0.5)'; ctx.lineWidth = 0.03*s;
+      ctx.stroke();
+      // 爪（3本・太く長く）
+      ctx.strokeStyle = 'rgba(240,200,100,0.95)'; ctx.lineWidth = 0.06*s; ctx.lineCap = 'round';
+      for (var ci = -1; ci <= 1; ci++){
+        ctx.beginPath();
+        ctx.moveTo(1.1*s*sign, 0.18*s + ci*0.14*s);
+        ctx.lineTo(1.55*s*sign, 0.26*s + ci*0.26*s);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    [[0.32, 1], [0.6, -1]].forEach(function(leg){
+      var li = Math.max(1, Math.min(M - 2, Math.round((M - 1) * leg[0])));
+      var pa3 = u[li - 1], pb3 = u[li + 1];
+      var la = Math.atan2(pb3.y - pa3.y, pb3.x - pa3.x);
+      var lnx = -Math.sin(la), lny = Math.cos(la);
+      var lw = w0 * (0.14 + 0.86 * Math.pow(1 - li / (M - 1), 0.55));
+      drawClaw(u[li].x + lnx*leg[1]*lw*0.75, u[li].y + lny*leg[1]*lw*0.75, la, leg[1]);
+    });
+
+    // 背筋の金（グロー＋本線。単線より特別感が出る）
+    var spinePath = new Path2D();
+    for (var i = 1; i < M - 1; i++){ if (i === 1) spinePath.moveTo(u[i].x, u[i].y); else spinePath.lineTo(u[i].x, u[i].y); }
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.beginPath();
-    for (var i = 1; i < M - 1; i++){ if (i === 1) ctx.moveTo(u[i].x, u[i].y); else ctx.lineTo(u[i].x, u[i].y); }
-    ctx.stroke();
+    ctx.strokeStyle = 'rgba(232,185,74,0.22)'; ctx.lineWidth = s * 0.32; ctx.stroke(spinePath);
+    ctx.strokeStyle = 'rgba(240,200,100,0.95)'; ctx.lineWidth = s * 0.09; ctx.stroke(spinePath);
 
     // 頭
     var ha = Math.atan2(u[0].y - u[1].y, u[0].x - u[1].x);
     ctx.save(); ctx.translate(u[0].x, u[0].y); ctx.rotate(ha);
-    ctx.fillStyle = pet.dark ? '#525256' : '#3C3C40';
+    // たてがみ（後方へ流れる数本の金の筋。頭の後ろに描いてから頭本体を重ねる）
+    ctx.strokeStyle = 'rgba(232,185,74,0.7)'; ctx.lineWidth = 0.045*s; ctx.lineCap = 'round';
+    for (var mi = 0; mi < 5; mi++){
+      var mfr = mi / 4 - 0.5;
+      var flick = Math.sin(t * 3.4 + mi * 1.1) * 0.12 * s;
+      ctx.beginPath();
+      ctx.moveTo(-0.18*s, mfr*0.5*s);
+      ctx.quadraticCurveTo(-0.95*s, mfr*1.3*s + flick*0.4, -1.75*s, mfr*1.6*s + flick);
+      ctx.stroke();
+    }
+    ctx.fillStyle = pet.dark ? '#3A3A70' : '#282854';
     ctx.beginPath(); ctx.ellipse(0.2*s, 0, 0.62*s, 0.46*s, 0, 0, Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.ellipse(0.66*s, 0.02*s, 0.32*s, 0.27*s, 0, 0, Math.PI*2); ctx.fill();
     // 角（金）
-    ctx.strokeStyle = 'rgba(181,126,40,0.95)'; ctx.lineWidth = 0.1*s; ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(232,185,74,0.95)'; ctx.lineWidth = 0.1*s; ctx.lineCap = 'round';
     ctx.beginPath(); ctx.moveTo(-0.1*s, -0.26*s); ctx.quadraticCurveTo(-0.78*s, -0.42*s, -0.95*s, -0.82*s); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(-0.1*s, 0.26*s); ctx.quadraticCurveTo(-0.78*s, 0.42*s, -0.95*s, 0.82*s); ctx.stroke();
     // ひげ（朱・長い・波打つ）
@@ -1080,8 +1154,10 @@ footer{
     var ww = Math.sin(t*3) * 0.2*s;
     ctx.beginPath(); ctx.moveTo(0.82*s, -0.14*s); ctx.quadraticCurveTo(1.55*s, -0.5*s + ww, 2.25*s, -0.06*s + ww); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(0.82*s, 0.14*s); ctx.quadraticCurveTo(1.55*s, 0.5*s - ww, 2.25*s, 0.06*s - ww); ctx.stroke();
-    // 目（金）
-    ctx.fillStyle = '#E8C97A';
+    // 目（金・グロー付き）
+    ctx.fillStyle = 'rgba(232,185,74,0.35)';
+    ctx.beginPath(); ctx.ellipse(0.14*s, -0.2*s, 0.22*s, 0.18*s, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#F0D48A';
     ctx.beginPath(); ctx.ellipse(0.14*s, -0.2*s, 0.14*s, 0.11*s, 0, 0, Math.PI*2); ctx.fill();
     ctx.fillStyle = '#20242B';
     ctx.beginPath(); ctx.arc(0.18*s, -0.2*s, 0.06*s, 0, Math.PI*2); ctx.fill();
