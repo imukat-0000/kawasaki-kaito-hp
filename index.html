@@ -274,6 +274,13 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:1.05rem; line-height:2.3;
 }
+.archive-cta{ margin-bottom:2.6rem; font-size:.85rem; }
+.archive-cta a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  padding-bottom:.15em; transition:border-color .25s;
+}
+.archive-cta a:hover{ border-color:var(--hido); }
 .chapter{ margin-bottom:clamp(3.5rem,7vw,5.5rem); }
 .chapter-head{ margin-bottom:1.8rem; display:flex; flex-wrap:wrap; align-items:baseline; gap:1rem; }
 .chapter-head h3{
@@ -479,6 +486,7 @@ footer{
     <ul>
       <li class="sub"><a href="#realism">工芸リアリズム</a></li>
       <li><a href="#works">作品</a></li>
+      <li class="sub"><a href="works/">作品一覧</a></li>
       <li class="sub"><a href="#artist">河﨑海斗</a></li>
       <li class="sub"><a href="#gallery">ギャラリー</a></li>
       <li><a href="#exhibitions">展示</a></li>
@@ -517,6 +525,7 @@ footer{
   <section id="works" class="io">
     <div class="sec-head"><h2>作品</h2><span>WORKS</span></div>
     <p class="works-lede">河﨑海斗は、金魚をつくっているのではない。金魚が金魚として存在するための――水、光、器、素材、見る者の記憶を組み直している。</p>
+    <p class="archive-cta"><a href="works/">制作年別のアーカイブで全作品を見る →</a></p>
 
     <figure class="works-feature">
       <div class="ph"><img src="img/feature_kingyo.jpg" alt="樹脂の内部に置かれた鋳金の金魚" loading="lazy"></div>
@@ -527,25 +536,25 @@ footer{
       <div class="chapter-head"><h3>存在は、水の中で変化する</h3><span>金魚 — GOLDFISH</span></div>
       <div class="works-grid">
         <article class="work">
-          <div class="work-visual"><span class="kanji">朱</span><span class="en">Vermilion Wakin</span></div>
+          <div class="work-visual"><img src="img/work_shuiro-wakin.jpg" alt="朱色和金 — 樹脂に封入された鋳金の和金" loading="lazy"></div>
           <div class="work-body">
             <h4>朱色和金<small>2025</small></h4>
             <span class="work-award">第19回 藝大アートプラザ・アートアワード 小学館賞</span>
-            <p>純銅を1,040度まで熱し、急冷する。表面に生じる赤い酸化皮膜——江戸時代の技法「緋銅」。赤は塗られるのではなく、内部から現れる。</p>
+            <p>真鍮で鋳込まれた金魚の肌に、酸化銅の粉末を幾度も擦り込んでいく。赤は熱と急冷が生むのではなく、手の反復という条件のなかで定着する。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>真鍮・銅・銀・樹脂</dd></div>
-              <div><dt>技法</dt><dd>鋳金・緋銅</dd></div>
+              <div><dt>素材</dt><dd>銀・銅・真鍮（アルミ入り）</dd></div>
+              <div><dt>技法</dt><dd>鋳金・第一酸化銅の擦り付け</dd></div>
             </dl>
           </div>
         </article>
         <article class="work">
-          <div class="work-visual"><span class="kanji">黒</span><span class="en">Black Chotengan</span></div>
+          <div class="work-visual"><img src="img/work_koku-chotengan.jpg" alt="黒頂天眼 — 樹脂に封入された黒の頂天眼" loading="lazy"></div>
           <div class="work-body">
             <h4>黒頂天眼<small>2024</small></h4>
             <span class="work-award">第18回 藝大アートプラザ・アートアワード 審査員特別賞</span>
             <p>上を向いて泳ぐ金魚「頂天眼」。緋銅の赤とは別の、黒という色の条件を金属に問うた作品。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>真鍮・樹脂</dd></div>
+              <div><dt>素材</dt><dd>銀・銅・真鍮（アルミ入り）</dd></div>
               <div><dt>サイズ</dt><dd>25 × 17.5 × 6 cm</dd></div>
             </dl>
           </div>
@@ -557,18 +566,18 @@ footer{
             <span class="work-award">サロン・ド・プランタン賞</span>
             <p>金魚作品の100倍を超える、現時点での最大作品。金属鋳造の物理的な限界と交渉しながら立ち上げられた。</p>
             <dl class="work-specs">
-              <div><dt>技法</dt><dd>鋳金</dd></div>
+              <div><dt>技法</dt><dd>鋳金・重力鋳造・緋銅酸化</dd></div>
               <div><dt>展示</dt><dd>「MATSURI INORU」新丸ビル（〜8/2）</dd></div>
             </dl>
           </div>
         </article>
         <article class="work">
-          <div class="work-visual"><span class="kanji">蘭</span><span class="en">Hakomono: Ranchu</span></div>
+          <div class="work-visual"><img src="img/work_hakomono-ranchu.jpg" alt="箱物 蘭鋳 — 樹脂の直方体に封入された蘭鋳" loading="lazy"></div>
           <div class="work-body">
             <h4>箱物 蘭鋳<small>2022</small></h4>
             <p>水の外に出た金魚は、同じ姿を保っていても、別の存在へと移行する。失われるのはかたちではなく、条件である。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>真鍮・樹脂・紙</dd></div>
+              <div><dt>素材</dt><dd>銀・銅・真鍮（アルミ入り）</dd></div>
               <div><dt>サイズ</dt><dd>10 × 10 × 10 cm</dd></div>
             </dl>
           </div>
@@ -585,7 +594,7 @@ footer{
             <h4>雨ノ蛙「狐の嫁入り」<small>2025</small></h4>
             <p>ガラス、光、色、背景。その条件のなかで、カエルは別の存在として立ち上がる。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>銅・真鍮・樹脂・ガラス</dd></div>
+              <div><dt>素材</dt><dd>銀・銅・真鍮（アルミ入り）</dd></div>
               <div><dt>サイズ</dt><dd>15 × 5 × 20 cm</dd></div>
             </dl>
           </div>
@@ -596,7 +605,7 @@ footer{
             <h4>画狂乃蛙<small>2025–2026</small></h4>
             <p>葛飾北斎「蛙とゆきのした」に描かれた蛙を、北斎と同じ江戸時代の技法で立体に起こす。タイトルは北斎の号「画狂人」との掛け言葉。</p>
             <dl class="work-specs">
-              <div><dt>技法</dt><dd>鋳金・緋銅</dd></div>
+              <div><dt>技法</dt><dd>鋳金・硫化・銀メッキ</dd></div>
               <div><dt>展示</dt><dd>北斎館 個展（2026年9月〜）</dd></div>
             </dl>
           </div>
@@ -613,7 +622,7 @@ footer{
             <h4>溶解変化<small>2022</small></h4>
             <p>殻、隙間、重さ、身を隠す場所。その条件のなかで、タコは別の存在として立ち上がる。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>青銅・貝殻</dd></div>
+              <div><dt>素材</dt><dd>青銅</dd></div>
               <div><dt>サイズ</dt><dd>7 × 5 × 5 cm</dd></div>
             </dl>
           </div>
@@ -636,13 +645,13 @@ footer{
           </div>
         </article>
         <article class="work">
-          <div class="work-visual"><span class="kanji">紅</span><span class="en">Autumn Leaves</span></div>
+          <div class="work-visual"><img src="img/work_kouyou.jpg" alt="紅葉 — 緋銅で赤く染めた鋳金の紅葉" loading="lazy"></div>
           <div class="work-body">
             <h4>紅葉<small>2025</small></h4>
             <span class="work-award">第20回 藝大アートプラザ・アートアワード 入選</span>
             <p>銅を紅葉の形に鋳造し、赤を生成させる。葉が色づく秋の一瞬という時間が、金属の中に留められている。</p>
             <dl class="work-specs">
-              <div><dt>素材</dt><dd>銅・真鍮</dd></div>
+              <div><dt>素材</dt><dd>銅</dd></div>
               <div><dt>サイズ</dt><dd>10 × 10 × 10 cm</dd></div>
             </dl>
           </div>
