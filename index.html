@@ -219,6 +219,25 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
   nav a{ font-size:1.1rem; letter-spacing:.14em; }
 }
 
+/* ============ quicknav（右端の小さな現在地ナビ） ============ */
+.quicknav{
+  position:fixed; right:1.4rem; top:50%; transform:translateY(-50%); z-index:15;
+  display:flex; flex-direction:column; gap:1.1rem;
+}
+.quicknav a{
+  position:relative; display:block; width:7px; height:7px; border-radius:50%;
+  background:color-mix(in srgb, var(--ink) 28%, transparent);
+  transition:background .25s ease, transform .25s ease;
+}
+.quicknav a:hover, .quicknav a.active{ background:var(--hido); transform:scale(1.4); }
+.quicknav a::after{
+  content:attr(data-label); position:absolute; right:1.3rem; top:50%; transform:translateY(-50%);
+  font-size:.62rem; letter-spacing:.14em; color:var(--ink-soft); white-space:nowrap;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.quicknav a:hover::after{ opacity:1; }
+@media (max-width:900px){ .quicknav{ display:none; } }
+
 /* ============ hero ============ */
 main{ position:relative; z-index:1; }
 .hero{
@@ -371,6 +390,27 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .archive-banner-icon{ font-size:1.6rem; color:var(--hido); transition:transform .25s ease; }
 .archive-banner:hover .archive-banner-icon{ transform:translateX(6px); }
 
+/* gallery（写真中心のシンプルなグリッド） */
+.gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1.3rem; }
+.gallery-grid figure{ margin:0; }
+.gallery-grid .ph{
+  aspect-ratio:4/3; overflow:hidden; border-radius:2px;
+  border:1px solid var(--line); background:var(--card);
+}
+.gallery-grid img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .6s ease;
+}
+.gallery-grid figure:hover img{ transform:scale(1.04); }
+.gallery-grid figcaption{
+  margin-top:.7rem; text-align:center;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:.8rem; letter-spacing:.2em; color:var(--ink-soft);
+}
+.gallery-grid .wide{ grid-column:1 / -1; }
+.gallery-grid .wide .ph{ aspect-ratio:21/9; }
+@media (max-width:640px){ .gallery-grid .wide .ph{ aspect-ratio:16/10; } }
+
 /* artist */
 .artist-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.7fr); gap:3rem; max-width:70rem; }
 @media (max-width:820px){ .artist-grid{ grid-template-columns:1fr; } }
@@ -387,6 +427,12 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .artist-photo img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:30% 50%;
+}
+.artist-roles{ display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:1.4rem; }
+.artist-roles span{
+  font-size:.7rem; letter-spacing:.14em; color:var(--hido);
+  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  border-radius:999px; padding:.35em 1.1em;
 }
 .artist-lede{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -506,15 +552,24 @@ footer{
     <li><a href="#exhibitions">展示情報</a></li>
     <li><a href="#works">代表作品</a></li>
     <li><a href="works/">作品一覧</a></li>
+    <li><a href="#gallery">ギャラリー</a></li>
     <li><a href="#artist">河﨑海斗</a></li>
     <li><a href="#contact">コンタクト</a></li>
   </ul>
 </nav>
 
+<nav class="quicknav" aria-label="クイックナビゲーション">
+  <a href="#top" data-label="TOP"></a>
+  <a href="#works" data-label="WORKS"></a>
+  <a href="#gallery" data-label="GALLERY"></a>
+  <a href="#artist" data-label="ARTIST"></a>
+  <a href="#contact" data-label="CONTACT"></a>
+</nav>
+
 <main id="top">
 
   <!-- First View: KOGEI REALISM（構成案どおり） -->
-  <section class="hero" aria-label="ヒーロー">
+  <section class="hero" id="hero" aria-label="ヒーロー">
     <div class="hero-side">
       <p class="hero-latin rise">KOGEI<br>REALISM</p>
       <p class="hero-ja rise">工芸リアリズム</p>
@@ -619,12 +674,52 @@ footer{
     </a>
   </section>
 
+  <!-- ギャラリー -->
+  <section id="gallery" class="io">
+    <div class="sec-head"><h2>ギャラリー</h2><span>GALLERY</span></div>
+    <div class="gallery-grid">
+      <figure class="wide">
+        <div class="ph"><img src="img/g_koi_install.jpg" alt="修了作品「錦鯉」の展示風景" loading="lazy"></div>
+        <figcaption>錦鯉</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_bag_single.jpg" alt="袋状の樹脂に封入された金魚" loading="lazy" style="object-position:50% 32%"></div>
+        <figcaption>包</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_bag_group.jpg" alt="樹脂に封入された金魚の群れ" loading="lazy"></div>
+        <figcaption>群</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_cube.jpg" alt="立方体の樹脂に封入された魚" loading="lazy"></div>
+        <figcaption>方</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_frog_brick.jpg" alt="煉瓦の上に置かれた鋳金のカエル" loading="lazy"></div>
+        <figcaption>蛙</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_leaves_blue.jpg" alt="板の上に重なる金属の葉" loading="lazy"></div>
+        <figcaption>葉</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_leaves_red.jpg" alt="展示台に散らされた紅葉" loading="lazy"></div>
+        <figcaption>紅</figcaption>
+      </figure>
+      <figure>
+        <div class="ph"><img src="img/g_process_hand.jpg" alt="樹脂封入の工程" loading="lazy" style="object-position:50% 35%"></div>
+        <figcaption>工程</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- 河﨑海斗 -->
   <section id="artist" class="io">
     <div class="sec-head"><h2>河﨑海斗</h2><span>KAITO KAWASAKI</span></div>
     <div class="artist-grid">
       <div class="artist-photo"><img src="img/artist_studio.jpg" alt="工房で制作する河﨑海斗" loading="lazy"></div>
       <div class="artist-text">
+        <div class="artist-roles"><span>金工作家</span><span>鋳金</span><span>KOGEI REALISM</span></div>
         <p class="artist-lede">河﨑海斗は、生命を模倣する作家ではない。生命が立ち上がる場を、工芸によってつくる作家である。</p>
         <p>2000年、広島県呉市生まれ。金工作家（鋳金）。2026年、東京藝術大学大学院美術研究科工芸専攻鋳金研究分野 修士課程修了。東京を拠点に制作する。</p>
         <p>鋳造した金魚をアクリル樹脂の内部に置く。樹脂は付加された素材でも、保護のための外殻でもない。それは環境として機能する——すなわち、水のもうひとつの形態である。磨き、加熱、酸素、温度。それらの条件を精密に調整することで、色は生成される。</p>
@@ -1766,6 +1861,30 @@ footer{
     ios.forEach(function(el){ ob.observe(el); });
   } else {
     ios.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- quicknav：現在地のハイライト ---------- */
+  var quicknavLinks = document.querySelectorAll('.quicknav a');
+  if (quicknavLinks.length && 'IntersectionObserver' in window){
+    var qnTargets = [];
+    quicknavLinks.forEach(function(a){
+      var href = a.getAttribute('href');
+      var targetId = href === '#top' ? 'hero' : href.slice(1);
+      var el = document.getElementById(targetId);
+      if (el) qnTargets.push({ link: a, el: el });
+    });
+    var qnObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          var match = qnTargets.filter(function(t){ return t.el === en.target; })[0];
+          if (match){
+            quicknavLinks.forEach(function(a){ a.classList.remove('active'); });
+            match.link.classList.add('active');
+          }
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    qnTargets.forEach(function(t){ qnObserver.observe(t.el); });
   }
 })();
 </script>
