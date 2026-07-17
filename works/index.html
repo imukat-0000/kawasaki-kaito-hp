@@ -418,6 +418,12 @@ footer{
     var y = new Date().getFullYear();
     if (y > 2026) yEl.textContent = "2026–" + y;
   }
+
+  /* トップページの代表作品カードなどから #id で直接開けるようにする */
+  if (location.hash){
+    var deepLinked = WORKS.filter(function(w){ return "#" + w.id === location.hash; })[0];
+    if (deepLinked) openModal(deepLinked);
+  }
 })();
 </script>
 </body>
