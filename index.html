@@ -247,7 +247,7 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
 main{ position:relative; z-index:1; }
 .hero{
   min-height:100svh;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center; justify-content:flex-end;
   padding:8.5rem clamp(1.4rem,6vw,5rem) 4rem;
   gap:2rem; position:relative; overflow:hidden;
 }
@@ -282,24 +282,6 @@ main{ position:relative; z-index:1; }
   .hero-bg img{ animation:none; opacity:0; }
   .hero-bg img:first-child{ opacity:1; }
 }
-.hero-side{ max-width:38rem; position:relative; z-index:1; }
-.hero-latin{
-  font-family:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;
-  font-size:clamp(2.6rem, 6.4vw, 5rem);
-  font-weight:500; letter-spacing:.08em; line-height:1.1;
-  text-wrap:balance;
-}
-.hero-ja{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.1rem, 2.4vw, 1.5rem);
-  letter-spacing:.5em; margin-top:.9rem; color:var(--ink-soft);
-}
-.hero-thesis{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.05rem, 2vw, 1.3rem);
-  line-height:2.3; margin-top:2.4rem; text-wrap:balance;
-}
-.hero-thesis em{ font-style:normal; color:var(--hido); }
 .hero-name{
   writing-mode:vertical-rl;
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -321,14 +303,12 @@ main{ position:relative; z-index:1; }
   background:linear-gradient(var(--ink-soft), transparent);
 }
 @media (max-width:760px){
-  .hero{ flex-direction:column-reverse; align-items:flex-start; justify-content:center; }
-  .hero-name{ align-self:flex-end; font-size:clamp(3.2rem,15vw,5rem); }
+  .hero-name{ font-size:clamp(3.2rem,15vw,5rem); }
 }
 
 /* reveal on intro end */
 .rise{ opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
 body.revealed .rise{ opacity:1; transform:none; }
-.hero .rise:nth-of-type(2){ transition-delay:.18s; }
 
 /* ============ sections ============ */
 section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白約3割減 */
@@ -670,15 +650,10 @@ footer{
   <!-- First View: KOGEI REALISM（構成案どおり） -->
   <section class="hero" id="hero" aria-label="ヒーロー">
     <div class="hero-bg" aria-hidden="true">
-      <img src="img/feature_kingyo.jpg" alt="" loading="eager">
-      <img src="img/g_koi_install.jpg" alt="" loading="lazy">
-      <img src="img/g_leaves_red.jpg" alt="" loading="lazy">
-      <img src="img/work_kouyou.jpg" alt="" loading="lazy">
-    </div>
-    <div class="hero-side">
-      <p class="hero-latin rise">KOGEI<br>REALISM</p>
-      <p class="hero-ja rise">工芸リアリズム</p>
-      <p class="hero-thesis rise">工芸リアリズムとは、<em>存在の条件</em>をつくるリアリズムである。</p>
+      <img src="img/work_shuiro-wakin.jpg" alt="" loading="eager">
+      <img src="img/work_koku-chotengan.jpg" alt="" loading="lazy">
+      <img src="img/work_hakomono-ranchu.jpg" alt="" loading="lazy">
+      <img src="img/work_kiiro-chotengan.jpg" alt="" loading="lazy">
     </div>
     <h1 class="hero-name rise">河﨑海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
