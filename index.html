@@ -169,31 +169,37 @@ body.kg-scoop, body.kg-scoop *{ cursor:none !important; }
    なってしまい、モバイル全画面オーバーレイがheaderの高さ内に閉じ込められるのを防ぐため） */
 header{
   position:fixed; top:0; left:0; right:0; z-index:30;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:1rem clamp(1.2rem, 4vw, 3rem);
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
   background:color-mix(in srgb, var(--paper) 84%, transparent);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
 }
 .brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none; position:relative; z-index:26;
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.05rem; letter-spacing:.3em; text-decoration:none; font-weight:600;
-  position:relative; z-index:26;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
+}
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
 }
 #mainNav{
-  position:fixed; top:0; right:0; z-index:21;
-  display:flex; align-items:center;
-  padding:1rem clamp(1.2rem, 4vw, 3rem);
+  position:fixed; top:6.2rem; right:clamp(1.2rem, 4vw, 3rem); z-index:21;
+  display:flex; align-items:flex-end;
 }
-#mainNav ul{ display:flex; gap:clamp(1rem,2.6vw,2.2rem); list-style:none; }
+#mainNav ul{ display:flex; flex-direction:column; align-items:flex-end; gap:1.15rem; list-style:none; }
 #mainNav a{
-  text-decoration:none; font-size:.8rem; letter-spacing:.16em;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  text-decoration:none; font-size:.85rem; letter-spacing:.08em;
   color:var(--ink-soft); transition:color .25s;
 }
 #mainNav a:hover{ color:var(--hido); }
 
 .nav-toggle{
-  display:none; position:relative; z-index:26;
+  display:flex; position:relative; z-index:26;
   flex-direction:column; align-items:center; justify-content:center; gap:5px;
   width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
 }
@@ -206,10 +212,9 @@ body.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
 body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
 
 @media (max-width:760px){
-  .nav-toggle{ display:flex; }
   #mainNav{
     inset:0; right:auto; z-index:24;
-    width:100%; height:100%; padding:0;
+    width:100%; height:100%; padding:0; align-items:center;
     background:var(--paper);
     justify-content:center;
     opacity:0; visibility:hidden; transition:opacity .3s ease;
@@ -243,8 +248,12 @@ main{ position:relative; z-index:1; }
 .hero{
   min-height:100svh;
   display:flex; align-items:center; justify-content:space-between;
-  padding:6rem clamp(1.4rem,6vw,5rem) 4rem;
+  padding:8.5rem clamp(1.4rem,6vw,5rem) 4rem;
   gap:2rem; position:relative; overflow:hidden;
+}
+@media (min-width:761px){
+  /* 右端のクイックナビ・グローバルナビと縦書きの名前が重ならないよう余白を確保 */
+  .hero{ padding-right:clamp(9rem,15vw,14rem); }
 }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
 .hero-bg img{
@@ -331,29 +340,45 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
 .sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
 
-/* concept */
-.concept-lede{
-  max-width:44rem;
+/* concept（Philosophyレイアウト：左にラベル、右に大きな和文＋英訳） */
+.phil-grid{
+  display:grid; grid-template-columns:10rem 1fr; gap:2rem 3rem; align-items:start;
+}
+@media (max-width:700px){ .phil-grid{ grid-template-columns:1fr; gap:1.2rem; } }
+.phil-label{
+  display:flex; flex-direction:column; gap:.5rem;
+  font-family:"Didot","Bodoni 72",Georgia,serif;
+  font-size:.9rem; letter-spacing:.16em; color:var(--ink-soft);
+}
+.phil-label small{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.66rem; letter-spacing:.2em; color:var(--hido);
+}
+.phil-jp{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.25rem, 2.6vw, 1.6rem); line-height:2.2; text-wrap:balance;
+  font-size:clamp(1.5rem,3.4vw,2.3rem); font-weight:600; line-height:1.65; text-wrap:balance;
 }
-.concept-sub{
-  max-width:44rem; margin-top:1.6rem; font-size:.92rem; color:var(--ink-soft);
-  border-left:2px solid var(--hido); padding-left:1.2rem;
+.phil-en{
+  margin-top:1.8rem;
+  font-family:"Didot","Bodoni 72",Georgia,serif;
+  font-size:.88rem; letter-spacing:.03em; line-height:1.9; color:var(--ink-soft);
 }
-.concept-more{ margin-top:2.6rem; padding-top:1.8rem; border-top:1px solid var(--line); }
+.concept-lede{
+  max-width:44rem; margin-bottom:2.2rem;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.1rem, 2.2vw, 1.35rem); line-height:2.1; text-wrap:balance;
+}
+.concept-more{ margin-top:2.6rem; }
 .concept-more summary{
-  cursor:pointer; list-style:none; display:inline-flex; align-items:baseline; gap:.9rem;
+  cursor:pointer; list-style:none; display:block; text-align:right;
+  font-family:"Didot","Bodoni 72",Georgia,serif;
+  font-size:.85rem; letter-spacing:.15em; color:var(--ink);
+  text-decoration:underline; text-underline-offset:.3em;
 }
 .concept-more summary::-webkit-details-marker{ display:none; }
-.concept-more summary .en{
-  font-family:"Didot","Bodoni 72",Georgia,serif;
-  font-size:.85rem; letter-spacing:.2em; color:var(--hido);
-}
-.concept-more summary .en::after{ content:"+"; margin-left:.6em; }
-.concept-more[open] summary .en::after{ content:"–"; }
-.concept-more summary .jp{ font-size:.78rem; letter-spacing:.14em; color:var(--ink-soft); }
-.concept-more .concept-block{ margin-top:2.2rem; max-width:44rem; }
+.concept-more summary:hover{ color:var(--hido); }
+.concept-more[open] summary{ margin-bottom:2.4rem; }
+.concept-more .concept-block{ padding-top:1.8rem; border-top:1px solid var(--line); max-width:44rem; }
 .concept-block h3{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.05rem,2vw,1.25rem); font-weight:600; letter-spacing:.12em;
@@ -615,7 +640,7 @@ footer{
 <canvas id="gamefx" aria-hidden="true"></canvas>
 
 <header>
-  <a class="brand" href="#top">河﨑海斗</a>
+  <a class="brand" href="#top">河﨑海斗<span class="brand-tagline">金工作家<br>鋳金</span></a>
   <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
     <span></span><span></span><span></span>
   </button>
@@ -661,13 +686,18 @@ footer{
 
   <!-- 思想3セクション -->
   <section id="concept" class="io">
-    <div class="sec-head"><h2>コンセプト</h2><span>CONCEPT</span></div>
-    <p class="concept-lede">河﨑海斗は、金魚をつくっているのではない。金魚が金魚として存在するための――水、光、器、素材、見る者の記憶を組み直している。</p>
-    <p class="concept-sub">生命を模倣するのではない。生命が現れる場をつくる。</p>
+    <div class="phil-grid">
+      <span class="phil-label">Concept<small>コンセプト</small></span>
+      <div class="phil-content">
+        <p class="phil-jp">生命を模倣するのではない。<br>生命が現れる場をつくる。</p>
+        <p class="phil-en">Not imitating life.<br>Creating where life emerges.</p>
+      </div>
+    </div>
 
     <details class="concept-more">
-      <summary><span class="en">Read More</span><span class="jp">工芸リアリズムについて</span></summary>
+      <summary>Read More</summary>
       <div class="concept-block">
+        <p class="concept-lede">河﨑海斗は、金魚をつくっているのではない。金魚が金魚として存在するための――水、光、器、素材、見る者の記憶を組み直している。</p>
         <h3>工芸リアリズム<small>KOGEI REALISM</small></h3>
         <ul class="realism-list">
           <li><span class="no">I</span>
