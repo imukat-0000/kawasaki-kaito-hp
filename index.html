@@ -401,12 +401,12 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
   gap:1.4rem; margin-bottom:2.6rem;
 }
 .zukan-card{
-  display:block; text-decoration:none; color:inherit;
-  border:1px solid var(--line); border-radius:2px; overflow:hidden;
+  display:flex; flex-direction:column; text-decoration:none; color:inherit;
+  background:var(--card); border:1px solid var(--line); border-radius:2px; overflow:hidden;
   transition:border-color .25s ease, transform .25s ease;
 }
 .zukan-card:hover{ border-color:var(--hido); transform:translateY(-4px); }
-.zukan-ph{ aspect-ratio:3/4; position:relative; overflow:hidden; }
+.zukan-ph{ aspect-ratio:3/4; position:relative; overflow:hidden; border-bottom:1px solid var(--line); }
 .zukan-ph img{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   transition:transform .6s ease;
@@ -422,18 +422,14 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:2.8rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
 }
-.zukan-meta{
-  position:absolute; left:0; right:0; bottom:0; z-index:1;
-  padding:2.2rem .9rem .9rem; display:flex; flex-direction:column; gap:.3rem;
-  background:linear-gradient(180deg, transparent, rgba(10,8,6,.62) 88%);
-}
-.zukan-animal{ font-size:.62rem; letter-spacing:.18em; color:#F7F4EC; opacity:.9; display:flex; gap:.5em; align-items:baseline; }
-.zukan-animal small{ color:#F7F4EC; opacity:.7; letter-spacing:.1em; font-size:.9em; }
+.zukan-meta{ padding:.85rem .9rem 1rem; display:flex; flex-direction:column; gap:.35rem; }
+.zukan-animal{ font-size:.62rem; letter-spacing:.18em; color:var(--hido); display:flex; gap:.5em; align-items:baseline; }
+.zukan-animal small{ color:var(--ink-soft); letter-spacing:.1em; font-size:.9em; }
 .zukan-title{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:.92rem; font-weight:600; letter-spacing:.04em; color:#F7F4EC;
+  font-size:.92rem; font-weight:600; letter-spacing:.04em;
 }
-.zukan-title small{ font-weight:400; font-size:.68rem; color:#F7F4EC; opacity:.75; margin-left:.5em; letter-spacing:.06em; }
+.zukan-title small{ font-weight:400; font-size:.68rem; color:var(--ink-soft); margin-left:.5em; letter-spacing:.06em; }
 
 .archive-banner{
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
@@ -753,34 +749,24 @@ footer{
 
     <div class="zukan-grid">
       <a class="zukan-card" href="works/#nishikigoi">
-        <div class="zukan-ph">
-          <img src="img/work_nishikigoi.jpg" alt="錦鯉" loading="lazy">
-          <div class="zukan-meta"><span class="zukan-animal">鯉<small>KOI</small></span><span class="zukan-title">錦鯉<small>2026 / 修了作品</small></span></div>
-        </div>
+        <div class="zukan-ph"><img src="img/work_nishikigoi.jpg" alt="錦鯉" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">鯉<small>KOI</small></span><span class="zukan-title">錦鯉<small>2026 / 修了作品</small></span></div>
       </a>
       <a class="zukan-card" href="works/#shuiro-wakin">
-        <div class="zukan-ph">
-          <img src="img/work_shuiro-wakin.jpg" alt="朱色和金" loading="lazy">
-          <div class="zukan-meta"><span class="zukan-animal">金魚<small>GOLDFISH</small></span><span class="zukan-title">朱色和金<small>2024</small></span></div>
-        </div>
+        <div class="zukan-ph"><img src="img/work_shuiro-wakin.jpg" alt="朱色和金" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">金魚<small>GOLDFISH</small></span><span class="zukan-title">朱色和金<small>2024</small></span></div>
       </a>
       <a class="zukan-card" href="works/#ame-kaeru">
-        <div class="zukan-ph">
-          <img src="img/g_frog_hand.jpg" alt="緑青のカエルの作品" loading="lazy">
-          <div class="zukan-meta"><span class="zukan-animal">カエル<small>FROG</small></span><span class="zukan-title">雨ノ蛙「狐の嫁入り」<small>2025</small></span></div>
-        </div>
+        <div class="zukan-ph"><img src="img/g_frog_hand.jpg" alt="緑青のカエルの作品" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">カエル<small>FROG</small></span><span class="zukan-title">雨ノ蛙「狐の嫁入り」<small>2025</small></span></div>
       </a>
       <a class="zukan-card" href="works/#w08">
-        <div class="zukan-ph zukan-ph-placeholder">
-          <span class="kanji">黄</span>
-          <div class="zukan-meta"><span class="zukan-animal">メダカ<small>MEDAKA</small></span><span class="zukan-title">黄粉メダカ<small>2026</small></span></div>
-        </div>
+        <div class="zukan-ph zukan-ph-placeholder"><span class="kanji">黄</span></div>
+        <div class="zukan-meta"><span class="zukan-animal">メダカ<small>MEDAKA</small></span><span class="zukan-title">黄粉メダカ<small>2026</small></span></div>
       </a>
       <a class="zukan-card" href="works/#w07">
-        <div class="zukan-ph zukan-ph-placeholder">
-          <span class="kanji">海</span>
-          <div class="zukan-meta"><span class="zukan-animal">海亀<small>SEA TURTLE</small></span><span class="zukan-title">青海亀<small>2026</small></span></div>
-        </div>
+        <div class="zukan-ph zukan-ph-placeholder"><span class="kanji">海</span></div>
+        <div class="zukan-meta"><span class="zukan-animal">海亀<small>SEA TURTLE</small></span><span class="zukan-title">青海亀<small>2026</small></span></div>
       </a>
     </div>
 
