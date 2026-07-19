@@ -174,6 +174,7 @@ header{
   background:color-mix(in srgb, var(--paper) 84%, transparent);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  transition:opacity .35s ease, transform .35s ease;
 }
 .brand{
   display:flex; flex-direction:column; gap:.6rem;
@@ -189,6 +190,7 @@ header{
 #mainNav{
   position:fixed; top:6.2rem; right:clamp(1.2rem, 4vw, 3rem); z-index:21;
   display:flex; align-items:flex-end;
+  transition:opacity .35s ease;
 }
 #mainNav ul{ display:flex; flex-direction:column; align-items:flex-end; gap:1.15rem; list-style:none; }
 #mainNav a{
@@ -1966,6 +1968,55 @@ footer{
       if (e.key === 'Escape') closeNav();
     });
   }
+
+  /* ---------- スクロール方向でヘッダーを隠す/出す ----------
+     クラス切り替え+CSSカスケードだと、他所のJS処理が絡んだ際に
+     まれに反映が遅れることがあったため、要素へ直接styleを当てて
+     カスケードに依存しない形にしている */
+  (function(){
+    var headerEl = document.querySelector('header');
+    var navEl = document.getElementById('mainNav');
+    if (!headerEl) return;
+    var lastY = window.scrollY;
+    var hideThreshold = 80; // ページ最上部付近では常に表示
+    var hidden = false;
+    var ticking = false;
+    function setHidden(next){
+      if (next === hidden) return;
+      hidden = next;
+      if (hidden){
+        headerEl.style.opacity = '0';
+        headerEl.style.transform = 'translateY(-100%)';
+        headerEl.style.pointerEvents = 'none';
+        if (navEl){ navEl.style.opacity = '0'; navEl.style.pointerEvents = 'none'; }
+      } else {
+        headerEl.style.opacity = '';
+        headerEl.style.transform = '';
+        headerEl.style.pointerEvents = '';
+        if (navEl){ navEl.style.opacity = ''; navEl.style.pointerEvents = ''; }
+      }
+    }
+    function update(){
+      var currentY = window.scrollY;
+      if (!document.body.classList.contains('nav-open')){
+        if (currentY <= hideThreshold){
+          setHidden(false);
+        } else if (currentY > lastY){
+          setHidden(true);
+        } else if (currentY < lastY){
+          setHidden(false);
+        }
+      }
+      lastY = currentY;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
 
   /* ---------- 展示ステータス（開催中 / まもなく開催）の自動判定 ---------- */
   var exhiStatus = document.getElementById('exhiStatus');
