@@ -188,7 +188,7 @@ header{
   color:var(--ink-soft);
 }
 #mainNav{
-  position:fixed; top:6.2rem; right:clamp(1.2rem, 4vw, 3rem); z-index:21;
+  position:fixed; top:7.6rem; right:clamp(1.2rem, 4vw, 3rem); z-index:21;
   display:flex; align-items:flex-end;
   transition:opacity .35s ease;
 }
@@ -1959,6 +1959,13 @@ footer{
       var open = document.body.classList.toggle('nav-open');
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open){
+        // スクロール連動の非表示処理が付けた inline style が残っていると
+        // メニューを開いてもCSS(body.nav-open #mainNav)より優先されて
+        // 見えなくなるため、開くタイミングで必ずクリアする
+        mainNav.style.opacity = '';
+        mainNav.style.pointerEvents = '';
+      }
     }
     navToggle.addEventListener('click', toggleNav);
     mainNav.querySelectorAll('a').forEach(function(a){
