@@ -201,7 +201,7 @@ header{
 #mainNav a:hover{ color:var(--hido); }
 
 .nav-toggle{
-  display:flex; position:relative; z-index:26;
+  display:none; position:relative; z-index:26;
   flex-direction:column; align-items:center; justify-content:center; gap:5px;
   width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
 }
@@ -216,6 +216,7 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
 .nav-sns{ display:none; }
 
 @media (max-width:760px){
+  .nav-toggle{ display:flex; }
   #mainNav{
     inset:0; right:auto; z-index:24;
     width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
@@ -1958,7 +1959,10 @@ footer{
     function toggleNav(){
       var open = document.body.classList.toggle('nav-open');
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
+      // フルスクリーンのメニューが実際に出るモバイル幅の時だけスクロールをロックする
+      // （PC幅ではナビは常時表示のため、ロックすると画面が動かせなくなるだけになる）
+      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
       if (open){
         // スクロール連動の非表示処理が付けた inline style が残っていると
         // メニューを開いてもCSS(body.nav-open #mainNav)より優先されて
