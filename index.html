@@ -594,7 +594,15 @@ footer{
   .intro-name{ animation:none; opacity:1; }
 }
 </style>
-<script src="js/edit-mode.js" defer></script>
+<script>
+/* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
+if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
+  var kkEditLoader = document.createElement("script");
+  kkEditLoader.src = "js/edit-mode.js";
+  kkEditLoader.defer = true;
+  document.head.appendChild(kkEditLoader);
+}
+</script>
 </head>
 <body>
 
@@ -829,7 +837,6 @@ footer{
       <a class="sns-btn primary" href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">INSTAGRAM @kkchaki</a>
       <a class="sns-btn" href="https://x.com/kkchaki" target="_blank" rel="noopener">X @kkchaki</a>
     </div>
-    <!-- ▼ お問い合わせ用メールアドレスが確定したらボタンを追加してください -->
   </section>
 
 </main>
@@ -1859,7 +1866,7 @@ footer{
   /* ---------- P0-03: 問い合わせメール導線 ---------- */
   // アドレスが確定したら下の1行に設定するだけで、チップが件名プリセット付き
   // メールリンクになり、EMAILボタンも現れる。
-  var CONTACT_EMAIL = '';   // 例: 'contact@kaito-kawasaki.jp'
+  var CONTACT_EMAIL = 'akaitomato1028@gmail.com';
   if (CONTACT_EMAIL){
     document.querySelectorAll('.contact-tags span').forEach(function(chip){
       var a = document.createElement('a');

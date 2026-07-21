@@ -219,7 +219,15 @@ footer{
   border-top:1px solid var(--line);
 }
 </style>
-<script src="../js/edit-mode.js" defer></script>
+<script>
+/* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
+if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
+  var kkEditLoader = document.createElement("script");
+  kkEditLoader.src = "../js/edit-mode.js";
+  kkEditLoader.defer = true;
+  document.head.appendChild(kkEditLoader);
+}
+</script>
 </head>
 <body>
 
