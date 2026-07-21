@@ -454,9 +454,9 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .archive-banner:hover .archive-banner-icon{ transform:translateX(6px); }
 
 /* artist */
-.artist-grid{ display:grid; grid-template-columns:1fr; gap:2rem; max-width:70rem; }
+.artist-grid{ display:grid; grid-template-columns:1fr; gap:2rem; max-width:70rem; margin-inline:auto; }
 .artist-photo{
-  aspect-ratio:3/4; width:100%; max-width:25rem; border-radius:2px; border:1px solid var(--line);
+  aspect-ratio:3/4; width:100%; max-width:25rem; margin-inline:auto; border-radius:2px; border:1px solid var(--line);
   position:relative; overflow:hidden;
   background:
     radial-gradient(circle at 50% 118%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 55%),
@@ -498,7 +498,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-feature{
   display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);
   border:1px solid var(--line); border-radius:2px; overflow:hidden;
-  background:var(--card); margin-bottom:3.2rem;
+  background:var(--card); max-width:60rem; margin:0 auto 3.2rem;
 }
 .exhi-feature-dm{ aspect-ratio:3/4; overflow:hidden; position:relative; }
 .exhi-feature-dm img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(var(--zoom,1)); }
@@ -519,7 +519,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   .exhi-feature-dm{ aspect-ratio:16/10; }
 }
 .exhi-more h3{ font-size:.75rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
-.exhi-list{ list-style:none; max-width:60rem; }
+.exhi-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .exhi-list li{
   display:grid; grid-template-columns:13em 1fr; gap:1.4rem;
   padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem;
