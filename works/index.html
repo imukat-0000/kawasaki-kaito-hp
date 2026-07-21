@@ -365,6 +365,52 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     });
   }
 
+  /* ---------- スクロール方向でヘッダーを隠す/出す ---------- */
+  (function(){
+    var headerEl = document.querySelector('header');
+    var navEl = document.getElementById('mainNav');
+    if (!headerEl) return;
+    var lastY = window.scrollY;
+    var hideThreshold = 80;
+    var hidden = false;
+    var ticking = false;
+    function setHidden(next){
+      if (next === hidden) return;
+      hidden = next;
+      if (hidden){
+        headerEl.style.opacity = '0';
+        headerEl.style.transform = 'translateY(-100%)';
+        headerEl.style.pointerEvents = 'none';
+        if (navEl){ navEl.style.opacity = '0'; navEl.style.pointerEvents = 'none'; }
+      } else {
+        headerEl.style.opacity = '';
+        headerEl.style.transform = '';
+        headerEl.style.pointerEvents = '';
+        if (navEl){ navEl.style.opacity = ''; navEl.style.pointerEvents = ''; }
+      }
+    }
+    function update(){
+      var currentY = window.scrollY;
+      if (!document.body.classList.contains('nav-open')){
+        if (currentY <= hideThreshold){
+          setHidden(false);
+        } else if (currentY > lastY){
+          setHidden(true);
+        } else if (currentY < lastY){
+          setHidden(false);
+        }
+      }
+      lastY = currentY;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
   var WORKS = [
     { id:"w01", title:"朱色和金郡", year:2026, yearLabel:"2026 / 卒業作品", motif:"金魚（和金）", award:"平成芸術賞", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入"],["展示","第72回 東京藝術大学卒業・修了作品展 東京都立美術館（2024年）<br>第10回 東京藝術大学 平成藝術賞 受賞作家展（2024年）"]], kanji:"郡" },
     { id:"w02", title:"紅葉和金", year:2026, motif:"金魚（和金）", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・緋銅酸化・第一酸化銅の擦り付け・樹脂封入"]], kanji:"紅" },
