@@ -550,15 +550,6 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   transition:color .25s ease, border-color .25s ease;
 }
 .news-sns-links a:hover{ color:var(--hido); border-color:var(--hido); }
-.news-x-embed{ max-width:420px; margin:2.4rem auto 0; }
-.news-x-heading{ text-align:center; margin-bottom:1rem; }
-.news-x-heading .label{
-  display:block; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.15rem; font-weight:600; letter-spacing:.15em;
-}
-.news-x-heading .sub{
-  display:block; font-size:.62rem; letter-spacing:.3em; color:var(--hido); margin-top:.4rem;
-}
 
 /* contact */
 .contact{ text-align:center; }
@@ -750,10 +741,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       </div>
     </div>
 
-    <div class="news-x-embed">
-      <div class="news-x-heading"><span class="label">最新の投稿</span><span class="sub">LATEST ON X</span></div>
-      <a class="twitter-timeline" data-tweet-limit="1" href="https://twitter.com/kkchaki?ref_src=twsrc%5Etfw">Tweets by kkchaki</a>
-    </div>
   </section>
 
   <!-- 代表作品：動物ごとに一点、図鑑のように -->
@@ -2041,21 +2028,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }, { rootMargin: '-45% 0px -45% 0px' });
     qnTargets.forEach(function(t){ qnObserver.observe(t.el); });
   }
-})();
-</script>
-<script>
-(function(){
-  "use strict";
-  var a = document.querySelector(".twitter-timeline");
-  if (!a) return;
-  var forced = document.documentElement.getAttribute("data-theme");
-  var dark = forced === "dark" || (forced !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  a.setAttribute("data-theme", dark ? "dark" : "light");
-  var s = document.createElement("script");
-  s.src = "https://platform.twitter.com/widgets.js";
-  s.async = true;
-  s.charset = "utf-8";
-  document.body.appendChild(s);
 })();
 </script>
 <script>
