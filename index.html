@@ -1637,6 +1637,10 @@ footer{
         actx.arc(pr.x, pr.y, 4 + er * pr.max, 0, Math.PI * 2);
         actx.stroke();
       }
+      // 餌をあげて育った金魚・鯉・龍も、最初の金魚たちと同じ背面キャンバスで
+      // 描くことで、コンテンツの裏に自然に潜れるようにする
+      updatePet(dt, t);
+      drawPetOn(actx, t);
       requestAnimationFrame(ambFrame);
     })(last);
 
@@ -1893,9 +1897,8 @@ footer{
       var dt = Math.min((now - glast) / 1000, 0.05); glast = now;
       var t = now / 1000;
       gctx.clearRect(0, 0, gamefx.clientWidth, gamefx.clientHeight);
-      updatePet(dt, t);
+      // pet(豪華な金魚・鯉・龍)の更新・描画は背面キャンバス側(ambFrame)で行う
       if (carrying) drawFoodPellet(gctx, foodPt.x, foodPt.y, t);
-      drawPetOn(gctx, t);
       if (poiMode) drawPoi(gctx, gcur.x, gcur.y, 1, {});
       drawFx(gctx, dt, t);
       requestAnimationFrame(gameFrame);
