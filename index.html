@@ -272,14 +272,15 @@ main{ position:relative; z-index:1; }
   .hero{ padding-right:clamp(9rem,15vw,14rem); }
 }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-bg img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; animation:heroFade 24s infinite;
+.hero-bg-item{ position:absolute; inset:0; opacity:0; animation:heroFade 24s infinite; }
+.hero-bg-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transform:scale(var(--zoom,1));
 }
-.hero-bg img:nth-child(1){ animation-delay:0s; }
-.hero-bg img:nth-child(2){ animation-delay:6s; }
-.hero-bg img:nth-child(3){ animation-delay:12s; }
-.hero-bg img:nth-child(4){ animation-delay:18s; }
+.hero-bg-item:nth-child(1){ animation-delay:0s; }
+.hero-bg-item:nth-child(2){ animation-delay:6s; }
+.hero-bg-item:nth-child(3){ animation-delay:12s; }
+.hero-bg-item:nth-child(4){ animation-delay:18s; }
 .hero::before{
   content:""; position:absolute; inset:0; z-index:0;
   background:linear-gradient(180deg,
@@ -295,8 +296,8 @@ main{ position:relative; z-index:1; }
   100%{ opacity:0; }
 }
 @media (prefers-reduced-motion: reduce){
-  .hero-bg img{ animation:none; opacity:0; }
-  .hero-bg img:first-child{ opacity:1; }
+  .hero-bg-item{ animation:none; opacity:0; }
+  .hero-bg-item:first-child{ opacity:1; }
 }
 .hero-name{
   writing-mode:vertical-rl;
@@ -409,9 +410,10 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .zukan-ph{ aspect-ratio:3/4; position:relative; overflow:hidden; border-bottom:1px solid var(--line); }
 .zukan-ph img{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transform:scale(var(--zoom,1));
   transition:transform .6s ease;
 }
-.zukan-card:hover .zukan-ph img{ transform:scale(1.06); }
+.zukan-card:hover .zukan-ph img{ transform:scale(calc(var(--zoom,1) * 1.06)); }
 .zukan-ph-placeholder{
   display:flex; align-items:center; justify-content:center;
   background:
@@ -466,6 +468,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .artist-photo img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:22% 40%;
+  transform:scale(var(--zoom,1));
 }
 .artist-roles{ display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:1.4rem; }
 .artist-roles span{
@@ -497,8 +500,8 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
   border:1px solid var(--line); border-radius:2px; overflow:hidden;
   background:var(--card); margin-bottom:3.2rem;
 }
-.exhi-feature-dm{ aspect-ratio:3/4; overflow:hidden; }
-.exhi-feature-dm img{ width:100%; height:100%; object-fit:cover; display:block; }
+.exhi-feature-dm{ aspect-ratio:3/4; overflow:hidden; position:relative; }
+.exhi-feature-dm img{ width:100%; height:100%; object-fit:cover; display:block; transform:scale(var(--zoom,1)); }
 .exhi-feature-body{ padding:2rem clamp(1.4rem,3vw,2.4rem); display:flex; flex-direction:column; justify-content:center; gap:.9rem; }
 .exhi-feature-status{
   align-self:flex-start; font-size:.7rem; letter-spacing:.16em;
@@ -589,6 +592,7 @@ footer{
   .intro-name{ animation:none; opacity:1; }
 }
 </style>
+<script src="js/edit-mode.js" defer></script>
 </head>
 <body>
 
@@ -638,10 +642,10 @@ footer{
   <!-- First View: KOGEI REALISM（構成案どおり） -->
   <section class="hero" id="hero" aria-label="ヒーロー">
     <div class="hero-bg" aria-hidden="true">
-      <img src="img/hero_wide_kingyo_white.jpg" alt="" loading="eager">
-      <img src="img/hero_wide_frog_leaves.jpg" alt="" loading="lazy">
-      <img src="img/hero_wide_kingyo_gallery.jpg" alt="" loading="lazy">
-      <img src="img/hero_wide_kingyo_wood.jpg" alt="" loading="lazy">
+      <div class="hero-bg-item" data-edit-slot="hero1" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_white.jpg" data-edit-label="ヒーロー背景1（白背景の金魚）" data-edit-where="index.html の .hero-bg 内 1枚目のimg"><img src="img/hero_wide_kingyo_white.jpg" alt="" loading="eager"></div>
+      <div class="hero-bg-item" data-edit-slot="hero2" data-edit-ratio="2.333" data-edit-path="img/hero_wide_frog_leaves.jpg" data-edit-label="ヒーロー背景2（蛙と葉）" data-edit-where="index.html の .hero-bg 内 2枚目のimg"><img src="img/hero_wide_frog_leaves.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero3" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_gallery.jpg" data-edit-label="ヒーロー背景3（展示風景）" data-edit-where="index.html の .hero-bg 内 3枚目のimg"><img src="img/hero_wide_kingyo_gallery.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero4" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_wood.jpg" data-edit-label="ヒーロー背景4（木目テーブル）" data-edit-where="index.html の .hero-bg 内 4枚目のimg"><img src="img/hero_wide_kingyo_wood.jpg" alt="" loading="lazy"></div>
     </div>
     <h1 class="hero-name rise">河﨑海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
@@ -679,7 +683,7 @@ footer{
     <div class="sec-head"><h2>展示情報</h2><span>EXHIBITIONS</span></div>
 
     <div class="exhi-feature">
-      <div class="exhi-feature-dm"><img src="img/exhibition_dm_takashimaya.jpg" alt="河﨑海斗展 DM「朱色和金」" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/exhibition_dm_takashimaya.jpg" data-edit-label="展示DM画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/exhibition_dm_takashimaya.jpg" alt="河﨑海斗展 DM「朱色和金」" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" id="exhiStatus">開催情報を確認中…</span>
         <h3>河﨑海斗展</h3>
@@ -726,23 +730,23 @@ footer{
 
     <div class="zukan-grid">
       <a class="zukan-card" href="works/#nishikigoi">
-        <div class="zukan-ph"><img src="img/work_nishikigoi.jpg" alt="錦鯉" loading="lazy"></div>
+        <div class="zukan-ph" data-edit-slot="work-nishikigoi" data-edit-ratio="0.75" data-edit-path="img/work_nishikigoi.jpg" data-edit-label="錦鯉" data-edit-where="index.html の代表作品セクション（錦鯉）"><img src="img/work_nishikigoi.jpg" alt="錦鯉" loading="lazy"></div>
         <div class="zukan-meta"><span class="zukan-animal">鯉<small>KOI</small></span><span class="zukan-title">錦鯉<small>2026 / 修了作品</small></span></div>
       </a>
       <a class="zukan-card" href="works/#shuiro-wakin">
-        <div class="zukan-ph"><img src="img/work_shuiro-wakin.jpg" alt="朱色和金" loading="lazy"></div>
+        <div class="zukan-ph" data-edit-slot="work-shuiro-wakin" data-edit-ratio="0.75" data-edit-path="img/work_shuiro-wakin.jpg" data-edit-label="朱色和金" data-edit-where="index.html の代表作品セクション（朱色和金）"><img src="img/work_shuiro-wakin.jpg" alt="朱色和金" loading="lazy"></div>
         <div class="zukan-meta"><span class="zukan-animal">金魚<small>GOLDFISH</small></span><span class="zukan-title">朱色和金<small>2024</small></span></div>
       </a>
       <a class="zukan-card" href="works/#ame-kaeru">
-        <div class="zukan-ph"><img src="img/g_frog_hand.jpg" alt="緑青のカエルの作品" loading="lazy"></div>
+        <div class="zukan-ph" data-edit-slot="work-frog" data-edit-ratio="0.75" data-edit-path="img/g_frog_hand.jpg" data-edit-label="雨ノ蛙「狐の嫁入り」" data-edit-where="index.html の代表作品セクション（カエル）"><img src="img/g_frog_hand.jpg" alt="緑青のカエルの作品" loading="lazy"></div>
         <div class="zukan-meta"><span class="zukan-animal">カエル<small>FROG</small></span><span class="zukan-title">雨ノ蛙「狐の嫁入り」<small>2025</small></span></div>
       </a>
       <a class="zukan-card" href="works/#w08">
-        <div class="zukan-ph zukan-ph-placeholder"><span class="kanji">黄</span></div>
+        <div class="zukan-ph zukan-ph-placeholder" data-edit-slot="work-w08" data-edit-ratio="0.75" data-edit-new-path="img/work_w08.jpg" data-edit-label="黄粉メダカ" data-edit-where="index.html の代表作品セクション（黄粉メダカ）"><span class="kanji">黄</span></div>
         <div class="zukan-meta"><span class="zukan-animal">メダカ<small>MEDAKA</small></span><span class="zukan-title">黄粉メダカ<small>2026</small></span></div>
       </a>
       <a class="zukan-card" href="works/#w07">
-        <div class="zukan-ph zukan-ph-placeholder"><span class="kanji">海</span></div>
+        <div class="zukan-ph zukan-ph-placeholder" data-edit-slot="work-w07" data-edit-ratio="0.75" data-edit-new-path="img/work_w07.jpg" data-edit-label="青海亀" data-edit-where="index.html の代表作品セクション（青海亀）"><span class="kanji">海</span></div>
         <div class="zukan-meta"><span class="zukan-animal">海亀<small>SEA TURTLE</small></span><span class="zukan-title">青海亀<small>2026</small></span></div>
       </a>
     </div>
@@ -757,7 +761,7 @@ footer{
   <section id="artist" class="io">
     <div class="sec-head"><h2>河﨑海斗</h2><span>KAITO KAWASAKI</span></div>
     <div class="artist-grid">
-      <div class="artist-photo"><img src="img/artist_self_portrait.jpg" alt="河﨑海斗 自己紹介イラスト（横顔）" loading="lazy"></div>
+      <div class="artist-photo" data-edit-slot="artist" data-edit-ratio="0.75" data-edit-path="img/artist_self_portrait.jpg" data-edit-label="経歴の写真" data-edit-where="index.html の .artist-photo img"><img src="img/artist_self_portrait.jpg" alt="河﨑海斗 自己紹介イラスト（横顔）" loading="lazy"></div>
       <div class="artist-text">
         <div class="artist-roles"><span>金工作家</span><span>鋳金</span><span>KOGEI REALISM</span></div>
         <p class="artist-lede">河﨑海斗は、生命を模倣する作家ではない。生命が立ち上がる場を、工芸によってつくる作家である。</p>

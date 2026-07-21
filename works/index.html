@@ -147,7 +147,7 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:2.5rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
 }
-.tile-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.tile-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(var(--zoom,1)); }
 .tile-meta{ padding:.65rem .75rem .8rem; }
 .tile-title{
   display:block; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -195,7 +195,7 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:5rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
 }
-.work-modal-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.work-modal-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(var(--zoom,1)); }
 .work-modal-body{ padding:1.6rem 1.6rem 1.8rem; display:flex; flex-direction:column; gap:.8rem; }
 .work-modal-body h3{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -219,6 +219,7 @@ footer{
   border-top:1px solid var(--line);
 }
 </style>
+<script src="../js/edit-mode.js" defer></script>
 </head>
 <body>
 
@@ -328,7 +329,11 @@ footer{
   ];
 
   function tileVisualHTML(w){
-    if (w.img) return '<img src="' + w.img + '" alt="' + (w.alt || w.title) + '" loading="lazy">';
+    if (w.img){
+      var style = "";
+      if (w.pos || w.zoom) style = ' style="' + (w.pos ? "object-position:" + w.pos + ";" : "") + (w.zoom ? "--zoom:" + w.zoom + ";" : "") + '"';
+      return '<img src="' + w.img + '" alt="' + (w.alt || w.title) + '" loading="lazy"' + style + '>';
+    }
     return '<span class="kanji">' + w.kanji + '</span>';
   }
 
@@ -346,7 +351,7 @@ footer{
     html += '<div class="archive-year"><div class="year-head"><span class="year-num">' + y + '</span><span class="year-line"></span></div><div class="archive-grid">';
     byYear[y].forEach(function(w){
       html += '<button class="archive-tile" type="button" data-id="' + w.id + '">' +
-        '<span class="tile-visual">' + tileVisualHTML(w) + '</span>' +
+        '<span class="tile-visual" data-edit-slot="' + w.id + '" data-edit-kind="archive" data-edit-ratio="1" data-edit-path="' + (w.img || "") + '" data-edit-new-path="../img/work_' + w.id + '.jpg" data-edit-label="' + w.title + '" data-edit-where="works/index.html の WORKS配列 id:&quot;' + w.id + '&quot;">' + tileVisualHTML(w) + '</span>' +
         '<span class="tile-meta"><span class="tile-title">' + w.title + '</span>' +
         (w.yearLabel ? '<span class="tile-note">' + w.yearLabel + '</span>' : '') +
         '</span></button>';
@@ -354,6 +359,7 @@ footer{
     html += "</div></div>";
   });
   archive.innerHTML = html;
+  if (window.KKEditMode) window.KKEditMode.scan();
 
   var modal = document.getElementById("workModal");
   var modalVisual = document.getElementById("modalVisual");
