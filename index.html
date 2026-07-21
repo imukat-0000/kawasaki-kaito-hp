@@ -470,7 +470,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   object-fit:cover; object-position:47% 49%;
   transform:scale(var(--zoom,1));
 }
-.artist-roles{ display:flex; flex-wrap:wrap; gap:.6rem; margin-bottom:1.4rem; }
+.artist-roles{ display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-bottom:1.4rem; }
 .artist-roles span{
   font-size:.7rem; letter-spacing:.14em; color:var(--hido);
   border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
@@ -479,9 +479,10 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .artist-lede{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.15rem,2.2vw,1.4rem); line-height:2.2; margin-bottom:1.6rem; text-wrap:balance;
+  text-align:center;
 }
 .artist-text p + p{ margin-top:1.1em; }
-.artist-text > p{ font-size:.95rem; }
+.artist-text > p{ font-size:.95rem; text-align:center; }
 .cv{ margin-top:2.4rem; display:grid; gap:2rem; }
 .cv h3{
   font-size:.78rem; letter-spacing:.3em; color:var(--hido); font-weight:600; margin-bottom:.8rem;
