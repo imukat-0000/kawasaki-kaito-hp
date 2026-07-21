@@ -540,6 +540,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
   transition:color .25s ease, border-color .25s ease;
 }
 .news-sns-links a:hover{ color:var(--hido); border-color:var(--hido); }
+.news-x-embed{ max-width:420px; margin:1.6rem auto 0; }
 
 /* contact */
 .contact{ text-align:center; }
@@ -721,6 +722,10 @@ footer{
         <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
         <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
       </div>
+    </div>
+
+    <div class="news-x-embed">
+      <a class="twitter-timeline" data-height="480" data-chrome="noheader nofooter noborders transparent" href="https://twitter.com/kkchaki?ref_src=twsrc%5Etfw">Tweets by kkchaki</a>
     </div>
   </section>
 
@@ -2006,6 +2011,21 @@ footer{
     }, { rootMargin: '-45% 0px -45% 0px' });
     qnTargets.forEach(function(t){ qnObserver.observe(t.el); });
   }
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var a = document.querySelector(".twitter-timeline");
+  if (!a) return;
+  var forced = document.documentElement.getAttribute("data-theme");
+  var dark = forced === "dark" || (forced !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  a.setAttribute("data-theme", dark ? "dark" : "light");
+  var s = document.createElement("script");
+  s.src = "https://platform.twitter.com/widgets.js";
+  s.async = true;
+  s.charset = "utf-8";
+  document.body.appendChild(s);
 })();
 </script>
 </body>
