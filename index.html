@@ -328,7 +328,8 @@ main{ position:relative; z-index:1; }
 body.revealed .rise{ opacity:1; transform:none; }
 
 /* ============ sections ============ */
-section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白約3割減 */
+section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:1600px; margin-inline:auto; }  /* 余白約3割減。広い画面では両端に余白を作り内容を中央寄りに(文字は左揃えのまま) */
+.hero{ max-width:none; margin-inline:0; }
 .sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
 .sec-head h2{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -453,10 +454,9 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); }  /* 余白
 .archive-banner:hover .archive-banner-icon{ transform:translateX(6px); }
 
 /* artist */
-.artist-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.7fr); gap:3rem; max-width:70rem; }
-@media (max-width:820px){ .artist-grid{ grid-template-columns:1fr; } }
+.artist-grid{ display:grid; grid-template-columns:1fr; gap:2rem; max-width:70rem; }
 .artist-photo{
-  aspect-ratio:3/4; border-radius:2px; border:1px solid var(--line);
+  aspect-ratio:3/4; width:100%; max-width:25rem; border-radius:2px; border:1px solid var(--line);
   position:relative; overflow:hidden;
   background:
     radial-gradient(circle at 50% 118%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 55%),
