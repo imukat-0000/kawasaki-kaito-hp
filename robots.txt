@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://imukat-0000.github.io/kawasaki-kaito-hp/sitemap.xml
+Sitemap: https://kaitokawasaki.com/sitemap.xml
