@@ -80,32 +80,82 @@ a{ color:inherit; }
 .mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
 
 /* ============ nav（本体と共通） ============ */
+/* nav はheaderの兄弟要素（headerのbackdrop-filterがposition:fixedの containing block に
+   なってしまい、モバイル全画面オーバーレイがheaderの高さ内に閉じ込められるのを防ぐため） */
 header{
-  position:fixed; top:0; left:0; right:0; z-index:20;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:1rem clamp(1.2rem, 4vw, 3rem);
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
   background:color-mix(in srgb, var(--paper) 84%, transparent);
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  transition:opacity .35s ease, transform .35s ease;
 }
 .brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none; position:relative; z-index:26;
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.05rem; letter-spacing:.3em; text-decoration:none; font-weight:600;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
 }
-nav ul{ display:flex; gap:clamp(1rem,2.6vw,2.2rem); list-style:none; }
-nav a{
-  text-decoration:none; font-size:.8rem; letter-spacing:.16em;
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
+}
+#mainNav{
+  position:fixed; top:7.6rem; right:clamp(1.2rem, 4vw, 3rem); z-index:21;
+  display:flex; align-items:flex-end;
+  transition:opacity .35s ease;
+}
+#mainNav ul{ display:flex; flex-direction:column; align-items:flex-end; gap:1.15rem; list-style:none; }
+#mainNav a{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  text-decoration:none; font-size:.85rem; letter-spacing:.08em;
   color:var(--ink-soft); transition:color .25s;
 }
-nav a:hover, nav a[aria-current]{ color:var(--hido); }
-@media (max-width:720px){
-  header{ flex-direction:column; gap:.3rem; padding:.7rem 1rem; }
-  nav ul{ gap:1.1rem; }
-  nav a{ font-size:.72rem; letter-spacing:.1em; }
-  nav .sub{ display:none; }
+#mainNav a:hover, #mainNav a[aria-current]{ color:var(--hido); }
+
+.nav-toggle{
+  display:none; position:relative; z-index:26;
+  flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
+}
+.nav-toggle span{
+  display:block; width:1.4rem; height:1.5px; background:var(--ink);
+  transition:transform .25s ease, opacity .2s ease;
+}
+body.nav-open .nav-toggle span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+.nav-sns{ display:none; }
+
+@media (max-width:760px){
+  .nav-toggle{ display:flex; }
+  #mainNav{
+    inset:0; right:auto; z-index:24;
+    width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
+    background:var(--paper);
+    justify-content:flex-end;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open #mainNav{ opacity:1; visibility:visible; }
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:1.8rem; }
+  #mainNav a{ font-size:1.5rem; letter-spacing:.1em; }
+
+  .nav-sns{
+    display:flex; gap:1.4rem;
+    position:fixed; left:1.4rem; bottom:1.8rem; z-index:25;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open .nav-sns{ opacity:1; visibility:visible; }
+  .nav-sns a{
+    font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
+  }
+  .nav-sns a:hover{ color:var(--hido); }
 }
 
-main{ position:relative; z-index:1; padding-top:5.5rem; }
+main{ position:relative; z-index:1; padding-top:9rem; }
 section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 
 .sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:2.2rem; }
@@ -241,19 +291,25 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <body>
 
 <header>
-  <a class="brand" href="../index.html">河﨑海斗</a>
-  <nav aria-label="メイン">
-    <ul>
-      <li class="sub"><a href="../index.html#realism">工芸リアリズム</a></li>
-      <li><a href="../index.html#works">作品</a></li>
-      <li><a href="index.html" aria-current="page">作品一覧</a></li>
-      <li class="sub"><a href="../index.html#artist">河﨑海斗</a></li>
-      <li class="sub"><a href="../index.html#gallery">ギャラリー</a></li>
-      <li><a href="../index.html#exhibitions">展示</a></li>
-      <li><a href="../index.html#contact">コンタクト</a></li>
-    </ul>
-  </nav>
+  <a class="brand" href="../index.html">河﨑海斗<span class="brand-tagline">金工作家<br>鋳金</span></a>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<nav aria-label="メイン" id="mainNav">
+  <ul>
+    <li><a href="../index.html#concept">コンセプト</a></li>
+    <li><a href="../index.html#exhibitions">展示情報</a></li>
+    <li><a href="../index.html#works">代表作品</a></li>
+    <li><a href="index.html" aria-current="page">作品一覧</a></li>
+    <li><a href="../index.html#artist">河﨑海斗</a></li>
+    <li><a href="../index.html#contact">コンタクト</a></li>
+  </ul>
+  <div class="nav-sns">
+    <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
+  </div>
+</nav>
 
 <main>
   <section aria-label="作品一覧の説明">
@@ -284,6 +340,30 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <script>
 (function(){
   "use strict";
+
+  /* ---------- ハンバーガーメニュー ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var mainNav = document.getElementById('mainNav');
+  if (navToggle && mainNav){
+    var closeNav = function(){
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    var toggleNav = function(){
+      var open = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', toggleNav);
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeNav();
+    });
+  }
 
   var WORKS = [
     { id:"w01", title:"朱色和金郡", year:2026, yearLabel:"2026 / 卒業作品", motif:"金魚（和金）", award:"平成芸術賞", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入"],["展示","第72回 東京藝術大学卒業・修了作品展 東京都立美術館（2024年）<br>第10回 東京藝術大学 平成藝術賞 受賞作家展（2024年）"]], kanji:"郡" },
