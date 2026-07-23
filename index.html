@@ -330,6 +330,7 @@ main{ position:relative; z-index:1; }
 }
 @media (max-width:760px){
   .hero-name{ font-size:clamp(3.2rem,15vw,5rem); }
+  .intro-sub-full{ display:none; }
 }
 
 /* reveal on intro end */
@@ -630,7 +631,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   <canvas id="introCanvas"></canvas>
   <div class="intro-name">
     <h1>河﨑海斗</h1>
-    <p>Kogei Realism — Kaito Kawasaki</p>
+    <p><span class="intro-sub-full">Kogei Realism — </span>Kaito Kawasaki</p>
   </div>
   <button class="intro-skip" id="skipBtn" type="button">SKIP</button>
 </div>
