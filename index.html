@@ -406,12 +406,14 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   font-size:clamp(1rem, 1.8vw, 1.2rem); line-height:2; text-wrap:balance;
 }
 
-/* 代表作品：図鑑グリッド */
+/* 代表作品：図鑑グリッド(横スライド) */
 .zukan-grid{
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
-  gap:1.4rem; margin-bottom:2.6rem;
+  display:flex; gap:1.4rem; margin-bottom:2.6rem;
+  overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  padding-bottom:.6rem; scrollbar-width:thin;
 }
 .zukan-card{
+  flex:0 0 clamp(160px, 42vw, 220px); scroll-snap-align:start;
   display:flex; flex-direction:column; text-decoration:none; color:inherit;
   background:var(--card); border:1px solid var(--line); border-radius:2px; overflow:hidden;
   transition:border-color .25s ease, transform .25s ease;
