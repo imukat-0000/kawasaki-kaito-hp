@@ -506,6 +506,14 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 }
 .cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
 .galleries{ font-size:.85rem; color:var(--ink-soft); }
+@media (max-width:760px){
+  .artist-photo{ max-width:70%; }
+  .cv{ margin-top:1.6rem; gap:1.2rem; }
+  .cv h3{ font-size:.7rem; margin-bottom:.5rem; }
+  .cv ul{ font-size:.78rem; }
+  .cv li{ gap:.8em; padding:.4em 0; }
+  .galleries{ font-size:.78rem; }
+}
 
 /* exhibitions */
 .exhi-feature{
@@ -2036,46 +2044,19 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <script>
 (function(){
   "use strict";
-  // NFCタグ経由の来場（?visit=nfc）を、金魚育成ゲームのQRカウントに合流させる。
+  // NFCタグ経由の来場（?visit=nfc）を、金魚育成ゲームのNFCタッチ数として加算する。
   // 展示会場のNFCプレートは https://kaitokawasaki.com/?visit=nfc を指す想定。
   var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbwJKRyeAw9jiC-jmvJ2fIgRdmdHpu1CVCu61cEC9OojBjMtszdU4fdj99eBIPz0ogwh/exec";
-  var STORAGE_PREFIX = "kawasaki_hp_nfc_counted_";
-
   var params = new URLSearchParams(window.location.search);
   if (params.get("visit") !== "nfc") return;
 
-  function getJstDateKey(){
-    var parts = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit"
-    }).formatToParts(new Date());
-    var values = {};
-    parts.forEach(function(p){ values[p.type] = p.value; });
-    return values.year + "-" + values.month + "-" + values.day;
-  }
-
-  var storageKey = STORAGE_PREFIX + getJstDateKey();
-  var alreadyCounted = false;
-  try {
-    alreadyCounted = window.localStorage.getItem(storageKey) === "1";
-  } catch (error) {
-    alreadyCounted = false;
-  }
-
-  // 同一タブでの複数タップ・リロードによる二重加算を防ぐため、送信前に予約する。
-  try {
-    if (!alreadyCounted) window.localStorage.setItem(storageKey, "1");
-  } catch (error) {
-    // localStorageが使えない環境では重複防止できないが、送信自体は続行する。
-  }
-
-  if (!alreadyCounted) {
-    var url = new URL(COUNTER_API_URL);
-    url.searchParams.set("src", "qr");
-    url.searchParams.set("_", String(Date.now()));
-    fetch(url.toString(), { method: "GET", mode: "no-cors", cache: "no-store" }).catch(function(){
-      // 通信に失敗しても来場者の閲覧体験は妨げない。
-    });
-  }
+  // NFCタグでこのURLを開くたびに加算する。端末・日付による重複制限は設けない。
+  var url = new URL(COUNTER_API_URL);
+  url.searchParams.set("src", "nfc");
+  url.searchParams.set("_", String(Date.now()));
+  fetch(url.toString(), { method: "GET", mode: "no-cors", cache: "no-store" }).catch(function(){
+    // 通信に失敗しても来場者の閲覧体験は妨げない。
+  });
 
   // URLからクエリを消し、リロードのたびに?visit=nfcが残らないようにする。
   var cleanUrl = window.location.pathname + window.location.hash;
