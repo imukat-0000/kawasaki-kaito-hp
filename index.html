@@ -2047,7 +2047,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   "use strict";
   // NFCタグ経由の来場（?visit=nfc）を、金魚育成ゲームのNFCタッチ数として加算する。
   // 展示会場のNFCプレートは https://kaitokawasaki.com/?visit=nfc を指す想定。
-  var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbwJKRyeAw9jiC-jmvJ2fIgRdmdHpu1CVCu61cEC9OojBjMtszdU4fdj99eBIPz0ogwh/exec";
+  var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbz0G1_owFGE0fv_-P26afkA2vE4_0G9m726KD9U4VnpC7CI2-NvnkoCt_jrka8mxtBU/exec";
   var params = new URLSearchParams(window.location.search);
   if (params.get("visit") !== "nfc") return;
 
