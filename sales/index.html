@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>販売情報 | 河﨑海斗 — KOGEI REALISM</title>
+<meta name="description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
+<meta property="og:title" content="販売情報 | 河﨑海斗">
+<meta property="og:description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kaitokawasaki.com/sales/">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="修了作品「錦鯉」— 樹脂に封入された鋳金の錦鯉">
+<meta property="og:site_name" content="河﨑海斗 | KOGEI REALISM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kkchaki">
+<meta name="twitter:title" content="販売情報 | 河﨑海斗">
+<meta name="twitter:description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
+<meta name="twitter:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
+<meta name="twitter:image:alt" content="修了作品「錦鯉」— 樹脂に封入された鋳金の錦鯉">
+<meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://kaitokawasaki.com/sales/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+@font-face{
+  font-family:"Noto Serif JP";
+  src:url("../fonts/NotoSerifJP-sub.woff2") format("woff2");
+  font-weight:200 900;
+  font-display:swap;
+}
+
+/* ============ tokens（本体 index.html と同一） ============ */
+:root{
+  --paper:#F7F4EC;
+  --ink:#1C1E22;
+  --ink-soft:#4C4D48;
+  --hido:#9C3B22;
+  --hido-deep:#7E2E1A;
+  --brass:#9A7B3F;
+  --line:#DCD5C6;
+  --card:#FFFDF7;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+    --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+    --line:#2B3037; --card:#1B1F25;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#4C4D48;
+  --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
+  --line:#DCD5C6; --card:#FFFDF7;
+}
+:root[data-theme="dark"]{
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+  --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+  --line:#2B3037; --card:#1B1F25;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; background:var(--paper); }
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";
+  line-height:1.9;
+  letter-spacing:0.04em;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+
+/* ============ nav（本体と共通） ============ */
+/* nav はheaderの兄弟要素（headerのbackdrop-filterがposition:fixedの containing block に
+   なってしまい、モバイル全画面オーバーレイがheaderの高さ内に閉じ込められるのを防ぐため） */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
+  background:color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none; position:relative; z-index:26;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
+}
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
+}
+#mainNav{
+  position:fixed; top:0; height:7.75rem; right:clamp(1.2rem, 4vw, 3rem); z-index:31;
+  display:flex; align-items:center;
+  transition:opacity .35s ease;
+}
+#mainNav ul{ display:flex; flex-direction:row; align-items:center; gap:1.8rem; list-style:none; }
+#mainNav a{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  text-decoration:none; font-size:.85rem; letter-spacing:.08em;
+  color:var(--ink-soft); transition:color .25s;
+}
+#mainNav a:hover, #mainNav a[aria-current]{ color:var(--hido); }
+
+.nav-toggle{
+  display:none; position:relative; z-index:26;
+  flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
+}
+.nav-toggle span{
+  display:block; width:1.4rem; height:1.5px; background:var(--ink);
+  transition:transform .25s ease, opacity .2s ease;
+}
+body.nav-open .nav-toggle span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+.nav-sns{ display:none; }
+
+@media (max-width:760px){
+  .nav-toggle{ display:flex; }
+  #mainNav{
+    inset:0; right:auto; z-index:24;
+    width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
+    background:var(--paper);
+    justify-content:flex-end;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open #mainNav{ opacity:1; visibility:visible; }
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:1.8rem; }
+  #mainNav a{ font-size:1.5rem; letter-spacing:.1em; }
+
+  .nav-sns{
+    display:flex; gap:1.4rem;
+    position:fixed; left:1.4rem; bottom:1.8rem; z-index:25;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open .nav-sns{ opacity:1; visibility:visible; }
+  .nav-sns a{
+    font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
+  }
+  .nav-sns a:hover{ color:var(--hido); }
+}
+
+main{ position:relative; z-index:1; padding-top:9rem; }
+section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
+
+.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:2.2rem; }
+.sec-head h2{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
+  white-space:nowrap;
+}
+.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
+.sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+.archive-back{ font-size:.8rem; }
+.archive-back a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  padding-bottom:.1em; transition:border-color .25s;
+}
+.archive-back a:hover{ border-color:var(--hido); }
+
+/* ============ 販売情報 ============ */
+.sales-lede{ max-width:42rem; color:var(--ink-soft); font-size:.92rem; margin:1.6rem 0 2.6rem; }
+.sales-group{ margin-bottom:2.8rem; }
+.sales-group h3{
+  font-size:.75rem; letter-spacing:.3em; color:var(--hido); font-weight:600; margin-bottom:1rem;
+}
+.sales-list{ list-style:none; max-width:60rem; }
+.sales-list li{
+  display:flex; align-items:center; justify-content:space-between; gap:1.2rem; flex-wrap:wrap;
+  padding:1em 0; border-bottom:1px solid var(--line);
+}
+.sales-name{ display:flex; flex-direction:column; gap:.2em; }
+.sales-name time{
+  font-size:.72rem; letter-spacing:.05em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+}
+.sales-name strong{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-weight:600; font-size:.98rem;
+}
+.sales-venue{ font-size:.82rem; color:var(--ink-soft); }
+.sales-link{
+  font-size:.78rem; color:var(--hido); text-decoration:none; white-space:nowrap;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  padding-bottom:.1em; transition:border-color .25s;
+}
+.sales-link:hover{ border-color:var(--hido); }
+.sales-note{ margin-top:1.6rem; font-size:.85rem; color:var(--ink-soft); }
+.sales-note a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+}
+.sales-note a:hover{ border-color:var(--hido); }
+
+footer{
+  padding:2.5rem; text-align:center;
+  font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+</style>
+<script>
+/* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
+if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
+  var kkEditLoader = document.createElement("script");
+  kkEditLoader.src = "../js/edit-mode.js";
+  kkEditLoader.defer = true;
+  document.head.appendChild(kkEditLoader);
+}
+</script>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../index.html">河﨑海斗<span class="brand-tagline">金工作家<br>鋳金</span></a>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<nav aria-label="メイン" id="mainNav">
+  <ul>
+    <li><a href="../index.html#concept">コンセプト</a></li>
+    <li><a href="../index.html#exhibitions">展示情報</a></li>
+    <li><a href="../index.html#works">代表作品</a></li>
+    <li><a href="../works/">作品一覧</a></li>
+    <li><a href="index.html" aria-current="page">販売情報</a></li>
+    <li><a href="../index.html#artist">河﨑海斗</a></li>
+    <li><a href="../index.html#contact">コンタクト</a></li>
+  </ul>
+  <div class="nav-sns">
+    <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
+  </div>
+</nav>
+
+<main>
+  <section aria-label="販売情報">
+    <div class="sec-head"><h2>販売情報</h2><span>WHERE TO FIND</span></div>
+    <p class="archive-back"><a href="../index.html#exhibitions">← 展示情報を見る</a></p>
+    <p class="sales-lede">河﨑海斗の作品は、以下のギャラリー・展示会場でご覧いただけます。会期や取り扱い作品は変更になる場合があるため、各会場の公式サイトでご確認ください。</p>
+
+    <div class="sales-group">
+      <h3>常設で取り扱い</h3>
+      <ul class="sales-list">
+        <li>
+          <div class="sales-name">
+            <strong>藝大アートプラザ</strong>
+            <span class="sales-venue">東京藝術大学 上野キャンパス内（東京・上野）</span>
+          </div>
+          <a class="sales-link" href="https://artplaza.geidai.ac.jp/" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+        <li>
+          <div class="sales-name">
+            <strong>常設展示</strong>
+            <span class="sales-venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span>
+          </div>
+          <a class="sales-link" href="https://lecringinza.co.jp/theartsfusion/" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sales-group">
+      <h3>展示中・開催予定</h3>
+      <ul class="sales-list">
+        <li>
+          <div class="sales-name">
+            <time>2026.7.22 — 7.28</time>
+            <strong>河﨑海斗展</strong>
+            <span class="sales-venue">新宿髙島屋 2階 特設会場（東京・新宿）</span>
+          </div>
+          <a class="sales-link" href="https://www.takashimaya.co.jp/shinjuku/" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+        <li>
+          <div class="sales-name">
+            <time>2026.5.30 — 7.30</time>
+            <strong>個展「出藍の誉」</strong>
+            <span class="sales-venue">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span>
+          </div>
+          <a class="sales-link" href="https://store-tsutaya.tsite.jp/store/detail?storeId=2332" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+        <li>
+          <div class="sales-name">
+            <time>2026.6.8 — 8.2</time>
+            <strong>3人展「MATSURI INORU」</strong>
+            <span class="sales-venue">Spiral Garden 新丸ビル（東京・丸の内）— 修了作品「錦鯉」を展示</span>
+          </div>
+          <a class="sales-link" href="https://www.spiral.co.jp/shoplist/shinmaru-building" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+        <li>
+          <div class="sales-name">
+            <time>2026.9.4 — 10.20</time>
+            <strong>個展</strong>
+            <span class="sales-venue">北斎館（長野・小布施）— 「画狂乃蛙」は北斎館オンラインショップで販売中</span>
+          </div>
+          <a class="sales-link" href="https://shop.hokusai-kan.com/" target="_blank" rel="noopener">オンラインショップを見る →</a>
+        </li>
+        <li>
+          <div class="sales-name">
+            <time>2026.12.11 — 12.22</time>
+            <strong>個展</strong>
+            <span class="sales-venue">MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）</span>
+          </div>
+          <a class="sales-link" href="https://medelgalleryshu.com/" target="_blank" rel="noopener">サイトを見る →</a>
+        </li>
+      </ul>
+    </div>
+
+    <p class="sales-note">上記以外でのお問い合わせは<a href="../index.html#contact">コンタクト</a>よりご連絡ください。</p>
+  </section>
+</main>
+
+<footer>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- ハンバーガーメニュー ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var mainNav = document.getElementById('mainNav');
+  if (navToggle && mainNav){
+    var closeNav = function(){
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    var toggleNav = function(){
+      var open = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', toggleNav);
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  /* ---------- スクロール方向でヘッダーを隠す/出す ---------- */
+  (function(){
+    var headerEl = document.querySelector('header');
+    var navEl = document.getElementById('mainNav');
+    if (!headerEl) return;
+    var lastY = window.scrollY;
+    var hideThreshold = 80;
+    var hidden = false;
+    var ticking = false;
+    function setHidden(next){
+      if (next === hidden) return;
+      hidden = next;
+      if (hidden){
+        headerEl.style.opacity = '0';
+        headerEl.style.transform = 'translateY(-100%)';
+        headerEl.style.pointerEvents = 'none';
+        if (navEl){ navEl.style.opacity = '0'; navEl.style.pointerEvents = 'none'; }
+      } else {
+        headerEl.style.opacity = '';
+        headerEl.style.transform = '';
+        headerEl.style.pointerEvents = '';
+        if (navEl){ navEl.style.opacity = ''; navEl.style.pointerEvents = ''; }
+      }
+    }
+    function update(){
+      var currentY = window.scrollY;
+      if (!document.body.classList.contains('nav-open')){
+        if (currentY <= hideThreshold){
+          setHidden(false);
+        } else if (currentY > lastY){
+          setHidden(true);
+        } else if (currentY < lastY){
+          setHidden(false);
+        }
+      }
+      lastY = currentY;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  /* ©年の自動更新 */
+  var yEl = document.getElementById('cpyear');
+  if (yEl){
+    var y = new Date().getFullYear();
+    if (y > 2026) yEl.textContent = "2026–" + y;
+  }
+})();
+</script>
+</body>
+</html>
