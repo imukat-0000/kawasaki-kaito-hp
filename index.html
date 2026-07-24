@@ -281,7 +281,7 @@ main{ position:relative; z-index:1; }
   .hero{ padding-right:clamp(9rem,15vw,14rem); }
 }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-bg-item{ position:absolute; inset:0; opacity:0; animation:heroFade 24s infinite; }
+.hero-bg-item{ position:absolute; inset:0; opacity:0; animation:heroFade 48s infinite; }
 .hero-bg-item img{
   width:100%; height:100%; object-fit:cover; display:block;
   transform:scale(var(--zoom,1));
@@ -290,6 +290,10 @@ main{ position:relative; z-index:1; }
 .hero-bg-item:nth-child(2){ animation-delay:6s; }
 .hero-bg-item:nth-child(3){ animation-delay:12s; }
 .hero-bg-item:nth-child(4){ animation-delay:18s; }
+.hero-bg-item:nth-child(5){ animation-delay:24s; }
+.hero-bg-item:nth-child(6){ animation-delay:30s; }
+.hero-bg-item:nth-child(7){ animation-delay:36s; }
+.hero-bg-item:nth-child(8){ animation-delay:42s; }
 .hero::before{
   content:""; position:absolute; inset:0; z-index:0;
   background:linear-gradient(180deg,
@@ -299,9 +303,9 @@ main{ position:relative; z-index:1; }
 }
 @keyframes heroFade{
   0%{ opacity:0; }
-  4%{ opacity:1; }
-  25%{ opacity:1; }
-  29%{ opacity:0; }
+  2%{ opacity:1; }
+  12.5%{ opacity:1; }
+  14.6%{ opacity:0; }
   100%{ opacity:0; }
 }
 @media (prefers-reduced-motion: reduce){
@@ -672,10 +676,14 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   <!-- First View: KOGEI REALISM（構成案どおり） -->
   <section class="hero" id="hero" aria-label="ヒーロー">
     <div class="hero-bg" aria-hidden="true">
-      <div class="hero-bg-item" data-edit-slot="hero1" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_white.jpg" data-edit-label="ヒーロー背景1（白背景の金魚）" data-edit-where="index.html の .hero-bg 内 1枚目のimg"><img src="img/hero_wide_kingyo_white.jpg" alt="" loading="eager"></div>
+      <div class="hero-bg-item" data-edit-slot="hero1" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_white.jpg" data-edit-label="ヒーロー背景1（ボトルの金魚）" data-edit-where="index.html の .hero-bg 内 1枚目のimg"><img src="img/hero_wide_kingyo_white.jpg" alt="" loading="eager"></div>
       <div class="hero-bg-item" data-edit-slot="hero2" data-edit-ratio="2.333" data-edit-path="img/hero_wide_frog_leaves.jpg" data-edit-label="ヒーロー背景2（蛙と葉）" data-edit-where="index.html の .hero-bg 内 2枚目のimg"><img src="img/hero_wide_frog_leaves.jpg" alt="" loading="lazy"></div>
-      <div class="hero-bg-item" data-edit-slot="hero3" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_gallery.jpg" data-edit-label="ヒーロー背景3（展示風景）" data-edit-where="index.html の .hero-bg 内 3枚目のimg"><img src="img/hero_wide_kingyo_gallery.jpg" alt="" loading="lazy"></div>
-      <div class="hero-bg-item" data-edit-slot="hero4" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_wood.jpg" data-edit-label="ヒーロー背景4（木目テーブル）" data-edit-where="index.html の .hero-bg 内 4枚目のimg"><img src="img/hero_wide_kingyo_wood.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero3" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_gallery.jpg" data-edit-label="ヒーロー背景3（白い器の金魚）" data-edit-where="index.html の .hero-bg 内 3枚目のimg"><img src="img/hero_wide_kingyo_gallery.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero4" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_wood.jpg" data-edit-label="ヒーロー背景4（樹脂ブロックの金魚）" data-edit-where="index.html の .hero-bg 内 4枚目のimg"><img src="img/hero_wide_kingyo_wood.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero5" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_platetop.jpg" data-edit-label="ヒーロー背景5（皿の金魚・俯瞰）" data-edit-where="index.html の .hero-bg 内 5枚目のimg"><img src="img/hero_wide_kingyo_platetop.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero6" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_bowl.jpg" data-edit-label="ヒーロー背景6（丸鉢の金魚）" data-edit-where="index.html の .hero-bg 内 6枚目のimg"><img src="img/hero_wide_kingyo_bowl.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero7" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_confetti.jpg" data-edit-label="ヒーロー背景7（紙片と金魚）" data-edit-where="index.html の .hero-bg 内 7枚目のimg"><img src="img/hero_wide_kingyo_confetti.jpg" alt="" loading="lazy"></div>
+      <div class="hero-bg-item" data-edit-slot="hero8" data-edit-ratio="2.333" data-edit-path="img/hero_wide_kingyo_ridge.jpg" data-edit-label="ヒーロー背景8（樹脂の襞と金魚）" data-edit-where="index.html の .hero-bg 内 8枚目のimg"><img src="img/hero_wide_kingyo_ridge.jpg" alt="" loading="lazy"></div>
     </div>
     <h1 class="hero-name rise">河﨑海斗<small>KAWASAKI&nbsp;KAITO</small></h1>
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
