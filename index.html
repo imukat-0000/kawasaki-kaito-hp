@@ -562,6 +562,10 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-list strong{ font-weight:600; }
 .exhi-list .venue{ display:block; font-size:.8rem; color:var(--ink-soft); }
 @media (max-width:600px){ .exhi-list li{ grid-template-columns:1fr; gap:.2rem; } }
+.exhi-past{ margin-top:2.2rem; }
+.exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
+.exhi-list-past{ opacity:.6; }
+.exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
 .news-sns{
   margin-top:2.6rem; padding-top:1.8rem; border-top:1px solid var(--line);
   display:flex; flex-wrap:wrap; align-items:center; gap:1.2rem;
@@ -762,6 +766,16 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>2026.12.11 — 12.22</time>
           <div><strong>個展</strong><span class="venue">MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="exhi-past">
+      <h3>過去の展示</h3>
+      <ul class="exhi-list exhi-list-past">
+        <li>
+          <time>2026.7.22 — 7.28</time>
+          <div><strong>河﨑海斗展<span class="ended-tag">（終了）</span></strong><span class="venue">新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展</span></div>
         </li>
       </ul>
     </div>
