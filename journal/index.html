@@ -11,30 +11,27 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>販売情報 | 河﨑海斗 — KOGEI REALISM</title>
-<meta name="description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
-<meta property="og:title" content="販売情報 | 河﨑海斗">
-<meta property="og:description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
+<title>ジャーナル | 河﨑海斗 — KOGEI REALISM</title>
+<meta name="description" content="金工作家・河﨑海斗による制作ノート・思想エッセイ・展示記録。">
+<meta property="og:title" content="ジャーナル | 河﨑海斗">
+<meta property="og:description" content="金工作家・河﨑海斗による制作ノート・思想エッセイ・展示記録。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://kaitokawasaki.com/sales/">
+<meta property="og:url" content="https://kaitokawasaki.com/journal/">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
+<meta property="og:image" content="https://kaitokawasaki.com/img/work_shuiro-wakin.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="800">
-<meta property="og:image:alt" content="修了作品「錦鯉」— 樹脂に封入された鋳金の錦鯉">
+<meta property="og:image:alt" content="朱色和金 — 樹脂に封入された鋳金の和金">
 <meta property="og:site_name" content="河﨑海斗 | KOGEI REALISM">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@kkchaki">
-<meta name="twitter:title" content="販売情報 | 河﨑海斗">
-<meta name="twitter:description" content="金工作家・河﨑海斗の作品を取り扱うギャラリー・展示会場の情報。">
-<meta name="twitter:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
-<meta name="twitter:image:alt" content="修了作品「錦鯉」— 樹脂に封入された鋳金の錦鯉">
+<meta name="twitter:title" content="ジャーナル | 河﨑海斗">
+<meta name="twitter:description" content="金工作家・河﨑海斗による制作ノート・思想エッセイ・展示記録。">
+<meta name="twitter:image" content="https://kaitokawasaki.com/img/work_shuiro-wakin.jpg">
+<meta name="twitter:image:alt" content="朱色和金 — 樹脂に封入された鋳金の和金">
 <meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
-<link rel="canonical" href="https://kaitokawasaki.com/sales/">
-<link rel="alternate" hreflang="ja" href="https://kaitokawasaki.com/sales/">
-<link rel="alternate" hreflang="en" href="https://kaitokawasaki.com/en/sales/">
-<link rel="alternate" hreflang="x-default" href="https://kaitokawasaki.com/sales/">
+<link rel="canonical" href="https://kaitokawasaki.com/journal/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -186,38 +183,30 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 }
 .archive-back a:hover{ border-color:var(--hido); }
 
-/* ============ 販売情報 ============ */
-.sales-lede{ max-width:42rem; color:var(--ink-soft); font-size:.92rem; margin:1.6rem 0 2.6rem; }
-.sales-group{ margin-bottom:2.8rem; }
-.sales-group h3{
-  font-size:.75rem; letter-spacing:.3em; color:var(--hido); font-weight:600; margin-bottom:1rem;
+/* ============ ジャーナル ============ */
+.journal-lede{ max-width:42rem; color:var(--ink-soft); font-size:.92rem; margin:1.6rem 0 2.6rem; }
+.journal-list{ list-style:none; max-width:52rem; }
+.journal-list li{ border-bottom:1px solid var(--line); }
+.journal-card{
+  display:block; padding:1.6em 0; text-decoration:none; color:inherit;
 }
-.sales-list{ list-style:none; max-width:60rem; }
-.sales-list li{
-  display:flex; align-items:center; justify-content:space-between; gap:1.2rem; flex-wrap:wrap;
-  padding:1em 0; border-bottom:1px solid var(--line);
+.journal-meta{
+  display:flex; align-items:center; gap:.9em; margin-bottom:.5em;
 }
-.sales-name{ display:flex; flex-direction:column; gap:.2em; }
-.sales-name time{
+.journal-cat{
+  font-size:.68rem; letter-spacing:.14em; color:var(--hido);
+  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  border-radius:999px; padding:.25em .9em;
+}
+.journal-date{
   font-size:.72rem; letter-spacing:.05em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
-.sales-name strong{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-weight:600; font-size:.98rem;
+.journal-title{
+  display:block; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-weight:600; font-size:1.1rem; margin-bottom:.5em; transition:color .25s;
 }
-.sales-venue{ font-size:.82rem; color:var(--ink-soft); }
-.sales-link{
-  font-size:.78rem; color:var(--hido); text-decoration:none; white-space:nowrap;
-  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  padding-bottom:.1em; transition:border-color .25s;
-}
-.sales-link:hover{ border-color:var(--hido); }
-.sales-note{ margin-top:1.6rem; font-size:.85rem; color:var(--ink-soft); }
-.sales-note a{
-  color:var(--hido); text-decoration:none;
-  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-}
-.sales-note a:hover{ border-color:var(--hido); }
+.journal-card:hover .journal-title{ color:var(--hido); }
+.journal-excerpt{ font-size:.85rem; color:var(--ink-soft); max-width:44rem; }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -249,11 +238,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <li><a href="../index.html#exhibitions">展示情報</a></li>
     <li><a href="../index.html#works">代表作品</a></li>
     <li><a href="../works/">作品一覧</a></li>
-    <li><a href="index.html" aria-current="page">販売情報</a></li>
-    <li><a href="../journal/">ジャーナル</a></li>
+    <li><a href="../sales/">販売情報</a></li>
+    <li><a href="index.html" aria-current="page">ジャーナル</a></li>
     <li><a href="../index.html#artist">河﨑海斗</a></li>
     <li><a href="../index.html#contact">コンタクト</a></li>
-    <li><a href="/en/sales/" hreflang="en">EN</a></li>
   </ul>
   <div class="nav-sns">
     <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
@@ -262,99 +250,12 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 </nav>
 
 <main>
-  <section aria-label="販売情報">
-    <div class="sec-head"><h2>販売情報</h2><span>WHERE TO FIND</span></div>
-    <p class="archive-back"><a href="../index.html#exhibitions">← 展示情報を見る</a></p>
-    <p class="sales-lede">河﨑海斗の作品は、以下のギャラリー・展示会場でご覧いただけます。会期や取り扱い作品は変更になる場合があるため、各会場の公式サイトでご確認ください。</p>
+  <section aria-label="ジャーナル">
+    <div class="sec-head"><h2>ジャーナル</h2><span>JOURNAL</span></div>
+    <p class="archive-back"><a href="../index.html#artist">← 河﨑海斗について読む</a></p>
+    <p class="journal-lede">制作の背景、工芸リアリズムをめぐる思考、展示の記録。河﨑海斗による記事を随時公開しています。</p>
 
-    <div class="sales-group">
-      <h3>常設で取り扱い</h3>
-      <ul class="sales-list">
-        <li>
-          <div class="sales-name">
-            <strong>藝大アートプラザ</strong>
-            <span class="sales-venue">東京藝術大学 上野キャンパス内（東京・上野）</span>
-          </div>
-          <a class="sales-link" href="https://artplaza.geidai.ac.jp/" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <strong>常設展示</strong>
-            <span class="sales-venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span>
-          </div>
-          <a class="sales-link" href="https://lecringinza.co.jp/theartsfusion/" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <strong>GALLERY OPET</strong>
-            <span class="sales-venue">取り扱いギャラリー — 展示等でお世話になっているギャラリー</span>
-          </div>
-          <a class="sales-link" href="https://www.gallery-opet.com/河崎海斗" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <strong>常設展示</strong>
-            <span class="sales-venue">海上自衛隊呉史料館（てつのくじら館）ミュージアムショップ（広島・呉）— 「鉄ノ鯨」を展示</span>
-          </div>
-          <a class="sales-link" href="https://www.jmsdf-kure-museum.go.jp/shop-cafe/" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <strong>コラボレーション商品</strong>
-            <span class="sales-venue">制服のフジ — 河﨑海斗のイラストとのコラボ商品を販売</span>
-          </div>
-          <a class="sales-link" href="https://seifukunofuji.co.jp/SHOP/313615/list.html" target="_blank" rel="noopener">商品ページを見る →</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="sales-group">
-      <h3>展示中・開催予定</h3>
-      <ul class="sales-list">
-        <li>
-          <div class="sales-name">
-            <time>2026.7.22 — 7.28</time>
-            <strong>河﨑海斗展</strong>
-            <span class="sales-venue">新宿髙島屋 2階 特設会場（東京・新宿）</span>
-          </div>
-          <a class="sales-link" href="https://www.takashimaya.co.jp/shinjuku/" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <time>2026.5.30 — 7.30</time>
-            <strong>個展「出藍の誉」</strong>
-            <span class="sales-venue">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span>
-          </div>
-          <a class="sales-link" href="https://store-tsutaya.tsite.jp/store/detail?storeId=2332" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <time>2026.6.8 — 8.17</time>
-            <strong>3人展「MATSURI INORU」</strong>
-            <span class="sales-venue">Spiral Garden 新丸ビル（東京・丸の内）— 修了作品「錦鯉」を展示</span>
-          </div>
-          <a class="sales-link" href="https://www.spiral.co.jp/shoplist/shinmaru-building" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <time>2026.9.4 — 10.20</time>
-            <strong>個展</strong>
-            <span class="sales-venue">北斎館（長野・小布施）— 「画狂乃蛙」は北斎館オンラインショップで販売中</span>
-          </div>
-          <a class="sales-link" href="https://shop.hokusai-kan.com/" target="_blank" rel="noopener">オンラインショップを見る →</a>
-        </li>
-        <li>
-          <div class="sales-name">
-            <time>2026.12.11 — 12.22</time>
-            <strong>個展</strong>
-            <span class="sales-venue">MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）</span>
-          </div>
-          <a class="sales-link" href="https://medelgalleryshu.com/" target="_blank" rel="noopener">サイトを見る →</a>
-        </li>
-      </ul>
-    </div>
-
-    <p class="sales-note">上記以外でのお問い合わせは<a href="../index.html#contact">コンタクト</a>よりご連絡ください。</p>
+    <ul class="journal-list" id="journalList"></ul>
   </section>
 </main>
 
@@ -363,6 +264,23 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <script>
 (function(){
   "use strict";
+
+  var ARTICLES = [
+    { slug:"kogei-realism", title:"工芸リアリズムとは何か", date:"2026-07-29", category:"思想",
+      excerpt:"金魚をどれだけ精巧に模すかではなく、金魚が金魚として存在するための条件を組み直すこと。工芸リアリズムという言葉の意味について。" }
+  ];
+
+  var list = document.getElementById("journalList");
+  if (list){
+    list.innerHTML = ARTICLES.map(function(a){
+      return '<li><a class="journal-card" href="' + a.slug + '/">' +
+        '<span class="journal-meta"><span class="journal-cat">' + a.category + '</span>' +
+        '<time class="journal-date">' + a.date + '</time></span>' +
+        '<span class="journal-title">' + a.title + '</span>' +
+        '<span class="journal-excerpt">' + a.excerpt + '</span>' +
+        '</a></li>';
+    }).join("");
+  }
 
   /* ---------- ハンバーガーメニュー ---------- */
   var navToggle = document.getElementById('navToggle');
