@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F9HRX2EH1D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F9HRX2EH1D');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Works | Kaito Kawasaki — KOGEI REALISM</title>
+<meta name="description" content="Complete works archive of Kaito Kawasaki, metal-casting artist, browsable by year.">
+<meta property="og:title" content="All Works | Kaito Kawasaki">
+<meta property="og:description" content="Complete works archive of Kaito Kawasaki, metal-casting artist, browsable by year.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kaitokawasaki.com/en/works/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Master's thesis work 'Nishikigoi' — a cast-metal koi encased in resin">
+<meta property="og:site_name" content="Kaito Kawasaki | KOGEI REALISM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kkchaki">
+<meta name="twitter:title" content="All Works | Kaito Kawasaki">
+<meta name="twitter:description" content="Complete works archive of Kaito Kawasaki, metal-casting artist, browsable by year.">
+<meta name="twitter:image" content="https://kaitokawasaki.com/img/work_nishikigoi.jpg">
+<meta name="twitter:image:alt" content="Master's thesis work 'Nishikigoi' — a cast-metal koi encased in resin">
+<meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://kaitokawasaki.com/en/works/">
+<link rel="alternate" hreflang="ja" href="https://kaitokawasaki.com/works/">
+<link rel="alternate" hreflang="en" href="https://kaitokawasaki.com/en/works/">
+<link rel="alternate" hreflang="x-default" href="https://kaitokawasaki.com/works/">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<style>
+@font-face{
+  font-family:"Noto Serif JP";
+  src:url("../../fonts/NotoSerifJP-sub.woff2") format("woff2");
+  font-weight:200 900;
+  font-display:swap;
+}
+
+/* ============ tokens（本体 index.html と同一） ============ */
+:root{
+  --paper:#F7F4EC;
+  --ink:#1C1E22;
+  --ink-soft:#4C4D48;
+  --hido:#9C3B22;
+  --hido-deep:#7E2E1A;
+  --brass:#9A7B3F;
+  --line:#DCD5C6;
+  --card:#FFFDF7;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+    --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+    --line:#2B3037; --card:#1B1F25;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#4C4D48;
+  --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
+  --line:#DCD5C6; --card:#FFFDF7;
+}
+:root[data-theme="dark"]{
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+  --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+  --line:#2B3037; --card:#1B1F25;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; background:var(--paper); }
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";
+  line-height:1.9;
+  letter-spacing:0.04em;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+
+/* ============ nav（本体と共通） ============ */
+/* nav はheaderの兄弟要素（headerのbackdrop-filterがposition:fixedの containing block に
+   なってしまい、モバイル全画面オーバーレイがheaderの高さ内に閉じ込められるのを防ぐため） */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
+  background:color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none; position:relative; z-index:26;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
+}
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
+}
+#mainNav{
+  position:fixed; top:0; height:7.75rem; right:clamp(1.2rem, 4vw, 3rem); z-index:31;
+  display:flex; align-items:center;
+  transition:opacity .35s ease;
+}
+#mainNav ul{ display:flex; flex-direction:row; align-items:center; gap:1.8rem; list-style:none; }
+#mainNav a{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  text-decoration:none; font-size:.85rem; letter-spacing:.08em;
+  color:var(--ink-soft); transition:color .25s;
+}
+#mainNav a:hover, #mainNav a[aria-current]{ color:var(--hido); }
+
+.nav-toggle{
+  display:none; position:relative; z-index:26;
+  flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
+}
+.nav-toggle span{
+  display:block; width:1.4rem; height:1.5px; background:var(--ink);
+  transition:transform .25s ease, opacity .2s ease;
+}
+body.nav-open .nav-toggle span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+.nav-sns{ display:none; }
+
+@media (max-width:760px){
+  .nav-toggle{ display:flex; }
+  #mainNav{
+    inset:0; right:auto; z-index:24;
+    width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
+    background:var(--paper);
+    justify-content:flex-end;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open #mainNav{ opacity:1; visibility:visible; }
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:1.8rem; }
+  #mainNav a{ font-size:1.5rem; letter-spacing:.1em; }
+
+  .nav-sns{
+    display:flex; gap:1.4rem;
+    position:fixed; left:1.4rem; bottom:1.8rem; z-index:25;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open .nav-sns{ opacity:1; visibility:visible; }
+  .nav-sns a{
+    font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
+  }
+  .nav-sns a:hover{ color:var(--hido); }
+}
+
+main{ position:relative; z-index:1; padding-top:9rem; }
+section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
+
+.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:2.2rem; }
+.sec-head h2{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
+  white-space:nowrap;
+}
+.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
+.sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+.archive-back{ font-size:.8rem; }
+.archive-back a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  padding-bottom:.1em; transition:border-color .25s;
+}
+.archive-back a:hover{ border-color:var(--hido); }
+
+/* ============ 年別グリッド ============ */
+.archive-year{ margin-bottom:clamp(2.6rem,6vw,4rem); }
+.year-head{ display:flex; align-items:baseline; gap:1.1rem; margin-bottom:1.5rem; }
+.year-head .year-num{
+  font-family:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;
+  font-size:clamp(1.5rem,3vw,2rem); color:var(--hido); letter-spacing:.05em;
+}
+.year-head .year-line{ flex:1; height:1px; background:var(--line); }
+
+.archive-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:1.1rem;
+}
+.archive-tile{
+  appearance:none; border:1px solid var(--line); background:var(--card);
+  border-radius:2px; padding:0; cursor:pointer; text-align:left; font:inherit; color:inherit;
+  display:flex; flex-direction:column; overflow:hidden;
+  transition:border-color .25s ease, transform .25s ease;
+}
+.archive-tile:hover, .archive-tile:focus-visible{ border-color:var(--hido); transform:translateY(-3px); }
+.tile-visual{
+  aspect-ratio:1/1; position:relative;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(90% 130% at 50% 120%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 60%),
+    linear-gradient(165deg, color-mix(in srgb, var(--ink) 6%, var(--card)), var(--card));
+  border-bottom:1px solid var(--line);
+}
+.tile-visual .kanji{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:2.5rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
+}
+.tile-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(var(--zoom,1)); }
+.tile-meta{ padding:.65rem .75rem .8rem; }
+.tile-title{
+  display:block; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:.88rem; font-weight:600; letter-spacing:.05em;
+}
+.tile-note{ display:block; font-size:.65rem; color:var(--ink-soft); letter-spacing:.08em; margin-top:.2rem; }
+
+/* ============ モーダル ============ */
+.work-modal{
+  position:fixed; inset:0; z-index:60;
+  display:flex; align-items:center; justify-content:center; padding:1.4rem;
+  opacity:0; visibility:hidden; transition:opacity .25s ease;
+}
+.work-modal.open{ opacity:1; visibility:visible; }
+.work-modal-backdrop{
+  position:absolute; inset:0;
+  background:color-mix(in srgb, var(--ink) 55%, transparent);
+  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+}
+.work-modal-panel{
+  position:relative; z-index:1; width:100%; max-width:640px; max-height:88vh; overflow:auto;
+  background:var(--card); border:1px solid var(--line); border-radius:3px;
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+  transform:translateY(12px); transition:transform .25s ease;
+}
+.work-modal.open .work-modal-panel{ transform:none; }
+@media (min-width:640px){
+  .work-modal-panel{ max-width:820px; display:grid; grid-template-columns:1fr 1fr; }
+}
+.work-modal-close{
+  position:absolute; top:.6rem; right:.6rem; z-index:2;
+  width:2.2rem; height:2.2rem; border-radius:50%;
+  border:1px solid var(--line); background:var(--paper); color:var(--ink);
+  font-size:1.05rem; line-height:1; cursor:pointer;
+}
+.work-modal-close:hover{ border-color:var(--hido); color:var(--hido); }
+.work-modal-visual{
+  aspect-ratio:1/1; position:relative;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(90% 130% at 50% 120%, color-mix(in srgb, var(--hido) 22%, transparent) 0%, transparent 60%),
+    linear-gradient(165deg, color-mix(in srgb, var(--ink) 6%, var(--card)), var(--card));
+}
+.work-modal-visual .kanji{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:5rem; font-weight:600; color:color-mix(in srgb, var(--hido) 78%, var(--ink));
+}
+.work-modal-visual img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(var(--zoom,1)); }
+.work-modal-body{ padding:1.6rem 1.6rem 1.8rem; display:flex; flex-direction:column; gap:.8rem; }
+.work-modal-body h3{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.2rem; font-weight:600; letter-spacing:.06em;
+}
+.work-modal-body h3 small{ font-weight:400; font-size:.72rem; color:var(--ink-soft); margin-left:.6em; letter-spacing:.1em; }
+.modal-sub{ font-size:.72rem; color:var(--ink-soft); letter-spacing:.1em; margin-top:-.4rem; }
+.work-award{
+  font-size:.7rem; letter-spacing:.12em; color:var(--hido);
+  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  border-radius:999px; padding:.15em .9em; align-self:flex-start;
+}
+.work-modal-body p{ font-size:.87rem; line-height:1.9; }
+.work-specs{ margin-top:auto; font-size:.75rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:.7rem; }
+.work-specs div{ display:flex; gap:.8em; }
+.work-specs dt{ min-width:3.5em; letter-spacing:.1em; }
+
+footer{
+  padding:2.5rem; text-align:center;
+  font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+</style>
+<script>
+/* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
+if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
+  var kkEditLoader = document.createElement("script");
+  kkEditLoader.src = "../../js/edit-mode.js";
+  kkEditLoader.defer = true;
+  document.head.appendChild(kkEditLoader);
+}
+</script>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../index.html">Kaito Kawasaki<span class="brand-tagline">Metal-casting artist<br>Imono / Kaikin</span></a>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<nav aria-label="Main" id="mainNav">
+  <ul>
+    <li><a href="../index.html#concept">Concept</a></li>
+    <li><a href="../index.html#exhibitions">Exhibitions</a></li>
+    <li><a href="../index.html#works">Selected Works</a></li>
+    <li><a href="index.html" aria-current="page">All Works</a></li>
+    <li><a href="../sales/">Where to Buy</a></li>
+    <li><a href="../index.html#artist">Artist</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="/works/" hreflang="ja">日本語</a></li>
+  </ul>
+  <div class="nav-sns">
+    <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
+  </div>
+</nav>
+
+<main>
+  <section aria-label="About the works archive">
+    <div class="sec-head"><h2>All Works</h2><span>WORKS ARCHIVE</span></div>
+    <p class="archive-back"><a href="../index.html#works">← Read about the work</a></p>
+  </section>
+
+  <section id="archive" aria-label="Works listed by year"></section>
+</main>
+
+<div class="work-modal" id="workModal" hidden>
+  <div class="work-modal-backdrop" data-close></div>
+  <div class="work-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="work-modal-close" type="button" data-close aria-label="Close">✕</button>
+    <div class="work-modal-visual" id="modalVisual"></div>
+    <div class="work-modal-body">
+      <h3 id="modalTitle"></h3>
+      <p class="modal-sub" id="modalSub" hidden></p>
+      <span class="work-award" id="modalAward" hidden></span>
+      <p id="modalDesc" hidden></p>
+      <dl class="work-specs" id="modalSpecs"></dl>
+    </div>
+  </div>
+</div>
+
+<footer>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- ハンバーガーメニュー ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var mainNav = document.getElementById('mainNav');
+  if (navToggle && mainNav){
+    var closeNav = function(){
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    var toggleNav = function(){
+      var open = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', toggleNav);
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  /* ---------- スクロール方向でヘッダーを隠す/出す ---------- */
+  (function(){
+    var headerEl = document.querySelector('header');
+    var navEl = document.getElementById('mainNav');
+    if (!headerEl) return;
+    var lastY = window.scrollY;
+    var hideThreshold = 80;
+    var hidden = false;
+    var ticking = false;
+    function setHidden(next){
+      if (next === hidden) return;
+      hidden = next;
+      if (hidden){
+        headerEl.style.opacity = '0';
+        headerEl.style.transform = 'translateY(-100%)';
+        headerEl.style.pointerEvents = 'none';
+        if (navEl){ navEl.style.opacity = '0'; navEl.style.pointerEvents = 'none'; }
+      } else {
+        headerEl.style.opacity = '';
+        headerEl.style.transform = '';
+        headerEl.style.pointerEvents = '';
+        if (navEl){ navEl.style.opacity = ''; navEl.style.pointerEvents = ''; }
+      }
+    }
+    function update(){
+      var currentY = window.scrollY;
+      if (!document.body.classList.contains('nav-open')){
+        if (currentY <= hideThreshold){
+          setHidden(false);
+        } else if (currentY > lastY){
+          setHidden(true);
+        } else if (currentY < lastY){
+          setHidden(false);
+        }
+      }
+      lastY = currentY;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  var WORKS = [
+    { id:"w01", title:"Vermilion Wakin Cluster", year:2026, yearLabel:"2026 / Graduation Work", en:"朱色和金郡", motif:"Goldfish (Wakin)", award:"Heisei Art Award", desc:"A cluster does not exist as a single fish. Only through the repetition of casting — the same wakin, cast again and again — does the plural condition of a ‘cluster’ come into being.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"],["Exhibited","72nd Tokyo University of the Arts Graduation &amp; Diploma Works Exhibition, Tokyo Metropolitan Art Museum (2024)<br>10th Tokyo University of the Arts Heisei Art Award Exhibition (2024)"]], kanji:"郡", img:"../../img/work_w01.jpg", alt:"Vermilion Wakin Cluster", pos:"25% 42%" },
+    { id:"w02", title:"Autumn-Leaf Wakin", year:2026, en:"紅葉和金", motif:"Goldfish (Wakin)", desc:"Goldfish and autumn leaves, two seasons layered onto a single surface. The red of hido oxidation is at once the color of scales and the color of a leaf at the moment it falls.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, hido oxidation, cuprous-oxide burnishing, resin encapsulation"]], kanji:"紅", img:"../../img/work_w02.jpg", alt:"Autumn-Leaf Wakin", pos:"48% 36%" },
+    { id:"w03", title:"Silver-Dusted Medaka", year:2026, en:"銀粉メダカ", motif:"Medaka (killifish)", desc:"A new kind of mold — 3D printing — meets an old metal, silver. The smallness of the medaka becomes a condition that tests the precision of both mold and metal at once.", specs:[["Material","Silver, 3D photopolymer resin"],["Technique","3D printing, silver-powder burnishing, resin encapsulation"]], kanji:"銀", img:"../../img/work_w03.jpg", alt:"Silver-Dusted Medaka", pos:"52% 47%" },
+    { id:"nishikigoi", title:"Nishikigoi", year:2026, yearLabel:"2026 / Master's Thesis Work", en:"錦鯉", motif:"Koi (carp)", award:"Salon de Printemps Award", desc:"More than a hundred times the scale of the goldfish works, this is, for now, the largest piece. It was brought into being through constant negotiation with the physical limits of metal casting.", specs:[["Material","Silver, copper, sahari, brass (aluminum-alloyed), shakudo, shibuichi"],["Technique","Vacuum-pressure casting, gravity casting, plaster mold, polishing, nikuiro oxidation, hido oxidation, sulfide patination, silver plating, resin encapsulation"],["Exhibited","74th Tokyo University of the Arts Graduation &amp; Diploma Works Exhibition (2026)<br>Three-person exhibition ‘MATSURI INORU’, Spiral Garden, Shin-Marunouchi Building (Jun 8–Aug 17, 2026, extended, currently on view)"]], img:"../../img/work_nishikigoi.jpg", alt:"Master's thesis work ‘Nishikigoi’ — a cast-metal koi encased in resin" },
+    { id:"w04", title:"Rain Frog and Autumn Leaves", year:2026, en:"雨ノ蛙と紅葉", motif:"Frog + plant (autumn leaves)", desc:"The frog does not hide beneath the autumn leaves; it passes through the same oxidation process as the leaves, arriving at the same red.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, hido oxidation, sulfide patination, silver plating, resin coating"]], kanji:"紅", img:"../../img/work_w04.jpg", alt:"Rain Frog and Autumn Leaves", pos:"50% 50%" },
+    { id:"w05", title:"Rain Frog and Green Maple", year:2026, en:"雨ノ蛙と青紅葉", motif:"Frog + plant (autumn leaves)", desc:"Verdigris is a color that can only be born through time. The same crystals creep across the frog’s skin, holding the season in place, still green.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, crystallization, verdigris oxidation, sulfide patination, silver-powder burnishing, resin coating"]], kanji:"青", img:"../../img/work_w05.jpg", alt:"Rain Frog and Green Maple", pos:"35% 49%" },
+    { id:"w06", title:"Rain Frog and Yellow Maple", year:2026, en:"雨ノ蛙と黄紅葉", motif:"Frog + plant (autumn leaves)", desc:"Coloring maple leaves and a rain-soaked frog. Two different conditions of wet and dry are layered within a single nikuiro-oxidation process.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, nikuiro oxidation, sulfide patination, silver plating, resin coating"]], kanji:"黄", img:"../../img/work_w06.jpg", alt:"Rain Frog and Yellow Maple", pos:"41% 51%" },
+    { id:"w07", title:"Blue Sea Turtle", year:2026, en:"青海亀", motif:"Turtle (sea turtle)", desc:"A sea turtle carries no weight from its shell; only in water does it find its true speed. The blue of heat-color oxidation takes on, as color, the water that is absent here.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, sulfide patination, silver plating, resin coating"]], kanji:"海", img:"../../img/work_w07.jpg", alt:"Blue Sea Turtle", pos:"59% 35%" },
+    { id:"w08", title:"Yellow-Dusted Medaka", year:2026, en:"黄粉メダカ", motif:"Medaka", desc:"Brass powder and silver powder, two metal powders burnished into the same skin. The medaka’s yellow is born where two unmixed colors sit side by side.", specs:[["Material","Silver, brass, 3D photopolymer resin"],["Technique","3D printing, brass-powder burnishing, silver-powder burnishing, resin encapsulation"]], kanji:"黄", img:"../../img/work_w08.jpg", alt:"Yellow-Dusted Medaka", pos:"37% 51%" },
+    { id:"w09", title:"Yellow Wakin", year:2026, en:"黄色和金", motif:"Goldfish (Wakin)", desc:"Color is not made by oxidation alone. When a polished base metal simply returns light, yellow appears as the color of the metal itself.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, resin encapsulation"]], kanji:"黄", img:"../../img/work_w09.jpg", alt:"Yellow Wakin", pos:"40% 49%" },
+    { id:"w10", title:"Black-Dusted Medaka", year:2026, en:"黒粉メダカ", motif:"Medaka", desc:"Silver powder and the black of cupric oxide, brightness and darkness burnished into the same surface. The medaka’s black exists as the balance between two opposing powders.", specs:[["Material","Silver, copper"],["Technique","3D printing, silver-powder burnishing, cupric-oxide burnishing, resin encapsulation"]], kanji:"黒", img:"../../img/work_w10.jpg", alt:"Black-Dusted Medaka", pos:"47% 0%" },
+    { id:"w11", title:"Colors of Thought: Wakin", year:2025, en:"思色和金", motif:"Goldfish (Wakin)", desc:"The thought itself — not yet settled on a single color — is arranged as multiple bodies. The colors on the way to red are fixed in place, still in the order of time.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"]], img:"../../img/work_shiiro-wakin.jpg", alt:"Colors of Thought: Wakin — multiple bodies encased together in resin" },
+    { id:"w12", title:"Mottled Pearlscale", year:2025, en:"斑ラ珍珠鱗", motif:"Goldfish (pearlscale)", desc:"Sulfide patination and silver plating — oxidation and its resistance — contend on the same scale’s surface. The mottled pattern is born where that balance breaks.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"]], kanji:"斑", img:"../../img/work_w12.jpg", alt:"Mottled Pearlscale", pos:"50% 50%", zoom:"1.02" },
+    { id:"w13", title:"Mottled Chotengan", year:2025, en:"斑ラ頂天眼", motif:"Goldfish (chotengan)", desc:"Eyes turned upward reflect only the sky, like a mirror. The mottling of sulfide and silver plating holds, on the body’s surface, a color of the ground that those eyes will never see.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"]], kanji:"斑", img:"../../img/work_w13.jpg", alt:"Mottled Chotengan", pos:"80% 57%" },
+    { id:"w14", title:"Vermilion Bubble-Eye", year:2025, en:"朱色水泡眼", motif:"Goldfish (bubble-eye)", desc:"The bubble swelling beneath the eye is not water itself, but a transparent weight imitating water. Vermilion belongs only to the body that bears that weight.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"]], kanji:"朱", img:"../../img/work_w14.jpg", alt:"Vermilion Bubble-Eye", pos:"51% 70%" },
+    { id:"w15", title:"Vermilion Pearlscale", year:2025, en:"朱色珍珠鱗", motif:"Goldfish (pearlscale)", desc:"Onto scales that rise, pearl by pearl, vermilion is burnished in grain by grain. Not a uniform red — there are as many reds as there are grains.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"]], kanji:"朱", img:"../../img/work_w15.jpg", alt:"Vermilion Pearlscale", pos:"50% 50%" },
+    { id:"w16", title:"Vermilion Ranchu", year:2025, en:"朱色蘭鋳", motif:"Goldfish (ranchu)", desc:"Without a dorsal fin, the ranchu swims by roundness alone. Vermilion shifts in depth along the rises and falls of that roundness.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"]], kanji:"朱", img:"../../img/work_w16.jpg", alt:"Vermilion Ranchu", pos:"56% 50%" },
+    { id:"w17", title:"Shuiro Chobi", year:2025, en:"朱色蝶尾", motif:"Goldfish (chobi / butterfly-tail)", desc:"On a tail fin that opens wide like a butterfly’s wings, the roughness of nashiji texture and the smoothness of polishing coexist. Vermilion binds those differing textures into a single red.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, nashiji texturing, polishing, cuprous-oxide burnishing, resin encapsulation"]], kanji:"朱", img:"../../img/work_w17.jpg", alt:"Shuiro Chobi", pos:"50% 50%", zoom:"1.09" },
+    { id:"w18", title:"Vermilion Chotengan", year:2025, en:"朱色頂天眼", motif:"Goldfish (chotengan)", desc:"Swimming with its eyes fixed upward, the chotengan never looks ahead. Vermilion, in place of the unseen way forward, illuminates only the outline of the body.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"]], kanji:"朱", img:"../../img/work_w18.jpg", alt:"Vermilion Chotengan", pos:"50% 50%" },
+    { id:"gakkyo-kaeru", title:"Gakkyo no Kaeru (The Mad Painter’s Frog)", year:2025, yearLabel:"2025–2026", en:"画狂乃蛙", motif:"Frog (based on Hokusai’s ‘Frog and Saxifrage’)", desc:"The frog drawn in Hokusai’s ‘Frog and Saxifrage’ is brought into three dimensions using the same Edo-period techniques Hokusai himself worked with. The title plays on ‘Gakyōjin’ (‘The Man Mad About Painting’), Hokusai’s own artist’s name.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation, resin coating"],["Exhibited","Solo exhibition, Hokusai-kan Museum (from September 3, 2026)"],["Price","¥200,000 (available at the Hokusai-kan Museum online shop)"]], kanji:"狂", img:"../../img/work_gakkyo-kaeru.jpg", alt:"Gakkyo no Kaeru", pos:"52% 22%" },
+    { id:"w19", title:"White Wakin", year:2025, en:"白和金", motif:"Goldfish (Wakin)", desc:"Color is not added — white is born by halting oxidation. Silver plating holds the goldfish in the color of light, just before it would have turned red.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, silver plating, resin encapsulation"]], kanji:"白", img:"../../img/work_w19.jpg", alt:"White Wakin", pos:"0% 49%" },
+    { id:"w20", title:"White Ranchu", year:2025, en:"白蘭鋳", motif:"Goldfish (ranchu)", desc:"A ranchu with no shadow of oxidation shows its presence through outline alone. White is placed here less as a color than as color’s absence.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, silver plating, resin encapsulation"]], kanji:"白", img:"../../img/work_w20.jpg", alt:"White Ranchu", pos:"50% 50%" },
+    { id:"w21", title:"White Chobi", year:2025, en:"白蝶尾", motif:"Goldfish (chobi)", desc:"The thinness of the tail fin is kept intact because brass powder and silver plating — different metals’ particles — never overlap. White is the result of that thinness simply catching the light.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, brass-powder burnishing, silver plating, resin encapsulation"]], kanji:"白", img:"../../img/work_w21.jpg", alt:"White Chobi", pos:"50% 50%" },
+    { id:"kouyou", title:"Autumn Leaves", year:2025, en:"紅葉", motif:"Plant (autumn maple leaf)", award:"20th Geidai Art Plaza Art Award — Selected", desc:"Pure copper is cast into the shape of an autumn leaf, then dyed red through hido oxidation. The single moment of autumn when a leaf turns color is held, as time, inside the metal.", specs:[["Material","Copper"],["Technique","Vacuum-pressure casting, plaster mold, hido oxidation, resin coating"],["Exhibited","20th Geidai Art Plaza Art Award Exhibition (2026)<br>Kaito Kawasaki Exhibition, Shinjuku Takashimaya (Jul 22–28, 2026)<br>Featured on the cover of the ‘Kogei Realism’ booklet"]], img:"../../img/work_kouyou.jpg", alt:"Autumn Leaves — a cast-copper maple leaf dyed red through hido oxidation" },
+    { id:"w22", title:"Brown-Silver Toad", year:2025, en:"茶銀蟇蛙", motif:"Toad", desc:"A toad’s weight exists not for leaping but for staying still. The brown of sulfide patination and the light of silver plating are shared across the surface of that motionless body.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], kanji:"蟇", img:"../../img/work_w22.jpg", alt:"Brown-Silver Toad", pos:"50% 50%" },
+    { id:"w23", title:"Brown-Silver Rain Frog", year:2025, en:"茶銀雨ノ蛙", motif:"Frog", desc:"A body wet with rain looks heavier than a dry one. The brown of patination and the light of silver fix that illusion permanently, as the weight of metal.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], kanji:"茶", img:"../../img/work_w23.jpg", alt:"Brown-Silver Rain Frog", pos:"50% 50%" },
+    { id:"w24", title:"Silver Polka-Dot Pearlscale", year:2025, en:"銀水玉珍珠鱗", motif:"Goldfish (pearlscale)", desc:"Onto the raised grain of pearlscale, another pattern — polka dots — is layered. Silver plating binds the two roundnesses, of grain and of dot, in the same light.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"]], kanji:"銀", img:"../../img/work_w24.jpg", alt:"Silver Polka-Dot Pearlscale", pos:"22% 41%" },
+    { id:"w25", title:"Silver-Black Chotengan", year:2025, en:"銀黒頂天眼", motif:"Goldfish (chotengan)", desc:"Onto a base metal chosen with tin instead of copper, the black of sulfide patination settles. The border between silver and black is drawn as clearly as the upward-turned eye.", specs:[["Material","Silver, tin, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"]], kanji:"銀", img:"../../img/work_w25.jpg", alt:"Silver-Black Chotengan", pos:"50% 50%" },
+    { id:"w26", title:"Rain Frog: Night Rain", year:2025, en:"雨ノ蛙「夜雨」", motif:"Frog", desc:"Rain that falls at night leaves only sound, no visible color. A surface where verdigris and sulfide progress at once carries the humidity of that invisible night.", specs:[["Material","Silver, tin, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, sulfide patination, resin coating"]], img:"../../img/work_w26.jpg", alt:"Rain Frog: Night Rain", pos:"50% 50%" },
+    { id:"ame-kaeru", title:"Rain Frog: The Fox’s Wedding", year:2025, en:"雨ノ蛙「狐の嫁入り」", motif:"Frog", desc:"Glass, light, color, background. Within those conditions, the frog rises up as a different kind of existence.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], kanji:"雨", img:"../../img/work_ame-kaeru.jpg", alt:"Rain Frog: The Fox’s Wedding", pos:"50% 50%" },
+    { id:"w27", title:"Rain Frog: Sudden Shower", year:2025, en:"雨ノ蛙「白雨」", motif:"Frog", desc:"Hakuu is a rain that stops almost as soon as it begins. The brightness of silver plating and the shadow of sulfide — two changes occurring within a short span of time — coexist on the same surface.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], img:"../../img/work_w27.jpg", alt:"Rain Frog: Sudden Shower", pos:"50% 50%" },
+    { id:"w28", title:"Rain Frog: Accumulating Rain", year:2025, en:"雨ノ蛙「積雨」", motif:"Frog", desc:"Rain falls again and again onto the same place, as if accumulating. The sulfide slowly creeping across the surface traces the mark of that repetition.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], img:"../../img/work_w28.jpg", alt:"Rain Frog: Accumulating Rain", pos:"50% 50%" },
+    { id:"w29", title:"Rain Frog: Emerald Rain", year:2025, en:"雨ノ蛙「翠雨」", motif:"Frog", desc:"Emerald rain falls after passing through green leaves. The color of verdigris remains on the skin as the color of raindrops that have absorbed the green of those leaves.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, silver plating, resin coating"]], img:"../../img/work_w29.jpg", alt:"Rain Frog: Emerald Rain", pos:"50% 50%" },
+    { id:"w30", title:"Rain Frog: Fresh-Leaf Rain", year:2025, en:"雨ノ蛙「青葉雨」", motif:"Frog", desc:"Rain that falls after threading between fresh leaves reaches the ground carrying only their scent. The color of verdigris looks, too, like the trace of that scent, absorbed.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, silver plating, resin coating"]], img:"../../img/work_w30.jpg", alt:"Rain Frog: Fresh-Leaf Rain", pos:"47% 0%" },
+    { id:"w31", title:"Rain Frog: Wind-Blown Rain", year:2025, en:"雨ノ蛙「飛雨」", motif:"Frog", desc:"Rain blown sideways by the wind does not fall so much as cut across. The frog’s leaping posture holds that diagonal trajectory in place.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], img:"../../img/work_w31.jpg", alt:"Rain Frog: Wind-Blown Rain", pos:"50% 50%", zoom:"1.10" },
+    { id:"w32", title:"Raindrop Frog: Night Rain", year:2025, en:"雨粒蛙「夜雨」", motif:"Tree frog", desc:"For a tree frog no bigger than a raindrop, spending the night means a single condition: somewhere to hide. The light of silver plating is itself the faint reflection of a raindrop in the dark.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], img:"../../img/work_w32.jpg", alt:"Raindrop Frog: Night Rain", pos:"50% 50%" },
+    { id:"w33", title:"Blue Wakin", year:2025, en:"青和金", motif:"Goldfish (Wakin)", desc:"Blue is a color metal shows only for an instant, at its most unstable temperature. Heat-color oxidation is the technique that holds that instant in place, without letting it pass.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, sulfide patination, resin encapsulation"]], kanji:"青", img:"../../img/work_w33.jpg", alt:"Blue Wakin", pos:"50% 50%" },
+    { id:"w34", title:"Decayed-Leaf Yellow Chotengan", year:2025, en:"黄朽葉頂天眼", motif:"Goldfish (chotengan)", desc:"Kuchiba is the color left behind after the autumn leaves have finished turning. The chotengan’s upward-facing eyes keep that color of ending turned toward the sky.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, resin encapsulation"]], kanji:"黄", img:"../../img/work_w34.jpg", alt:"Decayed-Leaf Yellow Chotengan", pos:"50% 50%" },
+    { id:"w35", title:"Black Wakin", year:2025, en:"黒和金", motif:"Goldfish (Wakin)", desc:"A wakin before it turns red and a wakin that has passed beyond red arrive at the same black. Sulfide patination is the process that layers both ends into a single color.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"]], kanji:"黒", img:"../../img/work_w35.jpg", alt:"Black Wakin", pos:"50% 50%" },
+    { id:"w36", title:"Black Light-Indigo Bubble-Eye", year:2025, en:"黒浅葱水泡眼", motif:"Goldfish (bubble-eye)", desc:"Asagi is the color just before indigo fades to its faintest. Layering nikuiro oxidation with sulfide patination holds it exactly on the border with black.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, nikuiro oxidation, sulfide patination, resin encapsulation"]], kanji:"浅", img:"../../img/work_w36.jpg", alt:"Black Light-Indigo Bubble-Eye", pos:"50% 50%" },
+    { id:"w37", title:"Black Pearlscale", year:2025, en:"黒珍珠鱗", motif:"Goldfish (pearlscale)", desc:"The raised grain of pearlscale exists to catch light. The black of sulfide patination carves shadow into that unevenness, grain by grain, until each one stands apart.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"]], kanji:"黒", img:"../../img/work_w37.jpg", alt:"Black Pearlscale", pos:"50% 50%" },
+    { id:"shuiro-wakin", title:"Vermilion Wakin", year:2024, en:"朱色和金", motif:"Goldfish (Wakin)", award:"19th Geidai Art Plaza Art Award — Shogakukan Award", desc:"Copper-oxide powder is burnished again and again into the skin of a goldfish cast in brass. The red is not produced by heat and sudden cooling — it is fixed in place through the condition of repeated work by hand.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"],["Exhibited","19th Geidai Art Plaza Art Award Exhibition (2025)<br>Kaito Kawasaki Exhibition, Shinjuku Takashimaya (Jul 22–28, 2026)"]], img:"../../img/work_shuiro-wakin.jpg", alt:"Vermilion Wakin — a cast-metal wakin encased in resin" },
+    { id:"w38", title:"Scarlet Wakin", year:2024, en:"緋色和金", motif:"Goldfish (Wakin)", desc:"The red born of hido oxidation runs deeper than vermilion — closer to embers just before they burn out. Only a base metal without brass can sustain that depth.", specs:[["Material","Silver, copper"],["Technique","Vacuum-pressure casting, plaster mold, polishing, hido oxidation, resin encapsulation"]], kanji:"緋", img:"../../img/work_w38.jpg", alt:"Scarlet Wakin", pos:"50% 50%" },
+    { id:"w39", title:"Strawberry Candy", year:2024, en:"苺飴", motif:"Fruit (candied strawberry)", desc:"The gloss of candied strawberry is a shape caught mid-melt, mid-lick. The red of hido oxidation imitates, in metal, the color of a sweetness about to dissolve.", specs:[["Material","Copper"],["Technique","Pressure casting, plaster mold, hido oxidation, resin coating"]], kanji:"苺", img:"../../img/work_w39.jpg", alt:"Strawberry Candy", pos:"47% 49%" },
+    { id:"w40", title:"Golden-Dotted Pearlscale", year:2024, en:"金水玉珍珠鱗", motif:"Goldfish (pearlscale)", desc:"The fish is not made first and placed after. What is being constructed, at the same time as the fish, is the very place where it comes to exist.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"]], img:"../../img/work_kinmizutama-chinshurin.jpg", alt:"Golden-Dotted Pearlscale — a pearlscale with gold-and-black polka-dot markings" },
+    { id:"w41", title:"Raindrop Frog: Evening Shower", year:2024, en:"雨粒蛙 夕立", motif:"Tree frog", desc:"A yudachi falls without warning and stops without warning. Where silver plating’s light cuts into patches of sulfide is exactly where that sudden break of clear sky is expressed.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"]], img:"../../img/work_w41.jpg", alt:"Raindrop Frog: Evening Shower", pos:"50% 50%" },
+    { id:"w42", title:"Yellow Chotengan", year:2024, en:"黄色頂天眼", motif:"Goldfish (chotengan)", desc:"Yellow here is not oxidation but the color of brass itself. Passing through polishing alone before being sealed in resin, the chotengan shows the base metal’s color without concealment.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, resin encapsulation"]], img:"../../img/work_kiiro-chotengan.jpg", alt:"Yellow Chotengan — a chotengan encased in a clear resin block" },
+    { id:"w43", title:"Black Chobi", year:2024, en:"黒蝶尾", motif:"Goldfish (chobi)", desc:"Onto a tail fin spreading wide like a butterfly’s wings, particles of brass powder and the black of sulfide are layered again and again. The larger the surface, the more layers of color it takes.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, brass-powder burnishing, resin encapsulation"]], kanji:"黒", img:"../../img/work_w43.jpg", alt:"Black Chobi", pos:"50% 50%" },
+    { id:"koku-chotengan", title:"Black Chotengan", year:2024, en:"黒頂天眼", motif:"Goldfish (chotengan)", award:"18th Geidai Art Plaza Art Award — Special Jury Prize", desc:"Chotengan is a goldfish that swims looking upward. This piece questions, in metal, the condition of black as a color distinct from the red of hido oxidation.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"],["Exhibited","18th Geidai Art Plaza Art Award Exhibition (2024)<br>Geidai Art Plaza Art Award Winners’ Invitational Exhibition (2024)"]], img:"../../img/work_koku-chotengan.jpg", alt:"Black Chotengan — a black chotengan encased in resin", pos:"51% 76%" },
+    { id:"w44", title:"Great Black Ranchu", year:2023, en:"大黒蘭鋳", motif:"Goldfish (ranchu)", desc:"A mato clay mold is rougher than a plaster one, and lets the metal’s expression swing wider. The black of the great black ranchu lies where sulfide patination gently smooths over that roughness.", specs:[["Material","Bronze"],["Technique","Gravity casting, mato clay mold, polishing, sulfide patination, resin coating"]], kanji:"大", img:"../../img/work_w44.jpg", alt:"Great Black Ranchu", pos:"50% 50%" },
+    { id:"w45", title:"Black Ranchu", year:2023, en:"黒蘭鋳", motif:"Goldfish (ranchu)", desc:"Black sunk into roundness shows the ranchu’s finless body as mass rather than outline. Sulfide patination is the final process that fixes that sense of mass in place.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"]], kanji:"黒", img:"../../img/work_w45.jpg", alt:"Black Ranchu", pos:"50% 50%" },
+    { id:"yokai-henge", title:"Yokai Henge", year:2022, en:"溶解変化", motif:"Octopus (yokai transformation)", desc:"Shell, gap, weight, a place to hide the body. Within those conditions, the octopus rises up as a different kind of existence.", specs:[["Material","Bronze"],["Technique","Vacuum-pressure casting, plaster mold, as-cast surface texture"]], kanji:"溶", img:"../../img/work_yokai-henge.jpg", alt:"Yokai Henge", pos:"50% 50%" },
+    { id:"hakomono-ranchu", title:"Hakomono: Ranchu", year:2022, en:"箱物 蘭鋳", motif:"Goldfish (ranchu)", desc:"A goldfish taken out of water shifts into a different mode of existence, even while keeping the same form. What is lost is not its shape, but its condition.", specs:[["Material","Silver, copper, brass (aluminum-alloyed)"],["Technique","Vacuum-pressure casting, plaster mold, polishing, silver plating, resin coating"],["Exhibited","17th Geidai Art Plaza Grand Prize Exhibition (2023) — Selected"]], img:"../../img/work_hakomono-ranchu.jpg", alt:"Hakomono: Ranchu — a ranchu encased in a resin rectangular block" },
+    { id:"w46", title:"The Iron Whale", year:2021, en:"鉄ノ鯨", motif:"Whale (submarine-like form)", desc:"A form where whale and submarine, creature and machine, blur into one another. Verdigris and titanium oxide — two different blues — cover both sides of that blurred boundary at once.", specs:[["Material","Bronze"],["Technique","Gravity casting, plaster mold, verdigris oxidation, baked titanium-oxide finish, sulfide patination, wax coating"]], kanji:"鯨", img:"../../img/work_w46.jpg", alt:"The Iron Whale", pos:"39% 40%" },
+    { id:"w47", title:"Thread-Finned Deep-Sea Fish", year:2020, en:"イトヒキイワシ", motif:"Deep-sea fish (thread-finned)", desc:"In the deep sea, a condition where no light arrives, only the thread-like trailing fin carries information. Forging — hammering iron out into a thread — turns that fragility inside out, into the strength of metal.", specs:[["Material","Iron"],["Technique","Forging (hammered metalwork), oil-quench blackening"]], kanji:"イト" },
+    { id:"kansho-no-kawa", title:"Banana Peel", year:2020, en:"甘蕉ノ皮", motif:"Banana peel", desc:"Wall, gravity, decay, the instant of being thrown. Within those conditions, the banana peel rises up as a different kind of existence.", specs:[["Material","Bronze"],["Technique","Gravity casting, plaster mold, nashiji texturing, heat-color oxidation, sulfide patination"]], kanji:"蕉", img:"../../img/work_kansho-no-kawa.jpg", alt:"Banana Peel", pos:"50% 50%" },
+    { id:"w48", title:"Minogame (Moss-Shell Turtle)", year:2020, en:"蓑亀", motif:"Turtle", desc:"A minogame, wearing algae on its shell like a straw raincoat, is a form that grows precisely by not moving. The relief of the chased surface and the gradations of sulfide patination carve in the length of that stillness.", specs:[["Material","Copper"],["Technique","Chasing (repoussé), polishing, sulfide patination, wax coating"]], kanji:"蓑", img:"../../img/work_w48.jpg", alt:"Minogame (Moss-Shell Turtle)", pos:"49% 13%" },
+  ];
+
+  function tileVisualHTML(w){
+    if (w.img){
+      var style = "";
+      if (w.pos || w.zoom) style = ' style="' + (w.pos ? "object-position:" + w.pos + ";" : "") + (w.zoom ? "--zoom:" + w.zoom + ";" : "") + '"';
+      return '<img src="' + w.img + '" alt="' + (w.alt || w.title) + '" loading="lazy"' + style + '>';
+    }
+    return '<span class="kanji">' + w.kanji + '</span>';
+  }
+
+  var archive = document.getElementById("archive");
+  var byYear = {};
+  var years = [];
+  WORKS.forEach(function(w){
+    if (!byYear[w.year]){ byYear[w.year] = []; years.push(w.year); }
+    byYear[w.year].push(w);
+  });
+  years.sort(function(a, b){ return b - a; });
+
+  var html = "";
+  years.forEach(function(y){
+    html += '<div class="archive-year"><div class="year-head"><span class="year-num">' + y + '</span><span class="year-line"></span></div><div class="archive-grid">';
+    byYear[y].forEach(function(w){
+      html += '<button class="archive-tile" type="button" data-id="' + w.id + '">' +
+        '<span class="tile-visual" data-edit-slot="' + w.id + '" data-edit-kind="archive" data-edit-ratio="1" data-edit-path="' + (w.img || "") + '" data-edit-new-path="../img/work_' + w.id + '.jpg" data-edit-label="' + w.title + '" data-edit-where="works/index.html の WORKS配列 id:&quot;' + w.id + '&quot;">' + tileVisualHTML(w) + '</span>' +
+        '<span class="tile-meta"><span class="tile-title">' + w.title + '</span>' +
+        (w.yearLabel ? '<span class="tile-note">' + w.yearLabel + '</span>' : '') +
+        '</span></button>';
+    });
+    html += "</div></div>";
+  });
+  archive.innerHTML = html;
+  if (window.KKEditMode) window.KKEditMode.scan();
+
+  var modal = document.getElementById("workModal");
+  var modalVisual = document.getElementById("modalVisual");
+  var modalTitle = document.getElementById("modalTitle");
+  var modalSub = document.getElementById("modalSub");
+  var modalAward = document.getElementById("modalAward");
+  var modalDesc = document.getElementById("modalDesc");
+  var modalSpecs = document.getElementById("modalSpecs");
+  var lastFocused = null;
+
+  function openModal(w){
+    modalVisual.innerHTML = tileVisualHTML(w);
+    modalTitle.textContent = w.title;
+    modalTitle.innerHTML += w.yearLabel ? " <small>" + w.yearLabel + "</small>" : " <small>" + w.year + "</small>";
+    var sub = w.en || w.motif || "";
+    if (sub){ modalSub.textContent = sub; modalSub.hidden = false; }
+    else { modalSub.hidden = true; }
+    if (w.award){ modalAward.textContent = w.award; modalAward.hidden = false; }
+    else { modalAward.hidden = true; }
+    if (w.desc){ modalDesc.textContent = w.desc; modalDesc.hidden = false; }
+    else { modalDesc.hidden = true; }
+    modalSpecs.innerHTML = w.specs.map(function(s){
+      return "<div><dt>" + s[0] + "</dt><dd>" + s[1] + "</dd></div>";
+    }).join("");
+    lastFocused = document.activeElement;
+    modal.hidden = false;
+    requestAnimationFrame(function(){ modal.classList.add("open"); });
+    modal.querySelector(".work-modal-close").focus();
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+    window.setTimeout(function(){ modal.hidden = true; }, 250);
+    if (lastFocused) lastFocused.focus();
+  }
+
+  archive.addEventListener("click", function(e){
+    var tile = e.target.closest(".archive-tile");
+    if (!tile) return;
+    var w = WORKS.filter(function(x){ return x.id === tile.dataset.id; })[0];
+    if (w) openModal(w);
+  });
+
+  modal.addEventListener("click", function(e){
+    if (e.target.closest("[data-close]")) closeModal();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && !modal.hidden) closeModal();
+  });
+
+  var yEl = document.getElementById("cpyear");
+  if (yEl){
+    var y = new Date().getFullYear();
+    if (y > 2026) yEl.textContent = "2026–" + y;
+  }
+
+  /* トップページの代表作品カードなどから #id で直接開けるようにする */
+  if (location.hash){
+    var deepLinked = WORKS.filter(function(w){ return "#" + w.id === location.hash; })[0];
+    if (deepLinked) openModal(deepLinked);
+  }
+})();
+</script>
+</body>
+</html>
