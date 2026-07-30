@@ -1054,6 +1054,13 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 .work-specs{ margin-top:auto; font-size:.75rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:.7rem; }
 .work-specs div{ display:flex; gap:.8em; }
 .work-specs dt{ min-width:3.5em; letter-spacing:.1em; }
+.work-inquiry-btn{
+  display:inline-block; align-self:flex-start; text-decoration:none;
+  margin-top:.4rem; font-size:.74rem; letter-spacing:.14em;
+  padding:.7em 1.6em; border-radius:999px;
+  border:1px solid var(--hido); color:var(--hido); transition:all .3s;
+}
+.work-inquiry-btn:hover{ background:var(--hido); color:var(--paper); }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -1123,6 +1130,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <span class="work-award" id="modalAward" hidden></span>
       <p id="modalDesc" hidden></p>
       <dl class="work-specs" id="modalSpecs"></dl>
+      <a class="work-inquiry-btn" id="modalInquiry" href="mailto:akaitomato1028@gmail.com">Inquire About This Work</a>
     </div>
   </div>
 </div>
@@ -1287,6 +1295,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var modalAward = document.getElementById("modalAward");
   var modalDesc = document.getElementById("modalDesc");
   var modalSpecs = document.getElementById("modalSpecs");
+  var modalInquiry = document.getElementById("modalInquiry");
   var lastFocused = null;
 
   function openModal(w){
@@ -1303,6 +1312,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     modalSpecs.innerHTML = w.specs.map(function(s){
       return "<div><dt>" + s[0] + "</dt><dd>" + s[1] + "</dd></div>";
     }).join("");
+    modalInquiry.href = "mailto:akaitomato1028@gmail.com?subject=" + encodeURIComponent("Inquiry about \"" + w.title + "\"");
     lastFocused = document.activeElement;
     modal.hidden = false;
     requestAnimationFrame(function(){

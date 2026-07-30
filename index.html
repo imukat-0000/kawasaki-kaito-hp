@@ -1387,14 +1387,15 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   }
 
   // P0-06: イントロは初回のみ。ハッシュ付き直リンク時もスキップ
+  // localStorageで永続化し、再訪問時(別日・別セッション)も表示しない
   var introSeen = false;
-  try { introSeen = sessionStorage.getItem('introSeen') === '1'; } catch(e){}
+  try { introSeen = localStorage.getItem('introSeen') === '1'; } catch(e){}
 
   if (reduced || introSeen || location.hash){
     intro.remove();
     document.body.classList.add('revealed');
   } else {
-    try { sessionStorage.setItem('introSeen', '1'); } catch(e){}
+    try { localStorage.setItem('introSeen', '1'); } catch(e){}
     var canvas = document.getElementById('introCanvas');
     var ctx = fitCanvas(canvas);
     var W = canvas.clientWidth, H = canvas.clientHeight;
