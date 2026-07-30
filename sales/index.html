@@ -210,10 +210,19 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 }
 .sales-list{ list-style:none; max-width:60rem; }
 .sales-list li{
-  display:flex; align-items:center; justify-content:space-between; gap:1.2rem; flex-wrap:wrap;
+  display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap;
   padding:1em 0; border-bottom:1px solid var(--line);
 }
-.sales-name{ display:flex; flex-direction:column; gap:.2em; }
+.sales-thumb{
+  width:60px; height:60px; border-radius:.35rem; overflow:hidden; flex:none;
+  background:var(--card); display:flex; align-items:center; justify-content:center;
+}
+.sales-thumb img{ width:100%; height:100%; object-fit:cover; }
+.sales-thumb-kanji{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.2rem; color:var(--brass);
+}
+.sales-name{ display:flex; flex-direction:column; gap:.2em; flex:1 1 14rem; }
 .sales-name time{
   font-size:.72rem; letter-spacing:.05em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
@@ -225,7 +234,7 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 .sales-link{
   font-size:.78rem; color:var(--hido); text-decoration:none; white-space:nowrap;
   border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  padding-bottom:.1em; transition:border-color .25s;
+  padding-bottom:.1em; transition:border-color .25s; flex:none; margin-left:auto;
 }
 .sales-link:hover{ border-color:var(--hido); }
 .sales-note{ margin-top:1.6rem; font-size:.85rem; color:var(--ink-soft); }
@@ -295,6 +304,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <h3>常設で取り扱い</h3>
       <ul class="sales-list">
         <li>
+          <div class="sales-thumb"><span class="sales-thumb-kanji">藝</span></div>
           <div class="sales-name">
             <strong>藝大アートプラザ</strong>
             <span class="sales-venue">東京藝術大学 上野キャンパス内（東京・上野）</span>
@@ -302,6 +312,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <a class="sales-link" href="https://artplaza.geidai.ac.jp/" target="_blank" rel="noopener">サイトを見る →</a>
         </li>
         <li>
+          <div class="sales-thumb"><img src="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="朱色和金" loading="lazy"></div>
           <div class="sales-name">
             <strong>常設展示</strong>
             <span class="sales-venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span>
@@ -309,6 +320,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <a class="sales-link" href="https://lecringinza.co.jp/theartsfusion/" target="_blank" rel="noopener">サイトを見る →</a>
         </li>
         <li>
+          <div class="sales-thumb"><span class="sales-thumb-kanji">扱</span></div>
           <div class="sales-name">
             <strong>GALLERY OPET</strong>
             <span class="sales-venue">取り扱いギャラリー — 展示等でお世話になっているギャラリー</span>
@@ -316,6 +328,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <a class="sales-link" href="https://www.gallery-opet.com/河崎海斗" target="_blank" rel="noopener">サイトを見る →</a>
         </li>
         <li>
+          <div class="sales-thumb"><img src="../img/iron-whale-submarine-bronze-kaito-kawasaki.jpg" alt="鉄ノ鯨" loading="lazy"></div>
           <div class="sales-name">
             <strong>常設展示</strong>
             <span class="sales-venue">海上自衛隊呉史料館（てつのくじら館）ミュージアムショップ（広島・呉）— 「鉄ノ鯨」を展示</span>
@@ -329,6 +342,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <h3>コラボレーション商品</h3>
       <ul class="sales-list">
         <li>
+          <div class="sales-thumb"><span class="sales-thumb-kanji">布</span></div>
           <div class="sales-name">
             <strong>制服のフジ</strong>
             <span class="sales-venue">河﨑海斗のイラストとのコラボ商品を販売</span>
@@ -342,6 +356,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <h3>展示中・開催予定</h3>
       <ul class="sales-list">
         <li>
+          <div class="sales-thumb"><img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="錦鯉" loading="lazy"></div>
           <div class="sales-name">
             <time>2026.6.8 — 8.17</time>
             <strong>3人展「MATSURI INORU」</strong>
@@ -350,6 +365,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <a class="sales-link" href="https://www.spiral.co.jp/shoplist/shinmaru-building" target="_blank" rel="noopener">サイトを見る →</a>
         </li>
         <li>
+          <div class="sales-thumb"><img src="../img/hokusai-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="画狂乃蛙" loading="lazy"></div>
           <div class="sales-name">
             <time>2026.9.4 — 10.20</time>
             <strong>個展</strong>
@@ -358,6 +374,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <a class="sales-link" href="https://shop.hokusai-kan.com/" target="_blank" rel="noopener">オンラインショップを見る →</a>
         </li>
         <li>
+          <div class="sales-thumb"><span class="sales-thumb-kanji">個</span></div>
           <div class="sales-name">
             <time>2026.12.11 — 12.22</time>
             <strong>個展</strong>
