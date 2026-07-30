@@ -134,7 +134,8 @@ header{
   display:flex; align-items:center;
   transition:opacity .35s ease;
 }
-#mainNav ul{ display:flex; flex-direction:row; align-items:center; gap:1.8rem; list-style:none; }
+#mainNav ul{ display:flex; flex-direction:row; align-items:center; gap:1.8rem; list-style:none; min-width:0; }
+#mainNav ul li{ min-width:0; }
 #mainNav a{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   text-decoration:none; font-size:.85rem; letter-spacing:.08em;
@@ -191,7 +192,7 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
   white-space:nowrap;
 }
-.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); }
+.sec-head span{ font-size:.72rem; letter-spacing:.34em; color:var(--hido); min-width:0; overflow-wrap:break-word; }
 .sec-head::after{ content:""; flex:1; height:1px; background:var(--line); }
 
 .archive-back{ font-size:.8rem; }
