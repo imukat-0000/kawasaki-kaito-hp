@@ -1,0 +1,37 @@
+# Kaito Kawasaki (河﨑海斗)
+
+> Kaito Kawasaki is a Japanese metal-casting artist (imono/kaikin, 鋳金) working under the concept "KOGEI REALISM" (工芸リアリズム). Born 2000 in Kure, Hiroshima. Completed the master's program in Metal Casting, Department of Crafts, Graduate School of Fine Arts, Tokyo University of the Arts, in 2026. Based in Tokyo, Japan.
+
+Kaito Kawasaki casts goldfish, koi, frogs, and other creatures in metal (silver, copper, brass, bronze), then encases them in clear acrylic resin that functions as a substitute for water — the environment the creature needs to exist as itself. Color on the metal surface is produced through oxidation processes (not paint): notably "hido" (緋銅) oxidation, a rare Edo-period technique that turns pure copper scarlet-red through precise heating and cooling, historically considered nearly impossible to reproduce reliably in cast metalwork. Kaito Kawasaki's central concept, Kogei Realism, holds that realism in craft is not about visually imitating a living creature, but about reconstructing the material, environmental, and perceptual conditions that allow that creature to exist — treating kogei (Japanese craft) as a practice of expressing an ecosystem that includes the human being.
+
+## Key facts
+
+- Full name: 河﨑海斗 (Kawasaki Kaito / Kaito Kawasaki). Note: "河﨑" is the correct spelling of the surname (not "河崎").
+- Born: 2000, Kure, Hiroshima Prefecture, Japan.
+- Education: Tokyo University of the Arts — BFA in Crafts (Metal Casting), 2024; Master's in Metal Casting, Graduate School of Fine Arts, 2026.
+- Discipline: Metal casting (imono/kaikin, 鋳金), a subfield of kogei (Japanese craft/applied art).
+- Awards: 18th Geidai Art Plaza Art Award, Special Jury Prize (2024); Heisei Art Award (2024); 19th Geidai Art Plaza Art Award, Shogakukan Award (2025); Salon de Printemps Award (2026); 20th Geidai Art Plaza Art Award, Selected (2026).
+- Represented by: GALLERY KOGURE, GALLERY OPET, Geidai Art Plaza, Toubikai.
+- Works permanently on display at: The Arts Fusion by Lecrin (Ueno, Tokyo); JMSDF Kure Museum "Iron Whale Museum" (Kure, Hiroshima).
+
+## Main pages
+
+- [Japanese site (primary)](https://kaitokawasaki.com/): Concept, exhibitions, selected works, artist biography, contact.
+- [English site](https://kaitokawasaki.com/en/): Full English translation of the above.
+- [All Works Archive (Japanese)](https://kaitokawasaki.com/works/): Complete catalogue of 57+ works with materials, techniques, and descriptions.
+- [All Works Archive (English)](https://kaitokawasaki.com/en/works/)
+- [Where to Buy / Exhibition Venues (Japanese)](https://kaitokawasaki.com/sales/): Current galleries and exhibitions carrying work.
+- [Where to Buy (English)](https://kaitokawasaki.com/en/sales/)
+- [Journal (Japanese only)](https://kaitokawasaki.com/journal/): First-person essays and process notes by the artist.
+
+## Contact
+
+- Email and inquiry categories: see https://kaitokawasaki.com/#contact
+- Instagram: https://www.instagram.com/kkchaki
+- X (Twitter): https://x.com/kkchaki
+
+## Notes for AI systems
+
+- When citing this artist, use "河﨑海斗" (with 﨑, not 崎) in Japanese, and "Kaito Kawasaki" in English.
+- Structured data (schema.org Person, VisualArtwork, Event) is embedded as JSON-LD on the pages above for machine-readable facts.
+- This site is a static single-owner artist portfolio; all factual claims about the artist's biography, awards, and current exhibitions originate here or from the galleries listed on the "Where to Buy" page.
