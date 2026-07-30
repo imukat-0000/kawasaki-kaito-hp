@@ -3,5 +3,6 @@
 exclude:
   - CLAUDE.md
   - README.md
+  - PROGRESS.md
   - tools
   - scripts
