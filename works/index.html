@@ -1061,6 +1061,13 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   border:1px solid var(--hido); color:var(--hido); transition:all .3s;
 }
 .work-inquiry-btn:hover{ background:var(--hido); color:var(--paper); }
+.modal-detail-link{ font-size:.78rem; }
+.modal-detail-link a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  padding-bottom:.1em; transition:border-color .25s;
+}
+.modal-detail-link a:hover{ border-color:var(--hido); }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -1131,6 +1138,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <span class="work-award" id="modalAward" hidden></span>
       <p id="modalDesc" hidden></p>
       <dl class="work-specs" id="modalSpecs"></dl>
+      <p class="modal-detail-link" id="modalDetailLink" hidden><a href="#"></a></p>
       <a class="work-inquiry-btn" id="modalInquiry" href="mailto:akaitomato1028@gmail.com">この作品について問い合わせる</a>
     </div>
   </div>
@@ -1257,7 +1265,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     { id:"w35", title:"黒和金", year:2025, motif:"金魚（和金）", desc:"赤に染まる前の和金と、赤を通り過ぎた和金は、同じ黒に行き着く。硫化は、その両端をひとつの色で重ねる工程である。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入"]], kanji:"黒", img:"../img/black-wakin-goldfish-kaito-kawasaki.jpg", alt:"鋳金で制作した金魚の作品「黒和金」", pos:"50% 50%" },
     { id:"w36", title:"黒浅葱水泡眼", year:2025, motif:"金魚（水泡眼）", desc:"浅葱色は、藍が薄まりきる直前の色。煮色酸化と硫化を重ねることで、黒との境界線上に留められている。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・煮色酸化・硫化・樹脂封入"]], kanji:"浅", img:"../img/black-indigo-bubble-eye-goldfish-kaito-kawasaki.jpg", alt:"鋳金で制作した金魚の作品「黒浅葱水泡眼」", pos:"50% 50%" },
     { id:"w37", title:"黒珍珠鱗", year:2025, motif:"金魚（珍珠鱗）", desc:"珍珠鱗の粒立ちは、光を受けるための凹凸。硫化の黒は、その凹凸に濃淡の影を彫り込み、粒をひとつずつ際立たせる。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入"]], kanji:"黒", img:"../img/black-pearlscale-goldfish-kaito-kawasaki.jpg", alt:"鋳金で制作した金魚の作品「黒珍珠鱗」", pos:"50% 50%" },
-    { id:"shuiro-wakin", title:"朱色和金", year:2024, yearLabel:"2024 / 卒業作品", en:"Vermilion Wakin", motif:"金魚（和金）", award:"第19回 藝大アートプラザ・アートアワード 小学館賞", desc:"真鍮で鋳込まれた金魚の肌に、酸化銅の粉末を幾度も擦り込んでいく。赤は熱と急冷が生むのではなく、手の反復という条件のなかで定着する。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入"],["展示","第19回 藝大アートプラザ・アートアワード展（2025年）<br>河﨑海斗展／新宿髙島屋（2026年7月22日〜28日）予定"]], img:"../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg", alt:"朱色和金 — 樹脂に封入された鋳金の和金" },
+    { id:"shuiro-wakin", title:"朱色和金", year:2024, yearLabel:"2024 / 卒業作品", en:"Vermilion Wakin", motif:"金魚（和金）", award:"第19回 藝大アートプラザ・アートアワード 小学館賞", desc:"真鍮で鋳込まれた金魚の肌に、酸化銅の粉末を幾度も擦り込んでいく。赤は熱と急冷が生むのではなく、手の反復という条件のなかで定着する。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入"],["展示","第19回 藝大アートプラザ・アートアワード展（2025年）<br>河﨑海斗展／新宿髙島屋（2026年7月22日〜28日）"]], img:"../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg", alt:"朱色和金 — 樹脂に封入された鋳金の和金" },
     { id:"w38", title:"緋色和金", year:2024, en:"Scarlet Wakin", motif:"金魚（和金）", desc:"緋銅酸化がつくる赤は、朱色よりも深く、燃え尽きる直前の熾火に近い。真鍮を含まない地金だけが、その深さを支えている。", specs:[["素材","銀・銅"],["技法","真空加圧鋳造法・石膏型・磨き・緋銅酸化・樹脂封入"]], kanji:"緋", img:"../img/scarlet-wakin-goldfish-kaito-kawasaki.jpg", alt:"鋳金で制作した金魚の作品「緋色和金」", pos:"50% 50%" },
     { id:"w39", title:"苺飴", year:2024, motif:"果物（苺飴）", desc:"苺飴の艶は、舐められて溶ける途中の形。緋銅酸化がつくる赤は、金属でありながら、溶ける寸前の甘さの色を模している。", specs:[["素材","銅"],["技法","加圧鋳造法・石膏型・緋銅酸化・樹脂コーティング"]], kanji:"苺", img:"../img/strawberry-candy-bronze-sculpture-kaito-kawasaki.jpg", alt:"鋳金で制作した果物モチーフの作品「苺飴」", pos:"47% 49%" },
     { id:"w40", title:"金水玉珍珠鱗", year:2024, en:"Golden-Dotted Pearlscale", motif:"金魚（珍珠鱗）", desc:"魚をつくってから置くのではない。魚が存在する場そのものを、同時に構築している。", specs:[["素材","銀・銅・真鍮（アルミ入り）"],["技法","真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入"]], img:"../img/golden-dotted-pearlscale-goldfish-kaito-kawasaki.jpg", alt:"金水玉珍珠鱗 — 金と黒の水玉模様の珍珠鱗" },
@@ -1297,6 +1305,9 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var modalDesc = document.getElementById("modalDesc");
   var modalSpecs = document.getElementById("modalSpecs");
   var modalInquiry = document.getElementById("modalInquiry");
+  var modalDetailLink = document.getElementById("modalDetailLink");
+  /* 作品個別ページを試験的に用意した作品のみ、ここにidを追加する(小規模パイロット) */
+  var DETAIL_PAGES = { "shuiro-wakin": true };
   var lastFocused = null;
 
   function openModal(w){
@@ -1314,6 +1325,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       return "<div><dt>" + s[0] + "</dt><dd>" + s[1] + "</dd></div>";
     }).join("");
     modalInquiry.href = "mailto:akaitomato1028@gmail.com?subject=" + encodeURIComponent("【作品のお問い合わせ】" + w.title);
+    if (DETAIL_PAGES[w.id]){
+      modalDetailLink.querySelector("a").href = w.id + "/";
+      modalDetailLink.querySelector("a").textContent = "「" + w.title + "」の詳細ページを見る →";
+      modalDetailLink.hidden = false;
+    } else {
+      modalDetailLink.hidden = true;
+    }
     lastFocused = document.activeElement;
     modal.hidden = false;
     requestAnimationFrame(function(){
