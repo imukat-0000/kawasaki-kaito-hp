@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F9HRX2EH1D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F9HRX2EH1D');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ページが見つかりません | 河﨑海斗 — KOGEI REALISM</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@font-face{
+  font-family:"Noto Serif JP";
+  src:url("fonts/NotoSerifJP-sub.woff2") format("woff2");
+  font-weight:200 900;
+  font-display:swap;
+}
+
+:root{
+  --paper:#F7F4EC;
+  --ink:#1C1E22;
+  --ink-soft:#4C4D48;
+  --hido:#9C3B22;
+  --hido-deep:#7E2E1A;
+  --brass:#9A7B3F;
+  --line:#DCD5C6;
+  --card:#FFFDF7;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+    --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+    --line:#2B3037; --card:#1B1F25;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#4C4D48;
+  --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
+  --line:#DCD5C6; --card:#FFFDF7;
+}
+:root[data-theme="dark"]{
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+  --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+  --line:#2B3037; --card:#1B1F25;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; background:var(--paper); }
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";
+  line-height:1.9;
+  letter-spacing:0.04em;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+  z-index:100; background:var(--paper); color:var(--ink); padding:.8em 1.4em;
+  border:1px solid var(--hido); border-radius:.2rem; font-size:.85rem; text-decoration:none;
+}
+.skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; overflow:visible; }
+.mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+
+header{
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
+  background:color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
+}
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
+}
+
+main{
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:8rem clamp(1.4rem,6vw,5rem) 4rem;
+}
+.error-code{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(3rem,10vw,5.5rem); font-weight:600; color:var(--hido); line-height:1;
+  margin-bottom:1.4rem;
+}
+.error-title{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.2rem,3vw,1.6rem); font-weight:600; margin-bottom:1.2rem;
+}
+.error-lede{
+  max-width:32rem; color:var(--ink-soft); font-size:.92rem; margin-bottom:2.6rem;
+}
+.error-links{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;
+}
+.error-links a{
+  font-size:.82rem; letter-spacing:.05em; text-decoration:none; color:var(--hido);
+  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+  border-radius:999px; padding:.6em 1.4em; transition:border-color .25s, background .25s;
+}
+.error-links a:hover{ border-color:var(--hido); background:color-mix(in srgb, var(--hido) 8%, transparent); }
+
+footer{
+  padding:2.5rem; text-align:center;
+  font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+.footer-links{ margin-bottom:.8em; }
+.footer-links a{
+  color:var(--ink-soft); text-decoration:none; font-size:.7rem; letter-spacing:.15em;
+  border-bottom:1px solid transparent; transition:border-color .25s, color .25s;
+}
+.footer-links a:hover{ color:var(--hido); border-color:var(--hido); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<header>
+  <a class="brand" href="index.html">河﨑海斗<span class="brand-tagline">金工作家<br>鋳金</span></a>
+</header>
+
+<main id="main">
+  <p class="error-code">404</p>
+  <h1 class="error-title">お探しのページが見つかりません</h1>
+  <p class="error-lede">URLが変更または削除されたか、入力に誤りがある可能性があります。以下のページからお探しください。<br>
+  <span style="display:block; margin-top:.8em;">The page you're looking for could not be found. Please try one of the links below.</span></p>
+  <nav class="error-links" aria-label="主要ページ / Main pages">
+    <a href="index.html">トップページ</a>
+    <a href="works/">作品一覧</a>
+    <a href="sales/">販売情報</a>
+    <a href="journal/">ジャーナル</a>
+    <a href="en/">English Home</a>
+  </nav>
+</main>
+
+<footer>
+  <p class="footer-links"><a href="privacy/">プライバシーポリシー</a></p>
+  <p>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var yEl = document.getElementById("cpyear");
+  if (yEl){
+    var y = new Date().getFullYear();
+    if (y > 2026) yEl.textContent = "2026–" + y;
+  }
+})();
+</script>
+</body>
+</html>

@@ -844,6 +844,12 @@ body{
 }
 a{ color:inherit; }
 :focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+  z-index:100; background:var(--paper); color:var(--ink); padding:.8em 1.4em;
+  border:1px solid var(--hido); border-radius:.2rem; font-size:.85rem; text-decoration:none;
+}
+.skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; overflow:visible; }
 .mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
 
 /* ============ nav（本体と共通） ============ */
@@ -1045,6 +1051,12 @@ footer{
   font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
   border-top:1px solid var(--line);
 }
+.footer-links{ margin-bottom:.8em; }
+.footer-links a{
+  color:var(--ink-soft); text-decoration:none; font-size:.7rem; letter-spacing:.15em;
+  border-bottom:1px solid transparent; transition:border-color .25s, color .25s;
+}
+.footer-links a:hover{ color:var(--hido); border-color:var(--hido); }
 </style>
 <script>
 /* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
@@ -1057,6 +1069,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
   <a class="brand" href="../index.html">Kaito Kawasaki<span class="brand-tagline">Metal-casting artist<br>Imono / Kaikin</span></a>
@@ -1081,7 +1094,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </div>
 </nav>
 
-<main>
+<main id="main">
   <section aria-label="About the works archive">
     <div class="sec-head"><h2>All Works</h2><span>WORKS ARCHIVE</span></div>
     <p class="archive-back"><a href="../index.html#works">← Read about the work</a></p>
@@ -1105,7 +1118,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </div>
 </div>
 
-<footer>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</footer>
+<footer>
+  <p class="footer-links"><a href="../privacy/">Privacy Policy</a></p>
+  <p>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</p>
+</footer>
 
 <script>
 (function(){
@@ -1280,8 +1296,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }).join("");
     lastFocused = document.activeElement;
     modal.hidden = false;
-    requestAnimationFrame(function(){ modal.classList.add("open"); });
-    modal.querySelector(".work-modal-close").focus();
+    requestAnimationFrame(function(){
+      modal.classList.add("open");
+      modal.querySelector(".work-modal-close").focus();
+    });
     document.body.style.overflow = "hidden";
   }
 
@@ -1304,7 +1322,15 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   });
 
   document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && !modal.hidden) closeModal();
+    if (modal.hidden) return;
+    if (e.key === "Escape"){ closeModal(); return; }
+    if (e.key === "Tab"){
+      var focusable = modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
   });
 
   var yEl = document.getElementById("cpyear");

@@ -88,6 +88,12 @@ body{
 }
 a{ color:inherit; }
 :focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+  z-index:100; background:var(--paper); color:var(--ink); padding:.8em 1.4em;
+  border:1px solid var(--hido); border-radius:.2rem; font-size:.85rem; text-decoration:none;
+}
+.skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; overflow:visible; }
 .mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
 
 /* ============ nav（本体と共通） ============ */
@@ -224,6 +230,12 @@ footer{
   font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
   border-top:1px solid var(--line);
 }
+.footer-links{ margin-bottom:.8em; }
+.footer-links a{
+  color:var(--ink-soft); text-decoration:none; font-size:.7rem; letter-spacing:.15em;
+  border-bottom:1px solid transparent; transition:border-color .25s, color .25s;
+}
+.footer-links a:hover{ color:var(--hido); border-color:var(--hido); }
 </style>
 <script>
 /* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
@@ -236,6 +248,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <header>
   <a class="brand" href="../index.html">Kaito Kawasaki<span class="brand-tagline">Metal-casting artist<br>Imono / Kaikin</span></a>
@@ -260,7 +273,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </div>
 </nav>
 
-<main>
+<main id="main">
   <section aria-label="Where to buy">
     <div class="sec-head"><h2>Where to Buy</h2><span>WHERE TO FIND</span></div>
     <p class="archive-back"><a href="../index.html#exhibitions">← See exhibitions</a></p>
@@ -362,7 +375,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
 </main>
 
-<footer>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</footer>
+<footer>
+  <p class="footer-links"><a href="../privacy/">Privacy Policy</a></p>
+  <p>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</p>
+</footer>
 
 <script>
 (function(){

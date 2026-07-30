@@ -65,6 +65,73 @@
   "inLanguage": "en"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Event",
+      "name": "Three-Person Exhibition \"MATSURI INORU\"",
+      "startDate": "2026-06-08",
+      "endDate": "2026-08-17",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Spiral Garden, Shin-Marunouchi Building",
+        "address": { "@type": "PostalAddress", "addressLocality": "Marunouchi", "addressRegion": "Tokyo", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
+      "url": "https://www.spiral.co.jp/shoplist/shinmaru-building"
+    },
+    {
+      "@type": "Event",
+      "name": "Solo Exhibition \"Shutsuran no Homare\"",
+      "startDate": "2026-05-30",
+      "endDate": "2026-07-30",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "TSUTAYA BOOKSTORE, Ebisu Garden Place",
+        "address": { "@type": "PostalAddress", "addressLocality": "Ebisu", "addressRegion": "Tokyo", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
+      "url": "https://store-tsutaya.tsite.jp/store/detail?storeId=2332"
+    },
+    {
+      "@type": "Event",
+      "name": "Kaito Kawasaki Solo Exhibition",
+      "startDate": "2026-09-04",
+      "endDate": "2026-10-20",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Hokusai-kan Museum",
+        "address": { "@type": "PostalAddress", "addressLocality": "Obuse", "addressRegion": "Nagano", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
+      "url": "https://shop.hokusai-kan.com/"
+    },
+    {
+      "@type": "Event",
+      "name": "Kaito Kawasaki Solo Exhibition",
+      "startDate": "2026-12-11",
+      "endDate": "2026-12-22",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "MEDEL GALLERY SHU HIBIYA",
+        "address": { "@type": "PostalAddress", "addressLocality": "Imperial Hotel Plaza", "addressRegion": "Tokyo", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
+      "url": "https://medelgalleryshu.com/"
+    }
+  ]
+}
+</script>
 <style>
 /* P0-02: Android等に和文明朝が無い環境向けのサブセット同梱フォント */
 @font-face{
@@ -123,6 +190,12 @@ body{
 }
 a{ color:inherit; }
 :focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+  z-index:100; background:var(--paper); color:var(--ink); padding:.8em 1.4em;
+  border:1px solid var(--hido); border-radius:.2rem; font-size:.85rem; text-decoration:none;
+}
+.skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; overflow:visible; }
 .mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif; }
 
 /* ============ intro overlay ============ */
@@ -645,6 +718,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 </script>
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
 
 <!-- ============ オープニング ============ -->
 <div id="intro" aria-hidden="true">
@@ -902,6 +976,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <a href="works/">All Works</a>
     <a href="#artist">Artist</a>
     <a href="#contact">Contact</a>
+    <a href="privacy/">Privacy Policy</a>
   </nav>
   <div class="footer-sns">
     <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
