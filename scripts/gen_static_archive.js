@@ -14,6 +14,19 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+// 写真が未設定の作品用に、SEOに沿ったファイル名の提案を作る(英題があればそれを使う)
+function slugify(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+function suggestNewPath(w) {
+  var base = slugify(w.title) || slugify(w.en) || w.id;
+  return '../img/' + base + '-kaito-kawasaki.jpg';
+}
+
 function tileVisualHTML(w) {
   if (w.img) {
     var style = "";
@@ -35,8 +48,9 @@ var htmlOut = "";
 years.forEach(function (y) {
   htmlOut += '<div class="archive-year"><div class="year-head"><span class="year-num">' + y + '</span><span class="year-line"></span></div><div class="archive-grid">';
   byYear[y].forEach(function (w) {
+    var newPathAttr = w.img ? "" : (' data-edit-new-path="' + suggestNewPath(w) + '"');
     htmlOut += '<button class="archive-tile" type="button" data-id="' + w.id + '">' +
-      '<span class="tile-visual" data-edit-slot="' + w.id + '" data-edit-kind="archive" data-edit-ratio="1" data-edit-path="' + (w.img || "") + '" data-edit-new-path="../img/work_' + w.id + '.jpg" data-edit-label="' + esc(w.title) + '" data-edit-where="works/index.html の WORKS配列 id:&quot;' + w.id + '&quot;">' + tileVisualHTML(w) + '</span>' +
+      '<span class="tile-visual" data-edit-slot="' + w.id + '" data-edit-kind="archive" data-edit-ratio="1" data-edit-path="' + (w.img || "") + '"' + newPathAttr + ' data-edit-label="' + esc(w.title) + '" data-edit-where="works/index.html の WORKS配列 id:&quot;' + w.id + '&quot;">' + tileVisualHTML(w) + '</span>' +
       '<span class="tile-meta"><span class="tile-title">' + esc(w.title) + '</span>' +
       (w.yearLabel ? '<span class="tile-note">' + esc(w.yearLabel) + '</span>' : '') +
       '</span></button>';
