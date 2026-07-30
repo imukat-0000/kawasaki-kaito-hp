@@ -1,0 +1,7 @@
+# GitHub PagesのJekyllビルドから、公開サイトに含める必要のない
+# 内部用ファイルを除外する(リポジトリには残すが、kaitokawasaki.com からは配信しない)
+exclude:
+  - CLAUDE.md
+  - README.md
+  - tools
+  - scripts
