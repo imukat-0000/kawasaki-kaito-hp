@@ -56,6 +56,8 @@ Claude Codeとの作業履歴・今後の改善候補を記録するための内
   「過去にお世話になったギャラリー」セクションに正しい説明とともに移動（JA/EN）
 - 販売情報ページに GALLERY KOGURE を「常設で取り扱い」に追加（ホームページ経歴には既に記載あり、
   販売情報のみ未掲載だった。本人ページ gallerykogure.com/artists/kaito-kawasaki/ を確認の上リンク、JA/EN）
+- 英語版サイトの「鋳金」ローマ字表記の誤りを修正: "Kaikin" → "Chuukin"
+  （ヘッダータグライン・meta description・Person JSON-LD・llms.txt、全EN該当ファイル）
 - 販売情報ページに各会場の写真サムネイル追加
 
 ### SEO・検索対応
