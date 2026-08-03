@@ -1,6 +1,6 @@
 # 河﨑海斗公式サイト — 改善やることリスト / これまでの記録
 
-最終更新: 2026-08-04（改行修正後）
+最終更新: 2026-08-04（SEO監査対応後）
 
 このファイルは公開サイトには配信されません（`_config.yml`で除外済み）。
 Claude Codeとの作業履歴・今後の改善候補を記録するための内部メモです。
@@ -94,6 +94,20 @@ Claude Codeとの作業履歴・今後の改善候補を記録するための内
   （works/・sales/・journal/と同じ「トップは概要、詳細は専用ページ」パターン）。
   販売情報への導線が本文中に無かったため、販売情報ブリッジ（1文＋`.sns-btn`ボタン）を新設。
   検証でen/profile/の見出しが390px幅でオーバーフローするバグを発見・修正（見出しを短縮）
+
+### SEO監査（2026-08-04）
+- ブランドステートメント文言修正（後述）後、SEO観点で全面監査を実施。title/meta description/OGP/Twitter・
+  構造化データ・sitemap.xml・robots.txt・canonical/hreflang・見出し構造・HTTPS/リダイレクト・
+  GA4設置状況などを網羅的に確認し、以下4点を修正:
+  - 作品一覧(`works/index.html`)のVisualArtwork構造化データ57件全てに`creator`(河﨑海斗)が
+    欠落していた問題→`scripts/gen_static_archive.js`を修正し再生成(JA/EN)。個別ページ
+    (`works/shuiro-wakin/`)には元々あったが、一覧生成スクリプト側に無かった
+  - ホームページのh1重複(オープニング演出内の非表示h1＋実際のヒーローh1)→演出側を`<div>`に変更
+  - プライバシーポリシーページにh1が無かった問題→他ページと同じ`sec-head`パターンのh2をh1に統一。
+    修正の過程で「PRIVACY POLICY」ラベルが1文字ずつ改行される崩れ(既知の`.sec-head`flex-wrap問題と
+    同型)も発見・修正
+  - EN版meta descriptionが163文字とGoogleの表示目安をやや超えていたため146文字に短縮
+  - それ以外(canonical/hreflang/sitemap/robots.txt/JSON-LD構文/HTTPS強制等)は全て正常と確認済み
 
 ### 可読性
 - ホームページ全体の「読みづらい改行」を調査・修正（2026-08-04、JA/EN両方）:
