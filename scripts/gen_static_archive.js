@@ -68,7 +68,12 @@ var itemListElement = WORKS.map(function (w, i) {
   var obj = {
     "@type": "VisualArtwork",
     "name": w.title,
-    "dateCreated": String(w.year)
+    "dateCreated": String(w.year),
+    "creator": {
+      "@type": "Person",
+      "name": base.includes('/en/') ? "Kaito Kawasaki" : "河﨑海斗",
+      "url": "https://kaitokawasaki.com/"
+    }
   };
   if (w.img) obj.image = "https://kaitokawasaki.com/" + w.img.replace(/^(\.\.\/)+/, '');
   if (w.desc) obj.description = w.desc;

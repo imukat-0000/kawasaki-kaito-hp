@@ -176,8 +176,8 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
 main{ position:relative; z-index:1; padding-top:9rem; }
 section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 
-.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:2.2rem; }
-.sec-head h2{
+.sec-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem 1.4rem; margin-bottom:2.2rem; }
+.sec-head h1{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
   white-space:nowrap;
@@ -252,7 +252,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
 <main id="main">
   <section aria-label="Privacy Policy">
-    <div class="sec-head"><h2>Privacy Policy</h2><span>PRIVACY POLICY</span></div>
+    <div class="sec-head"><h1>Privacy Policy</h1><span>PRIVACY POLICY</span></div>
     <p class="policy-lede">This page describes how personal information is handled on the official website of Kaito Kawasaki (kaitokawasaki.com, "this site").</p>
 
     <div class="policy-block">
