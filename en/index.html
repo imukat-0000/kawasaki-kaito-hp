@@ -582,6 +582,11 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
 .cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+.cv li a{
+  color:var(--hido); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+}
+.cv li a:hover{ border-color:var(--hido); }
 .galleries{ font-size:.85rem; color:var(--ink-soft); }
 @media (max-width:760px){
   .artist-photo{ max-width:70%; }
@@ -934,6 +939,15 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
             <h3>Represented By</h3>
             <p class="galleries">GALLERY KOGURE / GALLERY OPET / Geidai Art Plaza / Toubikai</p>
           </div>
+          <div>
+            <h3>Press &amp; Media Coverage</h3>
+            <ul>
+              <li><b>2024</b><span><a href="https://serai.jp/hobby/1181142" target="_blank" rel="noopener">Serai.jp (Shogakukan)</a> — Report on the 18th Geidai Art Plaza Art Award ceremony, Special Jury Prize (JA)</span></li>
+              <li><b>2024</b><span><a href="https://kuremamapapa.com/event/10%E6%9C%8813%E6%97%A5%EF%BC%88%E6%97%A5%EF%BC%89%EF%BC%88%E6%97%A5%EF%BC%89%E6%B2%B3%E5%B4%8E%E6%B5%B7%E6%96%97%E5%80%8B%E5%B1%95%E3%80%9C%E5%AE%AE%E5%8E%9F%E3%83%8E%E8%89%B2%E3%80%9C-%E7%B5%90/?instance_id=2585" target="_blank" rel="noopener">Kure Mama Papa</a> — Announcement of the solo exhibition "Miyahara no Iro" (JA)</span></li>
+              <li><b>2025</b><span><a href="https://serai.jp/premium/1223693" target="_blank" rel="noopener">Serai.jp (Shogakukan)</a> — Report on the 19th Geidai Art Plaza Art Award ceremony, Shogakukan Award (JA)</span></li>
+              <li><b>2025</b><span><a href="https://artplaza.geidai.ac.jp/sights/27047/" target="_blank" rel="noopener">Geidai Art Plaza</a> — Award-winner interview (JA)</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -943,6 +957,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   <section id="contact" class="contact io">
     <div class="sec-head"><h2>Contact</h2><span>CONTACT</span></div>
     <p class="contact-p">For inquiries regarding exhibitions, works, press, or collaborative projects, please get in touch via email or social media.</p>
+    <p class="contact-p">If you need high-resolution images for press or publication, please let us know when you get in touch.</p>
     <div class="contact-tags">
       <a href="mailto:akaitomato1028@gmail.com?subject=%5BExhibition%20Inquiries%5D%20via%20official%20site">Exhibition Inquiries</a><a href="mailto:akaitomato1028@gmail.com?subject=%5BWork%20Inquiries%5D%20via%20official%20site">Work Inquiries</a><a href="mailto:akaitomato1028@gmail.com?subject=%5BPress%5D%20via%20official%20site">Press</a><a href="mailto:akaitomato1028@gmail.com?subject=%5BCollaborations%5D%20via%20official%20site">Collaborations</a><a href="mailto:akaitomato1028@gmail.com?subject=%5BInternational%5D%20via%20official%20site">International</a>
     </div>
