@@ -417,7 +417,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 /* 粗密：写真中心の代表作品(疎)から文字の多い展示情報(密)へ移る境目に、意図的に大きな間を挟む */
 #exhibitions{ padding-top:clamp(4.5rem,11vw,8.5rem); }
 .hero{ max-width:none; margin-inline:0; }
-.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
+.sec-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem 1.4rem; margin-bottom:3rem; }
 .sec-head h2{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
@@ -443,6 +443,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .phil-jp{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.5rem,3.4vw,2.3rem); font-weight:600; line-height:1.65; text-wrap:balance;
+  word-break:keep-all; overflow-wrap:break-word;
 }
 .phil-en{
   margin-top:1.8rem;
@@ -597,6 +598,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
 .cv-summary li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+.cv-summary li span{ word-break:keep-all; overflow-wrap:break-word; }
 .artist-text > .archive-banner{ margin-top:1.8rem; }
 
 /* 販売情報ブリッジ（静かな1文＋CTAのみ、意図的に余白を広くとる） */
@@ -793,7 +795,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="phil-grid">
       <span class="phil-label">Concept<small>コンセプト</small></span>
       <div class="phil-content">
-        <p class="phil-jp">河﨑海斗は、水辺に潜む小さな生命の一瞬を見つめ、<br>移ろい続ける自然の記憶を、金属の中に留める。</p>
+        <p class="phil-jp">河﨑海斗は、<wbr>水辺に潜む<wbr>小さな生命の<wbr>一瞬を見つめ、<br>移ろい続ける<wbr>自然の記憶を、<wbr>金属の中に留める。</p>
         <p class="phil-en">Preserving fleeting life in metal.</p>
       </div>
     </div>
@@ -864,7 +866,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <h3>3人展「MATSURI INORU」</h3>
         <time>2026.6.8 — 8.17</time>
         <p class="venue">Spiral Garden 新丸ビル（東京・丸の内）</p>
-        <p>修了作品「錦鯉」を展示中。会期延長し、8月17日まで開催しています。</p>
+        <p>修了作品「錦鯉」を展示中。会期延長し、<span style="white-space:nowrap">8月17日</span>まで開催しています。</p>
       </div>
     </div>
 
@@ -918,17 +920,17 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <div class="artist-text">
         <div class="artist-roles"><span>金工作家</span><span>鋳金</span><span>KOGEI REALISM</span></div>
         <p class="artist-lede">河﨑海斗は、<wbr>生命を模倣する作家ではない。<wbr>生命が立ち上がる場を、<wbr>工芸によってつくる作家である。<wbr></p>
-        <p>2000年、<wbr>広島県呉市生まれ。<wbr>金工作家（鋳金）。<wbr>2026年、<wbr>東京藝術大学大学院美術研究科工芸専攻鋳金研究分野 修士課程修了。<wbr>東京を拠点に制作する。<wbr></p>
+        <p>2000年、<wbr>広島県呉市生まれ。<wbr>金工作家（鋳金）。<wbr>2026年、<wbr>東京藝術大学大学院<wbr>美術研究科<wbr>工芸専攻<wbr>鋳金研究分野<wbr> 修士課程修了。<wbr>東京を拠点に制作する。<wbr></p>
         <p>鋳造した金魚をアクリル樹脂の内部に置く。<wbr>樹脂は付加された素材でも、<wbr>保護のための外殻でもない。<wbr>それは環境として機能する——すなわち、<wbr>水のもうひとつの形態である。<wbr>磨き、<wbr>加熱、<wbr>酸素、<wbr>温度。<wbr>それらの条件を精密に調整することで、<wbr>色は生成される。<wbr></p>
 
         <ul class="cv-summary">
-          <li><b>受賞</b><span>第19回 藝大アートプラザ・アートアワード 小学館賞（2025）ほか</span></li>
-          <li><b>展示</b><span>3人展「MATSURI INORU」（Spiral Garden 新丸ビル）ほか、国内外のアートフェアに出展</span></li>
-          <li><b>取扱い</b><span>GALLERY KOGURE ／ GALLERY OPET ／ 藝大アートプラザ ／ 桐美会</span></li>
-          <li><b>掲載</b><span>『金工家100人 現代日本の精鋭たち』（阿部出版）ほか</span></li>
+          <li><b>受賞</b><span>第19回<wbr> 藝大アートプラザ・アートアワード<wbr> 小学館賞（2025）ほか</span></li>
+          <li><b>展示</b><span>3人展「MATSURI INORU」<wbr>（Spiral Garden 新丸ビル）ほか、<wbr>国内外の<wbr>アートフェアに<wbr>出展</span></li>
+          <li><b>取扱い</b><span>GALLERY&nbsp;KOGURE ／ GALLERY&nbsp;OPET ／ 藝大アートプラザ ／ 桐美会</span></li>
+          <li><b>掲載</b><span>『金工家100人 現代日本の精鋭たち』<wbr>（阿部出版）ほか</span></li>
         </ul>
         <a class="archive-banner" href="profile/">
-          <span class="archive-banner-text">経歴・受賞歴・掲載実績を見る<small>FULL PROFILE</small></span>
+          <span class="archive-banner-text">経歴・実績を見る<small>FULL PROFILE</small></span>
           <span class="archive-banner-icon" aria-hidden="true">→</span>
         </a>
       </div>

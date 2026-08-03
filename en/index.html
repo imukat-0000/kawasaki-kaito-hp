@@ -418,7 +418,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 /* Density contrast: a deliberately larger gap between the photo-led Works section (sparse) and the text-dense Exhibitions section (dense) */
 #exhibitions{ padding-top:clamp(4.5rem,11vw,8.5rem); }
 .hero{ max-width:none; margin-inline:0; }
-.sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
+.sec-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem 1.4rem; margin-bottom:3rem; }
 .sec-head h2{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.5rem,3.2vw,2.1rem); font-weight:600; letter-spacing:.2em;
@@ -449,6 +449,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   margin-top:1.8rem;
   font-family:"Didot","Bodoni 72",Georgia,serif;
   font-size:.88rem; letter-spacing:.03em; line-height:1.9; color:var(--ink-soft);
+  word-break:keep-all; overflow-wrap:break-word;
 }
 .concept-lede{
   max-width:44rem; margin-bottom:2.2rem;
@@ -598,6 +599,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
 .cv-summary li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+.cv-summary li span{ overflow-wrap:break-word; }
 .artist-text > .archive-banner{ margin-top:1.8rem; }
 
 /* sales bridge (a single quiet sentence + CTA, deliberately spacious) */
@@ -794,7 +796,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <span class="phil-label">Concept<small>思想</small></span>
       <div class="phil-content">
         <p class="phil-jp">Preserving fleeting life in metal.</p>
-        <p class="phil-en">河﨑海斗は、水辺に潜む小さな生命の一瞬を見つめ、移ろい続ける自然の記憶を、金属の中に留める。</p>
+        <p class="phil-en">河﨑海斗は、<wbr>水辺に潜む<wbr>小さな生命の<wbr>一瞬を見つめ、<wbr>移ろい続ける<wbr>自然の記憶を、<wbr>金属の中に留める。</p>
       </div>
     </div>
 
@@ -864,7 +866,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <h3>Three-Person Exhibition "MATSURI INORU"</h3>
         <time>Jun 8 — Aug 17, 2026</time>
         <p class="venue">Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)</p>
-        <p>Featuring the diploma work "Nishikigoi." The run has been extended through August 17.</p>
+        <p>Featuring the diploma work "Nishikigoi." The run has been extended through <span style="white-space:nowrap">August 17</span>.</p>
       </div>
     </div>
 
@@ -924,11 +926,11 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <ul class="cv-summary">
           <li><b>Awards</b><span>19th Geidai Art Plaza Art Award, Shogakukan Award (2025), among others</span></li>
           <li><b>Exhibitions</b><span>Three-person exhibition "MATSURI INORU" (Spiral Garden), plus international art fairs</span></li>
-          <li><b>Galleries</b><span>GALLERY KOGURE / GALLERY OPET / Geidai Art Plaza / Toubikai</span></li>
+          <li><b>Galleries</b><span>GALLERY&nbsp;KOGURE / GALLERY&nbsp;OPET / Geidai Art Plaza / Toubikai</span></li>
           <li><b>Press</b><span>Featured in "100 Metal Craftspeople: Contemporary Japan's Elite" (Abe Publishing), among others</span></li>
         </ul>
         <a class="archive-banner" href="profile/">
-          <span class="archive-banner-text">Full Profile, Awards &amp; Press<small>FULL PROFILE</small></span>
+          <span class="archive-banner-text">View Profile &amp; Press<small>FULL PROFILE</small></span>
           <span class="archive-banner-icon" aria-hidden="true">→</span>
         </a>
       </div>
