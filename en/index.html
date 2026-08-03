@@ -415,6 +415,8 @@ body.revealed .rise{ opacity:1; transform:none; }
 
 /* ============ sections ============ */
 section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:1600px; margin-inline:auto; }  /* 余白約3割減。広い画面では両端に余白を作り内容を中央寄りに(文字は左揃えのまま) */
+/* Density contrast: a deliberately larger gap between the photo-led Works section (sparse) and the text-dense Exhibitions section (dense) */
+#exhibitions{ padding-top:clamp(4.5rem,11vw,8.5rem); }
 .hero{ max-width:none; margin-inline:0; }
 .sec-head{ display:flex; align-items:baseline; gap:1.4rem; margin-bottom:3rem; }
 .sec-head h2{
@@ -588,6 +590,19 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 }
 .cv li a:hover{ border-color:var(--hido); }
 .galleries{ font-size:.85rem; color:var(--ink-soft); }
+
+/* artist summary (homepage highlight; full list lives on profile/) */
+.cv-summary{ margin-top:2.2rem; list-style:none; font-size:.87rem; }
+.cv-summary li{
+  display:grid; grid-template-columns:7em minmax(0,1fr); gap:1.2em;
+  padding:.5em 0; border-bottom:1px solid var(--line);
+}
+.cv-summary li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+.artist-text > .archive-banner{ margin-top:1.8rem; }
+
+/* sales bridge (a single quiet sentence + CTA, deliberately spacious) */
+.sales-bridge{ text-align:center; padding-top:clamp(4rem,9vw,7rem); padding-bottom:clamp(4rem,9vw,7rem); }
+.sales-bridge p{ max-width:30rem; margin:0 auto 1.6rem; color:var(--ink-soft); font-size:.92rem; }
 @media (max-width:760px){
   .artist-photo{ max-width:70%; }
   .cv{ margin-top:1.6rem; gap:1.2rem; }
@@ -801,6 +816,43 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </details>
   </section>
 
+  <!-- Selected Works: one representative piece per creature, catalogue-style -->
+  <section id="works" class="io">
+    <div class="sec-head"><h2>Selected Works</h2><span>REPRESENTATIVE WORKS</span></div>
+
+    <div class="zukan-grid">
+      <a class="zukan-card" href="works/#nishikigoi">
+        <div class="zukan-ph" data-edit-slot="work-nishikigoi" data-edit-ratio="0.75" data-edit-path="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" data-edit-label="Nishikigoi" data-edit-where="index.html の代表作品セクション（錦鯉）"><img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="Cast-metal koi sculpture, &quot;Nishikigoi&quot;, master's thesis work, by Kaito Kawasaki" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Koi<small>鯉</small></span><span class="zukan-title">Nishikigoi<small>2026 / Master's Thesis Work</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#shuiro-wakin">
+        <div class="zukan-ph" data-edit-slot="work-shuiro-wakin" data-edit-ratio="0.75" data-edit-path="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" data-edit-label="Vermilion Wakin" data-edit-where="index.html の代表作品セクション（朱色和金）"><img src="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="Cast-metal goldfish sculpture, &quot;Vermilion Wakin&quot;, Shogakukan Award-winning work, by Kaito Kawasaki" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Goldfish<small>金魚</small></span><span class="zukan-title">Vermilion Wakin<small>2024</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#ame-kaeru">
+        <div class="zukan-ph" data-edit-slot="work-frog" data-edit-ratio="0.75" data-edit-path="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Rain Frog: The Fox's Wedding" data-edit-where="index.html の代表作品セクション（カエル）"><img src="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="Cast-metal frog sculpture, &quot;Rain Frog: The Fox's Wedding&quot;, verdigris finish, by Kaito Kawasaki" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Frog<small>カエル</small></span><span class="zukan-title">Rain Frog: The Fox's Wedding<small>2025</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#w08">
+        <div class="zukan-ph" data-edit-slot="work-w08" data-edit-ratio="0.75" data-edit-path="../img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" data-edit-label="Yellow-Dusted Medaka" data-edit-where="index.html の代表作品セクション（黄粉メダカ）"><img src="../img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" alt="Cast-metal medaka sculpture, &quot;Yellow-Dusted Medaka&quot;, by Kaito Kawasaki" loading="lazy" style="object-position:44% 49%"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Medaka<small>メダカ</small></span><span class="zukan-title">Yellow-Dusted Medaka<small>2026</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#w07">
+        <div class="zukan-ph" data-edit-slot="work-w07" data-edit-ratio="0.75" data-edit-path="../img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" data-edit-label="Blue Sea Turtle" data-edit-where="index.html の代表作品セクション（青海亀）"><img src="../img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" alt="Cast-metal sea turtle sculpture, &quot;Blue Sea Turtle&quot;, by Kaito Kawasaki" loading="lazy" style="object-position:54% 44%"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Sea Turtle<small>海亀</small></span><span class="zukan-title">Blue Sea Turtle<small>2026</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#kouyou">
+        <div class="zukan-ph" data-edit-slot="work-kouyou" data-edit-ratio="0.75" data-edit-path="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Autumn Leaves" data-edit-where="index.html の代表作品セクション（紅葉）"><img src="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="Autumn Leaves — a cast-copper maple leaf dyed red through hido oxidation" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">Plant<small>植物</small></span><span class="zukan-title">Autumn Leaves<small>2025</small></span></div>
+      </a>
+    </div>
+
+    <a class="archive-banner" href="works/">
+      <span class="archive-banner-text">All Works<small>ALL WORKS ARCHIVE</small></span>
+      <span class="archive-banner-icon" aria-hidden="true">→</span>
+    </a>
+  </section>
+
   <!-- Exhibitions -->
   <section id="exhibitions" class="io">
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
@@ -858,43 +910,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   </section>
 
-  <!-- Selected Works: one representative piece per creature, catalogue-style -->
-  <section id="works" class="io">
-    <div class="sec-head"><h2>Selected Works</h2><span>REPRESENTATIVE WORKS</span></div>
-
-    <div class="zukan-grid">
-      <a class="zukan-card" href="works/#nishikigoi">
-        <div class="zukan-ph" data-edit-slot="work-nishikigoi" data-edit-ratio="0.75" data-edit-path="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" data-edit-label="Nishikigoi" data-edit-where="index.html の代表作品セクション（錦鯉）"><img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="Cast-metal koi sculpture, &quot;Nishikigoi&quot;, master's thesis work, by Kaito Kawasaki" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Koi<small>鯉</small></span><span class="zukan-title">Nishikigoi<small>2026 / Master's Thesis Work</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#shuiro-wakin">
-        <div class="zukan-ph" data-edit-slot="work-shuiro-wakin" data-edit-ratio="0.75" data-edit-path="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" data-edit-label="Vermilion Wakin" data-edit-where="index.html の代表作品セクション（朱色和金）"><img src="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="Cast-metal goldfish sculpture, &quot;Vermilion Wakin&quot;, Shogakukan Award-winning work, by Kaito Kawasaki" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Goldfish<small>金魚</small></span><span class="zukan-title">Vermilion Wakin<small>2024</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#ame-kaeru">
-        <div class="zukan-ph" data-edit-slot="work-frog" data-edit-ratio="0.75" data-edit-path="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Rain Frog: The Fox's Wedding" data-edit-where="index.html の代表作品セクション（カエル）"><img src="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="Cast-metal frog sculpture, &quot;Rain Frog: The Fox's Wedding&quot;, verdigris finish, by Kaito Kawasaki" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Frog<small>カエル</small></span><span class="zukan-title">Rain Frog: The Fox's Wedding<small>2025</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#w08">
-        <div class="zukan-ph" data-edit-slot="work-w08" data-edit-ratio="0.75" data-edit-path="../img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" data-edit-label="Yellow-Dusted Medaka" data-edit-where="index.html の代表作品セクション（黄粉メダカ）"><img src="../img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" alt="Cast-metal medaka sculpture, &quot;Yellow-Dusted Medaka&quot;, by Kaito Kawasaki" loading="lazy" style="object-position:44% 49%"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Medaka<small>メダカ</small></span><span class="zukan-title">Yellow-Dusted Medaka<small>2026</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#w07">
-        <div class="zukan-ph" data-edit-slot="work-w07" data-edit-ratio="0.75" data-edit-path="../img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" data-edit-label="Blue Sea Turtle" data-edit-where="index.html の代表作品セクション（青海亀）"><img src="../img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" alt="Cast-metal sea turtle sculpture, &quot;Blue Sea Turtle&quot;, by Kaito Kawasaki" loading="lazy" style="object-position:54% 44%"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Sea Turtle<small>海亀</small></span><span class="zukan-title">Blue Sea Turtle<small>2026</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#kouyou">
-        <div class="zukan-ph" data-edit-slot="work-kouyou" data-edit-ratio="0.75" data-edit-path="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Autumn Leaves" data-edit-where="index.html の代表作品セクション（紅葉）"><img src="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="Autumn Leaves — a cast-copper maple leaf dyed red through hido oxidation" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">Plant<small>植物</small></span><span class="zukan-title">Autumn Leaves<small>2025</small></span></div>
-      </a>
-    </div>
-
-    <a class="archive-banner" href="works/">
-      <span class="archive-banner-text">All Works<small>ALL WORKS ARCHIVE</small></span>
-      <span class="archive-banner-icon" aria-hidden="true">→</span>
-    </a>
-  </section>
-
   <!-- Artist -->
   <section id="artist" class="io">
     <div class="sec-head"><h2>Artist</h2><span>KAITO KAWASAKI</span></div>
@@ -906,52 +921,24 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <p>Born in 2000 in Kure, Hiroshima Prefecture. Metal-casting artist (imono / chuukin). Completed the master's program in Metal Casting, Department of Crafts, Graduate School of Fine Arts, Tokyo University of the Arts, in 2026. Based in Tokyo.</p>
         <p>A cast goldfish is placed inside a body of acrylic resin. The resin is neither an added material nor a protective shell — it functions as an environment: another form of water. Polishing, heat, oxygen, temperature. By precisely tuning these conditions, color is generated.</p>
 
-        <div class="cv">
-          <div>
-            <h3>Biography</h3>
-            <ul>
-              <li><b>2000</b><span>Born in Kure, Hiroshima Prefecture</span></li>
-              <li><b>2024</b><span>Graduated, Department of Crafts (Metal Casting), Faculty of Fine Arts, Tokyo University of the Arts</span></li>
-              <li><b>2026</b><span>Completed the master's program, Metal Casting, Department of Crafts, Graduate School of Fine Arts, Tokyo University of the Arts</span></li>
-              <li><b>Present</b><span>Based in Tokyo. Works handled by GALLERY KOGURE, GALLERY OPET, Geidai Art Plaza, and Toubikai</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Selected Awards</h3>
-            <ul>
-              <li><b>2022</b><span>Tokyo University of the Arts Scholarship, Ataka Award</span></li>
-              <li><b>2024</b><span>18th Geidai Art Plaza Art Award, Special Jury Prize ("Black Chotengan")</span></li>
-              <li><b>2024</b><span>Heisei Art Award (graduation work "Goldfish")</span></li>
-              <li><b>2025</b><span>19th Geidai Art Plaza Art Award, Shogakukan Award ("Vermilion Wakin")</span></li>
-              <li><b>2026</b><span>Salon de Printemps Award (diploma work "Nishikigoi")</span></li>
-              <li><b>2026</b><span>20th Geidai Art Plaza Art Award, Selected ("Autumn Leaves")</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Selected Exhibitions</h3>
-            <ul>
-              <li><b>2024</b><span>ART FAIR TOKYO (Tokyo International Forum) / KIAF SEOUL (Seoul, Korea) / artKYOTO (Shosei-en, Kyoto) / Solo exhibition "Miyahara no Iro" (Kure, Hiroshima)</span></li>
-              <li><b>2025</b><span>ART FAIR TOKYO / Osaka-Kansai Expo "Nippon no Takaramono Matsuri" / Solo exhibition "Kaeru Hajimete Naku" (Ebisu, Tokyo)</span></li>
-              <li><b>2026</b><span>ART FAIR PHILIPPINES (Makati) / ART FAIR TOKYO / Three-person exhibition "A World in Kogei" (Geidai Art Plaza) / Three-person exhibition "MATSURI INORU" (Spiral Garden, Shin-Marunouchi Building)</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Represented By</h3>
-            <p class="galleries">GALLERY KOGURE / GALLERY OPET / Geidai Art Plaza / Toubikai</p>
-          </div>
-          <div>
-            <h3>Press &amp; Media Coverage</h3>
-            <ul>
-              <li><b>2024</b><span><a href="https://serai.jp/hobby/1181142" target="_blank" rel="noopener">Serai.jp (Shogakukan)</a> — Report on the 18th Geidai Art Plaza Art Award ceremony, Special Jury Prize (JA)</span></li>
-              <li><b>2024</b><span><a href="https://kuremamapapa.com/event/10%E6%9C%8813%E6%97%A5%EF%BC%88%E6%97%A5%EF%BC%89%EF%BC%88%E6%97%A5%EF%BC%89%E6%B2%B3%E5%B4%8E%E6%B5%B7%E6%96%97%E5%80%8B%E5%B1%95%E3%80%9C%E5%AE%AE%E5%8E%9F%E3%83%8E%E8%89%B2%E3%80%9C-%E7%B5%90/?instance_id=2585" target="_blank" rel="noopener">Kure Mama Papa</a> — Announcement of the solo exhibition "Miyahara no Iro" (JA)</span></li>
-              <li><b>2025</b><span><a href="https://serai.jp/premium/1223693" target="_blank" rel="noopener">Serai.jp (Shogakukan)</a> — Report on the 19th Geidai Art Plaza Art Award ceremony, Shogakukan Award (JA)</span></li>
-              <li><b>2025</b><span><a href="https://artplaza.geidai.ac.jp/sights/27047/" target="_blank" rel="noopener">Geidai Art Plaza</a> — Award-winner interview (JA)</span></li>
-              <li><b>2026</b><span>Featured in <a href="https://www.abepublishing.co.jp/?pid=191391978" target="_blank" rel="noopener">"100 Metal Craftspeople: Contemporary Japan's Elite"</a> (Abe Publishing) (JA)</span></li>
-            </ul>
-          </div>
-        </div>
+        <ul class="cv-summary">
+          <li><b>Awards</b><span>19th Geidai Art Plaza Art Award, Shogakukan Award (2025), among others</span></li>
+          <li><b>Exhibitions</b><span>Three-person exhibition "MATSURI INORU" (Spiral Garden), plus international art fairs</span></li>
+          <li><b>Galleries</b><span>GALLERY KOGURE / GALLERY OPET / Geidai Art Plaza / Toubikai</span></li>
+          <li><b>Press</b><span>Featured in "100 Metal Craftspeople: Contemporary Japan's Elite" (Abe Publishing), among others</span></li>
+        </ul>
+        <a class="archive-banner" href="profile/">
+          <span class="archive-banner-text">Full Profile, Awards &amp; Press<small>FULL PROFILE</small></span>
+          <span class="archive-banner-icon" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
+  </section>
+
+  <!-- Sales bridge -->
+  <section id="sales-bridge" class="sales-bridge io">
+    <p>For inquiries about acquiring a work, please see the representing galleries above, or visit the Where to Buy page.</p>
+    <a class="sns-btn" href="sales/">Where to Buy</a>
   </section>
 
   <!-- Contact -->
