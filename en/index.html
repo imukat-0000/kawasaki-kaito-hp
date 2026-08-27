@@ -72,21 +72,6 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "Three-Person Exhibition \"MATSURI INORU\"",
-      "startDate": "2026-06-08",
-      "endDate": "2026-08-17",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "Spiral Garden, Shin-Marunouchi Building",
-        "address": { "@type": "PostalAddress", "addressLocality": "Marunouchi", "addressRegion": "Tokyo", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
-      "url": "https://www.spiral.co.jp/shoplist/shinmaru-building"
-    },
-    {
-      "@type": "Event",
       "name": "Kaito Kawasaki Solo Exhibition",
       "startDate": "2026-09-04",
       "endDate": "2026-10-20",
@@ -860,13 +845,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
 
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="Master's thesis work 'Nishikigoi' — a cast-metal koi encased in resin" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/hokusai-frog-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/hokusai-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="'Gakkyo no Kaeru' — a cast-metal frog encased in resin" loading="lazy"></div>
       <div class="exhi-feature-body">
-        <span class="exhi-feature-status" id="exhiStatus">On view now</span>
-        <h3>Three-Person Exhibition "MATSURI INORU"</h3>
-        <time>Jun 8 — Aug 17, 2026</time>
-        <p class="venue">Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)</p>
-        <p>The run has been extended through <span style="white-space:nowrap">August 17</span>.</p>
+        <span class="exhi-feature-status" id="exhiStatus">Opening soon</span>
+        <h3>Kaito Kawasaki Solo Exhibition</h3>
+        <time>Sep 4 — Oct 20, 2026</time>
+        <p class="venue">Hokusai-kan Museum (Obuse, Nagano) — free admission</p>
+        <p>Featuring "Gakkyo no Kaeru," a cast-metal rendering of the frog from Hokusai's "Frog and Saxifrage."</p>
       </div>
     </div>
 
@@ -876,10 +861,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Ongoing</time>
           <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
-        </li>
-        <li>
-          <time>Sep 4 — Oct 20, 2026</time>
-          <div><strong>Solo Exhibition</strong><span class="venue">Hokusai-kan Museum (Obuse, Nagano) — free admission</span></div>
         </li>
         <li>
           <time>Dec 11 — 22, 2026</time>
@@ -894,6 +875,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Jul 22 — 28, 2026</time>
           <div><strong>Kaito Kawasaki Exhibition<span class="ended-tag">(Ended)</span></strong><span class="venue">Shinjuku Takashimaya, 2F Special Venue (Shinjuku, Tokyo) — first solo exhibition at a department store</span></div>
+        </li>
+        <li>
+          <time>Jun 8 — Aug 17, 2026</time>
+          <div><strong>Three-Person Exhibition "MATSURI INORU"<span class="ended-tag">(Ended)</span></strong><span class="venue">Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)</span></div>
         </li>
         <li>
           <time>May 30 — Jul 30, 2026</time>
@@ -2078,8 +2063,8 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var exhiStatus = document.getElementById('exhiStatus');
   if (exhiStatus){
     var today = new Date();
-    var exhiStart = new Date('2026-06-08T00:00:00+09:00');
-    var exhiEnd = new Date('2026-08-17T23:59:59+09:00');
+    var exhiStart = new Date('2026-09-04T00:00:00+09:00');
+    var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
     if (today < exhiStart) exhiStatus.textContent = 'Opening soon';
     else if (today <= exhiEnd) exhiStatus.textContent = 'On view now';
     else exhiStatus.textContent = 'Exhibition ended';
