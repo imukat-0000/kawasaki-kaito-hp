@@ -73,10 +73,21 @@ nav.mainnav a:hover{ color:var(--hido); }
   position:relative; min-height:100svh; display:flex; align-items:flex-end;
   padding-top:8rem;
 }
-.hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-bg img{ width:100%; height:100%; object-fit:cover; object-position:50% 30%; }
+.hero-bg{ position:absolute; inset:0; z-index:0; overflow:hidden; background:var(--bg); touch-action:pan-x; }
+.scene-video{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:center;
+  z-index:1; opacity:0; pointer-events:none;
+}
+.scene-video--active{ z-index:2; opacity:1; }
+.scene-poster{
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:var(--bg) url('media/poster.jpg') center/cover no-repeat;
+  transition:opacity .7s ease;
+}
+.scene-poster--hidden{ opacity:0; }
 .hero-bg::after{
-  content:""; position:absolute; inset:0;
+  content:""; position:absolute; inset:0; z-index:4;
   background:linear-gradient(180deg, rgba(11,12,14,.15) 0%, rgba(11,12,14,.35) 55%, rgba(11,12,14,.94) 100%);
 }
 .hero-inner{ position:relative; z-index:1; width:100%; padding-bottom:clamp(3rem,7vw,6rem); }
@@ -94,9 +105,23 @@ nav.mainnav a:hover{ color:var(--hido); }
   font-size:clamp(1rem,2.4vw,1.4rem); margin:1.2rem 0 0; letter-spacing:.02em;
 }
 .hero-scroll{
-  position:absolute; right:clamp(1.4rem,5vw,4rem); bottom:2.2rem; z-index:1;
+  position:absolute; right:clamp(1.4rem,5vw,4rem); bottom:clamp(2.6rem,4vw,4rem); z-index:1;
   font-size:.68rem; letter-spacing:.3em; color:var(--ink-soft);
   writing-mode:vertical-rl;
+  background:none; border:0; padding:.4em; cursor:pointer; font-family:inherit;
+  transition:color .3s ease;
+}
+.hero-scroll:hover{ color:var(--brass); }
+.hero-scroll--busy{ cursor:progress; color:var(--hido); }
+.hero-scroll:focus-visible{ outline:1px solid var(--brass); outline-offset:4px; }
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+@media (prefers-reduced-motion:reduce){
+  .scene-video{ display:none; }
+  .scene-poster{ opacity:1; transition:none; }
+  .hero-scroll{ display:none; }
 }
 
 /* ---------- section shell ---------- */
@@ -222,14 +247,19 @@ footer a:hover{ color:var(--hido); }
 
 <main id="top">
 
-  <section class="hero">
-    <div class="hero-bg"><img src="../img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" alt="鋳金で制作した新作 — 個展「うつろい、留める」出品作" loading="eager"></div>
+  <section class="hero" aria-label="ヒーロー">
+    <div class="hero-bg">
+      <div class="scene-poster" id="reefPoster" aria-hidden="true"></div>
+      <video class="scene-video scene-video--active" id="reefIdle" src="media/goldfish-idle.mp4" poster="media/poster.jpg" muted playsinline loop preload="auto" aria-hidden="true"></video>
+      <video class="scene-video" id="reefTransition" src="media/reef-transition.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+    </div>
     <div class="wrap hero-inner">
       <p class="hero-eyebrow">KOGEI REALISM</p>
       <h1 class="hero-title">存在の条件を、<br>金属に留める。</h1>
       <p class="hero-en">Kaito Kawasaki — Metal-Casting Artist</p>
     </div>
-    <span class="hero-scroll">SCROLL</span>
+    <button class="hero-scroll" id="reefScrollCue" type="button" aria-label="次の岩礁へ進む">SCROLL</button>
+    <p class="sr-only" id="reefStatus" role="status" aria-live="polite">岩礁の周りを泳いでいます</p>
   </section>
 
   <section id="concept" class="manifesto io">
@@ -340,6 +370,127 @@ footer a:hover{ color:var(--hido); }
   } else {
     ios.forEach(function(el){ el.classList.add('visible'); });
   }
+})();
+
+/* ---------- 金魚スクロールアニメーション（岩礁の入れ替え） ---------- */
+(function(){
+  'use strict';
+  var idleVideo = document.getElementById('reefIdle');
+  var transVideo = document.getElementById('reefTransition');
+  var poster = document.getElementById('reefPoster');
+  var scrollCue = document.getElementById('reefScrollCue');
+  var statusEl = document.getElementById('reefStatus');
+  if (!idleVideo || !transVideo) return;
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var phase = 'idle';            /* 'idle' | 'transition' */
+  var transitionReady = false;   /* reef-transition.mp4 が再生可能か */
+  var wheelGesture = false;      /* トラックパッド慣性の1ジェスチャー中フラグ */
+  var wheelDelta = 0;
+  var wheelReleaseTimer = null;
+  var cooldownUntil = 0;         /* 復帰直後の連続トリガー防止 */
+  var touchStartY = null;
+
+  function play(video){
+    if (!video) return;
+    var p = video.play();
+    if (p && typeof p.catch === 'function') p.catch(function(){ /* 次のジェスチャーで再試行される */ });
+  }
+  function resetHidden(video){
+    if (!video) return;
+    video.pause();
+    try { video.currentTime = 0; } catch (e) { /* noop */ }
+  }
+  function setPhase(next){
+    phase = next;
+    idleVideo.classList.toggle('scene-video--active', next === 'idle');
+    transVideo.classList.toggle('scene-video--active', next === 'transition');
+    if (scrollCue) {
+      scrollCue.textContent = next === 'idle' ? 'SCROLL' : 'SWIMMING';
+      scrollCue.classList.toggle('hero-scroll--busy', next !== 'idle');
+      scrollCue.disabled = reducedMotion || next !== 'idle';
+    }
+    if (statusEl) statusEl.textContent = next === 'idle' ? '岩礁の周りを泳いでいます' : '新しい岩礁へ向かっています';
+  }
+  /* ヒーローが画面の最上部にある間だけ、スクロール操作を岩礁の入れ替えとして扱う */
+  function atHero(){
+    return window.scrollY <= 2;
+  }
+  function beginTransition(){
+    if (reducedMotion || phase !== 'idle' || !transitionReady || performance.now() < cooldownUntil || !atHero()) return;
+    idleVideo.pause();
+    play(transVideo);
+    setPhase('transition');
+    window.requestAnimationFrame(function(){ resetHidden(idleVideo); });
+  }
+  function finishTransition(){
+    play(idleVideo);
+    setPhase('idle');
+    cooldownUntil = performance.now() + 700;
+    window.requestAnimationFrame(function(){ resetHidden(transVideo); });
+  }
+
+  idleVideo.addEventListener('canplay', function(){
+    if (poster) poster.classList.add('scene-poster--hidden');
+  });
+  transVideo.addEventListener('canplay', function(){ transitionReady = true; });
+  transVideo.addEventListener('ended', finishTransition);
+
+  if (reducedMotion) {
+    if (poster) poster.classList.remove('scene-poster--hidden');
+  } else {
+    play(idleVideo);
+  }
+
+  function releaseWheelGesture(){
+    wheelGesture = false;
+    wheelDelta = 0;
+    wheelReleaseTimer = null;
+  }
+  function onWheel(e){
+    if (reducedMotion || !atHero()) return;
+    if (e.deltaY <= 0) return;
+    e.preventDefault();
+    if (wheelReleaseTimer !== null) window.clearTimeout(wheelReleaseTimer);
+    wheelReleaseTimer = window.setTimeout(releaseWheelGesture, 280);
+    if (wheelGesture) return;
+    wheelDelta += e.deltaY;
+    if (wheelDelta < 72) return;
+    wheelGesture = true;
+    wheelDelta = 0;
+    beginTransition();
+  }
+  function onTouchStart(e){
+    touchStartY = (atHero() && e.touches[0]) ? e.touches[0].clientY : null;
+  }
+  function onTouchMove(e){
+    /* ヒーロー内では縦スワイプでページ自体をスクロールさせず、岩礁の入れ替え判定に使う */
+    if (atHero() && !reducedMotion) e.preventDefault();
+  }
+  function onTouchEnd(e){
+    var start = touchStartY;
+    touchStartY = null;
+    if (start === null || reducedMotion || !atHero()) return;
+    var touch = e.changedTouches[0];
+    var end = touch ? touch.clientY : undefined;
+    if (end !== undefined && start - end > 42) beginTransition();
+  }
+  function onKeyDown(e){
+    if (reducedMotion || e.repeat || !atHero()) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      beginTransition();
+    }
+  }
+
+  window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
+  window.addEventListener('touchend', onTouchEnd, { passive: true });
+  window.addEventListener('keydown', onKeyDown);
+  if (scrollCue) scrollCue.addEventListener('click', beginTransition);
 })();
 </script>
 
