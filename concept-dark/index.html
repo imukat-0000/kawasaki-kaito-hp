@@ -348,7 +348,7 @@ nav.mainnav a:hover{ color:var(--hido); }
     showPopup();
   }
 
-  function hidePoster(){ if (poster) poster.classList.add('scene-poster--hidden'); }
+  function hidePoster(){ if (!reducedMotion && poster) poster.classList.add('scene-poster--hidden'); }
   idleVideo.addEventListener('canplay', hidePoster);
   if (idleVideo.readyState >= 3) hidePoster();
   transVideo.addEventListener('canplay', function(){ transitionReady = true; });
