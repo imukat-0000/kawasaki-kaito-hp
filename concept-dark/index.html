@@ -118,10 +118,48 @@ nav.mainnav a:hover{ color:var(--hido); }
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
+
+/* ---------- 岩礁ポップアップ（切り替わるたびにセクションをプレビュー） ---------- */
+.reef-popup{
+  position:absolute; z-index:6;
+  left:clamp(1.4rem,5vw,4rem); bottom:clamp(6.5rem,14vw,8.5rem);
+  width:min(22rem, calc(100% - clamp(2.8rem,10vw,8rem)));
+  background:var(--card); border:1px solid var(--line); border-radius:2px;
+  padding:1.6rem 1.8rem 1.7rem;
+  box-shadow:0 1.4rem 3rem rgba(0,0,0,.45);
+  opacity:0; transform:translateY(14px); pointer-events:none;
+  transition:opacity .45s ease, transform .45s ease;
+}
+.reef-popup--visible{ opacity:1; transform:none; pointer-events:auto; }
+.reef-popup-close{
+  position:absolute; top:.6rem; right:.7rem; width:1.8rem; height:1.8rem;
+  background:none; border:0; color:var(--ink-soft); font-size:1.1rem; line-height:1;
+  cursor:pointer; transition:color .25s ease;
+}
+.reef-popup-close:hover{ color:var(--hido); }
+.reef-popup-eyebrow{
+  display:block; font-family:var(--serif-en); font-size:.68rem; letter-spacing:.14em;
+  color:var(--brass); margin-bottom:.6rem;
+}
+.reef-popup-title{
+  font-family:var(--serif-jp); font-weight:600; font-size:1.15rem; letter-spacing:.06em;
+  margin:0 0 .7rem;
+}
+.reef-popup-body{
+  font-size:.86rem; color:var(--ink-soft); line-height:1.85; margin:0 0 1.1rem;
+}
+.reef-popup-link{
+  display:inline-block; font-size:.72rem; letter-spacing:.1em; color:var(--hido);
+  text-decoration:none; border-bottom:1px solid var(--hido-deep); padding-bottom:.15em;
+  transition:color .25s ease, border-color .25s ease;
+}
+.reef-popup-link:hover{ color:var(--brass); border-color:var(--brass); }
+
 @media (prefers-reduced-motion:reduce){
   .scene-video{ display:none; }
   .scene-poster{ opacity:1; transition:none; }
   .hero-scroll{ display:none; }
+  .reef-popup{ display:none; }
 }
 
 /* ---------- section shell ---------- */
@@ -260,6 +298,14 @@ footer a:hover{ color:var(--hido); }
     </div>
     <button class="hero-scroll" id="reefScrollCue" type="button" aria-label="次の岩礁へ進む">SCROLL</button>
     <p class="sr-only" id="reefStatus" role="status" aria-live="polite">岩礁の周りを泳いでいます</p>
+
+    <div class="reef-popup" id="reefPopup" role="dialog" aria-label="セクションのプレビュー" hidden>
+      <button class="reef-popup-close" id="reefPopupClose" type="button" aria-label="閉じる">×</button>
+      <span class="reef-popup-eyebrow" id="reefPopupEyebrow"></span>
+      <h3 class="reef-popup-title" id="reefPopupTitle"></h3>
+      <p class="reef-popup-body" id="reefPopupBody"></p>
+      <a class="reef-popup-link" id="reefPopupLink" href="#concept"></a>
+    </div>
   </section>
 
   <section id="concept" class="manifesto io">
@@ -391,6 +437,58 @@ footer a:hover{ color:var(--hido); }
   var cooldownUntil = 0;         /* 復帰直後の連続トリガー防止 */
   var touchStartY = null;
 
+  var popup = document.getElementById('reefPopup');
+  var popupClose = document.getElementById('reefPopupClose');
+  var popupEyebrow = document.getElementById('reefPopupEyebrow');
+  var popupTitle = document.getElementById('reefPopupTitle');
+  var popupBody = document.getElementById('reefPopupBody');
+  var popupLink = document.getElementById('reefPopupLink');
+  var popupHideTimer = null;
+  var popupCycle = 0;
+  /* 岩礁が切り替わるたびに、ページの各セクションを順番にプレビュー表示する */
+  var SECTIONS = [
+    {
+      eyebrow: '01 — CONCEPT', title: 'コンセプト', href: '#concept', linkLabel: 'コンセプトを見る',
+      body: '身近に潜む小さな生命の一瞬を見つめ、移ろい続ける自然の記憶を、金属の中に留める。'
+    },
+    {
+      eyebrow: '02 — WORKS', title: '代表作品', href: '#works', linkLabel: '作品を見る',
+      body: '錦鯉、朱色和金、雨ノ蛙「狐の嫁入り」——樹脂に封入された鋳金の作品たち。'
+    },
+    {
+      eyebrow: '03 — ARTIST', title: '河﨑海斗', href: '#artist', linkLabel: 'プロフィールを見る',
+      body: '生命を模倣する作家ではない。生命が立ち上がる場を、工芸によってつくる作家である。'
+    },
+    {
+      eyebrow: '04 — CONTACT', title: 'コンタクト', href: '#contact', linkLabel: 'コンタクトを見る',
+      body: '展覧会・作品・取材・共同プロジェクトに関するお問い合わせは、メールまたはSNSより。'
+    }
+  ];
+
+  function showPopup(){
+    if (!popup) return;
+    var s = SECTIONS[popupCycle % SECTIONS.length];
+    popupCycle += 1;
+    if (popupEyebrow) popupEyebrow.textContent = s.eyebrow;
+    if (popupTitle) popupTitle.textContent = s.title;
+    if (popupBody) popupBody.textContent = s.body;
+    if (popupLink) { popupLink.textContent = s.linkLabel + ' →'; popupLink.href = s.href; }
+    if (popupHideTimer !== null) window.clearTimeout(popupHideTimer);
+    popup.hidden = false;
+    window.requestAnimationFrame(function(){ popup.classList.add('reef-popup--visible'); });
+  }
+  function hidePopup(){
+    if (!popup) return;
+    popup.classList.remove('reef-popup--visible');
+    if (popupHideTimer !== null) window.clearTimeout(popupHideTimer);
+    popupHideTimer = window.setTimeout(function(){ popup.hidden = true; popupHideTimer = null; }, 450);
+  }
+  if (popupClose) popupClose.addEventListener('click', hidePopup);
+  if (popupLink) popupLink.addEventListener('click', hidePopup);
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && popup && !popup.hidden) hidePopup();
+  });
+
   function play(video){
     if (!video) return;
     var p = video.play();
@@ -418,6 +516,7 @@ footer a:hover{ color:var(--hido); }
   }
   function beginTransition(){
     if (reducedMotion || phase !== 'idle' || !transitionReady || performance.now() < cooldownUntil || !atHero()) return;
+    hidePopup();
     idleVideo.pause();
     play(transVideo);
     setPhase('transition');
@@ -428,6 +527,8 @@ footer a:hover{ color:var(--hido); }
     setPhase('idle');
     cooldownUntil = performance.now() + 700;
     window.requestAnimationFrame(function(){ resetHidden(transVideo); });
+    /* 岩礁が新しい定位に落ち着いた瞬間、そのサイクルに対応するセクションをプレビュー表示する */
+    showPopup();
   }
 
   idleVideo.addEventListener('canplay', function(){
