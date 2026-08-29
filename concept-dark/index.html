@@ -348,10 +348,11 @@ nav.mainnav a:hover{ color:var(--hido); }
     showPopup();
   }
 
-  idleVideo.addEventListener('canplay', function(){
-    if (poster) poster.classList.add('scene-poster--hidden');
-  });
+  function hidePoster(){ if (poster) poster.classList.add('scene-poster--hidden'); }
+  idleVideo.addEventListener('canplay', hidePoster);
+  if (idleVideo.readyState >= 3) hidePoster();
   transVideo.addEventListener('canplay', function(){ transitionReady = true; });
+  if (transVideo.readyState >= 3) transitionReady = true;
   transVideo.addEventListener('ended', finishTransition);
 
   if (reducedMotion) {
