@@ -6,3 +6,4 @@ exclude:
   - PROGRESS.md
   - tools
   - scripts
+  - concept-dark
