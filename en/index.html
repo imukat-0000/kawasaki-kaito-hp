@@ -72,15 +72,15 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "Kaito Kawasaki Solo Exhibition",
-      "startDate": "2026-09-04",
+      "name": "Solo Exhibition \"Utsuroi, Tomeru\"",
+      "startDate": "2026-09-05",
       "endDate": "2026-10-20",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "location": {
         "@type": "Place",
-        "name": "Garari Cafe",
-        "address": { "@type": "PostalAddress", "addressLocality": "Obuse", "addressRegion": "Nagano", "addressCountry": "JP" }
+        "name": "Garari Showcase",
+        "address": { "@type": "PostalAddress", "streetAddress": "485-2F Obuse", "addressLocality": "Obuse", "addressRegion": "Nagano", "addressCountry": "JP" }
       },
       "performer": { "@type": "Person", "name": "Kaito Kawasaki" }
     },
@@ -844,12 +844,12 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
 
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" alt="A new metal-cast work to be shown at the Garari Cafe solo exhibition" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" alt="A new metal-cast work to be shown at the Garari Showcase solo exhibition &quot;Utsuroi, Tomeru&quot;" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" id="exhiStatus">Opening soon</span>
-        <h3>Kaito Kawasaki Solo Exhibition</h3>
-        <time>Sep 4 — Oct 20, 2026</time>
-        <p class="venue">Garari Cafe (Obuse, Nagano — near the Hokusai-kan Museum)</p>
+        <h3>Solo Exhibition "Utsuroi, Tomeru"</h3>
+        <time>Sep 5 — Oct 20, 2026</time>
+        <p class="venue">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission</p>
         <p>Featuring a new work, cast in metal, reinterpreting a painting by Katsushika Hokusai.</p>
       </div>
     </div>
@@ -2062,7 +2062,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var exhiStatus = document.getElementById('exhiStatus');
   if (exhiStatus){
     var today = new Date();
-    var exhiStart = new Date('2026-09-04T00:00:00+09:00');
+    var exhiStart = new Date('2026-09-05T00:00:00+09:00');
     var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
     if (today < exhiStart) exhiStatus.textContent = 'Opening soon';
     else if (today <= exhiEnd) exhiStatus.textContent = 'On view now';

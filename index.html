@@ -71,15 +71,15 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "河﨑海斗 個展",
-      "startDate": "2026-09-04",
+      "name": "個展「うつろい、留める」",
+      "startDate": "2026-09-05",
       "endDate": "2026-10-20",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "location": {
         "@type": "Place",
-        "name": "ガラリCafe",
-        "address": { "@type": "PostalAddress", "addressLocality": "小布施町", "addressRegion": "長野県", "addressCountry": "JP" }
+        "name": "ガラリShowcase",
+        "address": { "@type": "PostalAddress", "streetAddress": "小布施485-2F", "addressLocality": "小布施町", "addressRegion": "長野県", "addressCountry": "JP" }
       },
       "performer": { "@type": "Person", "name": "河﨑海斗" }
     },
@@ -844,12 +844,12 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="sec-head"><h2>展示情報</h2><span>EXHIBITIONS</span></div>
 
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" alt="鋳金で制作した新作（ガラリCafeでの個展に出品予定）" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg" alt="鋳金で制作した新作（ガラリShowcaseでの個展「うつろい、留める」に出品）" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" id="exhiStatus">まもなく開催</span>
-        <h3>河﨑海斗 個展</h3>
-        <time>2026.9.4 — 10.20</time>
-        <p class="venue">ガラリCafe（長野・小布施、北斎館近く）</p>
+        <h3>個展「うつろい、留める」</h3>
+        <time>2026.9.5 — 10.20</time>
+        <p class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</p>
         <p>葛飾北斎の絵画作品を、河﨑海斗の解釈のもと鋳金で立体化した新作を展示します。</p>
       </div>
     </div>
@@ -2065,7 +2065,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var exhiStatus = document.getElementById('exhiStatus');
   if (exhiStatus){
     var today = new Date();
-    var exhiStart = new Date('2026-09-04T00:00:00+09:00');
+    var exhiStart = new Date('2026-09-05T00:00:00+09:00');
     var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
     if (today < exhiStart) exhiStatus.textContent = 'まもなく開催';
     else if (today <= exhiEnd) exhiStatus.textContent = '開催中';
