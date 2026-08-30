@@ -327,9 +327,9 @@ nav.mainnav a:hover{ color:var(--hido); }
     }
     if (statusEl) statusEl.textContent = next === 'idle' ? '岩礁の周りを泳いでいます' : '新しい岩礁へ向かっています';
   }
-  /* ヒーローが画面の最上部にある間だけ、スクロール操作を岩礁の入れ替えとして扱う */
+  /* ページ全体が単一画面のヒーローのみで構成されているため、常にヒーロー内として扱う */
   function atHero(){
-    return window.scrollY <= 2;
+    return true;
   }
   function beginTransition(){
     if (reducedMotion || phase !== 'idle' || !transitionReady || performance.now() < cooldownUntil || !atHero()) return;
