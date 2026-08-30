@@ -359,6 +359,15 @@ nav.mainnav a:hover{ color:var(--hido); }
     if (poster) poster.classList.remove('scene-poster--hidden');
   } else {
     play(idleVideo);
+    var retryPlayOnGesture = function(){
+      if (idleVideo.paused) play(idleVideo);
+      document.removeEventListener('click', retryPlayOnGesture);
+      document.removeEventListener('touchstart', retryPlayOnGesture);
+      document.removeEventListener('keydown', retryPlayOnGesture);
+    };
+    document.addEventListener('click', retryPlayOnGesture);
+    document.addEventListener('touchstart', retryPlayOnGesture);
+    document.addEventListener('keydown', retryPlayOnGesture);
   }
 
   function releaseWheelGesture(){
