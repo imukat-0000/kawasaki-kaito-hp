@@ -243,7 +243,7 @@ nav.mainnav a:hover{ color:var(--hido); }
     if (!debugOn) return;
     var t = new Date().toISOString().substr(11, 12);
     debugLines.push(t + '  ' + msg);
-    if (debugLines.length > 22) debugLines.shift();
+    if (debugLines.length > 30) debugLines.shift();
     if (debugPanel) debugPanel.textContent = debugLines.join('\n');
   }
   if (debugOn && debugPanel) {
@@ -253,9 +253,10 @@ nav.mainnav a:hover{ color:var(--hido); }
     });
     dlog('debug mode ON, UA=' + navigator.userAgent.slice(0, 60));
     window.setInterval(function(){
-      dlog('tick idle[paused=' + idleVideo.paused + ' rs=' + idleVideo.readyState + ' ns=' + idleVideo.networkState +
-        '] trans[rs=' + transVideo.readyState + ' ns=' + transVideo.networkState + ' ready=' + transitionReady +
-        '] phase=' + phase + ' reducedMotion=' + reducedMotion + ' scrollY=' + window.scrollY);
+      dlog('tick idle[paused=' + idleVideo.paused + ' t=' + idleVideo.currentTime.toFixed(2) + ' rs=' + idleVideo.readyState +
+        '] trans[paused=' + transVideo.paused + ' t=' + transVideo.currentTime.toFixed(2) + '/' + transVideo.duration.toFixed(2) +
+        ' rs=' + transVideo.readyState + ' ended=' + transVideo.ended + ' err=' + (transVideo.error ? transVideo.error.code : 'null') +
+        '] phase=' + phase);
     }, 2000);
   }
 
@@ -335,6 +336,15 @@ nav.mainnav a:hover{ color:var(--hido); }
   function play(video){
     if (!video) return;
     var p = video.play();
+    if (debugOn) {
+      var label = (video === idleVideo) ? 'idle' : (video === transVideo) ? 'trans' : '?';
+      if (p && typeof p.then === 'function') {
+        p.then(function(){ dlog('play(' + label + ') RESOLVED'); },
+          function(err){ dlog('play(' + label + ') REJECTED: ' + err.name + ' ' + err.message); });
+      } else {
+        dlog('play(' + label + ') returned no promise');
+      }
+    }
     if (p && typeof p.catch === 'function') p.catch(function(){ /* 次のジェスチャーで再試行される */ });
   }
   function resetHidden(video){
@@ -372,6 +382,7 @@ nav.mainnav a:hover{ color:var(--hido); }
     window.requestAnimationFrame(function(){ resetHidden(idleVideo); });
   }
   function finishTransition(){
+    if (debugOn) dlog('finishTransition() called (ended event fired)');
     play(idleVideo);
     setPhase('idle');
     cooldownUntil = performance.now() + 700;
@@ -386,6 +397,13 @@ nav.mainnav a:hover{ color:var(--hido); }
   transVideo.addEventListener('canplay', function(){ transitionReady = true; });
   if (transVideo.readyState >= 3) transitionReady = true;
   transVideo.addEventListener('ended', finishTransition);
+  if (debugOn) {
+    ['stalled', 'waiting', 'error', 'suspend', 'pause', 'playing'].forEach(function(evt){
+      transVideo.addEventListener(evt, function(){
+        dlog('trans event: ' + evt + ' t=' + transVideo.currentTime.toFixed(2) + ' err=' + (transVideo.error ? transVideo.error.code : 'null'));
+      });
+    });
+  }
 
   if (reducedMotion) {
     if (poster) poster.classList.remove('scene-poster--hidden');
