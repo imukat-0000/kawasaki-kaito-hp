@@ -216,11 +216,6 @@ nav.mainnav a:hover{ color:var(--hido); }
 
 </main>
 
-<div id="debugWrap" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999;pointer-events:none;">
-  <pre id="debugStatus" style="margin:0;padding:.6em;font-size:11px;line-height:1.5;background:#003;color:#ff0;white-space:pre-wrap;border-bottom:2px solid #ff0;"></pre>
-  <pre id="debugPanel" style="margin:0;padding:.6em;font-size:11px;line-height:1.5;background:rgba(0,0,0,.82);color:#0f0;white-space:pre-wrap;max-height:55vh;overflow:hidden;"></pre>
-</div>
-
 <script>
 (function(){
   'use strict';
@@ -237,46 +232,6 @@ nav.mainnav a:hover{ color:var(--hido); }
   var scrollCue = document.getElementById('reefScrollCue');
   var statusEl = document.getElementById('reefStatus');
   if (!idleVideo || !transVideo) return;
-
-  /* ---- 一時的な検証用デバッグ表示（?debug=1 の時だけ有効。原因切り分け用） ---- */
-  var debugOn = /[?&]debug=1\b/.test(location.search);
-  var debugWrap = document.getElementById('debugWrap');
-  var debugStatus = document.getElementById('debugStatus');
-  var debugPanel = document.getElementById('debugPanel');
-  var debugLines = [];
-  function dlog(msg){
-    if (!debugOn) return;
-    var t = new Date().toISOString().substr(11, 12);
-    debugLines.push(t + '  ' + msg);
-    if (debugLines.length > 30) debugLines.shift();
-    if (debugPanel) debugPanel.textContent = debugLines.join('\n');
-    updateStatus();
-  }
-  function updateStatus(){
-    if (!debugOn || !debugStatus) return;
-    debugStatus.textContent =
-      'STATUS  primed=' + (typeof transPrimed !== 'undefined' ? transPrimed : '?') +
-      '  transitionReady=' + (typeof transitionReady !== 'undefined' ? transitionReady : '?') +
-      '  phase=' + (typeof phase !== 'undefined' ? phase : '?') + '\n' +
-      'idle: paused=' + idleVideo.paused + ' rs=' + idleVideo.readyState + ' t=' + idleVideo.currentTime.toFixed(1) + '\n' +
-      'trans: paused=' + transVideo.paused + ' rs=' + transVideo.readyState + ' ns=' + transVideo.networkState +
-      ' t=' + transVideo.currentTime.toFixed(1) + '/' + (transVideo.duration || 0).toFixed(1) +
-      ' err=' + (transVideo.error ? transVideo.error.code : 'null');
-  }
-  if (debugOn && debugWrap) {
-    debugWrap.style.display = 'block';
-    window.addEventListener('error', function(e){
-      dlog('JS ERROR: ' + e.message + ' @' + e.filename + ':' + e.lineno);
-    });
-    dlog('debug mode ON, UA=' + navigator.userAgent.slice(0, 60));
-    window.setInterval(updateStatus, 500);
-    window.setInterval(function(){
-      dlog('tick idle[paused=' + idleVideo.paused + ' t=' + idleVideo.currentTime.toFixed(2) + ' rs=' + idleVideo.readyState +
-        '] trans[paused=' + transVideo.paused + ' t=' + transVideo.currentTime.toFixed(2) + '/' + transVideo.duration.toFixed(2) +
-        ' rs=' + transVideo.readyState + ' ended=' + transVideo.ended + ' err=' + (transVideo.error ? transVideo.error.code : 'null') +
-        '] phase=' + phase);
-    }, 3000);
-  }
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var phase = 'idle';            /* 'idle' | 'transition' */
@@ -354,15 +309,6 @@ nav.mainnav a:hover{ color:var(--hido); }
   function play(video){
     if (!video) return;
     var p = video.play();
-    if (debugOn) {
-      var label = (video === idleVideo) ? 'idle' : (video === transVideo) ? 'trans' : '?';
-      if (p && typeof p.then === 'function') {
-        p.then(function(){ dlog('play(' + label + ') RESOLVED'); },
-          function(err){ dlog('play(' + label + ') REJECTED: ' + err.name + ' ' + err.message); });
-      } else {
-        dlog('play(' + label + ') returned no promise');
-      }
-    }
     if (p && typeof p.catch === 'function') p.catch(function(){ /* 次のジェスチャーで再試行される */ });
   }
   function resetHidden(video){
@@ -386,13 +332,7 @@ nav.mainnav a:hover{ color:var(--hido); }
     return true;
   }
   function beginTransition(){
-    if (debugOn) dlog('beginTransition() called: reducedMotion=' + reducedMotion + ' phase=' + phase +
-      ' transitionReady=' + transitionReady + ' cooldownLeft=' + Math.max(0, Math.round(cooldownUntil - performance.now())));
-    if (reducedMotion || phase !== 'idle' || !transitionReady || performance.now() < cooldownUntil || !atHero()) {
-      if (debugOn) dlog('beginTransition() BLOCKED by guard above');
-      return;
-    }
-    if (debugOn) dlog('beginTransition() PROCEEDING');
+    if (reducedMotion || phase !== 'idle' || !transitionReady || performance.now() < cooldownUntil || !atHero()) return;
     hidePopup();
     idleVideo.pause();
     play(transVideo);
@@ -400,7 +340,6 @@ nav.mainnav a:hover{ color:var(--hido); }
     window.requestAnimationFrame(function(){ resetHidden(idleVideo); });
   }
   function finishTransition(){
-    if (debugOn) dlog('finishTransition() called (ended event fired)');
     play(idleVideo);
     setPhase('idle');
     cooldownUntil = performance.now() + 700;
@@ -415,13 +354,6 @@ nav.mainnav a:hover{ color:var(--hido); }
   transVideo.addEventListener('canplay', function(){ transitionReady = true; });
   if (transVideo.readyState >= 3) transitionReady = true;
   transVideo.addEventListener('ended', finishTransition);
-  if (debugOn) {
-    ['stalled', 'waiting', 'error', 'suspend', 'pause', 'playing'].forEach(function(evt){
-      transVideo.addEventListener(evt, function(){
-        dlog('trans event: ' + evt + ' t=' + transVideo.currentTime.toFixed(2) + ' err=' + (transVideo.error ? transVideo.error.code : 'null'));
-      });
-    });
-  }
 
   var transPrimed = false;
   function primeTransVideo(){
@@ -433,10 +365,8 @@ nav.mainnav a:hover{ color:var(--hido); }
       p.then(function(){
         transVideo.pause();
         try { transVideo.currentTime = 0; } catch (e) { /* noop */ }
-        if (debugOn) dlog('transVideo primed (play+pause succeeded)');
-      }).catch(function(err){
+      }).catch(function(){
         transPrimed = false;
-        if (debugOn) dlog('transVideo prime REJECTED: ' + err.name);
       });
     }
   }
@@ -478,21 +408,17 @@ nav.mainnav a:hover{ color:var(--hido); }
   function onTouchStart(e){
     touchStartY = (atHero() && e.touches[0]) ? e.touches[0].clientY : null;
     if (!reducedMotion) primeTransVideo();
-    if (debugOn) dlog('touchstart y=' + touchStartY + ' touches=' + e.touches.length);
   }
   function onTouchMove(e){
     /* ヒーロー内では縦スワイプでページ自体をスクロールさせず、岩礁の入れ替え判定に使う */
     if (atHero() && !reducedMotion) e.preventDefault();
-    if (debugOn) dlog('touchmove y=' + (e.touches[0] ? e.touches[0].clientY : 'n/a') + ' defaultPrevented=' + e.defaultPrevented);
   }
   function onTouchEnd(e){
     var start = touchStartY;
     touchStartY = null;
-    if (debugOn) dlog('touchend start=' + start + ' reducedMotion=' + reducedMotion + ' atHero=' + atHero());
     if (start === null || reducedMotion || !atHero()) return;
     var touch = e.changedTouches[0];
     var end = touch ? touch.clientY : undefined;
-    if (debugOn) dlog('touchend end=' + end + ' diff(start-end)=' + (end !== undefined ? (start - end) : 'n/a') + ' threshold=42');
     if (end !== undefined && start - end > 42) beginTransition();
   }
   function onKeyDown(e){
