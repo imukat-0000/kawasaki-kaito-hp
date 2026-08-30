@@ -216,7 +216,10 @@ nav.mainnav a:hover{ color:var(--hido); }
 
 </main>
 
-<pre id="debugPanel" style="display:none;position:fixed;top:0;left:0;z-index:999;margin:0;padding:.6em;font-size:11px;line-height:1.5;background:rgba(0,0,0,.82);color:#0f0;max-width:100vw;white-space:pre-wrap;pointer-events:none;"></pre>
+<div id="debugWrap" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999;pointer-events:none;">
+  <pre id="debugStatus" style="margin:0;padding:.6em;font-size:11px;line-height:1.5;background:#003;color:#ff0;white-space:pre-wrap;border-bottom:2px solid #ff0;"></pre>
+  <pre id="debugPanel" style="margin:0;padding:.6em;font-size:11px;line-height:1.5;background:rgba(0,0,0,.82);color:#0f0;white-space:pre-wrap;max-height:55vh;overflow:hidden;"></pre>
+</div>
 
 <script>
 (function(){
@@ -237,6 +240,8 @@ nav.mainnav a:hover{ color:var(--hido); }
 
   /* ---- 一時的な検証用デバッグ表示（?debug=1 の時だけ有効。原因切り分け用） ---- */
   var debugOn = /[?&]debug=1\b/.test(location.search);
+  var debugWrap = document.getElementById('debugWrap');
+  var debugStatus = document.getElementById('debugStatus');
   var debugPanel = document.getElementById('debugPanel');
   var debugLines = [];
   function dlog(msg){
@@ -245,19 +250,32 @@ nav.mainnav a:hover{ color:var(--hido); }
     debugLines.push(t + '  ' + msg);
     if (debugLines.length > 30) debugLines.shift();
     if (debugPanel) debugPanel.textContent = debugLines.join('\n');
+    updateStatus();
   }
-  if (debugOn && debugPanel) {
-    debugPanel.style.display = 'block';
+  function updateStatus(){
+    if (!debugOn || !debugStatus) return;
+    debugStatus.textContent =
+      'STATUS  primed=' + (typeof transPrimed !== 'undefined' ? transPrimed : '?') +
+      '  transitionReady=' + (typeof transitionReady !== 'undefined' ? transitionReady : '?') +
+      '  phase=' + (typeof phase !== 'undefined' ? phase : '?') + '\n' +
+      'idle: paused=' + idleVideo.paused + ' rs=' + idleVideo.readyState + ' t=' + idleVideo.currentTime.toFixed(1) + '\n' +
+      'trans: paused=' + transVideo.paused + ' rs=' + transVideo.readyState + ' ns=' + transVideo.networkState +
+      ' t=' + transVideo.currentTime.toFixed(1) + '/' + (transVideo.duration || 0).toFixed(1) +
+      ' err=' + (transVideo.error ? transVideo.error.code : 'null');
+  }
+  if (debugOn && debugWrap) {
+    debugWrap.style.display = 'block';
     window.addEventListener('error', function(e){
       dlog('JS ERROR: ' + e.message + ' @' + e.filename + ':' + e.lineno);
     });
     dlog('debug mode ON, UA=' + navigator.userAgent.slice(0, 60));
+    window.setInterval(updateStatus, 500);
     window.setInterval(function(){
       dlog('tick idle[paused=' + idleVideo.paused + ' t=' + idleVideo.currentTime.toFixed(2) + ' rs=' + idleVideo.readyState +
         '] trans[paused=' + transVideo.paused + ' t=' + transVideo.currentTime.toFixed(2) + '/' + transVideo.duration.toFixed(2) +
         ' rs=' + transVideo.readyState + ' ended=' + transVideo.ended + ' err=' + (transVideo.error ? transVideo.error.code : 'null') +
         '] phase=' + phase);
-    }, 2000);
+    }, 3000);
   }
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -427,7 +445,6 @@ nav.mainnav a:hover{ color:var(--hido); }
     if (poster) poster.classList.remove('scene-poster--hidden');
   } else {
     play(idleVideo);
-    primeTransVideo();
     var retryPlayOnGesture = function(){
       if (idleVideo.paused) play(idleVideo);
       primeTransVideo();
