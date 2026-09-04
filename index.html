@@ -2113,15 +2113,17 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <script>
 (function(){
   "use strict";
-  // NFCタグ経由の来場（?visit=nfc）を、金魚育成ゲームのNFCタッチ数として加算する。
-  // 展示会場のNFCプレートは https://kaitokawasaki.com/?visit=nfc を指す想定。
+  // NFCタグ経由の来場を、金魚育成ゲームのNFCタッチ数として加算する。
+  // 藝大アートプラザ: https://kaitokawasaki.com/?visit=nfc
+  // 北斎館: https://kaitokawasaki.com/?visit=hokusaikan
   var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbz0G1_owFGE0fv_-P26afkA2vE4_0G9m726KD9U4VnpC7CI2-NvnkoCt_jrka8mxtBU/exec";
   var params = new URLSearchParams(window.location.search);
-  if (params.get("visit") !== "nfc") return;
+  var visitSource = params.get("visit");
+  if (visitSource !== "nfc" && visitSource !== "hokusaikan") return;
 
   // NFCタグでこのURLを開くたびに加算する。端末・日付による重複制限は設けない。
   var url = new URL(COUNTER_API_URL);
-  url.searchParams.set("src", "nfc");
+  url.searchParams.set("src", visitSource);
   url.searchParams.set("_", String(Date.now()));
   fetch(url.toString(), { method: "GET", mode: "no-cors", cache: "no-store" }).catch(function(){
     // 通信に失敗しても来場者の閲覧体験は妨げない。
