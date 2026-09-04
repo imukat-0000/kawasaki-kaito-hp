@@ -2116,7 +2116,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   // NFCタグ経由の来場を、金魚育成ゲームのNFCタッチ数として加算する。
   // 藝大アートプラザ: https://kaitokawasaki.com/?visit=nfc
   // 北斎館: https://kaitokawasaki.com/?visit=hokusaikan
-  var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbz0G1_owFGE0fv_-P26afkA2vE4_0G9m726KD9U4VnpC7CI2-NvnkoCt_jrka8mxtBU/exec";
+  var COUNTER_API_URL = "https://script.google.com/macros/s/AKfycbz7GpxZ9AEKnj_BrvUOcOCoH_44qMo0fhgbXikxgctmWtfrqWBCk4gxiVr19sfgE9LC/exec";
   var params = new URLSearchParams(window.location.search);
   var visitSource = params.get("visit");
   if (visitSource !== "nfc" && visitSource !== "hokusaikan") return;
