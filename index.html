@@ -2121,16 +2121,9 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var visitSource = params.get("visit");
   if (visitSource !== "nfc" && visitSource !== "hokusaikan") return;
 
-  // visitSourceをスプレッドシートのsource名にマッピング
-  var srcMapping = {
-    "nfc": "nfc_count",
-    "hokusaikan": "hokusaikan"
-  };
-  var src = srcMapping[visitSource];
-
   // NFCタグでこのURLを開くたびに加算する。端末・日付による重複制限は設けない。
   var url = new URL(COUNTER_API_URL);
-  url.searchParams.set("src", src);
+  url.searchParams.set("src", visitSource);
   url.searchParams.set("_", String(Date.now()));
   fetch(url.toString(), { method: "GET", mode: "no-cors", cache: "no-store" }).catch(function(){
     // 通信に失敗しても来場者の閲覧体験は妨げない。
