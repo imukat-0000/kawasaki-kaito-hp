@@ -92,7 +92,10 @@ jobs:
         run: node --test tools/build.test.mjs
 
       - name: 公開用フォルダを許可リストで作り、内部用ファイルの混入を確かめる
-        run: node tools/site-bundle.mjs _site
+        run: |
+          node tools/site-bundle.mjs _site
+          FP=$(cd _site && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum | sha256sum | cut -c1-64)
+          echo "一式の指紋（全ファイルのsha256）: $FP" | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: 参照先・作品の構造化データ・sitemap の検査
         run: node tools/check-site.mjs _site

@@ -3,6 +3,7 @@
 //
 //   node tools/site-bundle.mjs _site            許可リストのファイルだけを _site にコピーして検査する
 //   node tools/site-bundle.mjs --verify _site   コピーはせず、既にある公開用フォルダを検査だけする（再公開のとき）
+//   SITE_ROOT=<フォルダ> node tools/site-bundle.mjs _site   別の場所に取り出したコミットの中身から作る（生成はしない）
 //
 // 内部用ファイルが1つでも入っていたら、終了コード1で止まる（公開しない）。
 
@@ -11,7 +12,8 @@ import { execFileSync } from 'node:child_process';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// SITE_ROOT を渡すと、別の場所に取り出した過去のコミット（例: 保存した公開時点）から公開用フォルダを作る
+const ROOT = process.env.SITE_ROOT ? resolve(process.env.SITE_ROOT) : join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // 公開してよいもの（ここにないものは公開されない）
 export const ALLOW_FILES = ['index.html', '404.html', 'CNAME', 'favicon.png', 'favicon.svg', 'apple-touch-icon.png',

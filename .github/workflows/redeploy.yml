@@ -1,11 +1,16 @@
-# 再公開：以前に正常に公開できたファイル一式を、作り直さずにそのまま公開し直す。
+# 保存した一式の再公開：以前に正常に公開できたファイル一式を、作り直さずにそのまま公開し直す。
+# （公開方式は GitHub Actions のまま。以前の公開方式「ブランチから公開」への切り戻しとは別の操作）
 #
-# 使い方: GitHub の Actions →「再公開（保存した一式）」→ Run workflow。
-#   run_id を空欄にすると、直近に正常に公開できた一式を使う。
-#   特定の日の一式に戻したいときは、「公開」の実行記録の番号（URLの runs/ の後ろの数字）を入れる。
-#   候補の一覧は、この実行の Summary に出る。
-# 注意: main の中身はそのままなので、次の push や毎日の自動実行で main から作り直される。
-#       一式を戻したら、同じ日のうちに main 側も直す（例：AIに「直前の変更を取り消して」と頼む）。
+# 使い方: GitHub の Actions →「再公開（保存した一式）」→ Run workflow。一式の選び方は次のどちらか。
+#   run_id: 「公開」の実行記録の番号（URLの runs/ の後ろの数字）。空欄なら直近に正常に公開できたもの。
+#           候補の一覧は、この実行の Summary に出る。
+#   ref:    保存してあるブランチ名など（例: published-pr-b = 新方式に切り替える前、PR B を公開した時点）。
+#           そのコミットに入っているファイルを、許可リストのとおりにそのまま並べる（展示情報の生成はしない）。
+#           ref を入れたときは run_id は使わない。
+#
+# 戻した内容が、次の push や毎日の自動実行で上書きされないように、pause_auto_publish（既定で オン）が
+# 「公開」ワークフローを一時停止する。main 側を直したら、Actions →「公開」→ Enable workflow で再開し、
+# Run workflow で一度公開する。
 
 name: 再公開（保存した一式）
 
@@ -16,6 +21,14 @@ on:
         description: '使う一式の「公開」実行記録の番号（空欄なら直近の正常な公開）'
         required: false
         default: ''
+      ref:
+        description: '保存してあるブランチ名など（例: published-pr-b）。入れると run_id より優先'
+        required: false
+        default: ''
+      pause_auto_publish:
+        description: '戻した内容が上書きされないよう、自動公開（「公開」ワークフロー）を一時停止する'
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -26,11 +39,11 @@ concurrency:
 
 jobs:
   prepare:
-    name: 一式を取り出して確かめる
+    name: 一式を用意して確かめる
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      actions: read
+      actions: write # 自動公開の一時停止と、保存した一式の取り出しに使う
     steps:
       - uses: actions/checkout@v4
 
@@ -38,8 +51,18 @@ jobs:
         with:
           node-version: '22'
 
+      - name: 自動公開を一時停止する
+        if: inputs.pause_auto_publish == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow disable publish.yml
+          echo '自動公開（「公開」ワークフロー）を一時停止しました。再開は Actions →「公開」→ Enable workflow。' >> "$GITHUB_STEP_SUMMARY"
+
       - name: どの一式を使うか決める
         id: pick
+        if: inputs.ref == ''
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -57,24 +80,44 @@ jobs:
             RUN_ID=$(gh run list --workflow publish.yml --branch main --status success --limit 15 \
               --json databaseId,event -q '[.[] | select(.event != "pull_request")][0].databaseId')
           fi
-          if [ -z "$RUN_ID" ]; then echo "::error::正常に公開できた一式が見つかりません"; exit 1; fi
+          if [ -z "$RUN_ID" ]; then echo "::error::正常に公開できた一式が見つかりません（ref に published-pr-b を入れると、切り替え前の状態に戻せます）"; exit 1; fi
           read -r NAME CONC BRANCH EVENT <<< "$(gh run view "$RUN_ID" --json workflowName,conclusion,headBranch,event \
             -q '"\(.workflowName) \(.conclusion) \(.headBranch) \(.event)"')"
           if [ "$NAME" != 公開 ] || [ "$CONC" != success ] || [ "$BRANCH" != main ] || [ "$EVENT" = pull_request ]; then
             echo "::error::実行記録 $RUN_ID は、main の正常な「公開」ではありません（$NAME $CONC $BRANCH $EVENT）"; exit 1
           fi
           echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
-          echo "使う一式: 実行記録 $RUN_ID" >> "$GITHUB_STEP_SUMMARY"
+          echo "使う一式: 「公開」の実行記録 $RUN_ID" >> "$GITHUB_STEP_SUMMARY"
 
-      - uses: actions/download-artifact@v4
+      - name: 保存した一式を取り出す（実行記録から）
+        if: inputs.ref == ''
+        uses: actions/download-artifact@v4
         with:
           name: site-bundle
           path: _site
           run-id: ${{ steps.pick.outputs.run_id }}
           github-token: ${{ github.token }}
 
-      - name: 内部用ファイルの混入がないか確かめる
-        run: node tools/site-bundle.mjs --verify _site
+      - name: 保存したコミットを取り出す（ref から）
+        if: inputs.ref != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          path: _saved
+
+      - name: そのコミットのファイルを許可リストのとおりに並べる（生成はしない）
+        if: inputs.ref != ''
+        env:
+          REF: ${{ inputs.ref }}
+        run: |
+          SITE_ROOT=_saved node tools/site-bundle.mjs _site
+          echo "使う一式: $REF（コミット $(git -C _saved rev-parse --short HEAD)）" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 内部用ファイルの混入がないか確かめ、一式の指紋を記録する
+        run: |
+          node tools/site-bundle.mjs --verify _site
+          FP=$(cd _site && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum | sha256sum | cut -c1-64)
+          echo "一式の指紋（全ファイルのsha256）: $FP" | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: 本番の確認用に一式を渡す
         uses: actions/upload-artifact@v4
@@ -115,5 +158,5 @@ jobs:
         with:
           name: site-bundle
           path: _site
-      - name: 本番が取り出した一式になり、内部用ファイルが見えないことを確かめる
+      - name: 本番が用意した一式になり、内部用ファイルが見えないことを確かめる
         run: node tools/verify-live.mjs _site
