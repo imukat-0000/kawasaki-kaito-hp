@@ -1,5 +1,7 @@
-// tools/build.mjs のテスト。実行: node --test tools/
+// tools/build.mjs のテスト。実行: node --test tools/build.test.mjs
 // 本物のファイルは触らず、一時フォルダにコピーした上で、わざと壊した台帳や目印で止まることなどを確かめる。
+// 台帳と sitemap.xml は本物ではなくテスト用の固定の写し（tools/test-fixtures/、2026-10-09時点）を使い、
+// 基準日 2026-10-09 で一度生成した状態から始める。本物の台帳や日付が進んでも、テストの結果は変わらない。
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -19,6 +21,10 @@ function sandbox(){
     cpSync(join(ROOT, f), join(dir, f));
   }
   symlinkSync(join(ROOT, 'img'), join(dir, 'img'));
+  cpSync(join(ROOT, 'tools/test-fixtures/exhibitions.json'), join(dir, 'data/exhibitions.json'));
+  cpSync(join(ROOT, 'tools/test-fixtures/sitemap.xml'), join(dir, 'sitemap.xml'));
+  const r = spawnSync(process.execPath, [join(dir, 'tools/build.mjs'), '--today', '2026-10-09'], { encoding: 'utf8' });
+  if (r.status !== 0) throw new Error('テスト用の台帳で生成できません: ' + r.stdout + r.stderr);
   return dir;
 }
 function run(dir, args = [], env = {}){
@@ -46,7 +52,7 @@ function expectStop(t, setup, message){
   assert.deepEqual(readdirSync(dir).filter((f) => f.endsWith('.build-tmp')), []);
 }
 
-test('今の台帳で生成すると、今のHTMLと完全に一致する（2回実行しても同じ）', (t) => {
+test('同じ台帳・同じ日付で何度生成しても結果が変わらない', (t) => {
   const dir = sandbox();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   const before = snapshot(dir);
