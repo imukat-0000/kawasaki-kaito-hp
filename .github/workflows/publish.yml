@@ -8,7 +8,8 @@
 #   - プルリクエスト（生成と検査だけ。公開はしない）
 #
 # 流れ: 生成 → 検査 → 公開用フォルダを許可リストで作成 → 内部用ファイルの混入確認
-#       → （mainのときだけ）生成結果をmainに記録 → 一式を保存（90日）→ 公開 → 本番を確認
+#       → （mainのときだけ）生成結果をmainに記録 → 一式を保存（7日）→ 公開 → 本番を確認
+#       → （本番の確認に合格したら）保存した一式を新しい10回分までに整理
 # どこかで失敗したら公開しない（本番は前の状態のまま）。失敗するとIssueを作って知らせる。
 
 name: 公開
@@ -121,13 +122,20 @@ jobs:
           git commit -m "chore: 展示情報を ${{ steps.today.outputs.today }} の日付で再生成（自動）"
           git push origin HEAD:main
 
-      - name: 公開する一式を保存する（90日間。再公開に使う）
+      - name: 公開する内容と同じコミットを記録する（保存した一式が消えた後に、コミットから戻すときの目印）
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          echo "公開する内容と同じコミット: $(git rev-parse HEAD)（展示の分類は ${{ steps.today.outputs.today }} 時点）" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # 無料枠の保存容量に収めるため、7日で消え、さらに下の「保存数の整理」で新しい10回分までにする。
+      # それより前の状態に戻すときは、main のコミットを「再公開」の ref に指定する（CLAUDE.md の戻し方を参照）
+      - name: 公開する一式を保存する（7日間。再公開に使う）
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: site-bundle
           path: _site
-          retention-days: 90
+          retention-days: 7
           include-hidden-files: false
 
       - name: 公開用に渡す
@@ -155,6 +163,9 @@ jobs:
     name: 本番の確認
     needs: deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write # 保存数の整理（古い一式の削除）に使う
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -166,6 +177,21 @@ jobs:
           path: _site
       - name: 本番が今回の一式になり、内部用ファイルが見えないことを確かめる
         run: node tools/verify-live.mjs _site
+
+      # 本番の確認に合格したときだけ整理する（合格した一式が手元に残ってから古いものを消す）
+      - name: 保存数の整理（一式は新しい10回分まで。公開に使い終えた公開用の一時ファイルは消す）
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          KEEP: 10
+        run: |
+          gh api --paginate "repos/$GH_REPO/actions/artifacts?per_page=100" \
+            -q '.artifacts[] | select(.expired == false) | [.name, (.id|tostring), .created_at, (.workflow_run.id|tostring)] | @tsv' > artifacts.tsv
+          awk -F'\t' '$1 == "site-bundle"' artifacts.tsv | sort -t$'\t' -k3,3r | tail -n +$((KEEP + 1)) | cut -f2 > old-bundles.txt
+          awk -F'\t' -v run="$GITHUB_RUN_ID" '$1 == "github-pages" && $4 == run' artifacts.tsv | cut -f2 > used-pages.txt
+          cat old-bundles.txt used-pages.txt | while read -r id; do gh api -X DELETE "repos/$GH_REPO/actions/artifacts/$id"; done
+          TOTAL=$(awk -F'\t' '$1 == "site-bundle"' artifacts.tsv | wc -l)
+          echo "保存数の整理: 保存済みの一式 $TOTAL 件のうち古い $(wc -l < old-bundles.txt) 件と、公開用の一時ファイル $(wc -l < used-pages.txt) 件を削除しました" | tee -a "$GITHUB_STEP_SUMMARY"
 
   notify:
     name: 失敗の知らせ
