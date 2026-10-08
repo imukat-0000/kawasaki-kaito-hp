@@ -22,7 +22,8 @@
 - sitemap.xml の更新日（lastmod）は「読む人に見える内容が最後に変わった日」。上の4ページはビルドが自動で書き換える。それ以外のページは、内容を変えたコミットで同時にその日の日付へ書き換える（根拠のある日付がなければ lastmod は省く）。`--check` は、ページを変えたのに更新日が変わっていないと警告する
 - 公開されるのは許可リスト（`tools/site-bundle.mjs` の ALLOW_FILES・ALLOW_DIRS）にあるものだけ。新しい公開フォルダを作ったら、ここに足す。内部用ファイル（CLAUDE.md・tools・data など）が公開用フォルダに入ると止まる
 - 公開前の検査（GitHub上で毎回実行）: 展示情報の生成とテスト、許可リストと内部用ファイルの混入、参照先の実在・作品の構造化データの件数・sitemap（`tools/check-site.mjs`）、同梱フォントの文字の欠け（`tools/check_font.py`）、全ページのJavaScriptエラー（`tools/check-pages.mjs`）。公開後に本番を確認する（`tools/verify-live.mjs`）
-- 失敗すると「サイトの自動公開が失敗しました」というIssueが立つ。公開した一式は90日間保存され、Actions の「再公開（保存した一式）」で作り直さずに公開し直せる。戻したあとは main 側も同じ日に直す
+- 失敗すると「サイトの自動公開が失敗しました」というIssueが立つ
+- 戻し方は2種類あり、別物として扱う。(1) 保存した一式の再公開：公開方式は GitHub Actions のまま、Actions の「再公開（保存した一式）」で過去の一式（90日保存の実行記録、またはブランチ `published-pr-b` = 新方式に切り替える前の公開状態）を作り直さずに公開する。既定で自動公開（「公開」ワークフロー）を一時停止するので、main を直したら Actions →「公開」→ Enable workflow で再開し、Run workflow で一度公開する。(2) 以前の公開方式への切り戻し：Actions →「公開」を Disable workflow してから、Settings → Pages の Source を「Deploy from a branch」（main・/ (root)）に戻す。main の中身がそのまま公開されるので、main が壊れていれば先に直す
 - 金魚のオープニングアニメーション・カーソル追従・「餌をあげて育てる」隠しゲームはCanvas上のvanilla JSで実装（`<script>` 内）
 - 画像を追加する場合は `img/` に置き、大きい写真は書き出し時に軽量化する（サイト全体で数MB以内を目安に）
 - 変更後は実際にブラウザで開いて動作確認してから commit・push すること
