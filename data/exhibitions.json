@@ -1,0 +1,160 @@
+{
+  "_readme": "展示情報の正本。ここを直して node tools/build.mjs を実行すると、日英トップ・日英販売情報・JSON-LD・開催状況の判定日付がまとめて更新される。日付は YYYY-MM-DD で1回だけ書く。listTitle・venue はHTMLとしてそのまま入る（&nbsp; などが使える）。",
+  "exhibitions": [
+    {
+      "id": "lecrin-permanent",
+      "permanent": true,
+      "showOnSales": false,
+      "ja": {
+        "listTitle": "常設展示",
+        "venue": "The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示"
+      },
+      "en": {
+        "listTitle": "Permanent Display",
+        "venue": "The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring \"Vermilion Wakin\""
+      }
+    },
+    {
+      "id": "garari-2026",
+      "start": "2026-09-05",
+      "end": "2026-10-20",
+      "featured": true,
+      "image": "img/exhibition_dm_garari_showcase.jpg",
+      "showOnSales": true,
+      "salesImage": "img/red-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg",
+      "ja": {
+        "title": "個展「うつろい、留める」",
+        "listTitle": "個展「うつろい、留める」",
+        "venue": "ガラリShowcase（長野・小布施、北斎館隣）— 入場無料",
+        "text": "北斎館所蔵の葛飾北斎《菊図》に描かれた菊「巴錦」を、河﨑海斗の解釈のもと鋳金で立体化した新作「画狂ノ菊」を展示します。",
+        "imageAlt": "個展「うつろい、留める」告知DM — ガラリShowcase",
+        "imageLabel": "展示メイン画像",
+        "salesImageAlt": "うつろい、留める"
+      },
+      "en": {
+        "title": "Solo Exhibition \"Utsuroi, Tomeru\"",
+        "listTitle": "Solo Exhibition \"Utsuroi, Tomeru\"",
+        "venue": "Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission",
+        "text": "Featuring \"Gakyo no Kiku,\" a new cast-metal work reinterpreting the Tomoe-nishiki chrysanthemum depicted in Hokusai's Chrysanthemums (Kiku-zu), held in the Hokusai-kan collection.",
+        "imageAlt": "Announcement flyer for the solo exhibition \"Utsuroi, Tomeru\" at Garari Showcase",
+        "imageLabel": "Exhibition main image",
+        "salesImageAlt": "Utsuroi, Tomeru"
+      },
+      "place": {
+        "ja": { "name": "ガラリShowcase", "streetAddress": "小布施485-2F", "locality": "小布施町", "region": "長野県" },
+        "en": { "name": "Garari Showcase", "streetAddress": "485-2F Obuse", "locality": "Obuse", "region": "Nagano" }
+      }
+    },
+    {
+      "id": "kogei-art-fair-2026",
+      "start": "2026-11-27",
+      "end": "2026-11-29",
+      "url": "https://kogei-artfair.jp/",
+      "showOnSales": true,
+      "salesKanji": "金",
+      "ja": {
+        "title": "KOGEI Art Fair Kanazawa 2026",
+        "listTitle": "KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026",
+        "venue": "ハイアット セントリック 金沢（石川・金沢）— GALLERY&nbsp;KOGURE ブース"
+      },
+      "en": {
+        "title": "KOGEI Art Fair Kanazawa 2026",
+        "listTitle": "KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026",
+        "venue": "Hyatt Centric Kanazawa (Kanazawa, Ishikawa) — GALLERY&nbsp;KOGURE booth"
+      },
+      "place": {
+        "ja": { "name": "ハイアット セントリック 金沢", "streetAddress": "広岡1-5-2", "locality": "金沢市", "region": "石川県" },
+        "en": { "name": "Hyatt Centric Kanazawa", "streetAddress": "1-5-2 Hirooka", "locality": "Kanazawa", "region": "Ishikawa" }
+      }
+    },
+    {
+      "id": "medel-2026",
+      "start": "2026-12-11",
+      "end": "2026-12-22",
+      "url": "https://medelgalleryshu.com/",
+      "showOnSales": true,
+      "salesKanji": "個",
+      "ja": {
+        "title": "河﨑海斗 個展",
+        "listTitle": "個展",
+        "venue": "MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）"
+      },
+      "en": {
+        "title": "Kaito Kawasaki Solo Exhibition",
+        "listTitle": "Solo Exhibition",
+        "venue": "MEDEL GALLERY SHU HIBIYA (Imperial Hotel Plaza, 1F)"
+      },
+      "place": {
+        "ja": { "name": "MEDEL GALLERY SHU HIBIYA", "locality": "帝国ホテルプラザ", "region": "東京都" },
+        "en": { "name": "MEDEL GALLERY SHU HIBIYA", "locality": "Imperial Hotel Plaza", "region": "Tokyo" }
+      }
+    },
+    {
+      "id": "kure-2027",
+      "start": "2027-03-20",
+      "end": "2027-04-18",
+      "planned": true,
+      "showOnSales": true,
+      "salesKanji": "呉",
+      "ja": {
+        "title": "2人展（寺本光希・河﨑海斗）",
+        "listTitle": "2人展",
+        "venue": "呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）"
+      },
+      "en": {
+        "title": "Two-person Exhibition (Teramoto / Kawasaki)",
+        "listTitle": "Two-person Exhibition",
+        "venue": "Kure Municipal Museum of Art (Kure, Hiroshima)"
+      },
+      "place": {
+        "ja": { "name": "呉市立美術館", "locality": "呉市", "region": "広島県" },
+        "en": { "name": "Kure Municipal Museum of Art", "locality": "Kure", "region": "Hiroshima" }
+      }
+    },
+    {
+      "id": "takashimaya-shinjuku-2026",
+      "start": "2026-07-22",
+      "end": "2026-07-28",
+      "ja": {
+        "title": "河﨑海斗展",
+        "listTitle": "河﨑海斗展",
+        "venue": "新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展"
+      },
+      "en": {
+        "title": "Kaito Kawasaki Exhibition",
+        "listTitle": "Kaito Kawasaki Exhibition",
+        "venue": "Shinjuku Takashimaya, 2F Special Venue (Shinjuku, Tokyo) — first solo exhibition at a department store"
+      }
+    },
+    {
+      "id": "matsuri-inoru-2026",
+      "start": "2026-06-08",
+      "end": "2026-08-17",
+      "ja": {
+        "title": "3人展「MATSURI INORU」",
+        "listTitle": "3人展「MATSURI INORU」",
+        "venue": "Spiral Garden 新丸ビル（東京・丸の内）"
+      },
+      "en": {
+        "title": "Three-Person Exhibition \"MATSURI INORU\"",
+        "listTitle": "Three-Person Exhibition \"MATSURI INORU\"",
+        "venue": "Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)"
+      }
+    },
+    {
+      "id": "shutsuran-2026",
+      "start": "2026-05-30",
+      "end": "2026-07-30",
+      "ja": {
+        "title": "個展「出藍の誉」",
+        "listTitle": "個展「出藍の誉」",
+        "venue": "恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）"
+      },
+      "en": {
+        "title": "Solo Exhibition \"Shutsuran no Homare\"",
+        "listTitle": "Solo Exhibition \"Shutsuran no Homare\"",
+        "venue": "TSUTAYA BOOKSTORE, Ebisu Garden Place (Ebisu, Tokyo)"
+      }
+    }
+  ]
+}
