@@ -1,0 +1,187 @@
+# サイトの公開：GitHub上で生成・検査し、合格したファイルだけを kaitokawasaki.com に公開する。
+#
+# 動くとき
+#   - main への push（いつもの更新）
+#   - 毎日 日本時間 0:10 ごろ（その日の日付で展示情報を作り直す）。GitHubの混雑で遅れたり、
+#     まれに実行されないことがある。実行されなかった場合は通知が来ない
+#   - 手動（Actions の画面から）。test_failure を選ぶと、通知の確認のためにわざと失敗する（公開はしない）
+#   - プルリクエスト（生成と検査だけ。公開はしない）
+#
+# 流れ: 生成 → 検査 → 公開用フォルダを許可リストで作成 → 内部用ファイルの混入確認
+#       → （mainのときだけ）生成結果をmainに記録 → 一式を保存（90日）→ 公開 → 本番を確認
+# どこかで失敗したら公開しない（本番は前の状態のまま）。失敗するとIssueを作って知らせる。
+
+name: 公開
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '10 15 * * *' # 毎日 15:10 UTC = 日本時間 0:10
+  workflow_dispatch:
+    inputs:
+      test_failure:
+        description: '通知の確認用：わざと失敗させる（公開はしない）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# 公開と再公開が同時に走らないようにする（後から来たものは順番待ち）
+concurrency:
+  group: pages-publish-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: 生成と検査
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 生成結果を main に記録するため
+    outputs:
+      today: ${{ steps.today.outputs.today }}
+    steps:
+      - name: 通知の確認用にわざと失敗する
+        if: inputs.test_failure == true
+        run: |
+          echo "::error::通知の確認のために、わざと失敗させました（公開はしていません）"
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 検査に使う道具を入れる
+        run: |
+          python -m pip install --quiet fonttools==4.66.1 brotli==1.2.0
+          npm install --silent --prefix "$RUNNER_TEMP/pw" playwright@1.56.1
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: 今日の日付（日本時間）
+        id: today
+        run: echo "today=$(TZ=Asia/Tokyo date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: 展示情報を今日の日付で生成する（台帳の誤り・目印の異常があれば止まる）
+        run: node tools/build.mjs --today "${{ steps.today.outputs.today }}"
+
+      - name: 生成結果が台帳と一致するか・更新日の付け忘れがないか
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # 更新日の付け忘れは「今回の更新で変わったページ」について調べる（定時・手動の実行では今の状態と比べる）
+          case "$EVENT" in
+            pull_request) BASE="$PR_BASE";;
+            push) BASE="$BEFORE"; git cat-file -e "$BASE^{commit}" 2>/dev/null || BASE=HEAD~1;;
+            *) BASE=HEAD;;
+          esac
+          node tools/build.mjs --check --today "${{ steps.today.outputs.today }}" --since "$BASE"
+
+      - name: 生成処理のテスト
+        run: node --test tools/build.test.mjs
+
+      - name: 公開用フォルダを許可リストで作り、内部用ファイルの混入を確かめる
+        run: node tools/site-bundle.mjs _site
+
+      - name: 参照先・作品の構造化データ・sitemap の検査
+        run: node tools/check-site.mjs _site
+
+      - name: 同梱フォントの文字の欠けの検査
+        run: python tools/check_font.py
+
+      - name: 全ページをブラウザで開いて、JavaScriptエラーと読み込み失敗を調べる
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/pw/node_modules/playwright/index.mjs
+        run: node tools/check-pages.mjs _site
+
+      - name: 生成結果を main に記録する（日付で内容が変わったときだけ）
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then echo "記録する変更はありません"; exit 0; fi
+          git add index.html en/index.html sales/index.html en/sales/index.html sitemap.xml
+          if [ -n "$(git status --porcelain --untracked-files=no | grep -v '^M  ')" ]; then
+            echo "::error::生成で想定外のファイルが変わりました"; git status --porcelain; exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "chore: 展示情報を ${{ steps.today.outputs.today }} の日付で再生成（自動）"
+          git push origin HEAD:main
+
+      - name: 公開する一式を保存する（90日間。再公開に使う）
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-bundle
+          path: _site
+          retention-days: 90
+          include-hidden-files: false
+
+      - name: 公開用に渡す
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: 公開
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  verify:
+    name: 本番の確認
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-bundle
+          path: _site
+      - name: 本番が今回の一式になり、内部用ファイルが見えないことを確かめる
+        run: node tools/verify-live.mjs _site
+
+  notify:
+    name: 失敗の知らせ
+    needs: [build, deploy, verify]
+    if: failure() && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Issue で知らせる（同じ件名の未解決Issueがあればコメントを足す）
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          OWNER: ${{ github.repository_owner }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          TITLE='サイトの自動公開が失敗しました'
+          BODY=$(printf '@%s\n\n%s の実行が失敗しました（日本時間 %s）。\n本番は前の状態のままです（公開の手前で止まった場合）。\n\n実行記録: %s\n\nAIに「公開が失敗した理由を調べて直して」と頼んでください。直ったらこのIssueを閉じてください。' \
+            "$OWNER" "$EVENT" "$(TZ=Asia/Tokyo date '+%F %H:%M')" "$RUN_URL")
+          NUM=$(gh issue list --state open --search "in:title $TITLE" --json number,title -q ".[] | select(.title == \"$TITLE\") | .number" | head -1)
+          if [ -n "$NUM" ]; then gh issue comment "$NUM" --body "$BODY"; else gh issue create --title "$TITLE" --body "$BODY"; fi

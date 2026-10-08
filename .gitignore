@@ -1,2 +1,5 @@
 .env
 videos/
+__pycache__/
+_site/
+_site.files.txt

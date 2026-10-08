@@ -169,3 +169,26 @@ test('--check は、台帳とHTMLが食い違うと終了コード1で止まり�
   assert.match(r.out, /食い違っています: index.html, en\/index.html, sales\/index.html, en\/sales\/index.html, sitemap.xml/);
   assert.deepEqual(snapshot(dir), before);
 });
+
+test('終了日を変えると、日英トップ・日英販売情報・構造化データ・開催状況の判定日付のすべてに反映され、古い日付が残らない', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  // 注目展示（ガラリ展）と一覧の展示（MEDEL展）の終了日を5日延ばす
+  editData(dir, (list) => { byId(list, 'garari-2026').end = '2026-10-25'; byId(list, 'medel-2026').end = '2026-12-27'; });
+  const r = run(dir, ['--today', '2026-10-09']);
+  assert.equal(r.code, 0, r.out);
+  const expect = {
+    'index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>',
+      "var exhiEnd = new Date('2026-10-25T23:59:59+09:00');"],
+    'en/index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>',
+      "var exhiEnd = new Date('2026-10-25T23:59:59+09:00');"],
+    'sales/index.html': ['<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>'],
+    'en/sales/index.html': ['<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>'],
+  };
+  const old = ['2026-10-20', '2026-12-22', '— 10.20', '— 12.22', 'Oct 20, 2026', 'Dec 11 — 22'];
+  for (const [f, needles] of Object.entries(expect)){
+    const html = read(dir, f);
+    for (const n of needles) assert.ok(html.includes(n), `${f} に「${n}」がない`);
+    for (const o of old) assert.ok(!html.includes(o), `${f} に古い日付「${o}」が残っている`);
+  }
+});
