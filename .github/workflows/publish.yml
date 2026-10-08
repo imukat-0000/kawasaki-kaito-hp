@@ -9,7 +9,8 @@
 #
 # 流れ: 生成 → 検査 → 公開用フォルダを許可リストで作成 → 内部用ファイルの混入確認
 #       → （mainのときだけ）生成結果をmainに記録 → 一式を保存（7日）→ 公開 → 本番を確認
-#       → （本番の確認に合格したら）保存した一式を新しい10回分までに整理
+#       → （本番の確認に合格したら）保存した一式を新しい10件までに整理（整理が成功した直後の件数の上限。
+#         整理が止まっている間や、公開用の一時ファイルを含めた総容量の上限ではない）
 # どこかで失敗したら公開しない（本番は前の状態のまま）。失敗するとIssueを作って知らせる。
 
 name: 公開
@@ -122,12 +123,22 @@ jobs:
           git commit -m "chore: 展示情報を ${{ steps.today.outputs.today }} の日付で再生成（自動）"
           git push origin HEAD:main
 
-      - name: 公開する内容と同じコミットを記録する（保存した一式が消えた後に、コミットから戻すときの目印）
+      # 一式の識別番号（この実行記録の番号）と、コミットの番号は別物。
+      # 日付で展示情報が変わった日は、きっかけのコミットと公開する内容が違う（生成結果は上の手順で別のコミットとして記録される）
+      - name: 一式の識別番号と、きっかけのコミット・公開する内容を記録したコミットを残す
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
-          echo "公開する内容と同じコミット: $(git rev-parse HEAD)（展示の分類は ${{ steps.today.outputs.today }} 時点）" | tee -a "$GITHUB_STEP_SUMMARY"
+          {
+            echo "一式の識別番号（再公開の run_id）: ${{ github.run_id }}"
+            echo "きっかけのコミット: ${{ github.sha }}"
+            if [ "$(git rev-parse HEAD)" = "${{ github.sha }}" ]; then
+              echo "公開する内容を記録したコミット: ${{ github.sha }}（きっかけのコミットと同じ。展示の分類は ${{ steps.today.outputs.today }} 時点）"
+            else
+              echo "公開する内容を記録したコミット: $(git rev-parse HEAD)（${{ steps.today.outputs.today }} の日付で生成し直した結果。きっかけのコミットとは展示の部分が違う）"
+            fi
+          } | tee -a "$GITHUB_STEP_SUMMARY"
 
-      # 無料枠の保存容量に収めるため、7日で消え、さらに下の「保存数の整理」で新しい10回分までにする。
+      # 無料枠の保存容量に収めるため、7日で消え、さらに本番の確認に合格した後の「保存数の整理」で新しい10件までにする。
       # それより前の状態に戻すときは、main のコミットを「再公開」の ref に指定する（CLAUDE.md の戻し方を参照）
       - name: 公開する一式を保存する（7日間。再公開に使う）
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
@@ -179,7 +190,7 @@ jobs:
         run: node tools/verify-live.mjs _site
 
       # 本番の確認に合格したときだけ整理する（合格した一式が手元に残ってから古いものを消す）
-      - name: 保存数の整理（一式は新しい10回分まで。公開に使い終えた公開用の一時ファイルは消す）
+      - name: 保存数の整理（一式は新しい10件まで。公開に使い終えた公開用の一時ファイルは消す）
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

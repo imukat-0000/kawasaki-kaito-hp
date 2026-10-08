@@ -3,12 +3,15 @@
 #
 # 使い方: GitHub の Actions →「再公開（保存した一式）」→ Run workflow。一式の選び方は次のどちらか。
 #   run_id: 「公開」の実行記録の番号（URLの runs/ の後ろの数字）。空欄なら、一式が残っている直近の正常な公開。
-#           一式は7日間・新しい10回分まで残る。候補の一覧は、この実行の Summary に出る。
+#           使えるのは、7日以内かつ新しい10件に残っている一式だけ。候補の一覧は、この実行の Summary に出る。
 #           公開したファイルをそのまま公開し直すので、当時の公開内容と同じになる。
 #   ref:    ブランチ名やコミット（例: published-pr-b = 新方式に切り替える前、PR B を公開した時点）。
 #           保存した一式が残っていない、それより前の状態に戻すときに使う。
 #           そのコミットに入っているファイルを、許可リストのとおりに並べ直す（展示情報の生成はしない）。
-#           展示の分類（開催中・開催予定・過去）は、そのコミットで最後に展示情報を生成した日の状態のまま公開される。
+#           当時の公開内容と同じになるのは、その公開の生成結果が入ったコミット（「公開」の Summary の
+#           「公開する内容を記録したコミット」）を入れたときだけ。きっかけのコミットを入れると、日付で生成し直した
+#           展示の部分が当時の公開内容と違うことがある。展示の分類（開催中・開催予定・過去）は、
+#           そのコミットで最後に展示情報を生成した日の状態のまま公開される。
 #           ref を入れたときは run_id は使わない。
 #
 # 戻した内容が、次の push や毎日の自動実行で上書きされないように、pause_auto_publish（既定で オン）が
@@ -21,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       run_id:
-        description: '使う一式の「公開」実行記録の番号（空欄なら一式が残っている直近の正常な公開。残るのは7日間・10回分まで）'
+        description: '使う一式の「公開」実行記録の番号（空欄なら一式が残っている直近の正常な公開。使えるのは7日以内かつ新しい10件に残っているもの）'
         required: false
         default: ''
       ref:
@@ -89,7 +92,7 @@ jobs:
             done
           fi
           if [ -z "$RUN_ID" ]; then echo "::error::一式が残っている正常な公開が見つかりません（ref に main のコミットや published-pr-b を入れると、そのコミットから戻せます）"; exit 1; fi
-          if ! has_bundle "$RUN_ID"; then echo "::error::実行記録 $RUN_ID の一式は、保存期間（7日）を過ぎたか整理されて残っていません（ref にコミットを入れると、そのコミットから戻せます）"; exit 1; fi
+          if ! has_bundle "$RUN_ID"; then echo "::error::実行記録 $RUN_ID の一式は、7日を過ぎたか、新しい10件から外れて残っていません（ref にコミットを入れると、そのコミットから戻せます）"; exit 1; fi
           read -r NAME CONC BRANCH EVENT <<< "$(gh run view "$RUN_ID" --json workflowName,conclusion,headBranch,event \
             -q '"\(.workflowName) \(.conclusion) \(.headBranch) \(.event)"')"
           if [ "$NAME" != 公開 ] || [ "$CONC" != success ] || [ "$BRANCH" != main ] || [ "$EVENT" = pull_request ]; then
