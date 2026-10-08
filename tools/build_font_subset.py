@@ -23,14 +23,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-if len(sys.argv) < 2:
-    sys.exit("使い方: python3 tools/build_font_subset.py <NotoSerifJP[wght].ttf のパス>")
-SRC = Path(sys.argv[1])
 
 # 公開しないフォルダ（_config.yml の exclude と同じ）
-PRIVATE = {"tools", "scripts", "concept-dark", "data", "node_modules"}
-pages = sorted(p for p in REPO.rglob("*.html")
-               if not (set(p.relative_to(REPO).parts[:-1]) & PRIVATE))
+PRIVATE = {"tools", "scripts", "concept-dark", "data", "node_modules", "_site"}
 
 
 def visible_text(src):
@@ -39,39 +34,54 @@ def visible_text(src):
     return htmllib.unescape(re.sub(r"<[^>]+>", " ", src))
 
 
-chars = set()
-for m in re.finditer(r"<script\b(?![^>]*ld\+json)[^>]*>(.*?)</script>",
-                     (REPO / "index.html").read_text(encoding="utf-8"), re.S):
-    js = re.sub(r"/\*.*?\*/", "", m.group(1), flags=re.S)
-    js = re.sub(r"(?m)//[^\n'\"]*$", "", js)
-    for q in re.findall(r"'((?:[^'\\\n]|\\.)*)'|\"((?:[^\"\\\n]|\\.)*)\"", js):
-        chars.update(q[0] + q[1])
-for p in pages:
-    src = p.read_text(encoding="utf-8")
-    chars.update(visible_text(src))
-    for m in re.finditer(r'\b(?:title|en):"((?:[^"\\]|\\.)*)"', src):
-        chars.update(m.group(1))
-# 将来の文言変更に備えて、かな・記号・英数は全部入れておく
-for lo, hi in [(0x20, 0x7E),        # ASCII
-               (0x3040, 0x309F),    # ひらがな
-               (0x30A0, 0x30FF),    # カタカナ
-               (0xFF01, 0xFF5E)]:   # 全角英数・記号
-    chars.update(chr(c) for c in range(lo, hi + 1))
-chars.update("、。・「」『』（）〜―…※℃×〇◯℮年月日時分東京広島河﨑髙")
+def collect_chars(repo=REPO):
+    """サブセットに入れる文字の集合を返す（tools/check_font.py の検査でも使う）。"""
+    pages = sorted(p for p in repo.rglob("*.html")
+                   if not (set(p.relative_to(repo).parts[:-1]) & PRIVATE))
+    chars = set()
+    for m in re.finditer(r"<script\b(?![^>]*ld\+json)[^>]*>(.*?)</script>",
+                         (repo / "index.html").read_text(encoding="utf-8"), re.S):
+        js = re.sub(r"/\*.*?\*/", "", m.group(1), flags=re.S)
+        js = re.sub(r"(?m)//[^\n'\"]*$", "", js)
+        for q in re.findall(r"'((?:[^'\\\n]|\\.)*)'|\"((?:[^\"\\\n]|\\.)*)\"", js):
+            chars.update(q[0] + q[1])
+    for p in pages:
+        src = p.read_text(encoding="utf-8")
+        chars.update(visible_text(src))
+        for m in re.finditer(r'\b(?:title|en):"((?:[^"\\]|\\.)*)"', src):
+            chars.update(m.group(1))
+    # 将来の文言変更に備えて、かな・記号・英数は全部入れておく
+    for lo, hi in [(0x20, 0x7E),        # ASCII
+                   (0x3040, 0x309F),    # ひらがな
+                   (0x30A0, 0x30FF),    # カタカナ
+                   (0xFF01, 0xFF5E)]:   # 全角英数・記号
+        chars.update(chr(c) for c in range(lo, hi + 1))
+    chars.update("、。・「」『』（）〜―…※℃×〇◯℮年月日時分東京広島河﨑髙")
+    return chars
 
-text = "".join(sorted(c for c in chars if not c.isspace() or c == " "))
-glyphs_file = REPO / "tools" / "_glyphs.txt"
-glyphs_file.write_text(text, encoding="utf-8")
 
-outdir = REPO / "fonts"
-outdir.mkdir(exist_ok=True)
-out = outdir / "NotoSerifJP-sub.woff2"
-subprocess.run([
-    sys.executable, "-m", "fontTools.subset", str(SRC),
-    f"--text-file={glyphs_file}",
-    "--flavor=woff2",
-    f"--output-file={out}",
-    "--layout-features=palt,kern,liga",
-    "--no-hinting",
-], check=True)
-print(out, out.stat().st_size // 1024, "KB,", len(text), "glyphs requested")
+def main():
+    if len(sys.argv) < 2:
+        sys.exit("使い方: python3 tools/build_font_subset.py <NotoSerifJP[wght].ttf のパス>")
+    src = Path(sys.argv[1])
+    chars = collect_chars()
+    text = "".join(sorted(c for c in chars if not c.isspace() or c == " "))
+    glyphs_file = REPO / "tools" / "_glyphs.txt"
+    glyphs_file.write_text(text, encoding="utf-8")
+
+    outdir = REPO / "fonts"
+    outdir.mkdir(exist_ok=True)
+    out = outdir / "NotoSerifJP-sub.woff2"
+    subprocess.run([
+        sys.executable, "-m", "fontTools.subset", str(src),
+        f"--text-file={glyphs_file}",
+        "--flavor=woff2",
+        f"--output-file={out}",
+        "--layout-features=palt,kern,liga",
+        "--no-hinting",
+    ], check=True)
+    print(out, out.stat().st_size // 1024, "KB,", len(text), "glyphs requested")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,119 @@
+# 再公開：以前に正常に公開できたファイル一式を、作り直さずにそのまま公開し直す。
+#
+# 使い方: GitHub の Actions →「再公開（保存した一式）」→ Run workflow。
+#   run_id を空欄にすると、直近に正常に公開できた一式を使う。
+#   特定の日の一式に戻したいときは、「公開」の実行記録の番号（URLの runs/ の後ろの数字）を入れる。
+#   候補の一覧は、この実行の Summary に出る。
+# 注意: main の中身はそのままなので、次の push や毎日の自動実行で main から作り直される。
+#       一式を戻したら、同じ日のうちに main 側も直す（例：AIに「直前の変更を取り消して」と頼む）。
+
+name: 再公開（保存した一式）
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: '使う一式の「公開」実行記録の番号（空欄なら直近の正常な公開）'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-publish-main
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: 一式を取り出して確かめる
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: どの一式を使うか決める
+        id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ inputs.run_id }}
+        run: |
+          {
+            echo '### 正常に公開できた最近の一式'
+            echo '| 実行記録の番号 | 日時（UTC） | きっかけ | コミット |'
+            echo '|---|---|---|---|'
+            gh run list --workflow publish.yml --branch main --status success --limit 15 \
+              --json databaseId,createdAt,event,headSha \
+              -q '.[] | select(.event != "pull_request") | "| \(.databaseId) | \(.createdAt) | \(.event) | \(.headSha[0:7]) |"'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -z "$RUN_ID" ]; then
+            RUN_ID=$(gh run list --workflow publish.yml --branch main --status success --limit 15 \
+              --json databaseId,event -q '[.[] | select(.event != "pull_request")][0].databaseId')
+          fi
+          if [ -z "$RUN_ID" ]; then echo "::error::正常に公開できた一式が見つかりません"; exit 1; fi
+          read -r NAME CONC BRANCH EVENT <<< "$(gh run view "$RUN_ID" --json workflowName,conclusion,headBranch,event \
+            -q '"\(.workflowName) \(.conclusion) \(.headBranch) \(.event)"')"
+          if [ "$NAME" != 公開 ] || [ "$CONC" != success ] || [ "$BRANCH" != main ] || [ "$EVENT" = pull_request ]; then
+            echo "::error::実行記録 $RUN_ID は、main の正常な「公開」ではありません（$NAME $CONC $BRANCH $EVENT）"; exit 1
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "使う一式: 実行記録 $RUN_ID" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-bundle
+          path: _site
+          run-id: ${{ steps.pick.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: 内部用ファイルの混入がないか確かめる
+        run: node tools/site-bundle.mjs --verify _site
+
+      - name: 本番の確認用に一式を渡す
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-bundle
+          path: _site
+          retention-days: 90
+
+      - name: 公開用に渡す
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: 公開
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  verify:
+    name: 本番の確認
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-bundle
+          path: _site
+      - name: 本番が取り出した一式になり、内部用ファイルが見えないことを確かめる
+        run: node tools/verify-live.mjs _site
