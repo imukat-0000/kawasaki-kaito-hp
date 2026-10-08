@@ -66,6 +66,7 @@
   "inLanguage": "en"
 }
 </script>
+<!-- build:exhibitions-jsonld -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -131,6 +132,7 @@
   ]
 }
 </script>
+<!-- /build:exhibitions-jsonld -->
 <style>
 /* P0-02: Android等に和文明朝が無い環境向けのサブセット同梱フォント */
 @font-face{
@@ -872,6 +874,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   <section id="exhibitions" class="io">
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
 
+    <!-- build:exhibitions -->
     <div class="exhi-feature">
       <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/exhibition_dm_garari_showcase.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/exhibition_dm_garari_showcase.jpg" alt="Announcement flyer for the solo exhibition &quot;Utsuroi, Tomeru&quot; at Garari Showcase" loading="lazy"></div>
       <div class="exhi-feature-body">
@@ -922,6 +925,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         </li>
       </ul>
     </div>
+    <!-- /build:exhibitions -->
 
     <div class="news-sns">
       <span class="news-sns-label">Follow for updates</span>
@@ -2100,8 +2104,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var exhiStatus = document.getElementById('exhiStatus');
   if (exhiStatus){
     var today = new Date();
+    /* build:exhibition-dates */
     var exhiStart = new Date('2026-09-05T00:00:00+09:00');
     var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
+    /* /build:exhibition-dates */
     if (today < exhiStart) exhiStatus.textContent = 'Opening soon';
     else if (today <= exhiEnd) exhiStatus.textContent = 'On view now';
     else exhiStatus.textContent = 'Exhibition ended';
