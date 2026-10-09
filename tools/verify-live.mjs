@@ -16,7 +16,7 @@ const dir = process.argv[2] && resolve(process.argv[2]);
 if (!dir || !existsSync(dir)){ console.error('使い方: node tools/verify-live.mjs <公開用フォルダ>'); process.exit(2); }
 
 const INTERNAL = ['/CLAUDE.md', '/README.md', '/PROGRESS.md', '/_config.yml', '/data/exhibitions.json', '/tools/build.mjs',
-  '/scripts/gen_static_archive.js', '/concept-dark/', '/.github/workflows/publish.yml', '/tools/_glyphs.txt'];
+  '/data/works.json', '/tools/works.mjs', '/concept-dark/', '/.github/workflows/publish.yml', '/tools/_glyphs.txt'];
 
 const get = async (path) => {
   const sep = path.includes('?') ? '&' : '?';

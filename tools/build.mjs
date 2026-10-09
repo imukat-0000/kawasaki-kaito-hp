@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// data/exhibitions.json（展示情報の正本）から、HTMLの目印の内側と sitemap.xml の更新日を書き換える。
+// data/exhibitions.json（展示情報の正本）と data/works.json（作品情報の正本）から、HTMLの目印の内側と sitemap.xml の更新日を書き換える。
+// 作品の生成・検査・照合の中身は tools/works.mjs にある。
 // 追加パッケージなし（Node.jsだけで動く）。生成結果はそのままコミットし、公開の仕組みは変えない。
 //
 //   node tools/build.mjs                     今日（日本時間）の日付で生成して書き込む
@@ -14,6 +15,7 @@ import { readFileSync, writeFileSync, renameSync, unlinkSync, existsSync } from 
 import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateWorks, worksRegions, checkWorksPages } from './works.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://kaitokawasaki.com/';
@@ -317,7 +319,8 @@ function salesGroup(c, lang, img){
   ].join('\n');
 }
 
-// どのページのどの目印に何を入れるか。kind: top=トップ / sales=販売情報（sitemap の更新日の判定に使う）
+// どのページのどの目印に何を入れるか。kind: top=トップ / sales=販売情報 / works=作品一覧（sitemap の更新日の判定に使う）
+let works; // data/works.json（下で読み込む）
 const PAGES = [
   { file: 'index.html', kind: 'top', regions: {
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), exhibitions: (c) => topExhibitions(c, 'ja', ''), 'exhibition-dates': statusDates } },
@@ -325,6 +328,8 @@ const PAGES = [
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
   { file: 'sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'ja', '../') } },
   { file: 'en/sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'en', '../../') } },
+  { file: 'works/index.html', kind: 'works', get regions(){ return worksRegions(works, 'ja'); } },
+  { file: 'en/works/index.html', kind: 'works', get regions(){ return worksRegions(works, 'en'); } },
 ];
 
 // ---------- 目印 ----------
@@ -389,12 +394,13 @@ function render(html, file, gens, c){
 }
 
 // ---------- sitemap の更新日 ----------
-// 4ページ（日英トップ・日英販売情報）の更新日は、次のうち最も新しい日にする。
+// 6ページ（日英トップ・日英販売情報・日英作品一覧）の更新日は、次のうち最も新しい日にする。
 //   ・今回のビルドでページの中身が変わったら、その日（基準日）
-//   ・展示の切り替わり日のうち基準日までに来たもの（展示が終わった翌日、注目展示の開始日）
+//   ・展示の切り替わり日のうち基準日までに来たもの（展示が終わった翌日、注目展示の開始日。作品一覧にはない）
 //   ・今 sitemap に書いてある日
 // それ以外のページの更新日は、内容を変えたときに手で書き換える（--check で付け忘れを警告する）。
 function boundaries(all, kind){
+  if (kind === 'works') return [];
   const days = [];
   for (const e of all){
     if (e.permanent) continue;
@@ -486,6 +492,13 @@ let data;
 try { data = JSON.parse(readFileSync(join(ROOT, 'data/exhibitions.json'), 'utf8')); }
 catch (err){ fail([`data/exhibitions.json を読めません: ${err.message}`]); }
 const dataErrors = validate(data);
+try { works = JSON.parse(readFileSync(join(ROOT, 'data/works.json'), 'utf8')); }
+catch (err){ fail([...dataErrors, `data/works.json を読めません: ${err.message}`]); }
+dataErrors.push(...validateWorks(works, ROOT));
+if (!dataErrors.length){
+  // トップの代表作品と作品の個別ページは生成せず、共通であるべき項目だけ台帳と照合する
+  dataErrors.push(...checkWorksPages(works, (f) => readFileSync(join(ROOT, f), 'utf8'), (f) => existsSync(join(ROOT, f))));
+}
 if (dataErrors.length) fail(dataErrors);
 
 const first = build(data);
@@ -522,7 +535,7 @@ if (CHECK){
     console.error(`HTMLが台帳（基準日 ${TODAY}）と食い違っています: ${changes.map((r) => r.file).join(', ')}\n→ node tools/build.mjs を実行してください。`);
     process.exit(1);
   }
-  console.log(`展示情報: HTMLは台帳と一致しています（基準日 ${TODAY}）。`);
+  console.log(`展示情報・作品情報: HTMLは台帳と一致しています（基準日 ${TODAY}）。`);
 } else {
   if (changes.length) writeAll(changes);
   console.log(changes.length ? `更新しました（基準日 ${TODAY}）: ${changes.map((r) => r.file).join(', ')}` : `変更なし（基準日 ${TODAY}）`);
