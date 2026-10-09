@@ -1,0 +1,2663 @@
+{
+  "_readme": [
+    "作品情報の正本。作品一覧（日・英）の小窓用データ・静的な一覧・構造化データは、ここから node tools/build.mjs で生成する（HTMLを直接直さない）。",
+    "並び順＝構造化データの順。一覧は「制作年の新しい順 → groups の順 → この並び順」で並ぶ。",
+    "title・yearLabel・motif・award・desc・alt は日本語（ja）と英語（en）を両方書く。specs の行は key（specLabels の見出し）と ja・en。複数行は [\"1行目\", \"2行目\"]。",
+    "img は img/ フォルダのファイル名。写真がない作品は kanji の文字を代わりに出す。pos は写真の位置、zoom は拡大率。",
+    "jaShowsEnTitle: true の作品は、日本語の小窓で英題を副題として出す。",
+    "keep は、今の表示をそのまま残すための例外（勝手にそろえない）。enListNoZoom: 英語の一覧のサムネイルだけ拡大率を付けない。jaSubtitleText: 日本語の小窓の副題を英題と違う表記で出す。topTitle: トップの代表作品の題名が台帳と違う表記のまま（照合だけに使う）。"
+  ],
+  "groups": [
+    {
+      "key": "goldfish",
+      "ja": "金魚",
+      "en": "Goldfish"
+    },
+    {
+      "key": "medaka",
+      "ja": "メダカ",
+      "en": "Medaka"
+    },
+    {
+      "key": "koi",
+      "ja": "鯉",
+      "en": "Koi"
+    },
+    {
+      "key": "frog",
+      "ja": "カエル",
+      "en": "Frogs"
+    },
+    {
+      "key": "turtle",
+      "ja": "亀",
+      "en": "Turtles"
+    },
+    {
+      "key": "plant",
+      "ja": "植物",
+      "en": "Plants"
+    },
+    {
+      "key": "creature",
+      "ja": "その他の生き物",
+      "en": "Other Creatures"
+    },
+    {
+      "key": "object",
+      "ja": "オブジェ・静物",
+      "en": "Objects & Still Life"
+    }
+  ],
+  "specLabels": {
+    "material": {
+      "ja": "素材",
+      "en": "Material"
+    },
+    "technique": {
+      "ja": "技法",
+      "en": "Technique"
+    },
+    "materialTechnique": {
+      "ja": "素材・技法",
+      "en": "Material / Technique"
+    },
+    "exhibited": {
+      "ja": "展示",
+      "en": "Exhibited"
+    },
+    "featuredIn": {
+      "ja": "掲載",
+      "en": "Featured in"
+    },
+    "price": {
+      "ja": "価格",
+      "en": "Price"
+    }
+  },
+  "works": [
+    {
+      "id": "w01",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg",
+      "pos": "25% 42%",
+      "kanji": "郡",
+      "title": {
+        "ja": "朱色和金郡",
+        "en": "Vermilion Wakin Cluster"
+      },
+      "yearLabel": {
+        "ja": "2026 / 修了作品",
+        "en": "2026 / Master's Thesis Work"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "群れという条件は、一匹では成立しない。反復して鋳込まれた和金が並ぶことで、初めて「郡」という存在が立ち上がる。",
+        "en": "A cluster does not exist as a single fish. Only through the repetition of casting — the same wakin, cast again and again — does the plural condition of a ‘cluster’ come into being."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色和金郡」",
+        "en": "Cast-metal goldfish sculpture, \"Vermilion Wakin Cluster\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w02",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/autumn-leaf-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "48% 36%",
+      "kanji": "紅",
+      "title": {
+        "ja": "紅葉和金",
+        "en": "Autumn-Leaf Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "金魚と紅葉、二つの季節が同じ表面に重ねられる。緋銅の赤は、鱗の色であると同時に、散り際の色でもある。",
+        "en": "Goldfish and autumn leaves, two seasons layered onto a single surface. The red of hido oxidation is at once the color of scales and the color of a leaf at the moment it falls."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「紅葉和金」",
+        "en": "Cast-metal goldfish sculpture, \"Autumn-Leaf Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緋銅酸化・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, hido oxidation, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w03",
+      "year": 2026,
+      "group": "medaka",
+      "img": "img/silver-dusted-medaka-fish-kaito-kawasaki.jpg",
+      "pos": "52% 47%",
+      "kanji": "銀",
+      "title": {
+        "ja": "銀粉メダカ",
+        "en": "Silver-Dusted Medaka"
+      },
+      "motif": {
+        "ja": "メダカ",
+        "en": "Medaka (killifish)"
+      },
+      "desc": {
+        "ja": "3Dプリントという新しい型が、銀という古い金属と出会う。メダカの小ささは、型と金属、両方の精度を試す条件になる。",
+        "en": "A new kind of mold — 3D printing — meets an old metal, silver. The smallness of the medaka becomes a condition that tests the precision of both mold and metal at once."
+      },
+      "alt": {
+        "ja": "鋳金で制作したメダカの作品「銀粉メダカ」",
+        "en": "Cast-metal medaka sculpture, \"Silver-Dusted Medaka\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・3D光硬化レジン",
+          "en": "Silver, 3D photopolymer resin"
+        },
+        {
+          "key": "technique",
+          "ja": "3Dプリント・銀粉の擦り付け・樹脂封入",
+          "en": "3D printing, silver-powder burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "nishikigoi",
+      "year": 2026,
+      "group": "koi",
+      "img": "img/nishikigoi-koi-bronze-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "錦鯉",
+        "en": "Nishikigoi"
+      },
+      "yearLabel": {
+        "ja": "2026 / 修了作品",
+        "en": "2026 / Master's Thesis Work"
+      },
+      "motif": {
+        "ja": "鯉",
+        "en": "Koi (carp)"
+      },
+      "award": {
+        "ja": "サロン・ド・プランタン賞",
+        "en": "Salon de Printemps Award"
+      },
+      "desc": {
+        "ja": "金魚作品の100倍を超える、現時点での最大作品。金属鋳造の物理的な限界と交渉しながら立ち上げられた。",
+        "en": "More than a hundred times the scale of the goldfish works, this is, for now, the largest piece. It was brought into being through constant negotiation with the physical limits of metal casting."
+      },
+      "alt": {
+        "ja": "修了作品「錦鯉」— 樹脂に封入された鋳金の錦鯉",
+        "en": "Master's thesis work ‘Nishikigoi’ — a cast-metal koi encased in resin"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・さはり・真鍮（アルミ入り）・赤銅・四分一",
+          "en": "Silver, copper, sahari, brass (aluminum-alloyed), shakudo, shibuichi"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・重力鋳造・石膏型・磨き・煮色酸化・緋銅酸化・硫化・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, gravity casting, plaster mold, polishing, nikuiro oxidation, hido oxidation, sulfide patination, silver plating, resin encapsulation"
+        },
+        {
+          "key": "exhibited",
+          "ja": [
+            "第74回 東京藝術大学卒業・修了作品展（2026年）",
+            "3人展「MATSURI INORU」Spiral Garden 新丸ビル（2026年6/8〜8/17、会期延長）"
+          ],
+          "en": [
+            "74th Tokyo University of the Arts Graduation &amp; Diploma Works Exhibition (2026)",
+            "Three-person exhibition ‘MATSURI INORU’, Spiral Garden, Shin-Marunouchi Building (Jun 8–Aug 17, 2026, extended)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w04",
+      "year": 2026,
+      "group": "frog",
+      "img": "img/rain-frog-autumn-leaves-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "紅",
+      "title": {
+        "ja": "雨ノ蛙と紅葉",
+        "en": "Rain Frog and Autumn Leaves"
+      },
+      "motif": {
+        "ja": "カエル＋植物（紅葉）",
+        "en": "Frog + plant (autumn leaves)"
+      },
+      "desc": {
+        "ja": "カエルは紅葉の下に潜むのではなく、紅葉と同じ酸化の工程を経て、同じ赤へとたどり着く。",
+        "en": "The frog does not hide beneath the autumn leaves; it passes through the same oxidation process as the leaves, arriving at the same red."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルと紅葉の作品「雨ノ蛙と紅葉」",
+        "en": "Cast-metal frog and autumn leaves sculpture, \"Rain Frog and Autumn Leaves\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緋銅酸化・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, hido oxidation, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w05",
+      "year": 2026,
+      "group": "frog",
+      "img": "img/rain-frog-green-maple-kaito-kawasaki.jpg",
+      "pos": "35% 49%",
+      "kanji": "青",
+      "title": {
+        "ja": "雨ノ蛙と青紅葉",
+        "en": "Rain Frog and Green Maple"
+      },
+      "motif": {
+        "ja": "カエル＋植物（紅葉）",
+        "en": "Frog + plant (autumn leaves)"
+      },
+      "desc": {
+        "ja": "緑青は、時間をかけてしか生まれない色。カエルの体表にも同じ結晶が這い、季節が青のまま留め置かれている。",
+        "en": "Verdigris is a color that can only be born through time. The same crystals creep across the frog’s skin, holding the season in place, still green."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルと紅葉の作品「雨ノ蛙と青紅葉」",
+        "en": "Cast-metal frog and autumn leaves sculpture, \"Rain Frog and Green Maple\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・結晶化・緑青酸化・硫化・銀粉の擦り付け・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, crystallization, verdigris oxidation, sulfide patination, silver-powder burnishing, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w06",
+      "year": 2026,
+      "group": "frog",
+      "img": "img/rain-frog-yellow-maple-kaito-kawasaki.jpg",
+      "pos": "41% 51%",
+      "kanji": "黄",
+      "title": {
+        "ja": "雨ノ蛙と黄紅葉",
+        "en": "Rain Frog and Yellow Maple"
+      },
+      "motif": {
+        "ja": "カエル＋植物（紅葉）",
+        "en": "Frog + plant (autumn leaves)"
+      },
+      "desc": {
+        "ja": "色づく紅葉と、雨に濡れたカエル。異なる乾湿の条件が、煮色酸化という一つの工程のなかで重ねられる。",
+        "en": "Coloring maple leaves and a rain-soaked frog. Two different conditions of wet and dry are layered within a single nikuiro-oxidation process."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルと紅葉の作品「雨ノ蛙と黄紅葉」",
+        "en": "Cast-metal frog and autumn leaves sculpture, \"Rain Frog and Yellow Maple\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・煮色酸化・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, nikuiro oxidation, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w07",
+      "year": 2026,
+      "group": "turtle",
+      "img": "img/blue-sea-turtle-bronze-kaito-kawasaki.jpg",
+      "pos": "59% 35%",
+      "kanji": "海",
+      "title": {
+        "ja": "青海亀",
+        "en": "Blue Sea Turtle"
+      },
+      "motif": {
+        "ja": "亀（ウミガメ）",
+        "en": "Turtle (sea turtle)"
+      },
+      "desc": {
+        "ja": "甲羅の重さを持たない海亀は、水のなかでしか本来の速度を得られない。焼き色の青は、その不在の水を色として引き受けている。",
+        "en": "A sea turtle carries no weight from its shell; only in water does it find its true speed. The blue of heat-color oxidation takes on, as color, the water that is absent here."
+      },
+      "alt": {
+        "ja": "鋳金で制作した亀の作品「青海亀」",
+        "en": "Cast-metal sea turtle sculpture, \"Blue Sea Turtle\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・焼き色酸化・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w08",
+      "year": 2026,
+      "group": "medaka",
+      "img": "img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg",
+      "pos": "37% 51%",
+      "kanji": "黄",
+      "title": {
+        "ja": "黄粉メダカ",
+        "en": "Yellow-Dusted Medaka"
+      },
+      "motif": {
+        "ja": "メダカ",
+        "en": "Medaka"
+      },
+      "desc": {
+        "ja": "真鍮の粉と銀の粉、二つの金属粉が同じ体表に擦り込まれる。メダカの黄は、混ざり合わない二色が隣り合うことで生まれる。",
+        "en": "Brass powder and silver powder, two metal powders burnished into the same skin. The medaka’s yellow is born where two unmixed colors sit side by side."
+      },
+      "alt": {
+        "ja": "鋳金で制作したメダカの作品「黄粉メダカ」",
+        "en": "Cast-metal medaka sculpture, \"Yellow-Dusted Medaka\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・真鍮・3D光硬化レジン",
+          "en": "Silver, brass, 3D photopolymer resin"
+        },
+        {
+          "key": "technique",
+          "ja": "3Dプリント・真鍮粉の擦り付け・銀粉の擦り付け・樹脂封入",
+          "en": "3D printing, brass-powder burnishing, silver-powder burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w09",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/yellow-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "40% 49%",
+      "kanji": "黄",
+      "title": {
+        "ja": "黄色和金",
+        "en": "Yellow Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "色は酸化だけがつくるのではない。磨かれた地金がそのまま光を返すとき、黄色は金属自身の色として現れる。",
+        "en": "Color is not made by oxidation alone. When a polished base metal simply returns light, yellow appears as the color of the metal itself."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黄色和金」",
+        "en": "Cast-metal goldfish sculpture, \"Yellow Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w10",
+      "year": 2026,
+      "group": "medaka",
+      "img": "img/black-dusted-medaka-fish-kaito-kawasaki.jpg",
+      "pos": "47% 0%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒粉メダカ",
+        "en": "Black-Dusted Medaka"
+      },
+      "motif": {
+        "ja": "メダカ",
+        "en": "Medaka"
+      },
+      "desc": {
+        "ja": "銀の粉と酸化銅の黒、明るさと暗さが同じ表面で擦り合わされる。メダカの黒は、対立する二つの粉の均衡としてある。",
+        "en": "Silver powder and the black of cupric oxide, brightness and darkness burnished into the same surface. The medaka’s black exists as the balance between two opposing powders."
+      },
+      "alt": {
+        "ja": "鋳金で制作したメダカの作品「黒粉メダカ」",
+        "en": "Cast-metal medaka sculpture, \"Black-Dusted Medaka\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅",
+          "en": "Silver, copper"
+        },
+        {
+          "key": "technique",
+          "ja": "3Dプリント・銀粉の擦り付け・第二酸化銅の擦り付け・樹脂封入",
+          "en": "3D printing, silver-powder burnishing, cupric-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "medaka-sora",
+      "year": 2026,
+      "group": "medaka",
+      "img": "img/medaka-midair-resin-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "宙",
+      "title": {
+        "ja": "メダカ宙",
+        "en": "Medaka, Midair"
+      },
+      "motif": {
+        "ja": "メダカ",
+        "en": "Medaka"
+      },
+      "desc": {
+        "ja": "水を持ち帰るための袋が破れる、その一瞬にだけメダカは宙にある。魚が水の外に触れるのは、この条件のもとでしかない。",
+        "en": "The bag of water carried home splits, and for that single instant the medaka hangs in air. Only under this condition does a fish ever touch what lies outside the water."
+      },
+      "alt": {
+        "ja": "鋳金で制作したメダカの作品「メダカ宙」",
+        "en": "Cast-metal medaka sculpture, ‘Medaka, Midair’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "gakkyo-kiku",
+      "year": 2026,
+      "group": "plant",
+      "img": "img/hokusai-chrysanthemum-bronze-sculpture-kaito-kawasaki.jpg",
+      "pos": "70% 45%",
+      "kanji": "菊",
+      "title": {
+        "ja": "画狂ノ菊",
+        "en": "Gakkyo no Kiku (The Mad Painter’s Chrysanthemum)"
+      },
+      "motif": {
+        "ja": "植物（菊、葛飾北斎をモチーフ）",
+        "en": "Chrysanthemum (based on Hokusai’s ‘Chrysanthemums’)"
+      },
+      "desc": {
+        "ja": "幾重にも巻き返る花弁は、波を描いた北斎の筆致と同じ渦を、金属の上に鋳込み直したもの。「画狂乃蛙」に続く、号への掛け言葉。",
+        "en": "The petals curl back layer upon layer, recasting in metal the same spiral Hokusai gave his waves. The title continues the wordplay of ‘Gakkyo no Kaeru’, turning on Hokusai’s own artist’s name."
+      },
+      "alt": {
+        "ja": "鋳金で制作した菊の作品「画狂ノ菊」",
+        "en": "Cast-metal chrysanthemum sculpture, ‘Gakkyo no Kiku’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "kurenai-masu-wakin",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/crimson-wakin-goldfish-masu-box-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "升",
+      "title": {
+        "ja": "紅升和金",
+        "en": "Crimson Wakin in a Masu"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "升は本来、酒や米を正確に量るための器。紅い和金がその中を泳ぐとき、升は量る道具から、満たされるための器へと役目を変える。",
+        "en": "A masu is a box built to measure sake and rice exactly. When a crimson wakin swims inside it, the box turns from an instrument of measure into a vessel waiting to be filled."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「紅升和金」",
+        "en": "Cast-metal goldfish sculpture, ‘Crimson Wakin in a Masu’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "kohaku-gin-wakin",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/kohaku-silver-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 40%",
+      "kanji": "銀",
+      "title": {
+        "ja": "紅白銀和金",
+        "en": "Red-and-White Silver Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "持ち帰りの袋の中で、紅白銀の一匹だけが小さく揺れている。祭りの金魚すくいという場面を離れても、袋と水と一匹という構成は変わらない。",
+        "en": "Inside the bag carried home from the festival, a single red, white and silver fish sways. Away from the scooping stall the arrangement still holds: a bag, some water, one fish."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「紅白銀和金」",
+        "en": "Cast-metal goldfish sculpture, ‘Red-and-White Silver Wakin’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "kohaku-wakin",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/kohaku-wakin-goldfish-triangle-kaito-kawasaki.jpg",
+      "pos": "50% 35%",
+      "kanji": "紅",
+      "title": {
+        "ja": "紅白和金",
+        "en": "Red-and-White Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "逆さに吊るされた水は、重力に逆らって三角の形を保つ。紅白の和金は、その不安定な均衡のただ中で静止している。",
+        "en": "Water hung upside down keeps a triangular shape against gravity. The red-and-white wakin rests motionless in the middle of that unstable balance."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「紅白和金」",
+        "en": "Cast-metal goldfish sculpture, ‘Red-and-White Wakin’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "kuro-wakin-cup",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/black-wakin-goldfish-cup-kaito-kawasaki.jpg",
+      "pos": "50% 55%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒和金カップ",
+        "en": "Black Wakin in a Cup"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "縁の粗い質感を持つ器は、すくうための道具であると同時に、留めるための器でもある。黒い和金は、その両義性のなかで静かに沈んでいる。",
+        "en": "A vessel with a roughened rim is at once a tool for scooping up and a container for holding. The black wakin settles quietly inside that double meaning."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒和金カップ」",
+        "en": "Cast-metal goldfish sculpture, ‘Black Wakin in a Cup’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "mikazuki-shuiro-wakin",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/crescent-vermilion-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "40% 40%",
+      "kanji": "月",
+      "title": {
+        "ja": "三日月朱和金",
+        "en": "Crescent Vermilion Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "大きく開いた尾びれは、満ちる前の月の欠けた輪郭に似る。朱色の和金は、その名の通り、三日月の細さと厚みを尾に宿している。",
+        "en": "The tail opens wide, echoing the pared outline of a moon before it fills. True to its name, the vermilion wakin carries the thinness and the weight of a crescent in its tail."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「三日月朱和金」",
+        "en": "Cast-metal goldfish sculpture, ‘Crescent Vermilion Wakin’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "shuiro-wakin-himesuiren",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/vermilion-wakin-goldfish-water-lily-kaito-kawasaki.jpg",
+      "pos": "50% 55%",
+      "kanji": "睡",
+      "title": {
+        "ja": "朱色和金と姫睡蓮",
+        "en": "Vermilion Wakin and Dwarf Water Lily"
+      },
+      "motif": {
+        "ja": "金魚（和金）＋植物（姫睡蓮）",
+        "en": "Goldfish (Wakin) + plant (dwarf water lily)"
+      },
+      "desc": {
+        "ja": "緑青の睡蓮の葉に囲まれて、朱色の和金が水面のかたちのなかを泳ぐ。花よりも先に、葉が池という場所をつくる。",
+        "en": "Ringed by verdigris lily pads, a vermilion wakin swims through the shape of the water’s surface. Before the flower arrives, it is the leaves that make the place a pond."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚と睡蓮の作品「朱色和金と姫睡蓮」",
+        "en": "Cast-metal goldfish and water lily sculpture, ‘Vermilion Wakin and Dwarf Water Lily’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "shuiro-wakin-bottle",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/vermilion-wakin-goldfish-bottle-kaito-kawasaki.jpg",
+      "pos": "35% 50%",
+      "kanji": "瓶",
+      "title": {
+        "ja": "朱色和金ボトル",
+        "en": "Vermilion Wakin in a Bottle"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "ペットボトルという使い捨ての容器の形をそのまま鋳型にして、朱色の和金だけがその中に留め置かれる。持ち運ばれるための透明さが、そのまま観賞のための透明さに転じる。",
+        "en": "The form of a disposable plastic bottle is taken directly as the mould, and only the vermilion wakin is kept inside. Transparency made for carrying turns into transparency made for looking."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色和金ボトル」",
+        "en": "Cast-metal goldfish sculpture, ‘Vermilion Wakin in a Bottle’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "masu-shuiro-wakin",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/vermilion-wakin-goldfish-masu-box-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "升",
+      "title": {
+        "ja": "升朱和金",
+        "en": "Vermilion Wakin in a Sake Masu"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "升は酒を量るための器でもある。琥珀色に満たされた升のなかで、朱色の和金は、酒か水か分からない液体の中を泳いでいる。",
+        "en": "A masu is also a box for measuring sake. Filled with amber, it holds a vermilion wakin swimming through a liquid that could be either sake or water."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「升朱和金」",
+        "en": "Cast-metal goldfish sculpture, ‘Vermilion Wakin in a Sake Masu’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "ao-momiji",
+      "year": 2026,
+      "group": "plant",
+      "img": "img/green-maple-leaves-bronze-kaito-kawasaki.jpg",
+      "pos": "50% 55%",
+      "kanji": "青",
+      "title": {
+        "ja": "青紅葉",
+        "en": "Green Maple"
+      },
+      "motif": {
+        "ja": "植物（紅葉の葉）",
+        "en": "Plant (green maple leaf)"
+      },
+      "desc": {
+        "ja": "銅を紅葉の形に鋳造し、緑青で染めた。色づく前の、まだ青いままの葉という季節が、金属の中に留められている。",
+        "en": "Copper cast into the shape of maple leaves, then dyed with verdigris. The season before the turning — leaves still green — is what has been held in the metal."
+      },
+      "alt": {
+        "ja": "青紅葉 — 緑青で染めた鋳金の紅葉",
+        "en": "Green Maple — cast-metal maple leaves patinated with verdigris, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "hiiro-wakin-cup-esa",
+      "year": 2026,
+      "group": "goldfish",
+      "img": "img/scarlet-wakin-goldfish-cup-food-kaito-kawasaki.jpg",
+      "pos": "50% 55%",
+      "kanji": "餌",
+      "title": {
+        "ja": "緋色和金カップ餌",
+        "en": "Scarlet Wakin, Cup and Feed"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "餌の欠片は、色とりどりのまま水面近くに漂う。緋色の和金は、その色に近づきながらも、決して食べることのない距離を保っている。",
+        "en": "Flakes of feed drift near the surface, still holding their colours. The scarlet wakin moves toward them and keeps exactly the distance at which it will never eat."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「緋色和金カップ餌」",
+        "en": "Cast-metal goldfish sculpture, ‘Scarlet Wakin, Cup and Feed’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "w11",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/colors-of-thought-wakin-goldfish-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "思色和金",
+        "en": "Colors of Thought: Wakin"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "一つの色に決め切る前の思考そのものが、複数体として並べられている。赤に至る途中の色が、時間の順番のまま定着した。",
+        "en": "The thought itself — not yet settled on a single color — is arranged as multiple bodies. The colors on the way to red are fixed in place, still in the order of time."
+      },
+      "alt": {
+        "ja": "思色和金 — 複数体を樹脂に封入した展示形式",
+        "en": "Colors of Thought: Wakin — multiple bodies encased together in resin"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w12",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/mottled-pearlscale-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "zoom": "1.02",
+      "kanji": "斑",
+      "title": {
+        "ja": "斑ラ珍珠鱗",
+        "en": "Mottled Pearlscale"
+      },
+      "motif": {
+        "ja": "金魚（珍珠鱗）",
+        "en": "Goldfish (pearlscale)"
+      },
+      "desc": {
+        "ja": "硫化と銀メッキ、酸化と防御、相反する二つの処理が同じ鱗の上でせめぎ合う。斑の模様は、その均衡が崩れた場所に生まれる。",
+        "en": "Sulfide patination and silver plating — oxidation and its resistance — contend on the same scale’s surface. The mottled pattern is born where that balance breaks."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「斑ラ珍珠鱗」",
+        "en": "Cast-metal goldfish sculpture, \"Mottled Pearlscale\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"
+        }
+      ],
+      "keep": {
+        "enListNoZoom": true
+      }
+    },
+    {
+      "id": "w13",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/mottled-chotengan-goldfish-kaito-kawasaki.jpg",
+      "pos": "80% 57%",
+      "kanji": "斑",
+      "title": {
+        "ja": "斑ラ頂天眼",
+        "en": "Mottled Chotengan"
+      },
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "desc": {
+        "ja": "上を向く眼は、鏡のように空だけを映す。硫化と銀メッキの斑が、その視界にはない地上の色を体表に留める。",
+        "en": "Eyes turned upward reflect only the sky, like a mirror. The mottling of sulfide and silver plating holds, on the body’s surface, a color of the ground that those eyes will never see."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「斑ラ頂天眼」",
+        "en": "Cast-metal goldfish sculpture, \"Mottled Chotengan\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w14",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/vermilion-bubble-eye-goldfish-kaito-kawasaki.jpg",
+      "pos": "51% 70%",
+      "kanji": "朱",
+      "title": {
+        "ja": "朱色水泡眼",
+        "en": "Vermilion Bubble-Eye"
+      },
+      "motif": {
+        "ja": "金魚（水泡眼）",
+        "en": "Goldfish (bubble-eye)"
+      },
+      "desc": {
+        "ja": "目の下に膨らむ水泡は、水そのものではなく、水を模した透明の重さ。朱色は、その重さを支える体の側にだけ宿る。",
+        "en": "The bubble swelling beneath the eye is not water itself, but a transparent weight imitating water. Vermilion belongs only to the body that bears that weight."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色水泡眼」",
+        "en": "Cast-metal goldfish sculpture, \"Vermilion Bubble-Eye\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w15",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/vermilion-pearlscale-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "朱",
+      "title": {
+        "ja": "朱色珍珠鱗",
+        "en": "Vermilion Pearlscale"
+      },
+      "motif": {
+        "ja": "金魚（珍珠鱗）",
+        "en": "Goldfish (pearlscale)"
+      },
+      "desc": {
+        "ja": "一枚一枚が真珠のように盛り上がる鱗に、朱色が粒ごと擦り込まれていく。均一な赤ではなく、粒の数だけの赤がある。",
+        "en": "Onto scales that rise, pearl by pearl, vermilion is burnished in grain by grain. Not a uniform red — there are as many reds as there are grains."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色珍珠鱗」",
+        "en": "Cast-metal goldfish sculpture, \"Vermilion Pearlscale\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w16",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/vermilion-ranchu-goldfish-kaito-kawasaki.jpg",
+      "pos": "56% 50%",
+      "kanji": "朱",
+      "title": {
+        "ja": "朱色蘭鋳",
+        "en": "Vermilion Ranchu"
+      },
+      "motif": {
+        "ja": "金魚（蘭鋳）",
+        "en": "Goldfish (ranchu)"
+      },
+      "desc": {
+        "ja": "背びれを持たない蘭鋳は、水面に対して丸みだけで泳ぐ。朱色は、その丸みの起伏に沿って濃淡を変える。",
+        "en": "Without a dorsal fin, the ranchu swims by roundness alone. Vermilion shifts in depth along the rises and falls of that roundness."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色蘭鋳」",
+        "en": "Cast-metal goldfish sculpture, \"Vermilion Ranchu\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w17",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/vermilion-chobi-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "zoom": "1.09",
+      "kanji": "朱",
+      "title": {
+        "ja": "朱色蝶尾",
+        "en": "Shuiro Chobi"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（蝶尾）",
+        "en": "Goldfish (chobi / butterfly-tail)"
+      },
+      "desc": {
+        "ja": "蝶のように大きく開く尾びれに、梨地の粗さと磨きの滑らかさが同居する。朱色は、その質感の違いを一つの赤で結ぶ。",
+        "en": "On a tail fin that opens wide like a butterfly’s wings, the roughness of nashiji texture and the smoothness of polishing coexist. Vermilion binds those differing textures into a single red."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色蝶尾」",
+        "en": "Cast-metal goldfish sculpture, \"Shuiro Chobi\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・梨地・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, nashiji texturing, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ],
+      "keep": {
+        "enListNoZoom": true
+      }
+    },
+    {
+      "id": "w18",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/vermilion-chotengan-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "朱",
+      "title": {
+        "ja": "朱色頂天眼",
+        "en": "Vermilion Chotengan"
+      },
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "desc": {
+        "ja": "上を向いた眼のまま泳ぐ頂天眼は、前方を見ない。朱色は、見えない前方の代わりに、体の輪郭だけを強く照らす。",
+        "en": "Swimming with its eyes fixed upward, the chotengan never looks ahead. Vermilion, in place of the unseen way forward, illuminates only the outline of the body."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「朱色頂天眼」",
+        "en": "Cast-metal goldfish sculpture, \"Vermilion Chotengan\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "gakkyo-kaeru",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/hokusai-frog-bronze-sculpture-kaito-kawasaki.jpg",
+      "pos": "52% 22%",
+      "kanji": "狂",
+      "title": {
+        "ja": "画狂乃蛙",
+        "en": "Gakkyo no Kaeru (The Mad Painter’s Frog)"
+      },
+      "yearLabel": {
+        "ja": "2025〜2026",
+        "en": "2025–2026"
+      },
+      "motif": {
+        "ja": "カエル（葛飾北斎「蛙とゆきのした」をモチーフ）",
+        "en": "Frog (based on Hokusai’s ‘Frog and Saxifrage’)"
+      },
+      "desc": {
+        "ja": "葛飾北斎「蛙とゆきのした」に描かれた蛙を、北斎と同じ江戸時代の技法で立体に起こす。タイトルは北斎の号「画狂人」との掛け言葉。",
+        "en": "The frog drawn in Hokusai’s ‘Frog and Saxifrage’ is brought into three dimensions using the same Edo-period techniques Hokusai himself worked with. The title plays on ‘Gakyōjin’ (‘The Man Mad About Painting’), Hokusai’s own artist’s name."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「画狂乃蛙」",
+        "en": "Cast-metal frog sculpture, \"Gakkyo no Kaeru (The Mad Painter’s Frog)\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂封入・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation, resin coating"
+        },
+        {
+          "key": "price",
+          "ja": "¥200,000（北斎館オンラインショップにて販売済み）",
+          "en": "¥200,000 (sold, via the Hokusai-kan Museum online shop)"
+        }
+      ]
+    },
+    {
+      "id": "w19",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/white-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "0% 49%",
+      "kanji": "白",
+      "title": {
+        "ja": "白和金",
+        "en": "White Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "色を足すのではなく、酸化を止めることで白は生まれる。銀メッキは、赤に至る前の金魚を、そのまま光の色に留める。",
+        "en": "Color is not added — white is born by halting oxidation. Silver plating holds the goldfish in the color of light, just before it would have turned red."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「白和金」",
+        "en": "Cast-metal goldfish sculpture, \"White Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, silver plating, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w20",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/white-ranchu-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "白",
+      "title": {
+        "ja": "白蘭鋳",
+        "en": "White Ranchu"
+      },
+      "motif": {
+        "ja": "金魚（蘭鋳）",
+        "en": "Goldfish (ranchu)"
+      },
+      "desc": {
+        "ja": "丸い体に酸化の影を持たない蘭鋳は、輪郭だけで存在を示す。白は、色というより、色の不在として置かれている。",
+        "en": "A ranchu with no shadow of oxidation shows its presence through outline alone. White is placed here less as a color than as color’s absence."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「白蘭鋳」",
+        "en": "Cast-metal goldfish sculpture, \"White Ranchu\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, silver plating, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w21",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/white-chobi-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "白",
+      "title": {
+        "ja": "白蝶尾",
+        "en": "White Chobi"
+      },
+      "motif": {
+        "ja": "金魚（蝶尾）",
+        "en": "Goldfish (chobi)"
+      },
+      "desc": {
+        "ja": "尾びれの薄さは、真鍮粉と銀メッキ、異なる金属の粉が重ならないことで保たれる。白は、その薄さがそのまま光ることの結果である。",
+        "en": "The thinness of the tail fin is kept intact because brass powder and silver plating — different metals’ particles — never overlap. White is the result of that thinness simply catching the light."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「白蝶尾」",
+        "en": "Cast-metal goldfish sculpture, \"White Chobi\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・真鍮粉の擦り付け・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, brass-powder burnishing, silver plating, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "kouyou",
+      "year": 2025,
+      "group": "plant",
+      "img": "img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "紅葉",
+        "en": "Autumn Leaves"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "植物（紅葉の葉）",
+        "en": "Plant (autumn maple leaf)"
+      },
+      "award": {
+        "ja": "第20回 藝大アートプラザ・アートアワード 入選",
+        "en": "20th Geidai Art Plaza Art Award — Selected"
+      },
+      "desc": {
+        "ja": "純銅を紅葉の形に鋳造し、緋銅で赤く染めた。葉が色づく秋の一瞬という時間が、金属の中に留められている。",
+        "en": "Pure copper is cast into the shape of an autumn leaf, then dyed red through hido oxidation. The single moment of autumn when a leaf turns color is held, as time, inside the metal."
+      },
+      "alt": {
+        "ja": "紅葉 — 緋銅で赤く染めた鋳金の紅葉",
+        "en": "Autumn Leaves — a cast-copper maple leaf dyed red through hido oxidation"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銅",
+          "en": "Copper"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・緋銅酸化・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, hido oxidation, resin coating"
+        },
+        {
+          "key": "exhibited",
+          "ja": [
+            "第20回 藝大アートプラザ・アートアワード展（2026年）",
+            "河﨑海斗展／新宿髙島屋（2026年7月22日〜28日）",
+            "工芸リアリズム（冊子表紙・掲載）"
+          ],
+          "en": [
+            "20th Geidai Art Plaza Art Award Exhibition (2026)",
+            "Kaito Kawasaki Exhibition, Shinjuku Takashimaya (Jul 22–28, 2026)",
+            "Featured on the cover of the ‘Kogei Realism’ booklet"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "w22",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/brown-silver-toad-bronze-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "蟇",
+      "title": {
+        "ja": "茶銀蟇蛙",
+        "en": "Brown-Silver Toad"
+      },
+      "motif": {
+        "ja": "ヒキガエル",
+        "en": "Toad"
+      },
+      "desc": {
+        "ja": "ヒキガエルの重さは、跳ぶためでなく留まるためにある。硫化がつくる茶と銀メッキの光は、その留まる体の表面で分け合われている。",
+        "en": "A toad’s weight exists not for leaping but for staying still. The brown of sulfide patination and the light of silver plating are shared across the surface of that motionless body."
+      },
+      "alt": {
+        "ja": "鋳金で制作したヒキガエルの作品「茶銀蟇蛙」",
+        "en": "Cast-metal toad sculpture, \"Brown-Silver Toad\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w23",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/brown-silver-rain-frog-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "茶",
+      "title": {
+        "ja": "茶銀雨ノ蛙",
+        "en": "Brown-Silver Rain Frog"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "雨に濡れた体は、乾いた体より重く見える。硫化の茶と銀の光が、その錯覚をそのまま金属の重さとして固定する。",
+        "en": "A body wet with rain looks heavier than a dry one. The brown of patination and the light of silver fix that illusion permanently, as the weight of metal."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「茶銀雨ノ蛙」",
+        "en": "Cast-metal frog sculpture, \"Brown-Silver Rain Frog\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w24",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/silver-polka-dot-pearlscale-goldfish-kaito-kawasaki.jpg",
+      "pos": "22% 41%",
+      "kanji": "銀",
+      "title": {
+        "ja": "銀水玉珍珠鱗",
+        "en": "Silver Polka-Dot Pearlscale"
+      },
+      "motif": {
+        "ja": "金魚（珍珠鱗）",
+        "en": "Goldfish (pearlscale)"
+      },
+      "desc": {
+        "ja": "珍珠鱗の粒立ちに、水玉という別の模様が重ねられる。銀メッキは、粒と水玉、二つの丸みを同じ光で結ぶ。",
+        "en": "Onto the raised grain of pearlscale, another pattern — polka dots — is layered. Silver plating binds the two roundnesses, of grain and of dot, in the same light."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「銀水玉珍珠鱗」",
+        "en": "Cast-metal goldfish sculpture, \"Silver Polka-Dot Pearlscale\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w25",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/silver-black-chotengan-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "銀",
+      "title": {
+        "ja": "銀黒頂天眼",
+        "en": "Silver-Black Chotengan"
+      },
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "desc": {
+        "ja": "銅ではなく錫を選んだ地金に、硫化の黒が乗る。銀と黒の境界は、上を向く眼と同じく、はっきりと分かたれている。",
+        "en": "Onto a base metal chosen with tin instead of copper, the black of sulfide patination settles. The border between silver and black is drawn as clearly as the upward-turned eye."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「銀黒頂天眼」",
+        "en": "Cast-metal goldfish sculpture, \"Silver-Black Chotengan\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・錫・真鍮（アルミ入り）",
+          "en": "Silver, tin, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w26",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-night-rain-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨ノ蛙「夜雨」",
+        "en": "Rain Frog: Night Rain"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "夜に降る雨は、色を見せずに音だけを残す。緑青と硫化が同時に進む体表は、見えない夜の湿度をそのまま帯びている。",
+        "en": "Rain that falls at night leaves only sound, no visible color. A surface where verdigris and sulfide progress at once carries the humidity of that invisible night."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「夜雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Night Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・錫・真鍮（アルミ入り）",
+          "en": "Silver, tin, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緑青酸化・硫化・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, sulfide patination, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "ame-kaeru",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-foxs-wedding-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "雨",
+      "title": {
+        "ja": "雨ノ蛙「狐の嫁入り」",
+        "en": "Rain Frog: The Fox’s Wedding"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "ガラス、光、色、背景。その条件のなかで、カエルは別の存在として立ち上がる。",
+        "en": "Glass, light, color, background. Within those conditions, the frog rises up as a different kind of existence."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「狐の嫁入り」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: The Fox’s Wedding\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ],
+      "keep": {
+        "jaSubtitleText": "Rain Frog: The Fox's Wedding",
+        "topTitle": {
+          "en": "Rain Frog: The Fox's Wedding"
+        }
+      }
+    },
+    {
+      "id": "w27",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-sudden-shower-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨ノ蛙「白雨」",
+        "en": "Rain Frog: Sudden Shower"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "白雨は、降り始めてすぐに止む雨。銀メッキの明るさと硫化の翳り、短い時間に起きる二つの変化が体表に同居する。",
+        "en": "Hakuu is a rain that stops almost as soon as it begins. The brightness of silver plating and the shadow of sulfide — two changes occurring within a short span of time — coexist on the same surface."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「白雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Sudden Shower\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w28",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-accumulating-rain-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨ノ蛙「積雨」",
+        "en": "Rain Frog: Accumulating Rain"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "幾度も降り積もるように、雨は同じ場所へ繰り返し落ちる。硫化がゆっくり這う体表は、その繰り返しの跡をそのまま写している。",
+        "en": "Rain falls again and again onto the same place, as if accumulating. The sulfide slowly creeping across the surface traces the mark of that repetition."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「積雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Accumulating Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w29",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-emerald-rain-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨ノ蛙「翠雨」",
+        "en": "Rain Frog: Emerald Rain"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "翠雨は、青葉を通り抜けてから落ちる雨。緑青の色は、葉の緑を吸い込んだ後の雨粒の色として体表に残る。",
+        "en": "Emerald rain falls after passing through green leaves. The color of verdigris remains on the skin as the color of raindrops that have absorbed the green of those leaves."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「翠雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Emerald Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緑青酸化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w30",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-fresh-leaf-rain-kaito-kawasaki.jpg",
+      "pos": "47% 0%",
+      "title": {
+        "ja": "雨ノ蛙「青葉雨」",
+        "en": "Rain Frog: Fresh-Leaf Rain"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "青葉のあいだを抜けて落ちる雨は、葉の匂いだけを含んで地表に届く。緑青の色は、その匂いを吸い込んだ跡のようにも見える。",
+        "en": "Rain that falls after threading between fresh leaves reaches the ground carrying only their scent. The color of verdigris looks, too, like the trace of that scent, absorbed."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「青葉雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Fresh-Leaf Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緑青酸化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, verdigris oxidation, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w31",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/rain-frog-wind-blown-rain-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "zoom": "1.10",
+      "title": {
+        "ja": "雨ノ蛙「飛雨」",
+        "en": "Rain Frog: Wind-Blown Rain"
+      },
+      "motif": {
+        "ja": "カエル",
+        "en": "Frog"
+      },
+      "desc": {
+        "ja": "風に流されて斜めに飛ぶ雨は、落ちるのではなく横切る。カエルの跳躍する姿勢は、その斜めの軌跡をそのまま留めている。",
+        "en": "Rain blown sideways by the wind does not fall so much as cut across. The frog’s leaping posture holds that diagonal trajectory in place."
+      },
+      "alt": {
+        "ja": "鋳金で制作したカエルの作品「雨ノ蛙「飛雨」」",
+        "en": "Cast-metal frog sculpture, \"Rain Frog: Wind-Blown Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ],
+      "keep": {
+        "enListNoZoom": true
+      }
+    },
+    {
+      "id": "w32",
+      "year": 2025,
+      "group": "frog",
+      "img": "img/raindrop-tree-frog-night-rain-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨粒蛙「夜雨」",
+        "en": "Raindrop Frog: Night Rain"
+      },
+      "motif": {
+        "ja": "アマガエル",
+        "en": "Tree frog"
+      },
+      "desc": {
+        "ja": "雨粒ほどの大きさで夜を過ごすアマガエルには、隠れる場所ばかりが条件になる。銀メッキの光は、闇の中でわずかに反射する雨粒そのものである。",
+        "en": "For a tree frog no bigger than a raindrop, spending the night means a single condition: somewhere to hide. The light of silver plating is itself the faint reflection of a raindrop in the dark."
+      },
+      "alt": {
+        "ja": "鋳金で制作したアマガエルの作品「雨粒蛙「夜雨」」",
+        "en": "Cast-metal tree frog sculpture, \"Raindrop Frog: Night Rain\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w33",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/blue-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "青",
+      "title": {
+        "ja": "青和金",
+        "en": "Blue Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "青という色は、金属がもっとも不安定な温度で見せる一瞬の発色。焼き色酸化は、その一瞬を通り過ぎずに留める技術である。",
+        "en": "Blue is a color metal shows only for an instant, at its most unstable temperature. Heat-color oxidation is the technique that holds that instant in place, without letting it pass."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「青和金」",
+        "en": "Cast-metal goldfish sculpture, \"Blue Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・焼き色酸化・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w34",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/decayed-leaf-chotengan-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "黄",
+      "title": {
+        "ja": "黄朽葉頂天眼",
+        "en": "Decayed-Leaf Yellow Chotengan"
+      },
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "desc": {
+        "ja": "朽葉色は、紅葉が終わったあとに残る色。頂天眼の上向きの眼は、その終わりの色を空に向けて見せ続けている。",
+        "en": "Kuchiba is the color left behind after the autumn leaves have finished turning. The chotengan’s upward-facing eyes keep that color of ending turned toward the sky."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黄朽葉頂天眼」",
+        "en": "Cast-metal goldfish sculpture, \"Decayed-Leaf Yellow Chotengan\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・焼き色酸化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, heat-color oxidation, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w35",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/black-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒和金",
+        "en": "Black Wakin"
+      },
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "赤に染まる前の和金と、赤を通り過ぎた和金は、同じ黒に行き着く。硫化は、その両端をひとつの色で重ねる工程である。",
+        "en": "A wakin before it turns red and a wakin that has passed beyond red arrive at the same black. Sulfide patination is the process that layers both ends into a single color."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒和金」",
+        "en": "Cast-metal goldfish sculpture, \"Black Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w36",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/black-indigo-bubble-eye-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "浅",
+      "title": {
+        "ja": "黒浅葱水泡眼",
+        "en": "Black Light-Indigo Bubble-Eye"
+      },
+      "motif": {
+        "ja": "金魚（水泡眼）",
+        "en": "Goldfish (bubble-eye)"
+      },
+      "desc": {
+        "ja": "浅葱色は、藍が薄まりきる直前の色。煮色酸化と硫化を重ねることで、黒との境界線上に留められている。",
+        "en": "Asagi is the color just before indigo fades to its faintest. Layering nikuiro oxidation with sulfide patination holds it exactly on the border with black."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒浅葱水泡眼」",
+        "en": "Cast-metal goldfish sculpture, \"Black Light-Indigo Bubble-Eye\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・煮色酸化・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, nikuiro oxidation, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w37",
+      "year": 2025,
+      "group": "goldfish",
+      "img": "img/black-pearlscale-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒珍珠鱗",
+        "en": "Black Pearlscale"
+      },
+      "motif": {
+        "ja": "金魚（珍珠鱗）",
+        "en": "Goldfish (pearlscale)"
+      },
+      "desc": {
+        "ja": "珍珠鱗の粒立ちは、光を受けるための凹凸。硫化の黒は、その凹凸に濃淡の影を彫り込み、粒をひとつずつ際立たせる。",
+        "en": "The raised grain of pearlscale exists to catch light. The black of sulfide patination carves shadow into that unevenness, grain by grain, until each one stands apart."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒珍珠鱗」",
+        "en": "Cast-metal goldfish sculpture, \"Black Pearlscale\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "shuiro-wakin",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/vermilion-wakin-goldfish-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "朱色和金",
+        "en": "Vermilion Wakin"
+      },
+      "yearLabel": {
+        "ja": "2024 / 卒業作品",
+        "en": "2024 / Graduation Work"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "award": {
+        "ja": "第19回 藝大アートプラザ・アートアワード 小学館賞",
+        "en": "19th Geidai Art Plaza Art Award — Shogakukan Award"
+      },
+      "desc": {
+        "ja": "真鍮で鋳込まれた金魚の肌に、酸化銅の粉末を幾度も擦り込んでいく。赤は熱と急冷が生むのではなく、手の反復という条件のなかで定着する。",
+        "en": "Copper-oxide powder is burnished again and again into the skin of a goldfish cast in brass. The red is not produced by heat and sudden cooling — it is fixed in place through the condition of repeated work by hand."
+      },
+      "alt": {
+        "ja": "朱色和金 — 樹脂に封入された鋳金の和金",
+        "en": "Vermilion Wakin — a cast-metal wakin encased in resin"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・第一酸化銅の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, cuprous-oxide burnishing, resin encapsulation"
+        },
+        {
+          "key": "exhibited",
+          "ja": [
+            "第19回 藝大アートプラザ・アートアワード展（2025年）",
+            "河﨑海斗展／新宿髙島屋（2026年7月22日〜28日）"
+          ],
+          "en": [
+            "19th Geidai Art Plaza Art Award Exhibition (2025)",
+            "Kaito Kawasaki Exhibition, Shinjuku Takashimaya (Jul 22–28, 2026)"
+          ]
+        },
+        {
+          "key": "featuredIn",
+          "ja": "『ARTcollectors'（アートコレクターズ）』2026年10月号（生活の友社）",
+          "en": "<i>ARTcollectors'</i>, October 2026 issue (Seikatsu no Tomo Sha)"
+        }
+      ]
+    },
+    {
+      "id": "w38",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/scarlet-wakin-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "緋",
+      "title": {
+        "ja": "緋色和金",
+        "en": "Scarlet Wakin"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（和金）",
+        "en": "Goldfish (Wakin)"
+      },
+      "desc": {
+        "ja": "緋銅酸化がつくる赤は、朱色よりも深く、燃え尽きる直前の熾火に近い。真鍮を含まない地金だけが、その深さを支えている。",
+        "en": "The red born of hido oxidation runs deeper than vermilion — closer to embers just before they burn out. Only a base metal without brass can sustain that depth."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「緋色和金」",
+        "en": "Cast-metal goldfish sculpture, \"Scarlet Wakin\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅",
+          "en": "Silver, copper"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・緋銅酸化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, hido oxidation, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w39",
+      "year": 2024,
+      "group": "object",
+      "img": "img/strawberry-candy-bronze-sculpture-kaito-kawasaki.jpg",
+      "pos": "47% 49%",
+      "kanji": "苺",
+      "title": {
+        "ja": "苺飴",
+        "en": "Strawberry Candy"
+      },
+      "motif": {
+        "ja": "果物（苺飴）",
+        "en": "Fruit (candied strawberry)"
+      },
+      "desc": {
+        "ja": "苺飴の艶は、舐められて溶ける途中の形。緋銅酸化がつくる赤は、金属でありながら、溶ける寸前の甘さの色を模している。",
+        "en": "The gloss of candied strawberry is a shape caught mid-melt, mid-lick. The red of hido oxidation imitates, in metal, the color of a sweetness about to dissolve."
+      },
+      "alt": {
+        "ja": "鋳金で制作した果物モチーフの作品「苺飴」",
+        "en": "Cast-metal candied strawberry sculpture, \"Strawberry Candy\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銅",
+          "en": "Copper"
+        },
+        {
+          "key": "technique",
+          "ja": "加圧鋳造法・石膏型・緋銅酸化・樹脂コーティング",
+          "en": "Pressure casting, plaster mold, hido oxidation, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w40",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/golden-dotted-pearlscale-goldfish-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "金水玉珍珠鱗",
+        "en": "Golden-Dotted Pearlscale"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（珍珠鱗）",
+        "en": "Goldfish (pearlscale)"
+      },
+      "desc": {
+        "ja": "魚をつくってから置くのではない。魚が存在する場そのものを、同時に構築している。",
+        "en": "The fish is not made first and placed after. What is being constructed, at the same time as the fish, is the very place where it comes to exist."
+      },
+      "alt": {
+        "ja": "金水玉珍珠鱗 — 金と黒の水玉模様の珍珠鱗",
+        "en": "Golden-Dotted Pearlscale — a pearlscale with gold-and-black polka-dot markings"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w41",
+      "year": 2024,
+      "group": "frog",
+      "img": "img/raindrop-tree-frog-evening-shower-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "title": {
+        "ja": "雨粒蛙 夕立",
+        "en": "Raindrop Frog: Evening Shower"
+      },
+      "motif": {
+        "ja": "アマガエル",
+        "en": "Tree frog"
+      },
+      "desc": {
+        "ja": "夕立は、前触れなく降り、前触れなく止む。銀メッキの光がまだらな硫化のなかに差し込むのは、その唐突な晴れ間の表現である。",
+        "en": "A yudachi falls without warning and stops without warning. Where silver plating’s light cuts into patches of sulfide is exactly where that sudden break of clear sky is expressed."
+      },
+      "alt": {
+        "ja": "鋳金で制作したアマガエルの作品「雨粒蛙 夕立」",
+        "en": "Cast-metal tree frog sculpture, \"Raindrop Frog: Evening Shower\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w42",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/yellow-chotengan-goldfish-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "黄色頂天眼",
+        "en": "Yellow Chotengan"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "desc": {
+        "ja": "黄色は酸化ではなく、真鍮という金属そのものの色。磨きだけを経て樹脂に封じられた頂天眼は、地金の色を隠さずに見せている。",
+        "en": "Yellow here is not oxidation but the color of brass itself. Passing through polishing alone before being sealed in resin, the chotengan shows the base metal’s color without concealment."
+      },
+      "alt": {
+        "ja": "黄色頂天眼 — 透明な樹脂ブロックに封入された頂天眼",
+        "en": "Yellow Chotengan — a chotengan encased in a clear resin block"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "w43",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/black-chobi-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒蝶尾",
+        "en": "Black Chobi"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（蝶尾）",
+        "en": "Goldfish (chobi)"
+      },
+      "desc": {
+        "ja": "蝶のように広がる尾びれに、真鍮粉の粒子と硫化の黒が幾層にも重ねられる。広がる面積の分だけ、色を重ねる工程も増えていく。",
+        "en": "Onto a tail fin spreading wide like a butterfly’s wings, particles of brass powder and the black of sulfide are layered again and again. The larger the surface, the more layers of color it takes."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒蝶尾」",
+        "en": "Cast-metal goldfish sculpture, \"Black Chobi\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・真鍮粉の擦り付け・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, brass-powder burnishing, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "koku-chotengan",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/black-chotengan-goldfish-kaito-kawasaki.jpg",
+      "pos": "51% 76%",
+      "title": {
+        "ja": "黒頂天眼",
+        "en": "Black Chotengan"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（頂天眼）",
+        "en": "Goldfish (chotengan)"
+      },
+      "award": {
+        "ja": "第18回 藝大アートプラザ・アートアワード 審査員特別賞",
+        "en": "18th Geidai Art Plaza Art Award — Special Jury Prize"
+      },
+      "desc": {
+        "ja": "上を向いて泳ぐ金魚「頂天眼」。緋銅の赤とは別の、黒という色の条件を金属に問うた作品。",
+        "en": "Chotengan is a goldfish that swims looking upward. This piece questions, in metal, the condition of black as a color distinct from the red of hido oxidation."
+      },
+      "alt": {
+        "ja": "黒頂天眼 — 樹脂に封入された黒の頂天眼",
+        "en": "Black Chotengan — a black chotengan encased in resin"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        },
+        {
+          "key": "exhibited",
+          "ja": [
+            "第18回 藝大アートプラザ・アートアワード展（2024年）",
+            "藝大アートプラザ・アートアワード受賞者招待展（2024年）"
+          ],
+          "en": [
+            "18th Geidai Art Plaza Art Award Exhibition (2024)",
+            "Geidai Art Plaza Art Award Winners’ Invitational Exhibition (2024)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hiiro-scarlet",
+      "year": 2024,
+      "group": "goldfish",
+      "img": "img/scarlet-suitcase-sculpture-kaito-kawasaki.jpg",
+      "pos": "45% 25%",
+      "kanji": "緋",
+      "title": {
+        "ja": "緋色-scarlet",
+        "en": "Scarlet"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（トランク型彫刻）",
+        "en": "Goldfish (suitcase-form sculpture)"
+      },
+      "desc": {
+        "ja": "トランクは、運ばれるためだけに存在する容器。開けられた小さな鞄のなかで、金魚だけが行き先を持たないまま留め置かれている。",
+        "en": "A suitcase exists only in order to be carried. Inside the small opened case, the goldfish alone is held, with nowhere that it is going."
+      },
+      "alt": {
+        "ja": "鋳金で制作したトランク型の作品「緋色-scarlet」",
+        "en": "Cast-metal suitcase-form sculpture, ‘Scarlet’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "w44",
+      "year": 2023,
+      "group": "goldfish",
+      "img": "img/great-black-ranchu-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "大",
+      "title": {
+        "ja": "大黒蘭鋳",
+        "en": "Great Black Ranchu"
+      },
+      "motif": {
+        "ja": "金魚（蘭鋳）",
+        "en": "Goldfish (ranchu)"
+      },
+      "desc": {
+        "ja": "真土型という土の型は、石膏型よりも荒く、金属の表情を大きく揺らす。大黒蘭鋳の黒は、その荒さを硫化がなだらかに均していく先にある。",
+        "en": "A mato clay mold is rougher than a plaster one, and lets the metal’s expression swing wider. The black of the great black ranchu lies where sulfide patination gently smooths over that roughness."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「大黒蘭鋳」",
+        "en": "Cast-metal goldfish sculpture, \"Great Black Ranchu\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "青銅",
+          "en": "Bronze"
+        },
+        {
+          "key": "technique",
+          "ja": "重力鋳造・真土型・磨き・硫化・樹脂コーティング",
+          "en": "Gravity casting, mato clay mold, polishing, sulfide patination, resin coating"
+        }
+      ]
+    },
+    {
+      "id": "w45",
+      "year": 2023,
+      "group": "goldfish",
+      "img": "img/black-ranchu-goldfish-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "黒",
+      "title": {
+        "ja": "黒蘭鋳",
+        "en": "Black Ranchu"
+      },
+      "motif": {
+        "ja": "金魚（蘭鋳）",
+        "en": "Goldfish (ranchu)"
+      },
+      "desc": {
+        "ja": "丸みの中に沈む黒は、背びれのない蘭鋳の体を、輪郭よりも量塊として見せる。硫化は、その量塊感を最後に固定する工程である。",
+        "en": "Black sunk into roundness shows the ranchu’s finless body as mass rather than outline. Sulfide patination is the final process that fixes that sense of mass in place."
+      },
+      "alt": {
+        "ja": "鋳金で制作した金魚の作品「黒蘭鋳」",
+        "en": "Cast-metal goldfish sculpture, \"Black Ranchu\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・硫化・樹脂封入",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, resin encapsulation"
+        }
+      ]
+    },
+    {
+      "id": "yokai-henge",
+      "year": 2022,
+      "group": "creature",
+      "img": "img/bronze-octopus-sculpture-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "溶",
+      "title": {
+        "ja": "溶解変化",
+        "en": "Yokai Henge"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "タコ（妖怪変化）",
+        "en": "Octopus (yokai transformation)"
+      },
+      "desc": {
+        "ja": "殻、隙間、重さ、身を隠す場所。その条件のなかで、タコは別の存在として立ち上がる。",
+        "en": "Shell, gap, weight, a place to hide the body. Within those conditions, the octopus rises up as a different kind of existence."
+      },
+      "alt": {
+        "ja": "鋳金で制作したタコの作品「溶解変化」",
+        "en": "Cast-metal octopus sculpture, \"Yokai Henge\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "青銅",
+          "en": "Bronze"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・鋳肌",
+          "en": "Vacuum-pressure casting, plaster mold, as-cast surface texture"
+        }
+      ]
+    },
+    {
+      "id": "hakomono-ranchu",
+      "year": 2022,
+      "group": "goldfish",
+      "img": "img/ranchu-goldfish-resin-block-kaito-kawasaki.jpg",
+      "title": {
+        "ja": "箱物 蘭鋳",
+        "en": "Hakomono: Ranchu"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "金魚（蘭鋳）",
+        "en": "Goldfish (ranchu)"
+      },
+      "desc": {
+        "ja": "水の外に出た金魚は、同じ姿を保っていても、別の存在へと移行する。失われるのはかたちではなく、条件である。",
+        "en": "A goldfish taken out of water shifts into a different mode of existence, even while keeping the same form. What is lost is not its shape, but its condition."
+      },
+      "alt": {
+        "ja": "箱物 蘭鋳 — 樹脂の直方体に封入された蘭鋳",
+        "en": "Hakomono: Ranchu — a ranchu encased in a resin rectangular block"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銀・銅・真鍮（アルミ入り）",
+          "en": "Silver, copper, brass (aluminum-alloyed)"
+        },
+        {
+          "key": "technique",
+          "ja": "真空加圧鋳造法・石膏型・磨き・銀メッキ・樹脂コーティング",
+          "en": "Vacuum-pressure casting, plaster mold, polishing, silver plating, resin coating"
+        },
+        {
+          "key": "exhibited",
+          "ja": "第17回 藝大アートプラザ大賞展（2023年）入選",
+          "en": "17th Geidai Art Plaza Grand Prize Exhibition (2023) — Selected"
+        }
+      ]
+    },
+    {
+      "id": "ao-no-kajitsu",
+      "year": 2022,
+      "group": "object",
+      "img": "img/blue-fruit-bronze-sculpture-kaito-kawasaki.jpg",
+      "pos": "50% 45%",
+      "kanji": "果",
+      "title": {
+        "ja": "青の果実",
+        "en": "Blue Fruit"
+      },
+      "motif": {
+        "ja": "果実（抽象形態）",
+        "en": "Fruit (abstract form)"
+      },
+      "desc": {
+        "ja": "緑青に覆われた果皮の内側に、金の帯だけが年輪のように残る。熟れることは、色を失うことではなく、内側の層をひとつずつ見せていくことだったのかもしれない。",
+        "en": "Inside a rind covered in verdigris, only a band of gold remains, like a growth ring. Perhaps ripening was never the loss of colour, but the showing of one inner layer after another."
+      },
+      "alt": {
+        "ja": "鋳金で制作した抽象彫刻「青の果実」",
+        "en": "Cast-metal abstract sculpture, ‘Blue Fruit’, by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "materialTechnique",
+          "ja": "後日追記予定",
+          "en": "To be added"
+        }
+      ]
+    },
+    {
+      "id": "w46",
+      "year": 2021,
+      "group": "creature",
+      "img": "img/iron-whale-submarine-bronze-kaito-kawasaki.jpg",
+      "pos": "39% 40%",
+      "kanji": "鯨",
+      "title": {
+        "ja": "鉄ノ鯨",
+        "en": "The Iron Whale"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "鯨（潜水艦のような造形）",
+        "en": "Whale (submarine-like form)"
+      },
+      "desc": {
+        "ja": "鯨と潜水艦、生き物と機械の境界があいまいな形。緑青と酸化チタン、二つの異なる青が、その境界の両側を同時に覆っている。",
+        "en": "A form where whale and submarine, creature and machine, blur into one another. Verdigris and titanium oxide — two different blues — cover both sides of that blurred boundary at once."
+      },
+      "alt": {
+        "ja": "鋳金で制作した鯨の作品「鉄ノ鯨」",
+        "en": "Cast-metal whale sculpture, \"The Iron Whale\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "青銅",
+          "en": "Bronze"
+        },
+        {
+          "key": "technique",
+          "ja": "重力鋳造・石膏型・緑青酸化・酸化チタンの焼き付け・硫化・蝋コーティング",
+          "en": "Gravity casting, plaster mold, verdigris oxidation, baked titanium-oxide finish, sulfide patination, wax coating"
+        }
+      ]
+    },
+    {
+      "id": "w47",
+      "year": 2020,
+      "group": "creature",
+      "kanji": "イト",
+      "title": {
+        "ja": "イトヒキイワシ",
+        "en": "Thread-Finned Deep-Sea Fish"
+      },
+      "motif": {
+        "ja": "深海魚（イトヒキイワシ）",
+        "en": "Deep-sea fish (thread-finned)"
+      },
+      "desc": {
+        "ja": "深海という光の届かない条件のなかで、糸を引くように伸びるひれだけが情報を運ぶ。鉄を打って伸ばす鍛造は、その糸の頼りなさを金属の強さで裏返す。",
+        "en": "In the deep sea, a condition where no light arrives, only the thread-like trailing fin carries information. Forging — hammering iron out into a thread — turns that fragility inside out, into the strength of metal."
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "鉄",
+          "en": "Iron"
+        },
+        {
+          "key": "technique",
+          "ja": "鍛金（鍛造）・油焼き",
+          "en": "Forging (hammered metalwork), oil-quench blackening"
+        }
+      ]
+    },
+    {
+      "id": "kansho-no-kawa",
+      "year": 2020,
+      "group": "object",
+      "img": "img/bronze-banana-peel-sculpture-kaito-kawasaki.jpg",
+      "pos": "50% 50%",
+      "kanji": "蕉",
+      "title": {
+        "ja": "甘蕉ノ皮",
+        "en": "Banana Peel"
+      },
+      "jaShowsEnTitle": true,
+      "motif": {
+        "ja": "バナナの皮",
+        "en": "Banana peel"
+      },
+      "desc": {
+        "ja": "壁、重力、腐敗、投げつけられた瞬間。その条件のなかで、バナナの皮は別の存在として立ち上がる。",
+        "en": "Wall, gravity, decay, the instant of being thrown. Within those conditions, the banana peel rises up as a different kind of existence."
+      },
+      "alt": {
+        "ja": "鋳金で制作したバナナの皮の作品「甘蕉ノ皮」",
+        "en": "Cast-metal banana peel sculpture, \"Banana Peel\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "青銅",
+          "en": "Bronze"
+        },
+        {
+          "key": "technique",
+          "ja": "重力鋳造・石膏型・梨地・焼き色酸化・硫化",
+          "en": "Gravity casting, plaster mold, nashiji texturing, heat-color oxidation, sulfide patination"
+        }
+      ]
+    },
+    {
+      "id": "w48",
+      "year": 2020,
+      "group": "turtle",
+      "img": "img/minogame-moss-turtle-bronze-kaito-kawasaki.jpg",
+      "pos": "49% 13%",
+      "kanji": "蓑",
+      "title": {
+        "ja": "蓑亀",
+        "en": "Minogame (Moss-Shell Turtle)"
+      },
+      "motif": {
+        "ja": "亀",
+        "en": "Turtle"
+      },
+      "desc": {
+        "ja": "甲羅に藻をまとう蓑亀は、動かないことで育つ姿。打ち出しの凹凸と硫化の濃淡が、その動かない時間の長さを彫り込んでいる。",
+        "en": "A minogame, wearing algae on its shell like a straw raincoat, is a form that grows precisely by not moving. The relief of the chased surface and the gradations of sulfide patination carve in the length of that stillness."
+      },
+      "alt": {
+        "ja": "鋳金で制作した亀の作品「蓑亀」",
+        "en": "Cast-metal turtle sculpture, \"Minogame (Moss-Shell Turtle)\", by Kaito Kawasaki"
+      },
+      "specs": [
+        {
+          "key": "material",
+          "ja": "銅",
+          "en": "Copper"
+        },
+        {
+          "key": "technique",
+          "ja": "彫金（打ち出し）・磨き・硫化・蝋コーティング",
+          "en": "Chasing (repoussé), polishing, sulfide patination, wax coating"
+        }
+      ]
+    }
+  ]
+}

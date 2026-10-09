@@ -81,7 +81,7 @@ for (const page of ['works/index.html', 'en/works/index.html']){
   const works = (src.match(/\bid:"[^"]+"/g) || []).length;
   const tiles = (src.match(/class="archive-tile[^"]*"[^>]*data-id="/g) || []).length;
   if (listed === null) errors.push(`${page}: 作品の構造化データ（ItemList）がありません`);
-  else if (listed !== works || listed !== tiles) errors.push(`${page}: 作品の構造化データが${listed}件ですが、作品データは${works}件、一覧は${tiles}件です（scripts/gen_static_archive.js で作り直してください）`);
+  else if (listed !== works || listed !== tiles) errors.push(`${page}: 作品の構造化データが${listed}件ですが、作品データは${works}件、一覧は${tiles}件です（data/works.json を直して node tools/build.mjs を実行してください）`);
   else console.log(`${page}: 作品の構造化データ ${listed}件（作品データ・一覧と一致）`);
 }
 

@@ -1,7 +1,9 @@
 // tools/build.mjs のテスト。実行: node --test tools/build.test.mjs
 // 本物のファイルは触らず、一時フォルダにコピーした上で、わざと壊した台帳や目印で止まることなどを確かめる。
-// 台帳と sitemap.xml は本物ではなくテスト用の固定の写し（tools/test-fixtures/、2026-10-09時点）を使い、
+// 展示の台帳と sitemap.xml は本物ではなくテスト用の固定の写し（tools/test-fixtures/、2026-10-09時点）を使い、
 // 基準日 2026-10-09 で一度生成した状態から始める。本物の台帳や日付が進んでも、テストの結果は変わらない。
+// 作品の台帳（data/works.json）は本物を使う（トップの代表作品・個別ページとの照合も本物どうしで行うため）。
+// 作品のテストは、代表作品にも個別ページにもない作品を台帳から選んで使う。
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,7 +14,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const FILES = ['index.html', 'en/index.html', 'sales/index.html', 'en/sales/index.html', 'sitemap.xml', 'data/exhibitions.json', 'tools/build.mjs'];
+const FILES = ['index.html', 'en/index.html', 'sales/index.html', 'en/sales/index.html', 'works/index.html', 'en/works/index.html',
+  'works/shuiro-wakin/index.html', 'sitemap.xml', 'data/exhibitions.json', 'data/works.json', 'tools/build.mjs', 'tools/works.mjs'];
 
 function sandbox(){
   const dir = mkdtempSync(join(tmpdir(), 'build-test-'));
@@ -197,4 +200,208 @@ test('終了日を変えると、日英トップ・日英販売情報・構造�
     for (const n of needles) assert.ok(html.includes(n), `${f} に「${n}」がない`);
     for (const o of old) assert.ok(!html.includes(o), `${f} に古い日付「${o}」が残っている`);
   }
+});
+
+// ---------- 作品（data/works.json） ----------
+const WORKS_PAGES = { ja: 'works/index.html', en: 'en/works/index.html' };
+function editWorks(dir, fn){
+  const p = join(dir, 'data/works.json');
+  const d = JSON.parse(readFileSync(p, 'utf8'));
+  fn(d.works, d);
+  writeFileSync(p, JSON.stringify(d, null, 2));
+}
+// 生成されたページから、小窓用データ・構造化データ・一覧のボタンを取り出す
+function worksOf(html){
+  const W = new Function('return ' + html.match(/var WORKS = (\[[\s\S]*?\n  \]);/)[1])();
+  const ld = JSON.parse(html.match(/<!-- build:works-jsonld -->\n<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  const archive = html.match(/<!-- build:works-archive -->\n([\s\S]*?)\n<!-- \/build:works-archive -->/)[1];
+  return { W, ld, archive };
+}
+const tileOf = (archive, id) => archive.match(new RegExp(`<button class="archive-tile" type="button" data-id="${id}">[\\s\\S]*?</button>`))[0];
+// 年の見出しごとに、その中のボタンの id を並べる
+const yearsOf = (archive) => Object.fromEntries(archive.split('<div class="archive-year">').slice(1).map((b) =>
+  [b.match(/<span class="year-num">(\d+)<\/span>/)[1], [...b.matchAll(/data-id="([^"]+)"/g)].map((m) => m[1])]));
+// 代表作品にも個別ページにもなく、写真と素材・技法の欄がある作品
+function plainWork(dir){
+  const top = read(dir, 'index.html') + read(dir, 'en/index.html');
+  const d = JSON.parse(read(dir, 'data/works.json'));
+  return d.works.find((w) => w.img && !w.keep && !top.includes(`works/#${w.id}"`) &&
+    w.specs.some((s) => s.key === 'material') && w.specs.some((s) => s.key === 'technique'));
+}
+
+test('作品：台帳の1件を変えると、日英の小窓用データ・一覧・構造化データ・sitemap の更新日のすべてに反映され、ほかの作品は変わらない', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const w0 = plainWork(dir);
+  const before = { ja: worksOf(read(dir, WORKS_PAGES.ja)), en: worksOf(read(dir, WORKS_PAGES.en)) };
+  const other = JSON.parse(read(dir, 'data/works.json')).works.find((w) => w.img && w.img !== w0.img).img;
+  editWorks(dir, (list) => {
+    const w = list.find((x) => x.id === w0.id);
+    w.title = { ja: '仮の題名', en: 'Test Title' };
+    w.desc = { ja: '仮の説明。', en: 'Test description.' };
+    w.alt = { ja: '仮の代替テキスト', en: 'Test alt' };
+    w.yearLabel = { ja: '仮の注記', en: 'Test note' };
+    w.award = { ja: '仮の受賞', en: 'Test Award' };
+    w.img = other;
+    w.pos = '10% 90%';
+    w.zoom = '1.23';
+    w.specs.find((s) => s.key === 'material').ja = ['仮の素材1', '仮の素材2'];
+    w.specs.find((s) => s.key === 'material').en = ['Test material 1', 'Test material 2'];
+    w.specs.find((s) => s.key === 'technique').ja = '仮の技法';
+    w.specs.find((s) => s.key === 'technique').en = 'Test technique';
+  });
+  const r = run(dir, ['--today', '2026-10-12']);
+  assert.equal(r.code, 0, r.out);
+  for (const lang of ['ja', 'en']){
+    const page = WORKS_PAGES[lang];
+    const after = worksOf(read(dir, page));
+    const ja = lang === 'ja';
+    const img = (ja ? '../img/' : '../../img/') + other.slice(4);
+    const i = after.W.findIndex((w) => w.id === w0.id);
+    // 小窓用データ
+    const w = after.W[i];
+    assert.equal(w.title, ja ? '仮の題名' : 'Test Title');
+    assert.equal(w.desc, ja ? '仮の説明。' : 'Test description.');
+    assert.equal(w.yearLabel, ja ? '仮の注記' : 'Test note');
+    assert.equal(w.award, ja ? '仮の受賞' : 'Test Award');
+    assert.equal(w.img, img);
+    assert.equal(w.alt, ja ? '仮の代替テキスト' : 'Test alt');
+    assert.equal(w.pos, '10% 90%');
+    assert.equal(w.zoom, '1.23');
+    assert.deepEqual(w.specs.find((s) => s[0] === (ja ? '素材' : 'Material')), ja ? ['素材', '仮の素材1<br>仮の素材2'] : ['Material', 'Test material 1<br>Test material 2']);
+    if (!ja) assert.equal(w.en, '仮の題名', '英語の小窓の副題は日本語の題名');
+    // 一覧
+    const tile = tileOf(after.archive, w0.id);
+    for (const n of [`src="${img}"`, ja ? 'alt="仮の代替テキスト"' : 'alt="Test alt"', 'style="object-position:10% 90%;--zoom:1.23;"',
+      `data-edit-path="${img}"`, ja ? '<span class="tile-title">仮の題名</span>' : '<span class="tile-title">Test Title</span>',
+      ja ? 'data-edit-label="仮の題名"' : 'data-edit-label="Test Title"', ja ? '<span class="tile-note">仮の注記</span>' : '<span class="tile-note">Test note</span>']){
+      assert.ok(tile.includes(n), `${page} の一覧に「${n}」がない`);
+    }
+    // 構造化データ
+    const item = after.ld.itemListElement[i].item;
+    assert.equal(item.name, ja ? '仮の題名' : 'Test Title');
+    assert.equal(item.description, ja ? '仮の説明。' : 'Test description.');
+    assert.equal(item.image, 'https://kaitokawasaki.com/' + other);
+    assert.equal(item.artMedium, ja ? '仮の素材1 仮の素材2' : 'Test material 1 Test material 2');
+    assert.equal(item.artform, ja ? '仮の技法' : 'Test technique');
+    assert.equal(item.award, ja ? '仮の受賞' : 'Test Award');
+    // 古い値が残らない・ほかの作品は変わらない
+    const old = before[lang].W[i];
+    assert.ok(!read(dir, page).includes(`"${old.title}"`), `${page} に古い題名が残っている`);
+    after.W.forEach((x, j) => { if (j !== i) assert.deepEqual(x, before[lang].W[j]); });
+    after.ld.itemListElement.forEach((x, j) => { if (j !== i) assert.deepEqual(x, before[lang].ld.itemListElement[j]); });
+    assert.equal(after.archive.replace(tile, ''), before[lang].archive.replace(tileOf(before[lang].archive, w0.id), ''));
+  }
+  const sm = read(dir, 'sitemap.xml');
+  for (const loc of ['works/', 'en/works/']) assert.match(sm, new RegExp(`<loc>https://kaitokawasaki.com/${loc}</loc>\\s*<lastmod>2026-10-12</lastmod>`));
+  assert.match(sm, /<loc>https:\/\/kaitokawasaki.com\/works\/shuiro-wakin\/<\/loc>\s*<lastmod>2026-10-07<\/lastmod>/, '個別ページの更新日は変えない');
+});
+
+test('作品：制作年と分類を変えると、一覧の年・分類の位置が移る（構造化データの順は台帳の順のまま）', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const w0 = plainWork(dir);
+  const order = JSON.parse(read(dir, 'data/works.json')).works.map((w) => w.id);
+  editWorks(dir, (list) => { const w = list.find((x) => x.id === w0.id); w.year = 2019; w.group = 'object'; });
+  assert.equal(run(dir, ['--today', '2026-10-09']).code, 0);
+  for (const lang of ['ja', 'en']){
+    const { W, ld, archive } = worksOf(read(dir, WORKS_PAGES[lang]));
+    const years = yearsOf(archive);
+    assert.deepEqual(years['2019'], [w0.id], '2019年の見出しができ、その作品だけが入る');
+    assert.ok(!(years[String(w0.year)] || []).includes(w0.id));
+    assert.ok(archive.lastIndexOf('<div class="archive-year">') < archive.indexOf(`data-id="${w0.id}"`), '一番古い年として最後に並ぶ');
+    assert.ok(archive.slice(archive.lastIndexOf('<div class="archive-year">')).includes(lang === 'ja' ? '<h4 class="motif-head">オブジェ・静物</h4>' : '<h4 class="motif-head">Objects &amp; Still Life</h4>'));
+    assert.deepEqual(W.map((w) => w.id), order);
+    assert.equal(ld.itemListElement.find((x) => x.item.name === W.find((w) => w.id === w0.id).title).item.dateCreated, '2019');
+  }
+});
+
+test('作品：記号（" \' & < >）を含む題名でも、HTML・小窓用データ・構造化データが壊れない', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const w0 = plainWork(dir);
+  const title = `"引用" & 'Quote' </script>`;
+  editWorks(dir, (list) => {
+    const w = list.find((x) => x.id === w0.id);
+    w.title = { ja: title.replace(/[<>]/g, ''), en: `It's "Quoted" & more` };
+    w.alt = { ja: '"代替"', en: `"Alt" & 'alt'` };
+  });
+  // < > は普通の文字の項目では使えない（小窓の作りが壊れるため）。それ以外の記号は通る
+  const r = run(dir, ['--today', '2026-10-09']);
+  assert.equal(r.code, 0, r.out);
+  const html = read(dir, WORKS_PAGES.en);
+  const { W, ld, archive } = worksOf(html);
+  assert.equal(W.find((w) => w.id === w0.id).title, `It's "Quoted" & more`);
+  assert.equal(ld.itemListElement.find((x) => x.item.name === `It's "Quoted" & more`).position, W.findIndex((w) => w.id === w0.id) + 1);
+  const tile = tileOf(archive, w0.id);
+  assert.ok(tile.includes('data-edit-label="It&#x27;s &quot;Quoted&quot; &amp; more"'));
+  assert.ok(tile.includes('alt="&quot;Alt&quot; &amp; &#x27;alt&#x27;"'));
+  assert.ok(tile.includes('<span class="tile-title">It&#x27;s &quot;Quoted&quot; &amp; more</span>'));
+  assert.equal(worksOf(read(dir, WORKS_PAGES.ja)).W.find((w) => w.id === w0.id).title, '"引用" & \'Quote\' /script');
+});
+
+const worksStop = (t, fn, message) => expectStop(t, (dir) => editWorks(dir, fn), message);
+const pick = (list) => list.find((w) => w.img && !w.keep && w.id !== 'shuiro-wakin');
+test('作品の台帳の誤りでは何も書かずに止まる：idの重複', (t) => worksStop(t,
+  (list) => { list[1].id = list[0].id; }, /id「[^」]+」が重複しています/));
+test('作品の台帳の誤りでは何も書かずに止まる：画像ファイルがない', (t) => worksStop(t,
+  (list) => { pick(list).img = 'img/no-such-photo.jpg'; }, /画像 img\/no-such-photo.jpg が見つかりません/));
+test('作品の台帳の誤りでは何も書かずに止まる：英語の題名の欠け', (t) => worksStop(t,
+  (list) => { delete pick(list).title.en; }, /title.en がありません（日本語・英語の両方が必要です）/));
+test('作品の台帳の誤りでは何も書かずに止まる：片方の言語だけの受賞', (t) => worksStop(t,
+  (list) => { pick(list).award = { ja: '賞' }; }, /award.en がありません/));
+test('作品の台帳の誤りでは何も書かずに止まる：普通の文字の項目にタグ', (t) => worksStop(t,
+  (list) => { pick(list).desc.en = 'a <b>bold</b> text'; }, /desc.en に < > や &amp; などの文字参照は使えません/));
+test('作品の台帳の誤りでは何も書かずに止まる：素材の欄の & の書き忘れ', (t) => worksStop(t,
+  (list) => { pick(list).specs[0].en = 'Copper & brass'; }, /& は &amp; と書いてください/));
+test('作品の台帳の誤りでは何も書かずに止まる：素材の欄の日英の行数違い', (t) => worksStop(t,
+  (list) => { const w = pick(list); w.specs[0].ja = ['1行目', '2行目']; }, /日本語（2行）と英語（1行）の行数が違います/));
+test('作品の台帳の誤りでは何も書かずに止まる：知らない分類', (t) => worksStop(t,
+  (list) => { pick(list).group = 'fish'; }, /分類 group「fish」が groups にありません/));
+test('作品の台帳の誤りでは何も書かずに止まる：項目名の綴り違い', (t) => worksStop(t,
+  (list) => { pick(list).tilte = pick(list).title; }, /知らない項目「tilte」があります/));
+test('作品：トップの代表作品の題名が台帳と食い違うと止まる', (t) => worksStop(t,
+  (list) => { list.find((w) => w.id === 'kouyou').title.en += ' (changed)'; }, /en\/index.html: 代表作品 kouyou の題名「[^」]+」が台帳（[^）]+ \(changed\)）と違います/));
+test('作品：トップの代表作品のリンク先が台帳にないと止まる', (t) => worksStop(t,
+  (list) => { list.find((w) => w.id === 'kouyou').id = 'kouyou-2'; }, /代表作品のリンク先 works\/#kouyou が台帳にありません/));
+test('作品：個別ページの共通項目（受賞・素材の欄）が台帳と食い違うと止まる', (t) => worksStop(t,
+  (list) => { const w = list.find((x) => x.id === 'shuiro-wakin'); w.award.ja += '（変更）'; w.specs[0].ja = '変更した素材'; },
+  /works\/shuiro-wakin\/index.html: 受賞「[^」]+」が台帳（[^）]+（変更））と違います[\s\S]*「素材」の欄/));
+
+test('作品：台帳を直して生成し忘れると --check が止める（作品一覧ページを名指しする）', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const w0 = plainWork(dir);
+  editWorks(dir, (list) => { const w = list.find((x) => x.id === w0.id); w.desc.ja = '変更。'; w.desc.en = 'Changed.'; });
+  const before = snapshot(dir);
+  const r = run(dir, ['--check', '--today', '2026-10-12']);
+  assert.equal(r.code, 1);
+  assert.match(r.out, /食い違っています: works\/index.html, en\/works\/index.html, sitemap.xml/);
+  assert.deepEqual(snapshot(dir), before);
+});
+
+test('作品：生成した範囲をHTMLで直接直しても、--check が止め、生成で台帳の内容に戻る', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const page = WORKS_PAGES.ja;
+  const orig = read(dir, page);
+  const id = plainWork(dir).id;
+  writeFileSync(join(dir, page), orig.replace(new RegExp(`(\\{ id:"${id}", title:")`), '$1手で直した'));
+  assert.equal(run(dir, ['--check', '--today', '2026-10-09']).code, 1);
+  assert.equal(run(dir, ['--today', '2026-10-09']).code, 0);
+  assert.equal(read(dir, page), orig);
+});
+
+test('作品：今の表示のまま残す例外（英語一覧の拡大率なし・「狐の嫁入り」の英題の記号）が生成後も保たれる', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const d = JSON.parse(read(dir, 'data/works.json'));
+  const ja = worksOf(read(dir, WORKS_PAGES.ja)), en = worksOf(read(dir, WORKS_PAGES.en));
+  for (const w of d.works.filter((x) => x.keep?.enListNoZoom)){
+    assert.ok(tileOf(ja.archive, w.id).includes(`--zoom:${w.zoom};`), `日本語の一覧の ${w.id} には拡大率がある`);
+    assert.ok(!tileOf(en.archive, w.id).includes('--zoom'), `英語の一覧の ${w.id} には拡大率がない`);
+    assert.equal(en.W.find((x) => x.id === w.id).zoom, w.zoom, '英語の小窓には拡大率がある');
+  }
+  assert.equal(ja.W.find((x) => x.id === 'ame-kaeru').en, "Rain Frog: The Fox's Wedding", '日本語の小窓の副題は U+0027');
+  assert.equal(en.W.find((x) => x.id === 'ame-kaeru').title, 'Rain Frog: The Fox’s Wedding', '英語の小窓の題名は U+2019');
 });
