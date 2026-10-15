@@ -591,11 +591,15 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   object-fit:cover; object-position:47% 49%;
   transform:scale(var(--zoom,1));
 }
-.artist-roles{ display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-bottom:1.4rem; }
-.artist-roles span{
-  font-size:.7rem; letter-spacing:.14em; color:var(--hido);
-  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  border-radius:999px; padding:.35em 1.1em;
+.artist-roles{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; row-gap:.4rem; margin-bottom:1.4rem; }
+.artist-roles span{ font-size:.7rem; letter-spacing:.14em; color:var(--hido); }
+.artist-roles span + span::before{
+  content:""; display:inline-block; width:1px; height:.9em; vertical-align:-.1em;
+  margin:0 1.1em; background:color-mix(in srgb, var(--hido) 45%, transparent);
+}
+@media (max-width:520px){
+  .artist-roles span:last-child{ flex-basis:100%; text-align:center; }
+  .artist-roles span:last-child::before{ display:none; }
 }
 .artist-lede{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
