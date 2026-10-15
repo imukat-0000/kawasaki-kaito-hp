@@ -62,6 +62,37 @@
       }
     },
     {
+      "id": "tobi-art-fair-2026",
+      "start": "2026-10-16",
+      "end": "2026-10-18",
+      "showOnSales": true,
+      "salesKanji": "美",
+      "ja": {
+        "title": "東美アートフェア2026",
+        "listTitle": "東美アートフェア2026",
+        "venue": "東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）"
+      },
+      "en": {
+        "title": "Tobi Art Fair 2026",
+        "listTitle": "Tobi&nbsp;Art&nbsp;Fair&nbsp;2026",
+        "venue": "Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)"
+      },
+      "place": {
+        "ja": {
+          "name": "東京美術倶楽部",
+          "streetAddress": "新橋6-19-15",
+          "locality": "港区",
+          "region": "東京都"
+        },
+        "en": {
+          "name": "Tokyo Art Club",
+          "streetAddress": "6-19-15 Shimbashi",
+          "locality": "Minato-ku",
+          "region": "Tokyo"
+        }
+      }
+    },
+    {
       "id": "kogei-art-fair-2026",
       "start": "2026-11-27",
       "end": "2026-11-29",
