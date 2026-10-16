@@ -93,6 +93,67 @@
       }
     },
     {
+      "id": "made-in-kure-2026",
+      "start": "2026-10-31",
+      "end": "2026-11-03",
+      "showOnSales": true,
+      "salesKanji": "呉",
+      "ja": {
+        "title": "POP UP SHOP「MADE IN KURE」",
+        "listTitle": "POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」",
+        "venue": "カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売"
+      },
+      "en": {
+        "title": "Pop-up Shop \"MADE IN KURE\"",
+        "listTitle": "Pop-up&nbsp;Shop \"MADE&nbsp;IN&nbsp;KURE\"",
+        "venue": "Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure"
+      },
+      "place": {
+        "ja": {
+          "name": "カグラザカヒトトハコ",
+          "streetAddress": "神楽坂6-58 NHビル1F",
+          "locality": "新宿区",
+          "region": "東京都"
+        },
+        "en": {
+          "name": "Kagurazaka Hitotohako",
+          "streetAddress": "NH Bldg. 1F, 6-58 Kagurazaka",
+          "locality": "Shinjuku-ku",
+          "region": "Tokyo"
+        }
+      }
+    },
+    {
+      "id": "ko-gei-kyoto-2026",
+      "start": "2026-11-06",
+      "end": "2026-11-08",
+      "showOnSales": false,
+      "ja": {
+        "title": "「工＋藝」京都 2026",
+        "listTitle": "「工＋藝」京都&nbsp;2026",
+        "venue": "大本山 妙顕寺（京都）"
+      },
+      "en": {
+        "title": "\"Ko + Gei\" Kyoto 2026",
+        "listTitle": "\"Ko&nbsp;+&nbsp;Gei\" Kyoto&nbsp;2026",
+        "venue": "Myokenji Temple (Kyoto)"
+      },
+      "place": {
+        "ja": {
+          "name": "大本山 妙顕寺",
+          "streetAddress": "妙顕寺前町514",
+          "locality": "京都市上京区",
+          "region": "京都府"
+        },
+        "en": {
+          "name": "Myokenji Temple",
+          "streetAddress": "514 Myokenji-maecho, Kamigyo-ku",
+          "locality": "Kyoto",
+          "region": "Kyoto"
+        }
+      }
+    },
+    {
       "id": "kogei-art-fair-2026",
       "start": "2026-11-27",
       "end": "2026-11-29",
