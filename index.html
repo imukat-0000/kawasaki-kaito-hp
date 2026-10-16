@@ -708,6 +708,15 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
 .exhi-list-past{ opacity:.6; }
 .exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
+.news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
+.news-list li{
+  display:grid; grid-template-columns:8em 1fr; gap:1.4rem;
+  padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.8;
+}
+.news-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
+.news-list a{ color:inherit; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:.25em; }
+.news-list a:hover{ color:var(--hido); }
+@media (max-width:600px){ .news-list li{ grid-template-columns:1fr; gap:.2rem; } }
 .news-sns{
   margin-top:2.6rem; padding-top:1.8rem; border-top:1px solid var(--line);
   display:flex; flex-wrap:wrap; align-items:center; gap:1.2rem;
@@ -912,6 +921,31 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </a>
   </section>
 
+  <!-- お知らせ -->
+  <section id="news" class="io">
+    <div class="sec-head"><h2>お知らせ</h2><span>NEWS</span></div>
+    <!-- build:news -->
+    <ul class="news-list">
+      <li>
+        <time datetime="2026-10-16">2026.10.16</time>
+        <p>東美アートフェア2026（10/16〜10/18、東京美術倶楽部 3階 増保美術ブース）に出品</p>
+      </li>
+      <li>
+        <time datetime="2026-10-14">2026.10.14</time>
+        <p>個展「一陽」の開催が決定（2026年12月11日〜22日、MEDEL GALLERY SHU HIBIYA）</p>
+      </li>
+      <li>
+        <time datetime="2026-10">2026.10</time>
+        <p>『ARTcollectors'』2026年10月号（生活の友社）に《朱色和金》が掲載</p>
+      </li>
+      <li>
+        <time datetime="2026-09-15">2026.9.15</time>
+        <p>第41回 桐美会展（広島県立美術館、9/15〜9/20）に《青海亀》を出品</p>
+      </li>
+    </ul>
+    <!-- /build:news -->
+  </section>
+
   <!-- 展示情報 -->
   <section id="exhibitions" class="io">
     <div class="sec-head"><h2>展示情報</h2><span>EXHIBITIONS</span></div>
@@ -1005,7 +1039,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <ul class="cv-summary">
           <li><b>受賞</b><span>サロン・ド・プランタン賞<wbr>（2026）、<wbr>第19回<wbr> 藝大アートプラザ・アートアワード<wbr> 小学館賞<wbr>（2025）ほか</span></li>
           <li><b>展示</b><span>個展「うつろい、留める」<wbr>（ガラリShowcase、<wbr>長野・小布施）ほか、<wbr>国内外の<wbr>アートフェアに<wbr>出展</span></li>
-          <li><b>取扱い</b><span>GALLERY&nbsp;KOGURE ／ 藝大アートプラザ ／ 桐美会</span></li>
+          <li><b>取扱い</b><span>GALLERY&nbsp;KOGURE ／ GALLERY&nbsp;OPET ／ 藝大アートプラザ</span></li>
           <li><b>掲載</b><span>『金工家100人 現代日本の精鋭たち』<wbr>（阿部出版）ほか</span></li>
         </ul>
         <a class="archive-banner" href="profile/">
