@@ -17,6 +17,7 @@ Android には和文明朝が標準搭載されていないため、Noto Serif J
   リポジトリには入れていないので、取得してそのパスを引数に渡す
 """
 import html as htmllib
+import json
 import re
 import subprocess
 import sys
@@ -50,6 +51,25 @@ def collect_chars(repo=REPO):
         chars.update(visible_text(src))
         for m in re.finditer(r'\b(?:title|en):"((?:[^"\\]|\\.)*)"', src):
             chars.update(m.group(1))
+    # 展示・お知らせの台帳の文字も入れる（日付で後から表示される注目展示の説明文などが、
+    # 毎日の自動実行で表示に切り替わった日に欠けないように）
+    def strings(v):
+        if isinstance(v, str):
+            yield v
+        elif isinstance(v, dict):
+            for k, x in v.items():
+                if not k.startswith("_"):   # _readme などの説明書きは画面に出ない
+                    yield from strings(x)
+        elif isinstance(v, list):
+            for x in v:
+                yield from strings(x)
+    for name in ("exhibitions.json", "news.json"):
+        f = repo / "data" / name
+        if f.exists():
+            for s in strings(json.loads(f.read_text(encoding="utf-8"))):
+                if s.startswith(("http", "img/")):
+                    continue
+                chars.update(htmllib.unescape(s))
     # 将来の文言変更に備えて、かな・記号・英数は全部入れておく
     for lo, hi in [(0x20, 0x7E),        # ASCII
                    (0x3040, 0x309F),    # ひらがな
