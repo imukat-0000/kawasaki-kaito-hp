@@ -67,16 +67,18 @@
       "end": "2026-10-18",
       "url": "https://artfair.toobi.co.jp/",
       "showOnSales": true,
-      "salesKanji": "美",
+      "salesImage": "img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg",
       "ja": {
         "title": "東美アートフェア2026",
         "listTitle": "東美アートフェア2026",
-        "venue": "東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）"
+        "venue": "東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）",
+        "salesImageAlt": "東美アートフェア2026"
       },
       "en": {
         "title": "Tokyo Art Club Fair 2026",
         "listTitle": "Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026",
-        "venue": "Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)"
+        "venue": "Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)",
+        "salesImageAlt": "Tokyo Art Club Fair 2026"
       },
       "place": {
         "ja": {
@@ -97,17 +99,27 @@
       "id": "made-in-kure-2026",
       "start": "2026-10-31",
       "end": "2026-11-03",
+      "featured": true,
+      "image": "img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg",
       "showOnSales": true,
-      "salesKanji": "呉",
+      "salesImage": "img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg",
       "ja": {
         "title": "POP UP SHOP「MADE IN KURE」",
         "listTitle": "POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」",
-        "venue": "カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売"
+        "venue": "カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売",
+        "text": "「呉から贈るクラフト市」として、呉の作り手4組が神楽坂に集まる4日間の展示販売。時間は11:00〜19:00。",
+        "imageAlt": "POP UP SHOP「MADE IN KURE」出品作 — 鋳金の蛙と紅葉",
+        "imageLabel": "展示メイン画像",
+        "salesImageAlt": "MADE IN KURE"
       },
       "en": {
         "title": "Pop-up Shop \"MADE IN KURE\"",
         "listTitle": "Pop-up&nbsp;Shop \"MADE&nbsp;IN&nbsp;KURE\"",
-        "venue": "Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure"
+        "venue": "Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure",
+        "text": "\"Gifts from Kure\": a four-day craft market bringing four makers from Kure to Kagurazaka. Open 11:00–19:00.",
+        "imageAlt": "Work shown at the pop-up shop \"MADE IN KURE\" — cast-metal frog with maple leaves",
+        "imageLabel": "Exhibition main image",
+        "salesImageAlt": "MADE IN KURE"
       },
       "place": {
         "ja": {
