@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// data/exhibitions.json（展示情報の正本）から、HTMLの目印の内側と sitemap.xml の更新日を書き換える。
+// data/exhibitions.json（展示情報の正本）と data/news.json（お知らせの正本）から、HTMLの目印の内側と sitemap.xml の更新日を書き換える。
 // 追加パッケージなし（Node.jsだけで動く）。生成結果はそのままコミットし、公開の仕組みは変えない。
 //
 //   node tools/build.mjs                     今日（日本時間）の日付で生成して書き込む
@@ -70,6 +70,35 @@ const KEYS = {
   place: ['name', 'streetAddress', 'locality', 'region'],
 };
 const HTML_FIELDS = ['listTitle', 'venue'];
+const NEWS_KEYS = { top: ['_readme', 'news'], item: ['date', 'url', 'ja', 'en'], lang: ['text'] };
+const NEWS_MAX = 5; // トップに出すお知らせの件数（新しい順）
+
+// お知らせの日付：YYYY-MM-DD（日まで）か YYYY-MM（月まで）
+function isValidNewsDate(s){
+  if (typeof s !== 'string') return false;
+  if (/^\d{4}-\d{2}$/.test(s)) return isValidDate(s + '-01');
+  return isValidDate(s);
+}
+function validateNews(data){
+  const errors = [];
+  if (!data || typeof data !== 'object' || !Array.isArray(data.news)) return ['data/news.json に news の一覧がありません'];
+  for (const k of Object.keys(data)) if (!NEWS_KEYS.top.includes(k)) errors.push(`data/news.json: 知らない項目「${k}」があります（綴りを確かめてください）`);
+  data.news.forEach((n, i) => {
+    const w = `お知らせ${i + 1}件目`;
+    if (!n || typeof n !== 'object'){ errors.push(`${w}: 形式が正しくありません`); return; }
+    for (const k of Object.keys(n)) if (!NEWS_KEYS.item.includes(k)) errors.push(`${w}: 知らない項目「${k}」があります（綴りを確かめてください）`);
+    if (!isValidNewsDate(n.date)) errors.push(`${w}: 日付 date は YYYY-MM-DD か YYYY-MM で書いてください（${n.date}）`);
+    if ('url' in n && !(typeof n.url === 'string' && /^https:\/\/[^\s"<>]+$/.test(n.url))) errors.push(`${w}: url は https:// で始まるURLにしてください`);
+    for (const lang of ['ja', 'en']){
+      const t = n[lang];
+      if (!t || typeof t !== 'object'){ errors.push(`${w}: 日本語・英語の両方が必要です（${lang}）`); continue; }
+      for (const k of Object.keys(t)) if (!NEWS_KEYS.lang.includes(k)) errors.push(`${w} の ${lang}: 知らない項目「${k}」があります`);
+      if (typeof t.text !== 'string' || t.text.trim() === '') errors.push(`${w} の ${lang}: text がありません`);
+      else if (/&(?:[a-zA-Z]+|#\d+|#x[0-9a-fA-F]+);/.test(t.text)) errors.push(`${w} の ${lang}.text: &nbsp; などの文字参照は使えません（普通の文字で書いてください）`);
+    }
+  });
+  return errors;
+}
 
 function validate(data){
   const errors = [];
@@ -189,6 +218,30 @@ const T = {
 };
 
 // ---------- 生成 ----------
+function newsDate(s, lang){
+  const [y, m, d] = s.split('-').map(Number);
+  if (lang === 'ja') return d ? `${y}.${m}.${d}` : `${y}.${m}`;
+  return d ? `${MON[m - 1]} ${d}, ${y}` : `${MON[m - 1]} ${y}`;
+}
+function newsList(news, lang){
+  const items = news.map((n, i) => ({ n, i }))
+    .sort((a, b) => (a.n.date < b.n.date ? 1 : a.n.date > b.n.date ? -1 : a.i - b.i)) // 新しい順。同じ日付なら台帳の順
+    .slice(0, NEWS_MAX)
+    .map(({ n }) => {
+      const body = n.url
+        ? `<a href="${attr(n.url)}" target="_blank" rel="noopener">${text(n[lang].text)}</a>`
+        : text(n[lang].text);
+      return [
+        '      <li>',
+        `        <time datetime="${n.date}">${newsDate(n.date, lang)}</time>`,
+        `        <p>${body}</p>`,
+        '      </li>',
+      ].join('\n');
+    });
+  if (!items.length) return '';
+  return ['    <ul class="news-list">', ...items, '    </ul>'].join('\n');
+}
+
 function listItem(e, lang, tag){
   const t = e[lang];
   const tagHtml = tag ? `<span class="ended-tag">${tag}</span>` : '';
@@ -320,9 +373,9 @@ function salesGroup(c, lang, img){
 // どのページのどの目印に何を入れるか。kind: top=トップ / sales=販売情報（sitemap の更新日の判定に使う）
 const PAGES = [
   { file: 'index.html', kind: 'top', regions: {
-    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), exhibitions: (c) => topExhibitions(c, 'ja', ''), 'exhibition-dates': statusDates } },
+    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja'), exhibitions: (c) => topExhibitions(c, 'ja', ''), 'exhibition-dates': statusDates } },
   { file: 'en/index.html', kind: 'top', regions: {
-    'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
+    'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), news: (c) => newsList(c.news, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
   { file: 'sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'ja', '../') } },
   { file: 'en/sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'en', '../../') } },
 ];
@@ -465,8 +518,8 @@ function writeAll(changes){
 }
 
 // ---------- 本体 ----------
-function build(data){
-  const c = classify(data.exhibitions, TODAY);
+function build(data, news){
+  const c = { ...classify(data.exhibitions, TODAY), news: news.news };
   const errors = [];
   const results = [];
   for (const p of PAGES){
@@ -485,10 +538,13 @@ function build(data){
 let data;
 try { data = JSON.parse(readFileSync(join(ROOT, 'data/exhibitions.json'), 'utf8')); }
 catch (err){ fail([`data/exhibitions.json を読めません: ${err.message}`]); }
-const dataErrors = validate(data);
+let news;
+try { news = JSON.parse(readFileSync(join(ROOT, 'data/news.json'), 'utf8')); }
+catch (err){ fail([`data/news.json を読めません: ${err.message}`]); }
+const dataErrors = [...validate(data), ...validateNews(news)];
 if (dataErrors.length) fail(dataErrors);
 
-const first = build(data);
+const first = build(data, news);
 if (first.errors.length) fail(first.errors);
 // 同じ台帳・同じ日付で2回目を作っても結果が変わらないこと（繰り返し実行しても安全なこと）を確かめる
 for (const r of first.results){
@@ -522,7 +578,7 @@ if (CHECK){
     console.error(`HTMLが台帳（基準日 ${TODAY}）と食い違っています: ${changes.map((r) => r.file).join(', ')}\n→ node tools/build.mjs を実行してください。`);
     process.exit(1);
   }
-  console.log(`展示情報: HTMLは台帳と一致しています（基準日 ${TODAY}）。`);
+  console.log(`展示情報・お知らせ: HTMLは台帳と一致しています（基準日 ${TODAY}）。`);
 } else {
   if (changes.length) writeAll(changes);
   console.log(changes.length ? `更新しました（基準日 ${TODAY}）: ${changes.map((r) => r.file).join(', ')}` : `変更なし（基準日 ${TODAY}）`);

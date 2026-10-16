@@ -713,6 +713,15 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
 .exhi-list-past{ opacity:.6; }
 .exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
+.news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
+.news-list li{
+  display:grid; grid-template-columns:8em 1fr; gap:1.4rem;
+  padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.8;
+}
+.news-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
+.news-list a{ color:inherit; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:.25em; }
+.news-list a:hover{ color:var(--hido); }
+@media (max-width:600px){ .news-list li{ grid-template-columns:1fr; gap:.2rem; } }
 .news-sns{
   margin-top:2.6rem; padding-top:1.8rem; border-top:1px solid var(--line);
   display:flex; flex-wrap:wrap; align-items:center; gap:1.2rem;
@@ -916,6 +925,31 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </a>
   </section>
 
+  <!-- News -->
+  <section id="news" class="io">
+    <div class="sec-head"><h2>News</h2><span>NEWS</span></div>
+    <!-- build:news -->
+    <ul class="news-list">
+      <li>
+        <time datetime="2026-10-16">Oct 16, 2026</time>
+        <p>Participating in Tobi Art Fair 2026 (Oct 16–18, Tokyo Art Club, 3F — Masuho Bijutsu booth)</p>
+      </li>
+      <li>
+        <time datetime="2026-10-14">Oct 14, 2026</time>
+        <p>Solo exhibition "Ichiyō" announced (Dec 11–22, 2026, MEDEL GALLERY SHU HIBIYA)</p>
+      </li>
+      <li>
+        <time datetime="2026-10">Oct 2026</time>
+        <p>"Vermilion Wakin" featured in ARTcollectors', October 2026 issue (Seikatsu no Tomo Sha)</p>
+      </li>
+      <li>
+        <time datetime="2026-09-15">Sep 15, 2026</time>
+        <p>"Blue Sea Turtle" shown at the 41st Toubikai Exhibition (Hiroshima Prefectural Art Museum, Sep 15–20)</p>
+      </li>
+    </ul>
+    <!-- /build:news -->
+  </section>
+
   <!-- Exhibitions -->
   <section id="exhibitions" class="io">
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
@@ -1009,7 +1043,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <ul class="cv-summary">
           <li><b>Awards</b><span>Salon de Printemps Award (2026), 19th Geidai Art Plaza Art Award, Shogakukan Award (2025), among others</span></li>
           <li><b>Exhibitions</b><span>Solo exhibition "Utsuroi, Tomeru" (Garari Showcase, Obuse, Nagano), plus international art fairs</span></li>
-          <li><b>Galleries</b><span>GALLERY&nbsp;KOGURE / Geidai Art Plaza / Toubikai</span></li>
+          <li><b>Galleries</b><span>GALLERY&nbsp;KOGURE / GALLERY&nbsp;OPET / Geidai Art Plaza / Toubikai</span></li>
           <li><b>Press</b><span>Featured in "100 Metal Craftspeople: Contemporary Japan's Elite" (Abe Publishing), among others</span></li>
         </ul>
         <a class="archive-banner" href="profile/">
