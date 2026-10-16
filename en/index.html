@@ -957,9 +957,19 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg" alt="Work shown at Tokyo Art Club Fair 2026: &quot;Rain Frog and Water Lily&quot;" loading="lazy"></div>
+      <div class="exhi-feature-body">
+        <span class="exhi-feature-status" hidden></span>
+        <h3>Tokyo Art Club Fair 2026</h3>
+        <time>Oct 16 — 18, 2026</time>
+        <p class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</p>
+        <p>A booth directed by Masuho Bijutsu and GALLERY KOGURE, presenting 100 small works by 50 artists, including "Rain Frog and Water Lily" and "Blue Sea Turtle." Hours: Oct 16, 10:00–19:00; Oct 17, 10:00–18:00; Oct 18, 10:00–17:00.</p>
+      </div>
+    </div>
+    <div class="exhi-feature">
       <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/exhibition_dm_garari_showcase.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/exhibition_dm_garari_showcase.jpg" alt="Announcement flyer for the solo exhibition &quot;Utsuroi, Tomeru&quot; at Garari Showcase" loading="lazy"></div>
       <div class="exhi-feature-body">
-        <span class="exhi-feature-status" id="exhiStatus" hidden></span>
+        <span class="exhi-feature-status" hidden></span>
         <h3>Solo Exhibition "Utsuroi, Tomeru"</h3>
         <time>Sep 5 — Oct 20, 2026</time>
         <p class="venue">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission</p>
@@ -973,10 +983,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Ongoing</time>
           <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
-        </li>
-        <li>
-          <time>Oct 16 — 18, 2026</time>
-          <div><strong>Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026</strong><span class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</span></div>
         </li>
         <li>
           <time>Oct 31 — Nov 3, 2026</time>
@@ -2194,17 +2200,21 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   /* ---------- 展示ステータス（開催中 / まもなく開催）の自動判定 ---------- */
   /* HTMLには状態を書かず（公開日によって誤表示になるため）、ここで日付から判定して表示する */
-  var exhiStatus = document.getElementById('exhiStatus');
-  if (exhiStatus){
+  var exhiStatuses = document.querySelectorAll('.exhi-feature-status');
+  if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiStart = new Date('2026-09-05T00:00:00+09:00');
-    var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
+    var exhiDates = [['2026-10-16', '2026-10-18'], ['2026-09-05', '2026-10-20']];
     /* /build:exhibition-dates */
-    if (today < exhiStart) exhiStatus.textContent = 'Opening soon';
-    else if (today <= exhiEnd) exhiStatus.textContent = 'On view now';
-    else exhiStatus.textContent = 'Exhibition ended';
-    exhiStatus.hidden = false;
+    for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
+      var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');
+      var exhiEnd = new Date(exhiDates[i][1] + 'T23:59:59+09:00');
+      var st = exhiStatuses[i];
+      if (today < exhiStart) st.textContent = 'Opening soon';
+      else if (today <= exhiEnd) st.textContent = 'On view now';
+      else st.textContent = 'Exhibition ended';
+      st.hidden = false;
+    }
   }
 
   /* ---------- スクロールで現れるセクション ---------- */

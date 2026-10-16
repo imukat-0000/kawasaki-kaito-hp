@@ -76,7 +76,7 @@ test('会期の切り替わり：最終日（10/20）までは注目展示、翌
     const past = html.slice(html.indexOf('exhi-past'));
     assert.match(past, lang === 'ja' ? /個展「うつろい、留める」<span class="ended-tag">（終了）/ : /Utsuroi, Tomeru"<span class="ended-tag">\(Ended\)/);
     assert.doesNotMatch(html, /"startDate": "2026-09-05"/, '構造化データから外れる');
-    assert.match(html, /var exhiStart = null;/);
+    assert.match(html, /var exhiDates = \[\];/);
   }
   assert.doesNotMatch(read(dir, 'sales/index.html'), /うつろい、留める/);
   assert.doesNotMatch(read(dir, 'en/sales/index.html'), /Utsuroi, Tomeru/);
@@ -91,7 +91,7 @@ test('会期の切り替わり：最終日（10/20）までは注目展示、翌
   assert.deepEqual(snapshot(dir), once);
 });
 
-test('注目展示の選び方：開催中（終了が早い順）→ 開催予定（開始が早い順）→ 台帳の順', (t) => {
+test('注目展示の選び方：開催中はすべて（終了が早い順）、なければ開催予定のうち開始が早いもの1つ（同じなら台帳の順）', (t) => {
   const dir = sandbox();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
   const feature = () => read(dir, 'index.html').match(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)<\/h3>/)?.[1];
@@ -109,7 +109,9 @@ test('注目展示の選び方：開催中（終了が早い順）→ 開催予�
   assert.equal(feature(), 'KOGEI Art Fair Kanazawa 2026', '開始日も同じなら台帳で上にあるもの');
   editData(dir, (list) => { byId(list, 'medel-2026').start = '2026-10-01'; byId(list, 'medel-2026').end = '2026-10-19'; });
   run(dir, ['--today', '2026-10-09']);
-  assert.equal(feature(), '河﨑海斗 個展', '開催中が2つなら終了が早いもの');
+  const all = [...read(dir, 'index.html').matchAll(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)<\/h3>/g)].map((m) => m[1]);
+  assert.deepEqual(all, ['河﨑海斗 個展', '個展「うつろい、留める」'], '開催中が2つなら両方を、終了が早い順に');
+  assert.match(read(dir, 'index.html'), /var exhiDates = \[\['2026-10-01', '2026-10-19'\], \['2026-09-05', '2026-10-20'\]\];/);
 });
 
 test('記号は変換され、構造化データの中でも </script> にならない', (t) => {
@@ -185,9 +187,9 @@ test('終了日を変えると、日英トップ・日英販売情報・構造�
   assert.equal(r.code, 0, r.out);
   const expect = {
     'index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>',
-      "var exhiEnd = new Date('2026-10-25T23:59:59+09:00');"],
+      "['2026-09-05', '2026-10-25']"],
     'en/index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>',
-      "var exhiEnd = new Date('2026-10-25T23:59:59+09:00');"],
+      "['2026-09-05', '2026-10-25']"],
     'sales/index.html': ['<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>'],
     'en/sales/index.html': ['<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>'],
   };

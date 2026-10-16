@@ -3,7 +3,7 @@
     "展示情報の正本。ここを直して node tools/build.mjs を実行すると、日英トップ・日英販売情報の展示一覧、展示の構造化データ（Event）、開催状況の判定日付、sitemap.xml の該当4ページの更新日がまとめて書き換わる。",
     "日付は日本時間の YYYY-MM-DD。最終日はその日の23:59まで開催中として扱う。",
     "listTitle と venue だけは &nbsp; などの文字参照が使える（タグは不可）。それ以外の文字項目は普通の文字として扱われ、記号は自動で変換される。",
-    "featured: true の展示のうち、開催中のもの（終了日が早い順）→ 開催予定のもの（開始日が早い順）→ 同じならこのファイルで上にあるもの、の順で1つがトップの注目展示になる。",
+    "featured: true の展示のうち、開催中のものはすべてトップの注目展示（大きな枠）に並ぶ（終了日が早い順）。開催中がなければ、開催予定のうち開始日が早いもの1つ（同じならこのファイルで上にあるもの）が出る。",
     "会期の判定はビルドを実行した日で決まる。毎日の自動実行（PR C）が入るまでは、展示が終わっても誰かがビルドして公開するまで並びは変わらない。"
   ],
   "exhibitions": [
@@ -65,6 +65,8 @@
       "id": "tobi-art-fair-2026",
       "start": "2026-10-16",
       "end": "2026-10-18",
+      "featured": true,
+      "image": "img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg",
       "url": "https://artfair.toobi.co.jp/",
       "showOnSales": true,
       "salesImage": "img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg",
@@ -72,12 +74,18 @@
         "title": "東美アートフェア2026",
         "listTitle": "東美アートフェア2026",
         "venue": "東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）",
+        "text": "増保美術とGALLERY KOGUREのディレクションによるブースに、50作家の小品100点が並ぶ。《雨ノ蛙と睡蓮》《青海亀》を出品。時間は16日10:00〜19:00、17日10:00〜18:00、18日10:00〜17:00。",
+        "imageAlt": "東美アートフェア2026 出品作《雨ノ蛙と睡蓮》",
+        "imageLabel": "展示メイン画像",
         "salesImageAlt": "東美アートフェア2026"
       },
       "en": {
         "title": "Tokyo Art Club Fair 2026",
         "listTitle": "Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026",
         "venue": "Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)",
+        "text": "A booth directed by Masuho Bijutsu and GALLERY KOGURE, presenting 100 small works by 50 artists, including \"Rain Frog and Water Lily\" and \"Blue Sea Turtle.\" Hours: Oct 16, 10:00–19:00; Oct 17, 10:00–18:00; Oct 18, 10:00–17:00.",
+        "imageAlt": "Work shown at Tokyo Art Club Fair 2026: \"Rain Frog and Water Lily\"",
+        "imageLabel": "Exhibition main image",
         "salesImageAlt": "Tokyo Art Club Fair 2026"
       },
       "place": {
