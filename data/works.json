@@ -69,10 +69,6 @@
     "featuredIn": {
       "ja": "掲載",
       "en": "Featured in"
-    },
-    "price": {
-      "ja": "価格",
-      "en": "Price"
     }
   },
   "works": [
@@ -1198,11 +1194,6 @@
           "key": "technique",
           "ja": "真空加圧鋳造法・石膏型・磨き・硫化・銀メッキ・樹脂封入・樹脂コーティング",
           "en": "Vacuum-pressure casting, plaster mold, polishing, sulfide patination, silver plating, resin encapsulation, resin coating"
-        },
-        {
-          "key": "price",
-          "ja": "¥200,000（北斎館オンラインショップにて販売済み）",
-          "en": "¥200,000 (sold, via the Hokusai-kan Museum online shop)"
         }
       ]
     },

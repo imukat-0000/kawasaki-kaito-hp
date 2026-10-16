@@ -87,6 +87,49 @@
     },
     {
       "@type": "Event",
+      "name": "Tokyo Art Club Fair 2026",
+      "startDate": "2026-10-16",
+      "endDate": "2026-10-18",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Tokyo Art Club",
+        "address": { "@type": "PostalAddress", "streetAddress": "6-19-15 Shimbashi", "addressLocality": "Minato-ku", "addressRegion": "Tokyo", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" },
+      "url": "https://artfair.toobi.co.jp/"
+    },
+    {
+      "@type": "Event",
+      "name": "Pop-up Shop \"MADE IN KURE\"",
+      "startDate": "2026-10-31",
+      "endDate": "2026-11-03",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Kagurazaka Hitotohako",
+        "address": { "@type": "PostalAddress", "streetAddress": "NH Bldg. 1F, 6-58 Kagurazaka", "addressLocality": "Shinjuku-ku", "addressRegion": "Tokyo", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" }
+    },
+    {
+      "@type": "Event",
+      "name": "\"Ko + Gei\" Kyoto 2026",
+      "startDate": "2026-11-06",
+      "endDate": "2026-11-08",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Myokenji Temple",
+        "address": { "@type": "PostalAddress", "streetAddress": "514 Myokenji-maecho, Kamigyo-ku", "addressLocality": "Kyoto", "addressRegion": "Kyoto", "addressCountry": "JP" }
+      },
+      "performer": { "@type": "Person", "name": "Kaito Kawasaki" }
+    },
+    {
+      "@type": "Event",
       "name": "KOGEI Art Fair Kanazawa 2026",
       "startDate": "2026-11-27",
       "endDate": "2026-11-29",
@@ -102,7 +145,7 @@
     },
     {
       "@type": "Event",
-      "name": "Kaito Kawasaki Solo Exhibition",
+      "name": "Kaito Kawasaki Solo Exhibition \"Ichiyō\"",
       "startDate": "2026-12-11",
       "endDate": "2026-12-22",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -577,11 +620,15 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   object-fit:cover; object-position:47% 49%;
   transform:scale(var(--zoom,1));
 }
-.artist-roles{ display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-bottom:1.4rem; }
-.artist-roles span{
-  font-size:.7rem; letter-spacing:.14em; color:var(--hido);
-  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  border-radius:999px; padding:.35em 1.1em;
+.artist-roles{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; row-gap:.4rem; margin-bottom:1.4rem; }
+.artist-roles span{ font-size:.7rem; letter-spacing:.14em; color:var(--hido); }
+.artist-roles span + span::before{
+  content:""; display:inline-block; width:1px; height:.9em; vertical-align:-.1em;
+  margin:0 1.1em; background:color-mix(in srgb, var(--hido) 45%, transparent);
+}
+@media (max-width:520px){
+  .artist-roles span:last-child{ flex-basis:100%; text-align:center; }
+  .artist-roles span:last-child::before{ display:none; }
 }
 .artist-lede{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
@@ -667,6 +714,15 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
 .exhi-list-past{ opacity:.6; }
 .exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
+.news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
+.news-list li{
+  display:grid; grid-template-columns:8em 1fr; gap:1.4rem;
+  padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem; line-height:1.8;
+}
+.news-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
+.news-list a{ color:inherit; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:.25em; }
+.news-list a:hover{ color:var(--hido); }
+@media (max-width:600px){ .news-list li{ grid-template-columns:1fr; gap:.2rem; } }
 .news-sns{
   margin-top:2.6rem; padding-top:1.8rem; border-top:1px solid var(--line);
   display:flex; flex-wrap:wrap; align-items:center; gap:1.2rem;
@@ -870,6 +926,31 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </a>
   </section>
 
+  <!-- News -->
+  <section id="news" class="io">
+    <div class="sec-head"><h2>News</h2><span>NEWS</span></div>
+    <!-- build:news -->
+    <ul class="news-list">
+      <li>
+        <time datetime="2026-10-16">Oct 16, 2026</time>
+        <p><a href="https://artfair.toobi.co.jp/" target="_blank" rel="noopener">Participating in Tokyo Art Club Fair 2026 (Oct 16–18, Tokyo Art Club, 3F — Masuho Bijutsu booth)</a></p>
+      </li>
+      <li>
+        <time datetime="2026-10-14">Oct 14, 2026</time>
+        <p>Solo exhibition "Ichiyō" announced (Dec 11–22, 2026, MEDEL GALLERY SHU HIBIYA)</p>
+      </li>
+      <li>
+        <time datetime="2026-10">Oct 2026</time>
+        <p>"Vermilion Wakin" featured in ARTcollectors', October 2026 issue (Seikatsu no Tomo Sha)</p>
+      </li>
+      <li>
+        <time datetime="2026-09-15">Sep 15, 2026</time>
+        <p>"Blue Sea Turtle" shown at the 41st Toubikai Exhibition (Hiroshima Prefectural Art Museum, Sep 15–20)</p>
+      </li>
+    </ul>
+    <!-- /build:news -->
+  </section>
+
   <!-- Exhibitions -->
   <section id="exhibitions" class="io">
     <div class="sec-head"><h2>Exhibitions</h2><span>EXHIBITIONS</span></div>
@@ -894,12 +975,24 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
         </li>
         <li>
+          <time>Oct 16 — 18, 2026</time>
+          <div><strong>Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026</strong><span class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</span></div>
+        </li>
+        <li>
+          <time>Oct 31 — Nov 3, 2026</time>
+          <div><strong>Pop-up&nbsp;Shop "MADE&nbsp;IN&nbsp;KURE"</strong><span class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</span></div>
+        </li>
+        <li>
+          <time>Nov 6 — 8, 2026</time>
+          <div><strong>"Ko&nbsp;+&nbsp;Gei" Kyoto&nbsp;2026</strong><span class="venue">Myokenji Temple (Kyoto)</span></div>
+        </li>
+        <li>
           <time>Nov 27 — 29, 2026</time>
           <div><strong>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</strong><span class="venue">Hyatt Centric Kanazawa (Kanazawa, Ishikawa) — GALLERY&nbsp;KOGURE booth</span></div>
         </li>
         <li>
           <time>Dec 11 — 22, 2026</time>
-          <div><strong>Solo Exhibition</strong><span class="venue">MEDEL GALLERY SHU HIBIYA (Imperial Hotel Plaza, 1F)</span></div>
+          <div><strong>Solo Exhibition "Ichiyō"</strong><span class="venue">MEDEL GALLERY SHU HIBIYA (Imperial Hotel Plaza, 1F)</span></div>
         </li>
         <li>
           <time>Mar 20 — Apr 18, 2027</time>
@@ -951,7 +1044,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <ul class="cv-summary">
           <li><b>Awards</b><span>Salon de Printemps Award (2026), 19th Geidai Art Plaza Art Award, Shogakukan Award (2025), among others</span></li>
           <li><b>Exhibitions</b><span>Solo exhibition "Utsuroi, Tomeru" (Garari Showcase, Obuse, Nagano), plus international art fairs</span></li>
-          <li><b>Galleries</b><span>GALLERY&nbsp;KOGURE / Geidai Art Plaza / Toubikai</span></li>
+          <li><b>Galleries</b><span>GALLERY&nbsp;KOGURE / GALLERY&nbsp;OPET / Geidai Art Plaza</span></li>
           <li><b>Press</b><span>Featured in "100 Metal Craftspeople: Contemporary Japan's Elite" (Abe Publishing), among others</span></li>
         </ul>
         <a class="archive-banner" href="profile/">

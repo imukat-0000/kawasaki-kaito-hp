@@ -211,6 +211,9 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   display:grid; grid-template-columns:4.2em minmax(0,1fr); gap:1.2em;
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
+/* 同じ年の展示は1行ずつ並べ、年の区切りにだけ線を引く */
+.cv li:has(+ li > b:empty){ border-bottom-color:transparent; padding-bottom:.2em; }
+.cv li:has(> b:empty){ padding-top:.2em; }
 .cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
 .cv li a{
   color:var(--hido); text-decoration:none;
@@ -281,13 +284,15 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
           <li><b>2000</b><span>広島県呉市に生まれる</span></li>
           <li><b>2024</b><span>東京藝術大学 美術学部 工芸科 鋳金専攻 卒業</span></li>
           <li><b>2026</b><span>東京藝術大学大学院 美術研究科 工芸専攻 鋳金研究分野 修士課程 修了</span></li>
-          <li><b>現在</b><span>東京を拠点に制作。GALLERY KOGURE、藝大アートプラザ、桐美会で作品を取り扱い</span></li>
+          <li><b>現在</b><span>東京を拠点に制作。GALLERY KOGURE、GALLERY OPET、藝大アートプラザで作品を取り扱い</span></li>
         </ul>
       </div>
       <div>
         <h3>受賞歴</h3>
         <ul>
+          <li><b>2021</b><span>大和ミュージアム クラウドファンディング返礼品デザインコンペ 最優秀賞</span></li>
           <li><b>2022</b><span>東京藝術大学奨学金制度 安宅賞</span></li>
+          <li><b>2023</b><span>第17回 藝大アートプラザ大賞展 入選（箱物 蘭鋳、溶解変化 赤、溶解変化 青）</span></li>
           <li><b>2024</b><span>第18回 藝大アートプラザ・アートアワード 審査員特別賞（黒頂天眼）</span></li>
           <li><b>2024</b><span>平成芸術賞（卒業作品「金魚」）</span></li>
           <li><b>2025</b><span>第19回 藝大アートプラザ・アートアワード 小学館賞（朱色和金）</span></li>
@@ -298,14 +303,39 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <div>
         <h3>主な展示</h3>
         <ul>
-          <li><b>2024</b><span>ART FAIR TOKYO（東京国際フォーラム）／ KIAF SEOUL（韓国・ソウル）／ artKYOTO（京都・渉成園）／ 個展「宮原ノ色」（広島・呉）</span></li>
-          <li><b>2025</b><span>ART FAIR TOKYO ／ 大阪・関西万博「にっぽんの宝物祭り」／ 個展「カエルハジメテナク」（東京・恵比寿）</span></li>
-          <li><b>2026</b><span>個展「うつろい、留める」（ガラリShowcase・長野・小布施／北斎館隣）／ 河﨑海斗展（新宿髙島屋）／ 個展「出藍の誉」（東京・恵比寿）／ 3人展「MATSURI&nbsp;INORU」（Spiral&nbsp;Garden 新丸ビル）／ 3人展「工芸生態系 ─ A&nbsp;World&nbsp;in&nbsp;Kogei ─」（藝大アートプラザ）／ ART&nbsp;FAIR&nbsp;TOKYO ／ ART&nbsp;FAIR&nbsp;PHILIPPINES（マカティ）</span></li>
+          <li><b>2022</b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2022」（天王洲セントラルタワー）</span></li>
+          <li><b>2023</b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2023」（天王洲セントラルタワー）</span></li>
+          <li><b></b><span>第17回 藝大アートプラザ大賞展（藝大アートプラザ）</span></li>
+          <li><b>2024</b><span>ART FAIR TOKYO（東京国際フォーラム）</span></li>
+          <li><b></b><span>KIAF SEOUL（韓国・ソウル）</span></li>
+          <li><b></b><span>artKYOTO（京都・渉成園）</span></li>
+          <li><b></b><span>個展「宮原ノ色」（広島・呉）</span></li>
+          <li><b></b><span>第18回 藝大アートプラザ・アートアワード展（藝大アートプラザ）</span></li>
+          <li><b></b><span>第72回 東京藝術大学 卒業・修了作品展（東京都美術館）</span></li>
+          <li><b></b><span>グループ展「東風凍りを解く」（奈良蔦屋書店）</span></li>
+          <li><b></b><span>2人展（金澤水銀窟・石川・金沢）</span></li>
+          <li><b></b><span>オフィス展示「MISTO」（MISTO&nbsp;Tsukiji）</span></li>
+          <li><b></b><span>工芸アートフェア金沢（ハイアット セントリック 金沢）</span></li>
+          <li><b>2025</b><span>ART FAIR TOKYO</span></li>
+          <li><b></b><span>大阪・関西万博「にっぽんの宝物祭り」</span></li>
+          <li><b></b><span>個展「カエルハジメテナク」（東京・恵比寿）</span></li>
+          <li><b></b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2025」（天王洲セントラルタワー）</span></li>
+          <li><b></b><span>OSAKA&nbsp;INTERNATIONAL&nbsp;ART&nbsp;2025（大阪城ホール）</span></li>
+          <li><b>2026</b><span>個展「うつろい、留める」（ガラリShowcase・長野・小布施／北斎館隣）</span></li>
+          <li><b></b><span>河﨑海斗展（新宿髙島屋）</span></li>
+          <li><b></b><span>個展「出藍の誉」（東京・恵比寿）</span></li>
+          <li><b></b><span>3人展「MATSURI&nbsp;INORU」（Spiral&nbsp;Garden 新丸ビル）</span></li>
+          <li><b></b><span>3人展「工芸生態系 ─ A&nbsp;World&nbsp;in&nbsp;Kogei ─」（藝大アートプラザ）</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;TOKYO</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;PHILIPPINES（マカティ）</span></li>
+          <li><b></b><span>第41回 桐美会展（広島県立美術館）</span></li>
+          <li><b></b><span>第20回 藝大アートプラザ・アートアワード展（藝大アートプラザ）</span></li>
+          <li><b></b><span>第74回 東京藝術大学 卒業・修了作品展（東京藝術大学大学美術館）</span></li>
         </ul>
       </div>
       <div>
         <h3>取り扱いギャラリー</h3>
-        <p class="galleries">GALLERY KOGURE ／ 藝大アートプラザ ／ 桐美会</p>
+        <p class="galleries">GALLERY KOGURE ／ GALLERY OPET ／ 藝大アートプラザ</p>
       </div>
       <div>
         <h3>掲載実績</h3>

@@ -1,0 +1,31 @@
+{
+  "_readme": [
+    "トップの「お知らせ」の正本。ここを直して node tools/build.mjs を実行すると、日英トップのお知らせ欄が書き換わる。",
+    "date は YYYY-MM-DD（日まで）か YYYY-MM（月まで）。新しい順に並べ替え、新しい5件だけを出す。",
+    "text は普通の文字で書く（記号は自動で変換される。&nbsp; などの文字参照やタグは使えない）。一人称は使わない。価格は書かない。",
+    "url（任意）は https:// で始まるURL。書くと本文がリンクになる。"
+  ],
+  "news": [
+    {
+      "date": "2026-10-16",
+      "url": "https://artfair.toobi.co.jp/",
+      "ja": { "text": "東美アートフェア2026（10/16〜10/18、東京美術倶楽部 3階 増保美術ブース）に出品" },
+      "en": { "text": "Participating in Tokyo Art Club Fair 2026 (Oct 16–18, Tokyo Art Club, 3F — Masuho Bijutsu booth)" }
+    },
+    {
+      "date": "2026-10-14",
+      "ja": { "text": "個展「一陽」の開催が決定（2026年12月11日〜22日、MEDEL GALLERY SHU HIBIYA）" },
+      "en": { "text": "Solo exhibition \"Ichiyō\" announced (Dec 11–22, 2026, MEDEL GALLERY SHU HIBIYA)" }
+    },
+    {
+      "date": "2026-10",
+      "ja": { "text": "『ARTcollectors'』2026年10月号（生活の友社）に《朱色和金》が掲載" },
+      "en": { "text": "\"Vermilion Wakin\" featured in ARTcollectors', October 2026 issue (Seikatsu no Tomo Sha)" }
+    },
+    {
+      "date": "2026-09-15",
+      "ja": { "text": "第41回 桐美会展（広島県立美術館、9/15〜9/20）に《青海亀》を出品" },
+      "en": { "text": "\"Blue Sea Turtle\" shown at the 41st Toubikai Exhibition (Hiroshima Prefectural Art Museum, Sep 15–20)" }
+    }
+  ]
+}

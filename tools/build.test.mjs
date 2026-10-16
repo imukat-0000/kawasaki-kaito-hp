@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FILES = ['index.html', 'en/index.html', 'sales/index.html', 'en/sales/index.html', 'works/index.html', 'en/works/index.html',
-  'works/shuiro-wakin/index.html', 'sitemap.xml', 'data/exhibitions.json', 'data/works.json', 'tools/build.mjs', 'tools/works.mjs'];
+  'works/shuiro-wakin/index.html', 'sitemap.xml', 'data/exhibitions.json', 'data/news.json', 'data/works.json', 'tools/build.mjs', 'tools/works.mjs'];
 
 function sandbox(){
   const dir = mkdtempSync(join(tmpdir(), 'build-test-'));
@@ -404,4 +404,41 @@ test('作品：今の表示のまま残す例外（英語一覧の拡大率な�
   }
   assert.equal(ja.W.find((x) => x.id === 'ame-kaeru').en, "Rain Frog: The Fox's Wedding", '日本語の小窓の副題は U+0027');
   assert.equal(en.W.find((x) => x.id === 'ame-kaeru').title, 'Rain Frog: The Fox’s Wedding', '英語の小窓の題名は U+2019');
+});
+
+function editNews(dir, fn){
+  const p = join(dir, 'data/news.json');
+  const d = JSON.parse(readFileSync(p, 'utf8'));
+  fn(d.news, d);
+  writeFileSync(p, JSON.stringify(d, null, 2));
+}
+
+test('お知らせ：新しい順に5件まで、月までの日付・リンク・記号の変換', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  editNews(dir, (list) => {
+    list.length = 0;
+    const n = (date, ja, en, url) => list.push({ date, ...(url ? { url } : {}), ja: { text: ja }, en: { text: en } });
+    n('2026-09-01', '九月', 'Sep');
+    n('2026-10', '十月', 'October');
+    n('2026-10-02', 'A & <b>', 'A & <b>', 'https://example.com/?a=1&b=2');
+    n('2026-08-01', '八月', 'Aug');
+    n('2026-07-01', '七月', 'Jul');
+    n('2026-06-01', '六月', 'Jun');
+  });
+  const r = run(dir, ['--today', '2026-10-09']);
+  assert.equal(r.code, 0, r.out);
+  const ja = read(dir, 'index.html');
+  const items = [...ja.matchAll(/<time datetime="([^"]+)">([^<]+)<\/time>/g)].map((m) => `${m[1]}=${m[2]}`);
+  assert.deepEqual(items, ['2026-10-02=2026.10.2', '2026-10=2026.10', '2026-09-01=2026.9.1', '2026-08-01=2026.8.1', '2026-07-01=2026.7.1']);
+  assert.doesNotMatch(ja, /六月/, '6件目は出さない');
+  assert.match(ja, /<a href="https:\/\/example.com\/\?a=1&amp;b=2" target="_blank" rel="noopener">A &amp; &lt;b&gt;<\/a>/);
+  assert.match(read(dir, 'en/index.html'), /<time datetime="2026-10">Oct 2026<\/time>/);
+  assert.equal(run(dir, ['--check', '--today', '2026-10-09']).code, 0);
+});
+
+test('お知らせの台帳の誤りで止まる', (t) => {
+  expectStop(t, (dir) => editNews(dir, (list) => { list[0].date = '2026-13-01'; }), /date は YYYY-MM-DD か YYYY-MM/);
+  expectStop(t, (dir) => editNews(dir, (list) => { delete list[0].en; }), /日本語・英語の両方が必要です/);
+  expectStop(t, (dir) => editNews(dir, (list) => { list[0].ja.text = 'A&nbsp;B'; }), /文字参照は使えません/);
 });
