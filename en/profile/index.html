@@ -210,6 +210,9 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   display:grid; grid-template-columns:4.2em minmax(0,1fr); gap:1.2em;
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
+/* 同じ年の展示は1行ずつ並べ、年の区切りにだけ線を引く */
+.cv li:has(+ li > b:empty){ border-bottom-color:transparent; padding-bottom:.2em; }
+.cv li:has(> b:empty){ padding-top:.2em; }
 .cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
 .cv li a{
   color:var(--hido); text-decoration:none;
@@ -298,10 +301,33 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <h3>Selected Exhibitions</h3>
         <ul>
           <li><b>2022</b><span>Group exhibition "IMONO&nbsp;COLLECTION&nbsp;2022" (Tennozu Central Tower, Tokyo)</span></li>
-          <li><b>2023</b><span>Group exhibition "IMONO&nbsp;COLLECTION&nbsp;2023" (Tennozu Central Tower, Tokyo) / 17th Geidai Art Plaza Grand Prize Exhibition (Geidai Art Plaza)</span></li>
-          <li><b>2024</b><span>ART FAIR TOKYO (Tokyo International Forum) / KIAF SEOUL (Seoul, Korea) / artKYOTO (Shosei-en, Kyoto) / Solo exhibition "Miyahara no Iro" (Kure, Hiroshima) / 18th Geidai Art Plaza Art Award Exhibition (Geidai Art Plaza) / 72nd Tokyo University of the Arts Graduation Works Exhibition (Tokyo Metropolitan Art Museum) / Group exhibition "Harukaze Kori wo Toku" (Nara Tsutaya Books) / Two-person exhibition (Kanazawa Suiginkutsu, Kanazawa, Ishikawa) / Office exhibition "MISTO" (MISTO&nbsp;Tsukiji) / KOGEI Art Fair Kanazawa (Hyatt Centric Kanazawa)</span></li>
-          <li><b>2025</b><span>ART FAIR TOKYO / Osaka-Kansai Expo "Nippon no Takaramono Matsuri" / Solo exhibition "Kaeru Hajimete Naku" (Ebisu, Tokyo) / Group exhibition "IMONO&nbsp;COLLECTION&nbsp;2025" (Tennozu Central Tower, Tokyo) / OSAKA&nbsp;INTERNATIONAL&nbsp;ART&nbsp;2025 (Osaka-jo Hall)</span></li>
-          <li><b>2026</b><span>Solo exhibition "Utsuroi, Tomeru" (Garari Showcase, Obuse, Nagano — next to the Hokusai-kan Museum) / Kaito Kawasaki Exhibition (Shinjuku Takashimaya) / Solo exhibition "Shutsuran no Homare" (Ebisu, Tokyo) / Three-person exhibition "MATSURI&nbsp;INORU" (Spiral&nbsp;Garden, Shin-Marunouchi Building) / Three-person exhibition "A&nbsp;World&nbsp;in&nbsp;Kogei" (Geidai Art Plaza) / ART&nbsp;FAIR&nbsp;TOKYO / ART&nbsp;FAIR&nbsp;PHILIPPINES (Makati) / 41st Toubikai Exhibition (Hiroshima Prefectural Art Museum) / 20th Geidai Art Plaza Art Award Exhibition (Geidai Art Plaza) / 74th Tokyo University of the Arts Graduation Works Exhibition (The University Art Museum, Tokyo University of the Arts)</span></li>
+          <li><b>2023</b><span>Group exhibition "IMONO&nbsp;COLLECTION&nbsp;2023" (Tennozu Central Tower, Tokyo)</span></li>
+          <li><b></b><span>17th Geidai Art Plaza Grand Prize Exhibition (Geidai Art Plaza)</span></li>
+          <li><b>2024</b><span>ART FAIR TOKYO (Tokyo International Forum)</span></li>
+          <li><b></b><span>KIAF SEOUL (Seoul, Korea)</span></li>
+          <li><b></b><span>artKYOTO (Shosei-en, Kyoto)</span></li>
+          <li><b></b><span>Solo exhibition "Miyahara no Iro" (Kure, Hiroshima)</span></li>
+          <li><b></b><span>18th Geidai Art Plaza Art Award Exhibition (Geidai Art Plaza)</span></li>
+          <li><b></b><span>72nd Tokyo University of the Arts Graduation Works Exhibition (Tokyo Metropolitan Art Museum)</span></li>
+          <li><b></b><span>Group exhibition "Harukaze Kori wo Toku" (Nara Tsutaya Books)</span></li>
+          <li><b></b><span>Two-person exhibition (Kanazawa Suiginkutsu, Kanazawa, Ishikawa)</span></li>
+          <li><b></b><span>Office exhibition "MISTO" (MISTO&nbsp;Tsukiji)</span></li>
+          <li><b></b><span>KOGEI Art Fair Kanazawa (Hyatt Centric Kanazawa)</span></li>
+          <li><b>2025</b><span>ART FAIR TOKYO</span></li>
+          <li><b></b><span>Osaka-Kansai Expo "Nippon no Takaramono Matsuri"</span></li>
+          <li><b></b><span>Solo exhibition "Kaeru Hajimete Naku" (Ebisu, Tokyo)</span></li>
+          <li><b></b><span>Group exhibition "IMONO&nbsp;COLLECTION&nbsp;2025" (Tennozu Central Tower, Tokyo)</span></li>
+          <li><b></b><span>OSAKA&nbsp;INTERNATIONAL&nbsp;ART&nbsp;2025 (Osaka-jo Hall)</span></li>
+          <li><b>2026</b><span>Solo exhibition "Utsuroi, Tomeru" (Garari Showcase, Obuse, Nagano — next to the Hokusai-kan Museum)</span></li>
+          <li><b></b><span>Kaito Kawasaki Exhibition (Shinjuku Takashimaya)</span></li>
+          <li><b></b><span>Solo exhibition "Shutsuran no Homare" (Ebisu, Tokyo)</span></li>
+          <li><b></b><span>Three-person exhibition "MATSURI&nbsp;INORU" (Spiral&nbsp;Garden, Shin-Marunouchi Building)</span></li>
+          <li><b></b><span>Three-person exhibition "A&nbsp;World&nbsp;in&nbsp;Kogei" (Geidai Art Plaza)</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;TOKYO</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;PHILIPPINES (Makati)</span></li>
+          <li><b></b><span>41st Toubikai Exhibition (Hiroshima Prefectural Art Museum)</span></li>
+          <li><b></b><span>20th Geidai Art Plaza Art Award Exhibition (Geidai Art Plaza)</span></li>
+          <li><b></b><span>74th Tokyo University of the Arts Graduation Works Exhibition (The University Art Museum, Tokyo University of the Arts)</span></li>
         </ul>
       </div>
       <div>

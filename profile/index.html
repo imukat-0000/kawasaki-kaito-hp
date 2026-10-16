@@ -211,6 +211,9 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
   display:grid; grid-template-columns:4.2em minmax(0,1fr); gap:1.2em;
   padding:.5em 0; border-bottom:1px solid var(--line);
 }
+/* 同じ年の展示は1行ずつ並べ、年の区切りにだけ線を引く */
+.cv li:has(+ li > b:empty){ border-bottom-color:transparent; padding-bottom:.2em; }
+.cv li:has(> b:empty){ padding-top:.2em; }
 .cv li b{ font-weight:400; color:var(--ink-soft); font-variant-numeric:tabular-nums; }
 .cv li a{
   color:var(--hido); text-decoration:none;
@@ -301,10 +304,33 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <h3>主な展示</h3>
         <ul>
           <li><b>2022</b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2022」（天王洲セントラルタワー）</span></li>
-          <li><b>2023</b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2023」（天王洲セントラルタワー）／ 第17回 藝大アートプラザ大賞展（藝大アートプラザ）</span></li>
-          <li><b>2024</b><span>ART FAIR TOKYO（東京国際フォーラム）／ KIAF SEOUL（韓国・ソウル）／ artKYOTO（京都・渉成園）／ 個展「宮原ノ色」（広島・呉）／ 第18回 藝大アートプラザ・アートアワード展（藝大アートプラザ）／ 第72回 東京藝術大学 卒業・修了作品展（東京都美術館）／ グループ展「東風凍りを解く」（奈良蔦屋書店）／ 2人展（金澤水銀窟・石川・金沢）／ オフィス展示「MISTO」（MISTO&nbsp;Tsukiji）／ 工芸アートフェア金沢（ハイアット セントリック 金沢）</span></li>
-          <li><b>2025</b><span>ART FAIR TOKYO ／ 大阪・関西万博「にっぽんの宝物祭り」／ 個展「カエルハジメテナク」（東京・恵比寿）／ グループ展「IMONO&nbsp;COLLECTION&nbsp;2025」（天王洲セントラルタワー）／ OSAKA&nbsp;INTERNATIONAL&nbsp;ART&nbsp;2025（大阪城ホール）</span></li>
-          <li><b>2026</b><span>個展「うつろい、留める」（ガラリShowcase・長野・小布施／北斎館隣）／ 河﨑海斗展（新宿髙島屋）／ 個展「出藍の誉」（東京・恵比寿）／ 3人展「MATSURI&nbsp;INORU」（Spiral&nbsp;Garden 新丸ビル）／ 3人展「工芸生態系 ─ A&nbsp;World&nbsp;in&nbsp;Kogei ─」（藝大アートプラザ）／ ART&nbsp;FAIR&nbsp;TOKYO ／ ART&nbsp;FAIR&nbsp;PHILIPPINES（マカティ）／ 第41回 桐美会展（広島県立美術館）／ 第20回 藝大アートプラザ・アートアワード展（藝大アートプラザ）／ 第74回 東京藝術大学 卒業・修了作品展（東京藝術大学大学美術館）</span></li>
+          <li><b>2023</b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2023」（天王洲セントラルタワー）</span></li>
+          <li><b></b><span>第17回 藝大アートプラザ大賞展（藝大アートプラザ）</span></li>
+          <li><b>2024</b><span>ART FAIR TOKYO（東京国際フォーラム）</span></li>
+          <li><b></b><span>KIAF SEOUL（韓国・ソウル）</span></li>
+          <li><b></b><span>artKYOTO（京都・渉成園）</span></li>
+          <li><b></b><span>個展「宮原ノ色」（広島・呉）</span></li>
+          <li><b></b><span>第18回 藝大アートプラザ・アートアワード展（藝大アートプラザ）</span></li>
+          <li><b></b><span>第72回 東京藝術大学 卒業・修了作品展（東京都美術館）</span></li>
+          <li><b></b><span>グループ展「東風凍りを解く」（奈良蔦屋書店）</span></li>
+          <li><b></b><span>2人展（金澤水銀窟・石川・金沢）</span></li>
+          <li><b></b><span>オフィス展示「MISTO」（MISTO&nbsp;Tsukiji）</span></li>
+          <li><b></b><span>工芸アートフェア金沢（ハイアット セントリック 金沢）</span></li>
+          <li><b>2025</b><span>ART FAIR TOKYO</span></li>
+          <li><b></b><span>大阪・関西万博「にっぽんの宝物祭り」</span></li>
+          <li><b></b><span>個展「カエルハジメテナク」（東京・恵比寿）</span></li>
+          <li><b></b><span>グループ展「IMONO&nbsp;COLLECTION&nbsp;2025」（天王洲セントラルタワー）</span></li>
+          <li><b></b><span>OSAKA&nbsp;INTERNATIONAL&nbsp;ART&nbsp;2025（大阪城ホール）</span></li>
+          <li><b>2026</b><span>個展「うつろい、留める」（ガラリShowcase・長野・小布施／北斎館隣）</span></li>
+          <li><b></b><span>河﨑海斗展（新宿髙島屋）</span></li>
+          <li><b></b><span>個展「出藍の誉」（東京・恵比寿）</span></li>
+          <li><b></b><span>3人展「MATSURI&nbsp;INORU」（Spiral&nbsp;Garden 新丸ビル）</span></li>
+          <li><b></b><span>3人展「工芸生態系 ─ A&nbsp;World&nbsp;in&nbsp;Kogei ─」（藝大アートプラザ）</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;TOKYO</span></li>
+          <li><b></b><span>ART&nbsp;FAIR&nbsp;PHILIPPINES（マカティ）</span></li>
+          <li><b></b><span>第41回 桐美会展（広島県立美術館）</span></li>
+          <li><b></b><span>第20回 藝大アートプラザ・アートアワード展（藝大アートプラザ）</span></li>
+          <li><b></b><span>第74回 東京藝術大学 卒業・修了作品展（東京藝術大学大学美術館）</span></li>
         </ul>
       </div>
       <div>
