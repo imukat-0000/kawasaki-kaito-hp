@@ -100,6 +100,7 @@ test('注目展示の選び方：開催中はすべて（終了が早い順）�
   editData(dir, (list) => { prep(byId(list, 'kogei-art-fair-2026')); prep(byId(list, 'medel-2026')); });
   run(dir, ['--today', '2026-10-09']);
   assert.equal(feature(), '個展「うつろい、留める」', '開催中のものを優先');
+  assert.doesNotMatch(read(dir, 'index.html'), /<div class="exhi-slider"/, '1つならスライドにしない');
   run(dir, ['--today', '2026-10-21']);
   assert.equal(feature(), 'KOGEI Art Fair Kanazawa 2026', '開催予定のうち開始が早いもの');
   run(dir, ['--today', '2026-11-30']);
@@ -111,6 +112,8 @@ test('注目展示の選び方：開催中はすべて（終了が早い順）�
   run(dir, ['--today', '2026-10-09']);
   const all = [...read(dir, 'index.html').matchAll(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)<\/h3>/g)].map((m) => m[1]);
   assert.deepEqual(all, ['河﨑海斗 個展', '個展「うつろい、留める」'], '開催中が2つなら両方を、終了が早い順に');
+  assert.match(read(dir, 'index.html'), /<div class="exhi-slider"[^>]*>\s*<div class="exhi-track">/, '2つ以上なら横にスライドする形');
+  assert.match(read(dir, 'en/index.html'), /aria-label="Next exhibition"/);
   assert.match(read(dir, 'index.html'), /var exhiDates = \[\['2026-10-01', '2026-10-19'\], \['2026-09-05', '2026-10-20'\]\];/);
 });
 
