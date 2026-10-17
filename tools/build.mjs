@@ -212,9 +212,11 @@ function period(e, lang){
 }
 const T = {
   ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'その他の展示', past: '過去の展示',
-        site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗' },
+        site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
+        slider: '開催中の展示', prev: '前の展示', next: '次の展示' },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Other Exhibitions', past: 'Past Exhibitions',
-        site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki' },
+        site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
+        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition' },
 };
 
 // ---------- 生成 ----------
@@ -256,8 +258,13 @@ function listItem(e, lang, tag){
 function topExhibitions(c, lang, img){
   const L = T[lang];
   const out = [];
+  // 2つ以上なら横にスライドして見る形にする（矢印・点はページ内のスクリプトが動かす）
+  const slider = c.features.length > 1;
+  const pad = slider ? '    ' : '';
+  if (slider) out.push(`    <div class="exhi-slider" role="region" aria-roledescription="carousel" aria-label="${L.slider}">`, '      <div class="exhi-track">');
   for (const f of c.features){
     const t = f[lang];
+    const start = out.length;
     const src = attr(img + f.image);
     out.push(
       '    <div class="exhi-feature">',
@@ -272,7 +279,17 @@ function topExhibitions(c, lang, img){
       '      </div>',
       '    </div>',
     );
+    if (slider) for (let i = start; i < out.length; i++) out[i] = pad + out[i];
   }
+  if (slider) out.push(
+    '      </div>',
+    '      <div class="exhi-nav">',
+    `        <button class="exhi-prev" type="button" aria-label="${L.prev}">‹</button>`,
+    '        <span class="exhi-dots"></span>',
+    `        <button class="exhi-next" type="button" aria-label="${L.next}">›</button>`,
+    '      </div>',
+    '    </div>',
+  );
   const block = (cls, ulCls, head, items) => {
     if (!items.length) return;
     if (out.length) out.push('');
