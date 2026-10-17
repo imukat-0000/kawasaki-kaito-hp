@@ -953,9 +953,19 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/tobi-art-fair-2026-ame-kaeru-suiren-kaito-kawasaki.jpg" alt="東美アートフェア2026 出品作《雨ノ蛙と睡蓮》" loading="lazy"></div>
+      <div class="exhi-feature-body">
+        <span class="exhi-feature-status" hidden></span>
+        <h3>東美アートフェア2026</h3>
+        <time>2026.10.16 — 10.18</time>
+        <p class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</p>
+        <p>増保美術とGALLERY KOGUREのディレクションによるブースに、50作家の小品100点が並ぶ。《雨ノ蛙と睡蓮》《青海亀》を出品。時間は16日10:00〜19:00、17日10:00〜18:00、18日10:00〜17:00。</p>
+      </div>
+    </div>
+    <div class="exhi-feature">
       <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/exhibition_dm_garari_showcase.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/exhibition_dm_garari_showcase.jpg" alt="個展「うつろい、留める」告知DM — ガラリShowcase" loading="lazy"></div>
       <div class="exhi-feature-body">
-        <span class="exhi-feature-status" id="exhiStatus" hidden></span>
+        <span class="exhi-feature-status" hidden></span>
         <h3>個展「うつろい、留める」</h3>
         <time>2026.9.5 — 10.20</time>
         <p class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</p>
@@ -969,10 +979,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>常設展示</time>
           <div><strong>常設展示</strong><span class="venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span></div>
-        </li>
-        <li>
-          <time>2026.10.16 — 10.18</time>
-          <div><strong>東美アートフェア2026</strong><span class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</span></div>
         </li>
         <li>
           <time>2026.10.31 — 11.3</time>
@@ -2193,17 +2199,21 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   /* ---------- 展示ステータス（開催中 / まもなく開催）の自動判定 ---------- */
   /* HTMLには状態を書かず（公開日によって誤表示になるため）、ここで日付から判定して表示する */
-  var exhiStatus = document.getElementById('exhiStatus');
-  if (exhiStatus){
+  var exhiStatuses = document.querySelectorAll('.exhi-feature-status');
+  if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiStart = new Date('2026-09-05T00:00:00+09:00');
-    var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
+    var exhiDates = [['2026-10-16', '2026-10-18'], ['2026-09-05', '2026-10-20']];
     /* /build:exhibition-dates */
-    if (today < exhiStart) exhiStatus.textContent = 'まもなく開催';
-    else if (today <= exhiEnd) exhiStatus.textContent = '開催中';
-    else exhiStatus.textContent = '会期終了';
-    exhiStatus.hidden = false;
+    for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
+      var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');
+      var exhiEnd = new Date(exhiDates[i][1] + 'T23:59:59+09:00');
+      var st = exhiStatuses[i];
+      if (today < exhiStart) st.textContent = 'まもなく開催';
+      else if (today <= exhiEnd) st.textContent = '開催中';
+      else st.textContent = '会期終了';
+      st.hidden = false;
+    }
   }
 
   /* ---------- スクロールで現れるセクション ---------- */
