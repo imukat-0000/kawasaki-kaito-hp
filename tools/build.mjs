@@ -183,14 +183,14 @@ function classify(all, today){
   const ongoing = (e) => !e.permanent && e.start <= today && today <= e.end;
   const upcoming = (e) => !e.permanent && today < e.start;
   const by = (k, dir = 1) => (a, b) => (a[k] < b[k] ? -dir : a[k] > b[k] ? dir : 0); // 同じなら台帳の順（安定ソート）
-  const featured =
-    all.filter((e) => e.featured && ongoing(e)).sort(by('end'))[0] ||
-    all.filter((e) => e.featured && upcoming(e)).sort(by('start'))[0] ||
-    null;
+  // 開催中の注目展示はすべて大きく出す（終了が早い順）。開催中がなければ、開催予定のうち開始が早いもの1つ
+  const ongoingFeatures = all.filter((e) => e.featured && ongoing(e)).sort(by('end'));
+  const features = ongoingFeatures.length ? ongoingFeatures
+    : all.filter((e) => e.featured && upcoming(e)).sort(by('start')).slice(0, 1);
   const current = all.filter((e) => !e.permanent && !ended(e)).sort(by('start'));
   return {
-    featured,
-    others: [...all.filter((e) => e.permanent), ...current.filter((e) => e !== featured)],
+    features,
+    others: [...all.filter((e) => e.permanent), ...current.filter((e) => !features.includes(e))],
     past: all.filter(ended).sort(by('start', -1)),
     events: current,
     sales: current.filter((e) => e.showOnSales),
@@ -214,9 +214,11 @@ function period(e, lang){
 }
 const T = {
   ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'その他の展示', past: '過去の展示',
-        site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗' },
+        site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
+        slider: '開催中の展示', prev: '前の展示', next: '次の展示' },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Other Exhibitions', past: 'Past Exhibitions',
-        site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki' },
+        site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
+        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition' },
 };
 
 // ---------- 生成 ----------
@@ -258,16 +260,20 @@ function listItem(e, lang, tag){
 function topExhibitions(c, lang, img){
   const L = T[lang];
   const out = [];
-  const f = c.featured;
-  if (f){
+  // 2つ以上なら横にスライドして見る形にする（矢印・点はページ内のスクリプトが動かす）
+  const slider = c.features.length > 1;
+  const pad = slider ? '    ' : '';
+  if (slider) out.push(`    <div class="exhi-slider" role="region" aria-roledescription="carousel" aria-label="${L.slider}">`, '      <div class="exhi-track">');
+  for (const f of c.features){
     const t = f[lang];
+    const start = out.length;
     const src = attr(img + f.image);
     out.push(
       '    <div class="exhi-feature">',
       `      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="${src}" data-edit-label="${attr(t.imageLabel)}" data-edit-where="index.html の .exhi-feature-dm img"><img src="${src}" alt="${attr(t.imageAlt)}" loading="lazy"></div>`,
       '      <div class="exhi-feature-body">',
       // 状態はHTMLに書かない（公開日によって誤表示になるため）。ページ内のスクリプトが日本時間で判定して表示する
-      '        <span class="exhi-feature-status" id="exhiStatus" hidden></span>',
+      '        <span class="exhi-feature-status" hidden></span>',
       `        <h3>${text(t.title)}</h3>`,
       `        <time>${period(f, lang)}</time>`,
       `        <p class="venue">${t.venue}</p>`,
@@ -275,7 +281,17 @@ function topExhibitions(c, lang, img){
       '      </div>',
       '    </div>',
     );
+    if (slider) for (let i = start; i < out.length; i++) out[i] = pad + out[i];
   }
+  if (slider) out.push(
+    '      </div>',
+    '      <div class="exhi-nav">',
+    `        <button class="exhi-prev" type="button" aria-label="${L.prev}">‹</button>`,
+    '        <span class="exhi-dots"></span>',
+    `        <button class="exhi-next" type="button" aria-label="${L.next}">›</button>`,
+    '      </div>',
+    '    </div>',
+  );
   const block = (cls, ulCls, head, items) => {
     if (!items.length) return;
     if (out.length) out.push('');
@@ -334,12 +350,9 @@ function eventsJsonld(c, lang){
   ].join('\n');
 }
 
+// 注目展示の会期（ページ上の並びと同じ順）。ページ内のスクリプトが1つずつ状態を判定する
 function statusDates(c){
-  if (!c.featured) return '    var exhiStart = null;\n    var exhiEnd = null;';
-  return [
-    `    var exhiStart = new Date('${c.featured.start}T00:00:00+09:00');`,
-    `    var exhiEnd = new Date('${c.featured.end}T23:59:59+09:00');`,
-  ].join('\n');
+  return `    var exhiDates = [${c.features.map((f) => `['${f.start}', '${f.end}']`).join(', ')}];`;
 }
 
 function salesGroup(c, lang, img){
@@ -573,15 +586,16 @@ const changes = first.results.filter((r) => r.src !== r.out);
 
 // ---------- 知らせ ----------
 const warns = [];
-const { featured } = first.c;
+const { features } = first.c;
 for (const e of data.exhibitions.filter((e) => e.featured && !e.permanent && e.end < TODAY)){
   warns.push(`${e.id} は会期が終わっています（${e.end}）。過去の展示に入れました。featured は外して構いません`);
 }
-if (!featured) warns.push('注目展示がありません（featured: true で、開催中か開催予定の展示がない）。トップは一覧だけになります');
+if (!features.length) warns.push('注目展示がありません（featured: true で、開催中か開催予定の展示がない）。トップは一覧だけになります');
 else {
-  const daysLeft = (Date.parse(featured.end) - Date.parse(TODAY)) / 86400000;
-  const next = classify(data.exhibitions, addDays(featured.end, 1)).featured;
-  if (daysLeft <= 14 && !next) warns.push(`注目展示 ${featured.id} は ${featured.end} に終わりますが、次の注目展示がありません。終了後は注目展示の枠が消え、一覧だけになります`);
+  const last = features.reduce((a, b) => (b.end > a.end ? b : a));
+  const daysLeft = (Date.parse(last.end) - Date.parse(TODAY)) / 86400000;
+  const next = classify(data.exhibitions, addDays(last.end, 1)).features;
+  if (daysLeft <= 14 && !next.length) warns.push(`注目展示 ${last.id} は ${last.end} に終わりますが、次の注目展示がありません。終了後は注目展示の枠が消え、一覧だけになります`);
 }
 warns.push(...lastmodWarnings(sm.out));
 for (const w of warns) console.warn('注意: ' + w);

@@ -1424,18 +1424,26 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
 
 .nav-sns{ display:none; }
 
-@media (max-width:760px){
+/* メニュー9項目を横一列に並べるとロゴに重なる幅（タブレットを含む）では、ハンバーガーメニューにする */
+@media (max-width:1100px){
   .nav-toggle{ display:flex; }
   #mainNav{
     inset:0; right:auto; z-index:24;
-    width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
+    width:100%; height:100%; align-items:center;
+    /* 上は固定ヘッダーの高さ(7.75rem)＋余白、下はInstagram・Xの行の分をあける。
+       収まらない画面ではメニューの中だけがスクロールする */
+    padding:8.75rem clamp(1.4rem,8vw,4rem) 4.8rem;
+    overflow-y:auto; overscroll-behavior:contain;
     background:var(--paper);
     justify-content:flex-end;
     opacity:0; visibility:hidden; transition:opacity .3s ease;
   }
   body.nav-open #mainNav{ opacity:1; visibility:visible; }
-  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:1.8rem; }
-  #mainNav a{ font-size:1.5rem; letter-spacing:.1em; }
+  /* margin:auto で余白があるときは上下中央、足りないときは上端からはみ出さずに並べる */
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:clamp(.7rem, 2.6vh, 1.6rem); margin:auto 0; }
+  /* 文字の大きさと間隔は画面の高さに合わせて縮め、9項目が1画面に収まるようにする */
+  #mainNav li{ line-height:1.35; }
+  #mainNav a{ font-size:clamp(1.05rem, 2.9vh, 1.5rem); letter-spacing:.1em; }
 
   .nav-sns{
     display:flex; gap:1.4rem;
@@ -1447,6 +1455,11 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
     font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
   }
   .nav-sns a:hover{ color:var(--hido); }
+}
+
+/* 横向きのスマートフォンなど高さが低い画面：項目を3列に並べて1画面に収める */
+@media (max-width:1100px) and (max-height:520px){
+  #mainNav ul{ display:grid; grid-template-columns:repeat(3, auto); justify-items:end; gap:.8rem 2rem; }
 }
 
 main{ position:relative; z-index:1; padding-top:9rem; }
@@ -1688,7 +1701,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     var toggleNav = function(){
       var open = document.body.classList.toggle('nav-open');
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      var isMobileNav = window.matchMedia('(max-width:1100px)').matches;
       document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
     };
     navToggle.addEventListener('click', toggleNav);

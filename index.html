@@ -72,35 +72,6 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "個展「うつろい、留める」",
-      "startDate": "2026-09-05",
-      "endDate": "2026-10-20",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "ガラリShowcase",
-        "address": { "@type": "PostalAddress", "streetAddress": "小布施485-2F", "addressLocality": "小布施町", "addressRegion": "長野県", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "河﨑海斗" }
-    },
-    {
-      "@type": "Event",
-      "name": "東美アートフェア2026",
-      "startDate": "2026-10-16",
-      "endDate": "2026-10-18",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "東京美術倶楽部",
-        "address": { "@type": "PostalAddress", "streetAddress": "新橋6-19-15", "addressLocality": "港区", "addressRegion": "東京都", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "河﨑海斗" },
-      "url": "https://artfair.toobi.co.jp/"
-    },
-    {
-      "@type": "Event",
       "name": "POP UP SHOP「MADE IN KURE」",
       "startDate": "2026-10-31",
       "endDate": "2026-11-03",
@@ -353,18 +324,26 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
 
 .nav-sns{ display:none; }
 
-@media (max-width:760px){
+/* メニュー9項目を横一列に並べるとロゴに重なる幅（タブレットを含む）では、ハンバーガーメニューにする */
+@media (max-width:1100px){
   .nav-toggle{ display:flex; }
   #mainNav{
     inset:0; right:auto; z-index:24;
-    width:100%; height:100%; padding:0 clamp(1.4rem,8vw,4rem); align-items:center;
+    width:100%; height:100%; align-items:center;
+    /* 上は固定ヘッダーの高さ(7.75rem)＋余白、下はInstagram・Xの行の分をあける。
+       収まらない画面ではメニューの中だけがスクロールする */
+    padding:8.75rem clamp(1.4rem,8vw,4rem) 4.8rem;
+    overflow-y:auto; overscroll-behavior:contain;
     background:var(--paper);
     justify-content:flex-end;
     opacity:0; visibility:hidden; transition:opacity .3s ease;
   }
   body.nav-open #mainNav{ opacity:1; visibility:visible; }
-  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:1.8rem; }
-  #mainNav a{ font-size:1.5rem; letter-spacing:.1em; }
+  /* margin:auto で余白があるときは上下中央、足りないときは上端からはみ出さずに並べる */
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:clamp(.7rem, 2.6vh, 1.6rem); margin:auto 0; }
+  /* 文字の大きさと間隔は画面の高さに合わせて縮め、9項目が1画面に収まるようにする */
+  #mainNav li{ line-height:1.35; }
+  #mainNav a{ font-size:clamp(1.05rem, 2.9vh, 1.5rem); letter-spacing:.1em; }
 
   .nav-sns{
     display:flex; gap:1.4rem;
@@ -376,6 +355,11 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
     font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
   }
   .nav-sns a:hover{ color:var(--hido); }
+}
+
+/* 横向きのスマートフォンなど高さが低い画面：項目を3列に並べて1画面に収める */
+@media (max-width:1100px) and (max-height:520px){
+  #mainNav ul{ display:grid; grid-template-columns:repeat(3, auto); justify-items:end; gap:.8rem 2rem; }
 }
 
 /* ============ quicknav（右端の小さな現在地ナビ） ============ */
@@ -695,6 +679,24 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   .exhi-feature{ grid-template-columns:1fr; }
   .exhi-feature-dm{ aspect-ratio:1472/2088; }
 }
+/* 開催中の展示が2つ以上あるときは横にスライド */
+.exhi-slider{ max-width:60rem; margin:0 auto 3.2rem; }
+.exhi-track{
+  display:flex; gap:1rem; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  scrollbar-width:none; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain;
+}
+.exhi-track::-webkit-scrollbar{ display:none; }
+.exhi-track .exhi-feature{ flex:0 0 100%; margin:0; scroll-snap-align:start; }
+.exhi-nav{ display:flex; align-items:center; justify-content:center; gap:1rem; margin-top:1.1rem; }
+.exhi-nav button.exhi-prev, .exhi-nav button.exhi-next{
+  width:2.4rem; height:2.4rem; border-radius:50%; border:1px solid var(--line); background:var(--card);
+  color:var(--ink); font-size:1.3rem; line-height:1; cursor:pointer;
+}
+.exhi-nav button:disabled{ opacity:.35; cursor:default; }
+.exhi-dots{ display:flex; gap:.55rem; }
+.exhi-dots button{ width:.55rem; height:.55rem; padding:0; border-radius:50%; border:0; background:var(--line); cursor:pointer; }
+.exhi-dots button[aria-current="true"]{ background:var(--hido); }
+@media (prefers-reduced-motion: reduce){ .exhi-track{ scroll-behavior:auto; } }
 .exhi-more h3{ font-size:.75rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
 .exhi-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .exhi-list li{
@@ -953,13 +955,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/exhibition_dm_garari_showcase.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/exhibition_dm_garari_showcase.jpg" alt="個展「うつろい、留める」告知DM — ガラリShowcase" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" alt="POP UP SHOP「MADE IN KURE」出品作 — 鋳金の蛙と紅葉" loading="lazy"></div>
       <div class="exhi-feature-body">
-        <span class="exhi-feature-status" id="exhiStatus" hidden></span>
-        <h3>個展「うつろい、留める」</h3>
-        <time>2026.9.5 — 10.20</time>
-        <p class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</p>
-        <p>北斎館所蔵の葛飾北斎《菊図》に描かれた菊「巴錦」を、河﨑海斗の解釈のもと鋳金で立体化した新作「画狂ノ菊」を展示します。</p>
+        <span class="exhi-feature-status" hidden></span>
+        <h3>POP UP SHOP「MADE IN KURE」</h3>
+        <time>2026.10.31 — 11.3</time>
+        <p class="venue">カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売</p>
+        <p>「呉から贈るクラフト市」として、呉の作り手4組が神楽坂に集まる4日間の展示販売。時間は11:00〜19:00。</p>
       </div>
     </div>
 
@@ -969,14 +971,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>常設展示</time>
           <div><strong>常設展示</strong><span class="venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span></div>
-        </li>
-        <li>
-          <time>2026.10.16 — 10.18</time>
-          <div><strong>東美アートフェア2026</strong><span class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</span></div>
-        </li>
-        <li>
-          <time>2026.10.31 — 11.3</time>
-          <div><strong>POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</strong><span class="venue">カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売</span></div>
         </li>
         <li>
           <time>2026.11.6 — 11.8</time>
@@ -1000,6 +994,14 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="exhi-past">
       <h3>過去の展示</h3>
       <ul class="exhi-list exhi-list-past">
+        <li>
+          <time>2026.10.16 — 10.18</time>
+          <div><strong>東美アートフェア2026<span class="ended-tag">（終了）</span></strong><span class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</span></div>
+        </li>
+        <li>
+          <time>2026.9.5 — 10.20</time>
+          <div><strong>個展「うつろい、留める」<span class="ended-tag">（終了）</span></strong><span class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</span></div>
+        </li>
         <li>
           <time>2026.7.22 — 7.28</time>
           <div><strong>河﨑海斗展<span class="ended-tag">（終了）</span></strong><span class="venue">新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展</span></div>
@@ -1507,16 +1509,18 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     setTimeout(function(){ intro.remove(); }, 1000);
   }
 
-  // P0-06: イントロは初回のみ。ハッシュ付き直リンク時もスキップ
-  // localStorageで永続化し、再訪問時(別日・別セッション)も表示しない
+  // イントロはサイトに入るたび（ブラウザのタブごとに1回）表示する。
+  // 同じ訪問の中でトップに戻ったとき・ハッシュ付き直リンク時は出さない
+  // （以前は localStorage で「一度見たら二度と出さない」にしていたが、
+  //   再訪問した人にも見えるように sessionStorage に変えた）
   var introSeen = false;
-  try { introSeen = localStorage.getItem('introSeen') === '1'; } catch(e){}
+  try { introSeen = sessionStorage.getItem('introSeen') === '1'; } catch(e){}
 
   if (reduced || introSeen || location.hash){
     intro.remove();
     document.body.classList.add('revealed');
   } else {
-    try { localStorage.setItem('introSeen', '1'); } catch(e){}
+    try { sessionStorage.setItem('introSeen', '1'); } catch(e){}
     var canvas = document.getElementById('introCanvas');
     var ctx = fitCanvas(canvas);
     var W = canvas.clientWidth, H = canvas.clientHeight;
@@ -2123,7 +2127,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       // フルスクリーンのメニューが実際に出るモバイル幅の時だけスクロールをロックする
       // （PC幅ではナビは常時表示のため、ロックすると画面が動かせなくなるだけになる）
-      var isMobileNav = window.matchMedia('(max-width:760px)').matches;
+      var isMobileNav = window.matchMedia('(max-width:1100px)').matches;
       document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
       if (open){
         // スクロール連動の非表示処理が付けた inline style が残っていると
@@ -2193,17 +2197,57 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   /* ---------- 展示ステータス（開催中 / まもなく開催）の自動判定 ---------- */
   /* HTMLには状態を書かず（公開日によって誤表示になるため）、ここで日付から判定して表示する */
-  var exhiStatus = document.getElementById('exhiStatus');
-  if (exhiStatus){
+  var exhiStatuses = document.querySelectorAll('.exhi-feature-status');
+  if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiStart = new Date('2026-09-05T00:00:00+09:00');
-    var exhiEnd = new Date('2026-10-20T23:59:59+09:00');
+    var exhiDates = [['2026-10-31', '2026-11-03']];
     /* /build:exhibition-dates */
-    if (today < exhiStart) exhiStatus.textContent = 'まもなく開催';
-    else if (today <= exhiEnd) exhiStatus.textContent = '開催中';
-    else exhiStatus.textContent = '会期終了';
-    exhiStatus.hidden = false;
+    for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
+      var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');
+      var exhiEnd = new Date(exhiDates[i][1] + 'T23:59:59+09:00');
+      var st = exhiStatuses[i];
+      if (today < exhiStart) st.textContent = 'まもなく開催';
+      else if (today <= exhiEnd) st.textContent = '開催中';
+      else st.textContent = '会期終了';
+      st.hidden = false;
+    }
+  }
+
+  /* ---------- 開催中の展示のスライド（矢印・点・スワイプ） ---------- */
+  var exhiSlider = document.querySelector('.exhi-slider');
+  if (exhiSlider){
+    var exTrack = exhiSlider.querySelector('.exhi-track');
+    var exSlides = exTrack.querySelectorAll('.exhi-feature');
+    var exPrev = exhiSlider.querySelector('.exhi-prev');
+    var exNext = exhiSlider.querySelector('.exhi-next');
+    var exDotsBox = exhiSlider.querySelector('.exhi-dots');
+    var exDots = [];
+    var exLabel = exPrev.getAttribute('aria-label').indexOf('Previous') === 0 ? 'Exhibition ' : '展示 ';
+    var exStride = function(){ return Math.max(1, exSlides[1].offsetLeft - exSlides[0].offsetLeft); };
+    var exGo = function(i){ exTrack.scrollTo({ left: i * exStride(), behavior: reduced ? 'auto' : 'smooth' }); };
+    var exCur = function(){ return Math.round(exTrack.scrollLeft / exStride()); };
+    for (var k = 0; k < exSlides.length; k++){
+      (function(i){
+        var d = document.createElement('button');
+        d.type = 'button';
+        d.setAttribute('aria-label', exLabel + (i + 1));
+        d.addEventListener('click', function(){ exGo(i); });
+        exDotsBox.appendChild(d);
+        exDots.push(d);
+      })(k);
+    }
+    var exSync = function(){
+      var c = Math.min(exSlides.length - 1, Math.max(0, exCur()));
+      for (var j = 0; j < exDots.length; j++) exDots[j].setAttribute('aria-current', j === c ? 'true' : 'false');
+      exPrev.disabled = c === 0;
+      exNext.disabled = c === exSlides.length - 1;
+    };
+    exPrev.addEventListener('click', function(){ exGo(Math.max(0, exCur() - 1)); });
+    exNext.addEventListener('click', function(){ exGo(Math.min(exSlides.length - 1, exCur() + 1)); });
+    exTrack.addEventListener('scroll', exSync, { passive: true });
+    window.addEventListener('resize', exSync);
+    exSync();
   }
 
   /* ---------- スクロールで現れるセクション ---------- */
