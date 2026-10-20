@@ -1523,16 +1523,18 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     setTimeout(function(){ intro.remove(); }, 1000);
   }
 
-  // P0-06: イントロは初回のみ。ハッシュ付き直リンク時もスキップ
-  // localStorageで永続化し、再訪問時(別日・別セッション)も表示しない
+  // イントロはサイトに入るたび（ブラウザのタブごとに1回）表示する。
+  // 同じ訪問の中でトップに戻ったとき・ハッシュ付き直リンク時は出さない
+  // （以前は localStorage で「一度見たら二度と出さない」にしていたが、
+  //   再訪問した人にも見えるように sessionStorage に変えた）
   var introSeen = false;
-  try { introSeen = localStorage.getItem('introSeen') === '1'; } catch(e){}
+  try { introSeen = sessionStorage.getItem('introSeen') === '1'; } catch(e){}
 
   if (reduced || introSeen || location.hash){
     intro.remove();
     document.body.classList.add('revealed');
   } else {
-    try { localStorage.setItem('introSeen', '1'); } catch(e){}
+    try { sessionStorage.setItem('introSeen', '1'); } catch(e){}
     var canvas = document.getElementById('introCanvas');
     var ctx = fitCanvas(canvas);
     var W = canvas.clientWidth, H = canvas.clientHeight;
