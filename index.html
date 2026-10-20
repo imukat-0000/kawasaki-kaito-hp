@@ -72,20 +72,6 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "個展「うつろい、留める」",
-      "startDate": "2026-09-05",
-      "endDate": "2026-10-20",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "ガラリShowcase",
-        "address": { "@type": "PostalAddress", "streetAddress": "小布施485-2F", "addressLocality": "小布施町", "addressRegion": "長野県", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "河﨑海斗" }
-    },
-    {
-      "@type": "Event",
       "name": "POP UP SHOP「MADE IN KURE」",
       "startDate": "2026-10-31",
       "endDate": "2026-11-03",
@@ -969,13 +955,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/exhibition_dm_garari_showcase.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/exhibition_dm_garari_showcase.jpg" alt="個展「うつろい、留める」告知DM — ガラリShowcase" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" alt="POP UP SHOP「MADE IN KURE」出品作 — 鋳金の蛙と紅葉" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" hidden></span>
-        <h3>個展「うつろい、留める」</h3>
-        <time>2026.9.5 — 10.20</time>
-        <p class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</p>
-        <p>北斎館所蔵の葛飾北斎《菊図》に描かれた菊「巴錦」を、河﨑海斗の解釈のもと鋳金で立体化した新作「画狂ノ菊」を展示します。</p>
+        <h3>POP UP SHOP「MADE IN KURE」</h3>
+        <time>2026.10.31 — 11.3</time>
+        <p class="venue">カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売</p>
+        <p>「呉から贈るクラフト市」として、呉の作り手4組が神楽坂に集まる4日間の展示販売。時間は11:00〜19:00。</p>
       </div>
     </div>
 
@@ -985,10 +971,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>常設展示</time>
           <div><strong>常設展示</strong><span class="venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span></div>
-        </li>
-        <li>
-          <time>2026.10.31 — 11.3</time>
-          <div><strong>POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</strong><span class="venue">カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売</span></div>
         </li>
         <li>
           <time>2026.11.6 — 11.8</time>
@@ -1015,6 +997,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>2026.10.16 — 10.18</time>
           <div><strong>東美アートフェア2026<span class="ended-tag">（終了）</span></strong><span class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</span></div>
+        </li>
+        <li>
+          <time>2026.9.5 — 10.20</time>
+          <div><strong>個展「うつろい、留める」<span class="ended-tag">（終了）</span></strong><span class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</span></div>
         </li>
         <li>
           <time>2026.7.22 — 7.28</time>
@@ -2215,7 +2201,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiDates = [['2026-09-05', '2026-10-20']];
+    var exhiDates = [['2026-10-31', '2026-11-03']];
     /* /build:exhibition-dates */
     for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
       var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');

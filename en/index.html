@@ -73,20 +73,6 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "Solo Exhibition \"Utsuroi, Tomeru\"",
-      "startDate": "2026-09-05",
-      "endDate": "2026-10-20",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "Garari Showcase",
-        "address": { "@type": "PostalAddress", "streetAddress": "485-2F Obuse", "addressLocality": "Obuse", "addressRegion": "Nagano", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "Kaito Kawasaki" }
-    },
-    {
-      "@type": "Event",
       "name": "Pop-up Shop \"MADE IN KURE\"",
       "startDate": "2026-10-31",
       "endDate": "2026-11-03",
@@ -973,13 +959,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/exhibition_dm_garari_showcase.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/exhibition_dm_garari_showcase.jpg" alt="Announcement flyer for the solo exhibition &quot;Utsuroi, Tomeru&quot; at Garari Showcase" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" alt="Work shown at the pop-up shop &quot;MADE IN KURE&quot; — cast-metal frog with maple leaves" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" hidden></span>
-        <h3>Solo Exhibition "Utsuroi, Tomeru"</h3>
-        <time>Sep 5 — Oct 20, 2026</time>
-        <p class="venue">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission</p>
-        <p>Featuring "Gakyo no Kiku," a new cast-metal work reinterpreting the Tomoe-nishiki chrysanthemum depicted in Hokusai's Chrysanthemums (Kiku-zu), held in the Hokusai-kan collection.</p>
+        <h3>Pop-up Shop "MADE IN KURE"</h3>
+        <time>Oct 31 — Nov 3, 2026</time>
+        <p class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</p>
+        <p>"Gifts from Kure": a four-day craft market bringing four makers from Kure to Kagurazaka. Open 11:00–19:00.</p>
       </div>
     </div>
 
@@ -989,10 +975,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Ongoing</time>
           <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
-        </li>
-        <li>
-          <time>Oct 31 — Nov 3, 2026</time>
-          <div><strong>Pop-up&nbsp;Shop "MADE&nbsp;IN&nbsp;KURE"</strong><span class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</span></div>
         </li>
         <li>
           <time>Nov 6 — 8, 2026</time>
@@ -1019,6 +1001,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Oct 16 — 18, 2026</time>
           <div><strong>Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026<span class="ended-tag">(Ended)</span></strong><span class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</span></div>
+        </li>
+        <li>
+          <time>Sep 5 — Oct 20, 2026</time>
+          <div><strong>Solo Exhibition "Utsuroi, Tomeru"<span class="ended-tag">(Ended)</span></strong><span class="venue">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission</span></div>
         </li>
         <li>
           <time>Jul 22 — 28, 2026</time>
@@ -2217,7 +2203,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiDates = [['2026-09-05', '2026-10-20']];
+    var exhiDates = [['2026-10-31', '2026-11-03']];
     /* /build:exhibition-dates */
     for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
       var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');
