@@ -1861,6 +1861,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   /* 作品個別ページを試験的に用意した作品のみ、ここにidを追加する(小規模パイロット) */
   var DETAIL_PAGES = { "shuiro-wakin": true };
   var lastFocused = null;
+  var closeTimer = null;
 
   function openModal(w){
     modalVisual.innerHTML = tileVisualHTML(w);
@@ -1885,6 +1886,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       modalDetailLink.hidden = true;
     }
     lastFocused = document.activeElement;
+    window.clearTimeout(closeTimer);
     modal.hidden = false;
     requestAnimationFrame(function(){
       modal.classList.add("open");
@@ -1896,7 +1898,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   function closeModal(){
     modal.classList.remove("open");
     document.body.style.overflow = "";
-    window.setTimeout(function(){ modal.hidden = true; }, 250);
+    closeTimer = window.setTimeout(function(){ modal.hidden = true; }, 250);
     if (lastFocused) lastFocused.focus();
   }
 

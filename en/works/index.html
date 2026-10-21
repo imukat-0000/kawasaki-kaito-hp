@@ -1848,6 +1848,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   var modalSpecs = document.getElementById("modalSpecs");
   var modalInquiry = document.getElementById("modalInquiry");
   var lastFocused = null;
+  var closeTimer = null;
 
   function openModal(w){
     modalVisual.innerHTML = tileVisualHTML(w);
@@ -1865,6 +1866,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }).join("");
     modalInquiry.href = "mailto:akaitomato1028@gmail.com?subject=" + encodeURIComponent("Inquiry about \"" + w.title + "\"");
     lastFocused = document.activeElement;
+    window.clearTimeout(closeTimer);
     modal.hidden = false;
     requestAnimationFrame(function(){
       modal.classList.add("open");
@@ -1876,7 +1878,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   function closeModal(){
     modal.classList.remove("open");
     document.body.style.overflow = "";
-    window.setTimeout(function(){ modal.hidden = true; }, 250);
+    closeTimer = window.setTimeout(function(){ modal.hidden = true; }, 250);
     if (lastFocused) lastFocused.focus();
   }
 
