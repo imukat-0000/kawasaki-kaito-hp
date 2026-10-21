@@ -213,30 +213,112 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 }
 .archive-back a:hover{ border-color:var(--hido); }
 
-/* ============ ジャーナル ============ */
-.journal-lede{ max-width:42rem; color:var(--ink-soft); font-size:.92rem; margin:1.6rem 0 2.6rem; }
-.journal-list{ list-style:none; max-width:52rem; }
-.journal-list li{ border-bottom:1px solid var(--line); }
-.journal-card{
-  display:block; padding:1.6em 0; text-decoration:none; color:inherit;
+/* ============ ジャーナル（ブログ風・一覧と記事で共通） ============ */
+/* 方眼ノートのような点の地紋。作家の手帳をのぞくような親しみを出す */
+body{
+  background-image:radial-gradient(color-mix(in srgb, var(--line) 75%, transparent) 1px, transparent 1.2px);
+  background-size:22px 22px;
 }
-.journal-meta{
-  display:flex; align-items:center; gap:.9em; margin-bottom:.5em;
+.jr-avatar{
+  flex:none; width:3.4rem; height:3.4rem; border-radius:50%; overflow:hidden;
+  border:2px solid var(--card); box-shadow:0 0 0 2px color-mix(in srgb, var(--hido) 35%, transparent);
+  background:var(--card);
 }
+.jr-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
 .journal-cat{
-  font-size:.68rem; letter-spacing:.14em; color:var(--hido);
-  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  border-radius:999px; padding:.25em .9em;
+  display:inline-block; font-size:.68rem; letter-spacing:.14em; line-height:1.6; color:var(--hido);
+  background:color-mix(in srgb, var(--hido) 11%, var(--card));
+  border-radius:999px; padding:.3em 1em;
 }
+.journal-cat::before{ content:"● "; font-size:.6em; vertical-align:.2em; opacity:.7; }
 .journal-date{
-  font-size:.72rem; letter-spacing:.05em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+  font-size:.74rem; letter-spacing:.06em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
+/* マスキングテープ風の留め具（写真の上の角に貼る） */
+.jr-photo{ position:relative; }
+.jr-photo::before, .jr-photo::after{
+  content:""; position:absolute; z-index:2; top:-.7rem; width:5.2rem; height:1.5rem;
+  background:color-mix(in srgb, var(--hido) 26%, transparent);
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+  pointer-events:none;
+}
+.jr-photo::before{ left:1.2rem; transform:rotate(-6deg); }
+.jr-photo::after{ right:1.2rem; transform:rotate(5deg); background:color-mix(in srgb, var(--brass) 28%, transparent); }
+.jr-btn{
+  display:inline-flex; align-items:center; gap:.4em;
+  font-size:.8rem; letter-spacing:.06em; text-decoration:none;
+  color:var(--hido); background:var(--card);
+  border:1.5px solid color-mix(in srgb, var(--hido) 40%, transparent);
+  border-radius:999px; padding:.55em 1.3em;
+  transition:background .25s, color .25s, border-color .25s, transform .25s;
+}
+.jr-btn:hover{ background:var(--hido); color:var(--card); border-color:var(--hido); transform:translateY(-2px); }
+@media (prefers-reduced-motion:reduce){
+  .jr-btn, .jr-card{ transition:none !important; }
+  .jr-btn:hover, .jr-card:hover{ transform:none !important; }
+}
+
+/* ---------- 一覧 ---------- */
+.jr-hello{
+  display:flex; align-items:center; gap:1.1rem;
+  max-width:52rem; margin:1.8rem 0 2.8rem; padding:1.2rem 1.4rem;
+  background:var(--card); border-radius:1.2rem;
+  border:1px solid var(--line);
+  box-shadow:0 6px 20px -14px rgba(60,40,20,.35);
+}
+.jr-hello-name{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-weight:600; font-size:.98rem; letter-spacing:.12em; line-height:1.5;
+}
+.jr-hello-name small{
+  display:block; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-weight:400; font-size:.66rem; letter-spacing:.1em; color:var(--ink-soft);
+}
+.journal-lede{ color:var(--ink-soft); font-size:.88rem; line-height:1.85; margin-top:.35rem; }
+
+.journal-list{
+  list-style:none; max-width:60rem;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap:2.6rem 2rem; padding-top:.6rem;
+}
+.jr-card{
+  display:flex; flex-direction:column; height:100%;
+  text-decoration:none; color:inherit;
+  background:var(--card); border-radius:1.2rem; padding:.8rem .8rem 1.4rem;
+  border:1px solid var(--line);
+  box-shadow:0 8px 24px -16px rgba(60,40,20,.4);
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.jr-card:hover{ transform:translateY(-4px) rotate(-.4deg); box-shadow:0 16px 30px -18px rgba(60,40,20,.5); }
+.jr-card .jr-photo{ aspect-ratio:3/2; }
+.jr-card .jr-photo img{
+  width:100%; height:100%; object-fit:cover; display:block; border-radius:.8rem;
+}
+/* 日付スタンプ（写真の右下に重ねる） */
+.jr-stamp{
+  position:absolute; right:.8rem; bottom:-1.2rem; z-index:3;
+  width:3.9rem; height:3.9rem; border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--hido); color:var(--card);
+  border:3px solid var(--card);
+  font-variant-numeric:tabular-nums; line-height:1.15; transform:rotate(8deg);
+}
+.jr-stamp b{ font-family:"Didot","Bodoni 72","Bodoni Moda",serif; font-size:1.02rem; font-weight:600; letter-spacing:.02em; }
+.jr-stamp small{ font-size:.56rem; letter-spacing:.1em; opacity:.9; }
+.jr-card-body{ display:flex; flex-direction:column; flex:1; padding:1.3rem .7rem 0; }
+.jr-card .journal-meta{ display:flex; align-items:center; gap:.8em; margin-bottom:.7em; }
 .journal-title{
   display:block; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-weight:600; font-size:1.1rem; margin-bottom:.5em; transition:color .25s;
+  font-weight:600; font-size:1.08rem; line-height:1.6; margin-bottom:.6em; transition:color .25s;
 }
-.journal-card:hover .journal-title{ color:var(--hido); }
-.journal-excerpt{ font-size:.85rem; color:var(--ink-soft); max-width:44rem; }
+.jr-card:hover .journal-title{ color:var(--hido); }
+.journal-excerpt{ font-size:.84rem; line-height:1.85; color:var(--ink-soft); flex:1; }
+.jr-more{ align-self:flex-end; margin-top:1rem; font-size:.76rem; letter-spacing:.1em; color:var(--hido); }
+.jr-more::after{ content:" →"; display:inline-block; transition:transform .25s; }
+.jr-card:hover .jr-more::after{ transform:translateX(3px); }
+@media (max-width:520px){
+  .jr-hello{ align-items:flex-start; padding:1.1rem 1.1rem; }
+}
 
 footer{
   padding:2.5rem; text-align:center;
@@ -290,7 +372,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   <section aria-label="ジャーナル">
     <div class="sec-head"><h1>ジャーナル</h1><span>JOURNAL</span></div>
     <p class="archive-back"><a href="../index.html#artist">← 河﨑海斗について読む</a></p>
-    <p class="journal-lede">制作の背景、工芸リアリズムをめぐる思考、展示の記録。河﨑海斗による記事を随時公開しています。</p>
+    <div class="jr-hello">
+      <span class="jr-avatar"><img src="../img/kaito-kawasaki-avatar.jpg" alt="" width="120" height="120" loading="lazy"></span>
+      <div>
+        <p class="jr-hello-name">河﨑海斗<small>金工作家・鋳金</small></p>
+        <p class="journal-lede">制作の背景、工芸リアリズムをめぐる思考、展示の記録。河﨑海斗による記事を随時公開しています。</p>
+      </div>
+    </div>
 
     <ul class="journal-list" id="journalList"></ul>
   </section>
@@ -306,21 +394,25 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   "use strict";
 
   var ARTICLES = [
-    { slug:"vermilion-wakin-cluster", title:"祭りの夜の、持ち帰れない金魚たち ——「朱色和金群」", date:"2026-10-21", category:"作品",
+    { slug:"vermilion-wakin-cluster", title:"祭りの夜の、持ち帰れない金魚たち ——「朱色和金群」", date:"2026-10-21", category:"作品", image:"vermilion-wakin-goldfish-group-kaito-kawasaki.jpg", alt:"鋳金で制作した朱色の和金の群れ「朱色和金群」",
       excerpt:"金魚すくいの水槽の前で、たくさんの金魚を見つめた記憶から生まれた作品「朱色和金群」。銅の赤、100匹の和金、樹脂の水、そして「工＋藝」京都 2026 での展示について。" },
-    { slug:"kogei-realism", title:"工芸リアリズムとは何か", date:"2026-07-29", category:"思想",
+    { slug:"kogei-realism", title:"工芸リアリズムとは何か", date:"2026-07-29", category:"思想", image:"bronze-goldfish-resin-kaito-kawasaki.jpg", alt:"樹脂に封入された鋳金の金魚",
       excerpt:"金魚をどれだけ精巧に模すかではなく、金魚が金魚として存在するための条件を組み直すこと。工芸リアリズムという言葉の意味について。" }
   ];
 
   var list = document.getElementById("journalList");
   if (list){
     list.innerHTML = ARTICLES.map(function(a){
-      return '<li><a class="journal-card" href="' + a.slug + '/">' +
-        '<span class="journal-meta"><span class="journal-cat">' + a.category + '</span>' +
-        '<time class="journal-date">' + a.date + '</time></span>' +
+      var d = a.date.split("-");
+      return '<li><a class="jr-card" href="' + a.slug + '/">' +
+        '<span class="jr-photo"><img src="../img/' + a.image + '" alt="' + a.alt + '" width="600" height="400" loading="lazy">' +
+        '<time class="jr-stamp" datetime="' + a.date + '"><b>' + d[1] + '.' + d[2] + '</b><small>' + d[0] + '</small></time></span>' +
+        '<span class="jr-card-body">' +
+        '<span class="journal-meta"><span class="journal-cat">' + a.category + '</span></span>' +
         '<span class="journal-title">' + a.title + '</span>' +
         '<span class="journal-excerpt">' + a.excerpt + '</span>' +
-        '</a></li>';
+        '<span class="jr-more">読む</span>' +
+        '</span></a></li>';
     }).join("");
   }
 
