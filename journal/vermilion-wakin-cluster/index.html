@@ -229,42 +229,114 @@ section{ padding:clamp(2rem,5vw,3.6rem) clamp(1.4rem,6vw,5rem); }
 }
 .archive-back a:hover{ border-color:var(--hido); }
 
-/* ============ ジャーナル記事 ============ */
-.journal-meta{ display:flex; align-items:center; gap:.9em; margin-bottom:1.2rem; }
+/* ============ ジャーナル（ブログ風・一覧と記事で共通） ============ */
+/* 方眼ノートのような点の地紋。作家の手帳をのぞくような親しみを出す */
+body{
+  background-image:radial-gradient(color-mix(in srgb, var(--line) 75%, transparent) 1px, transparent 1.2px);
+  background-size:22px 22px;
+}
 .journal-cat{
-  font-size:.68rem; letter-spacing:.14em; color:var(--hido);
-  border:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
-  border-radius:999px; padding:.25em .9em;
+  display:inline-block; font-size:.68rem; letter-spacing:.14em; line-height:1.6; color:var(--hido);
+  background:color-mix(in srgb, var(--hido) 11%, var(--card));
+  border-radius:999px; padding:.3em 1em;
 }
+.journal-cat::before{ content:"● "; font-size:.6em; vertical-align:.2em; opacity:.7; }
 .journal-date{
-  font-size:.72rem; letter-spacing:.05em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+  font-size:.74rem; letter-spacing:.06em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
-.journal-article{ max-width:42rem; }
+.jr-photo{ position:relative; }
+.jr-btn{
+  display:inline-flex; align-items:center; gap:.4em;
+  font-size:.8rem; letter-spacing:.06em; text-decoration:none;
+  color:var(--hido); background:var(--card);
+  border:1.5px solid color-mix(in srgb, var(--hido) 40%, transparent);
+  border-radius:999px; padding:.55em 1.3em;
+  transition:background .25s, color .25s, border-color .25s, transform .25s;
+}
+.jr-btn:hover{ background:var(--hido); color:var(--card); border-color:var(--hido); transform:translateY(-2px); }
+@media (prefers-reduced-motion:reduce){
+  .jr-btn, .jr-card{ transition:none !important; }
+  .jr-btn:hover, .jr-card:hover{ transform:none !important; }
+}
+
+/* ---------- 記事 ---------- */
+/* 読みものとして、パソコン幅でも本文の列を画面の中央に置く */
+.archive-back, .journal-article, .jr-pager{ max-width:44rem; margin-left:auto; margin-right:auto; }
+.journal-article{
+  max-width:44rem; position:relative;
+  background:var(--card); border:1px solid var(--line); border-radius:1.4rem;
+  padding:clamp(1.6rem,5vw,3rem) clamp(1.2rem,5vw,3.2rem) clamp(2rem,5vw,3rem);
+  box-shadow:0 10px 30px -20px rgba(60,40,20,.45);
+  margin-top:1.4rem;
+}
+.journal-meta{ display:flex; align-items:center; gap:.9em; margin-bottom:1.1rem; }
 .journal-article h1{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.5rem,3.6vw,2rem); font-weight:600; line-height:1.5; margin-bottom:1.8rem;
-}
-.journal-article-hero{
-  aspect-ratio:3/2; border-radius:.3rem; overflow:hidden; margin-bottom:2rem;
-}
-.journal-article-hero img{ width:100%; height:100%; object-fit:cover; }
-.journal-article p{ margin-bottom:1.3em; font-size:.94rem; }
-.journal-article h2{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:1.08rem; font-weight:600; letter-spacing:.06em; line-height:1.6;
-  margin:2.6rem 0 1rem; padding-left:.8rem; border-left:2px solid var(--hido);
+  font-size:clamp(1.45rem,3.6vw,1.95rem); font-weight:600; line-height:1.55; margin-bottom:1.8rem;
 }
 .journal-article h1 .nb{ display:inline-block; }
-.journal-article .journal-lead{ font-size:1rem; line-height:2; }
-.journal-figure{ margin:2rem 0 2.2rem; }
-.journal-figure img{ width:100%; height:auto; border-radius:.3rem; display:block; }
-.journal-figure figcaption{ margin-top:.6rem; font-size:.75rem; color:var(--ink-soft); letter-spacing:.04em; }
-.journal-related{ margin-top:2.4rem; font-size:.85rem; }
-.journal-related a{
-  color:var(--hido); text-decoration:none;
-  border-bottom:1px solid color-mix(in srgb, var(--hido) 45%, transparent);
+.journal-article-hero{
+  aspect-ratio:3/2; border-radius:1rem; overflow:hidden;
 }
-.journal-related a:hover{ border-color:var(--hido); }
+.journal-article-hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+.journal-article .jr-photo{ margin:0 0 2.2rem; }
+.journal-article p{ margin-bottom:1.3em; font-size:.95rem; line-height:2; }
+.journal-article .journal-lead{
+  font-size:1rem; line-height:2;
+  background:color-mix(in srgb, var(--hido) 7%, var(--card));
+  border-radius:1rem; padding:1.1rem 1.3rem; margin-bottom:1.8em;
+}
+/* 見出しには小さな金魚の印と、蛍光ペンを引いたような下線 */
+.journal-article h2{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.1rem; font-weight:600; letter-spacing:.06em; line-height:1.6;
+  margin:2.8rem 0 1.1rem;
+  display:flex; align-items:center; gap:.6rem;
+}
+.journal-article h2::before{
+  content:""; flex:none; width:1.6rem; height:1.1rem; background:var(--hido);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 22'%3E%3Cpath d='M1 11C5 3 14 1 21 6l8-5c-1.5 3.5-2 7-2 10s.5 6.5 2 10l-8-5C14 21 5 19 1 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 22'%3E%3Cpath d='M1 11C5 3 14 1 21 6l8-5c-1.5 3.5-2 7-2 10s.5 6.5 2 10l-8-5C14 21 5 19 1 11z'/%3E%3C/svg%3E") center/contain no-repeat;
+  transform:scaleX(-1);
+}
+.journal-article h2 span{
+  background:linear-gradient(transparent 62%, color-mix(in srgb, var(--hido) 18%, transparent) 62%);
+  padding:0 .15em;
+}
+.journal-figure{ margin:2rem 0 2.2rem; }
+.journal-figure img{ width:100%; height:auto; border-radius:1rem; display:block; }
+.journal-figure figcaption{ margin-top:.6rem; font-size:.75rem; color:var(--ink-soft); letter-spacing:.04em; }
+.journal-related{
+  margin-top:2.6rem; padding-top:1.6rem; border-top:2px dotted var(--line);
+  display:flex; flex-wrap:wrap; gap:.7rem; align-items:center; font-size:.8rem;
+}
+.journal-article .journal-related{ margin-bottom:0; }
+
+/* 前後の記事 */
+.jr-pager{
+  max-width:44rem; margin-top:2rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+}
+.jr-pager a{
+  display:block; text-decoration:none; color:inherit;
+  background:var(--card); border:1px solid var(--line); border-radius:1rem;
+  padding:1rem 1.2rem; transition:border-color .25s, transform .25s;
+}
+.jr-pager a:hover{ border-color:var(--hido); transform:translateY(-2px); }
+.jr-pager small{ display:block; font-size:.68rem; letter-spacing:.12em; color:var(--hido); margin-bottom:.2rem; }
+.jr-pager span{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:.86rem; font-weight:600; line-height:1.6;
+}
+.jr-pager .next{ grid-column:2; text-align:right; }
+@media (max-width:520px){
+  .jr-pager{ grid-template-columns:1fr; }
+  .jr-pager .next{ grid-column:1; }
+}
+@media (prefers-reduced-motion:reduce){
+  .jr-pager a{ transition:none; }
+  .jr-pager a:hover{ transform:none; }
+}
 
 footer{
   padding:2.5rem; text-align:center;
@@ -322,35 +394,40 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <div class="journal-meta">
         <span class="journal-cat">作品</span>
         <time class="journal-date">2026-10-21</time>
+        <span class="journal-date">2分ほどで読めます</span>
       </div>
       <h1><span class="nb">祭りの夜の、</span><span class="nb">持ち帰れない金魚たち</span><br>——「朱色和金群」</h1>
 
-      <div class="journal-article-hero" data-edit-slot="journal-vermilion-wakin-cluster" data-edit-ratio="1.5" data-edit-path="../../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" data-edit-label="朱色和金群" data-edit-where="journal/vermilion-wakin-cluster/index.html の記事冒頭画像"><img src="../../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="鋳金で制作した朱色の和金の群れ「朱色和金群」" loading="eager"></div>
+      <div class="jr-photo"><div class="journal-article-hero" data-edit-slot="journal-vermilion-wakin-cluster" data-edit-ratio="1.5" data-edit-path="../../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" data-edit-label="朱色和金群" data-edit-where="journal/vermilion-wakin-cluster/index.html の記事冒頭画像"><img src="../../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="鋳金で制作した朱色の和金の群れ「朱色和金群」" loading="eager"></div></div>
 
       <p class="journal-lead">お祭りの夜、金魚すくいの水槽の前で、たくさんの金魚を見つめた記憶はありませんか。持ち帰りたいけれど、全部は持ち帰れない。「朱色和金群」は、そんな風景から生まれた作品です。</p>
 
-      <h2>金属と金魚</h2>
+      <h2><span>金属と金魚</span></h2>
       <p>金属と金魚には、共通点があります。どちらも、人が手を加えることで形や色を変えてきたものです。</p>
       <p>銅は、純粋であるほど赤く発色し、ほかの金属が少しでも混ざると、その赤は失われます。金魚もまた、赤い個体同士を掛け合わせることで、より濃い赤が受け継がれていきます。</p>
       <p>この作品の朱色は、金属の表面に酸化銅の粉を擦り込んで出しています。</p>
 
-      <h2>一匹から、群れへ</h2>
+      <h2><span>一匹から、群れへ</span></h2>
       <p>最初の金魚の作品をつくったころは、一匹を完成させるのが精一杯でした。</p>
       <p>2026年、東京藝術大学の修了制作「錦秋」では、錦鯉や紅葉の作品とともに、朱色の和金を全部で100匹つくりました。秋の華やかさと、お祭りの金魚すくいのワクワク感を、展示の中に呼び起こしたかったからです。</p>
       <p>いちばん大変だったのは、「たくさん」つくることでした。ヒレをつくるだけで半月。一日中ヒレをつくり続け、昼も夜もわからなくなるほどでした。</p>
 
-      <h2>金属の色と、樹脂の水</h2>
+      <h2><span>金属の色と、樹脂の水</span></h2>
       <p>金魚の色の部分は、すべて金属の色です。透明な水の部分は樹脂でできています。この作品は、二つの素材からできています。</p>
       <p>金属は、熱や薬品、時間によって、さまざまな色や形に変わります。その変化は魔法のようで、錬金術と呼びたくなるほどです。金魚たちは、そうした過程を経て生まれています。</p>
       <p>けれど、見るときに難しいことを考える必要はありません。ふと目にしたとき、自然に「かわいい」「綺麗」と思ってもらえたら、それがいちばん嬉しいです。</p>
 
-      <h2>京都・妙顕寺へ</h2>
+      <h2><span>京都・妙顕寺へ</span></h2>
       <p>「工＋藝」京都&nbsp;2026（11月6日〜8日）では、大本山 妙顕寺で、このうち20数匹を展示します。</p>
       <p>同じ会場には、古美術や近代の工芸の名品も並びます。長い時間を受け継いできたお寺の静かな空間で、お祭りの賑わいを思わせる金魚たちがどう見えるのか、私自身も楽しみにしています。</p>
       <p>ぜひ会場で、金魚たちに会いに来てください。</p>
 
-      <p class="journal-related">関連: <a href="../../works/#w01">作品「朱色和金群」を見る →</a><br><a href="../../index.html#exhibitions">展示情報を見る →</a></p>
+      <p class="journal-related"><span>関連:</span> <a class="jr-btn" href="../../works/#w01">作品「朱色和金群」を見る →</a><a class="jr-btn" href="../../index.html#exhibitions">展示情報を見る →</a></p>
     </article>
+
+    <nav class="jr-pager" aria-label="前後の記事">
+      <a class="prev" href="../kogei-realism/"><small>← 前の記事</small><span>工芸リアリズムとは何か</span></a>
+    </nav>
   </section>
 </main>
 
