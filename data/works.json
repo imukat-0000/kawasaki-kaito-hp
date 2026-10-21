@@ -78,9 +78,9 @@
       "group": "goldfish",
       "img": "img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg",
       "pos": "25% 42%",
-      "kanji": "郡",
+      "kanji": "群",
       "title": {
-        "ja": "朱色和金郡",
+        "ja": "朱色和金群",
         "en": "Vermilion Wakin Cluster"
       },
       "yearLabel": {
@@ -92,11 +92,11 @@
         "en": "Goldfish (Wakin)"
       },
       "desc": {
-        "ja": "群れという条件は、一匹では成立しない。反復して鋳込まれた和金が並ぶことで、初めて「郡」という存在が立ち上がる。",
+        "ja": "群れという条件は、一匹では成立しない。反復して鋳込まれた和金が並ぶことで、初めて「群」という存在が立ち上がる。",
         "en": "A cluster does not exist as a single fish. Only through the repetition of casting — the same wakin, cast again and again — does the plural condition of a ‘cluster’ come into being."
       },
       "alt": {
-        "ja": "鋳金で制作した金魚の作品「朱色和金郡」",
+        "ja": "鋳金で制作した金魚の作品「朱色和金群」",
         "en": "Cast-metal goldfish sculpture, \"Vermilion Wakin Cluster\", by Kaito Kawasaki"
       },
       "specs": [
