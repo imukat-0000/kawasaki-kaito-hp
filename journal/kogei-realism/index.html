@@ -235,12 +235,6 @@ body{
   background-image:radial-gradient(color-mix(in srgb, var(--line) 75%, transparent) 1px, transparent 1.2px);
   background-size:22px 22px;
 }
-.jr-avatar{
-  flex:none; width:3.4rem; height:3.4rem; border-radius:50%; overflow:hidden;
-  border:2px solid var(--card); box-shadow:0 0 0 2px color-mix(in srgb, var(--hido) 35%, transparent);
-  background:var(--card);
-}
-.jr-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
 .journal-cat{
   display:inline-block; font-size:.68rem; letter-spacing:.14em; line-height:1.6; color:var(--hido);
   background:color-mix(in srgb, var(--hido) 11%, var(--card));
@@ -250,16 +244,7 @@ body{
 .journal-date{
   font-size:.74rem; letter-spacing:.06em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
-/* マスキングテープ風の留め具（写真の上の角に貼る） */
 .jr-photo{ position:relative; }
-.jr-photo::before, .jr-photo::after{
-  content:""; position:absolute; z-index:2; top:-.7rem; width:5.2rem; height:1.5rem;
-  background:color-mix(in srgb, var(--hido) 26%, transparent);
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
-  pointer-events:none;
-}
-.jr-photo::before{ left:1.2rem; transform:rotate(-6deg); }
-.jr-photo::after{ right:1.2rem; transform:rotate(5deg); background:color-mix(in srgb, var(--brass) 28%, transparent); }
 .jr-btn{
   display:inline-flex; align-items:center; gap:.4em;
   font-size:.8rem; letter-spacing:.06em; text-decoration:none;
@@ -276,7 +261,7 @@ body{
 
 /* ---------- 記事 ---------- */
 /* 読みものとして、パソコン幅でも本文の列を画面の中央に置く */
-.archive-back, .journal-article, .jr-author, .jr-pager{ max-width:44rem; margin-left:auto; margin-right:auto; }
+.archive-back, .journal-article, .jr-pager{ max-width:44rem; margin-left:auto; margin-right:auto; }
 .journal-article{
   max-width:44rem; position:relative;
   background:var(--card); border:1px solid var(--line); border-radius:1.4rem;
@@ -287,16 +272,9 @@ body{
 .journal-meta{ display:flex; align-items:center; gap:.9em; margin-bottom:1.1rem; }
 .journal-article h1{
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-size:clamp(1.45rem,3.6vw,1.95rem); font-weight:600; line-height:1.55; margin-bottom:1.3rem;
+  font-size:clamp(1.45rem,3.6vw,1.95rem); font-weight:600; line-height:1.55; margin-bottom:1.8rem;
 }
 .journal-article h1 .nb{ display:inline-block; }
-.jr-byline{
-  display:flex; align-items:center; gap:.8rem; margin-bottom:2rem;
-  padding-bottom:1.4rem; border-bottom:2px dotted var(--line);
-}
-.jr-byline .jr-avatar{ width:2.6rem; height:2.6rem; }
-.jr-byline-name{ font-size:.82rem; letter-spacing:.1em; line-height:1.5; }
-.jr-byline-name small{ display:block; font-size:.68rem; color:var(--ink-soft); letter-spacing:.06em; }
 .journal-article-hero{
   aspect-ratio:3/2; border-radius:1rem; overflow:hidden;
 }
@@ -334,26 +312,6 @@ body{
 }
 .journal-article .journal-related{ margin-bottom:0; }
 
-/* この記事を書いた人 */
-.jr-author{
-  max-width:44rem; margin-top:2rem; position:relative;
-  display:flex; gap:1.2rem; align-items:center;
-  background:color-mix(in srgb, var(--hido) 7%, var(--card));
-  border-radius:1.4rem; padding:1.5rem 1.6rem;
-}
-.jr-author .jr-avatar{ width:4.4rem; height:4.4rem; }
-.jr-author-label{
-  display:inline-block; font-size:.64rem; letter-spacing:.16em; color:var(--card);
-  background:var(--hido); border-radius:999px; padding:.15em .9em; margin-bottom:.4rem;
-}
-.jr-author-name{
-  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
-  font-weight:600; font-size:1.05rem; letter-spacing:.14em; line-height:1.5;
-}
-.jr-author-role{ font-size:.72rem; color:var(--ink-soft); letter-spacing:.08em; margin-bottom:.7rem; }
-.jr-author-links{ display:flex; flex-wrap:wrap; gap:.5rem; }
-.jr-author-links .jr-btn{ font-size:.72rem; padding:.4em 1em; }
-
 /* 前後の記事 */
 .jr-pager{
   max-width:44rem; margin-top:2rem;
@@ -372,7 +330,6 @@ body{
 }
 .jr-pager .next{ grid-column:2; text-align:right; }
 @media (max-width:520px){
-  .jr-author{ flex-direction:column; align-items:flex-start; text-align:left; }
   .jr-pager{ grid-template-columns:1fr; }
   .jr-pager .next{ grid-column:1; }
 }
@@ -437,9 +394,9 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <div class="journal-meta">
         <span class="journal-cat">思想</span>
         <time class="journal-date">2026-07-29</time>
+        <span class="journal-date">2分ほどで読めます</span>
       </div>
       <h1>工芸リアリズムとは何か</h1>
-      <div class="jr-byline"><span class="jr-avatar"><img src="../../img/kaito-kawasaki-avatar.jpg" alt="" width="120" height="120" loading="lazy"></span><p class="jr-byline-name">河﨑海斗<small>2分ほどで読めます</small></p></div>
 
       <div class="jr-photo"><div class="journal-article-hero" data-edit-slot="journal-kogei-realism" data-edit-ratio="1.5" data-edit-path="../../img/bronze-goldfish-resin-kaito-kawasaki.jpg" data-edit-label="工芸リアリズム" data-edit-where="journal/kogei-realism/index.html の記事冒頭画像"><img src="../../img/bronze-goldfish-resin-kaito-kawasaki.jpg" alt="樹脂に封入された鋳金の金魚" loading="eager"></div></div>
 
@@ -455,16 +412,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
       <p class="journal-related"><span>関連:</span> <a class="jr-btn" href="../../index.html#concept">コンセプトページを見る →</a></p>
     </article>
-
-    <aside class="jr-author" aria-label="この記事を書いた人">
-      <span class="jr-avatar"><img src="../../img/kaito-kawasaki-avatar.jpg" alt="" width="120" height="120" loading="lazy"></span>
-      <div>
-        <span class="jr-author-label">この記事を書いた人</span>
-        <p class="jr-author-name">河﨑海斗</p>
-        <p class="jr-author-role">金工作家・鋳金</p>
-        <p class="jr-author-links"><a class="jr-btn" href="../../profile/">プロフィールを見る</a><a class="jr-btn" href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a><a class="jr-btn" href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a></p>
-      </div>
-    </aside>
 
     <nav class="jr-pager" aria-label="前後の記事">
       <a class="next" href="../vermilion-wakin-cluster/"><small>新しい記事 →</small><span>祭りの夜の、持ち帰れない金魚たち ——「朱色和金群」</span></a>
