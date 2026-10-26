@@ -39,7 +39,8 @@ concurrency:
 jobs:
   build:
     name: 生成と検査
-    runs-on: ubuntu-latest
+    # ubuntu-latest が 26.04 になり、Playwright 1.56.1 がブラウザを入れられなくなったため固定する
+    runs-on: ubuntu-24.04
     permissions:
       contents: write # 生成結果を main に記録するため
     outputs:
