@@ -148,18 +148,26 @@
       "id": "ko-gei-kyoto-2026",
       "start": "2026-11-06",
       "end": "2026-11-08",
+      "featured": true,
+      "image": "img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg",
       "showOnSales": true,
       "salesImage": "img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg",
       "ja": {
         "title": "「工＋藝」京都 2026",
         "listTitle": "「工＋藝」京都&nbsp;2026",
         "venue": "大本山 妙顕寺（京都）— 《朱色和金群》を出品",
+        "text": "群れという条件は、一匹では成立しない。反復して鋳込まれた和金が並ぶことで「群」が立ち上がる《朱色和金群》を、京都・妙顕寺で展示します。",
+        "imageAlt": "「工＋藝」京都 2026 出品作《朱色和金群》 — 鋳金の和金の群れ",
+        "imageLabel": "展示メイン画像",
         "salesImageAlt": "「工＋藝」京都 2026 出品作《朱色和金群》"
       },
       "en": {
         "title": "\"Ko + Gei\" Kyoto 2026",
         "listTitle": "\"Ko&nbsp;+&nbsp;Gei\" Kyoto&nbsp;2026",
         "venue": "Myokenji Temple (Kyoto) — showing \"Vermilion Wakin Cluster\"",
+        "text": "A cluster does not exist as a single fish. \"Vermilion Wakin Cluster\" — the same wakin, cast again and again until a cluster comes into being — will be shown at Myokenji Temple in Kyoto.",
+        "imageAlt": "\"Vermilion Wakin Cluster\", shown at \"Ko + Gei\" Kyoto 2026 — a cluster of cast-metal wakin goldfish",
+        "imageLabel": "Exhibition main image",
         "salesImageAlt": "\"Vermilion Wakin Cluster\", shown at \"Ko + Gei\" Kyoto 2026"
       },
       "place": {
