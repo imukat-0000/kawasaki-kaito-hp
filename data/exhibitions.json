@@ -210,36 +210,6 @@
       }
     },
     {
-      "id": "medel-2026",
-      "start": "2026-12-11",
-      "end": "2026-12-22",
-      "url": "https://medelgalleryshu.com/",
-      "showOnSales": true,
-      "salesKanji": "個",
-      "ja": {
-        "title": "河﨑海斗 個展「一陽」",
-        "listTitle": "個展「一陽」",
-        "venue": "MEDEL GALLERY SHU HIBIYA（帝国ホテルプラザ1F）"
-      },
-      "en": {
-        "title": "Kaito Kawasaki Solo Exhibition \"Ichiyō\"",
-        "listTitle": "Solo Exhibition \"Ichiyō\"",
-        "venue": "MEDEL GALLERY SHU HIBIYA (Imperial Hotel Plaza, 1F)"
-      },
-      "place": {
-        "ja": {
-          "name": "MEDEL GALLERY SHU HIBIYA",
-          "locality": "帝国ホテルプラザ",
-          "region": "東京都"
-        },
-        "en": {
-          "name": "MEDEL GALLERY SHU HIBIYA",
-          "locality": "Imperial Hotel Plaza",
-          "region": "Tokyo"
-        }
-      }
-    },
-    {
       "id": "kure-2027",
       "start": "2027-03-20",
       "end": "2027-04-18",
