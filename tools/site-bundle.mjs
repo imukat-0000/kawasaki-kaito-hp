@@ -18,7 +18,7 @@ const ROOT = process.env.SITE_ROOT ? resolve(process.env.SITE_ROOT) : join(dirna
 // 公開してよいもの（ここにないものは公開されない）
 export const ALLOW_FILES = ['index.html', '404.html', 'CNAME', 'favicon.png', 'favicon.svg', 'apple-touch-icon.png',
   'robots.txt', 'sitemap.xml', 'llms.txt'];
-export const ALLOW_DIRS = ['img', 'fonts', 'js', 'en', 'works', 'journal', 'profile', 'sales', 'privacy'];
+export const ALLOW_DIRS = ['img', 'fonts', 'js', 'en', 'works', 'journal', 'profile', 'sales', 'privacy', 'kinshu'];
 
 // 公開用フォルダに入っていたら止めるもの（どの階層にあっても）
 const FORBIDDEN = [
