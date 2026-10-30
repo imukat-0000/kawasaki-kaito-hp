@@ -218,6 +218,38 @@
       }
     },
     {
+      "id": "art-miyazaki-2027",
+      "start": "2027-01-22",
+      "end": "2027-01-25",
+      "url": "https://artmiyazaki.main.jp/",
+      "showOnSales": true,
+      "salesKanji": "宮",
+      "ja": {
+        "title": "ART MIYAZAKI 2027",
+        "listTitle": "ART&nbsp;MIYAZAKI&nbsp;2027",
+        "venue": "みやざきアートセンター 5階 ほか（宮崎）— 22日はVIP内覧、23〜25日が一般公開"
+      },
+      "en": {
+        "title": "ART MIYAZAKI 2027",
+        "listTitle": "ART&nbsp;MIYAZAKI&nbsp;2027",
+        "venue": "Miyazaki Art Center, 5F, and other venues (Miyazaki) — VIP preview Jan 22, open to the public Jan 23–25"
+      },
+      "place": {
+        "ja": {
+          "name": "みやざきアートセンター",
+          "streetAddress": "橘通西3-3-27",
+          "locality": "宮崎市",
+          "region": "宮崎県"
+        },
+        "en": {
+          "name": "Miyazaki Art Center",
+          "streetAddress": "3-3-27 Tachibana-dori Nishi",
+          "locality": "Miyazaki",
+          "region": "Miyazaki"
+        }
+      }
+    },
+    {
       "id": "kure-2027",
       "start": "2027-03-20",
       "end": "2027-04-18",
