@@ -73,20 +73,6 @@
   "@graph": [
     {
       "@type": "Event",
-      "name": "Pop-up Shop \"MADE IN KURE\"",
-      "startDate": "2026-10-31",
-      "endDate": "2026-11-03",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "Kagurazaka Hitotohako",
-        "address": { "@type": "PostalAddress", "streetAddress": "NH Bldg. 1F, 6-58 Kagurazaka", "addressLocality": "Shinjuku-ku", "addressRegion": "Tokyo", "addressCountry": "JP" }
-      },
-      "performer": { "@type": "Person", "name": "Kaito Kawasaki" }
-    },
-    {
-      "@type": "Event",
       "name": "\"Ko + Gei\" Kyoto 2026",
       "startDate": "2026-11-06",
       "endDate": "2026-11-08",
@@ -963,13 +949,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
     <!-- build:exhibitions -->
     <div class="exhi-feature">
-      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/made-in-kure-2026-ame-kaeru-momiji-kaito-kawasaki.jpg" alt="Work shown at the pop-up shop &quot;MADE IN KURE&quot; — cast-metal frog with maple leaves" loading="lazy"></div>
+      <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" data-edit-label="Exhibition main image" data-edit-where="index.html の .exhi-feature-dm img"><img src="../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="&quot;Vermilion Wakin Cluster&quot;, shown at &quot;Ko + Gei&quot; Kyoto 2026 — a cluster of cast-metal wakin goldfish" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" hidden></span>
-        <h3>Pop-up Shop "MADE IN KURE"</h3>
-        <time>Oct 31 — Nov 3, 2026</time>
-        <p class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</p>
-        <p>"Gifts from Kure": a four-day craft market bringing four makers from Kure to Kagurazaka. Open 11:00–19:00.</p>
+        <h3>"Ko + Gei" Kyoto 2026</h3>
+        <time>Nov 6 — 8, 2026</time>
+        <p class="venue">Myokenji Temple (Kyoto) — showing "Vermilion Wakin Cluster"</p>
+        <p>A cluster does not exist as a single fish. "Vermilion Wakin Cluster" — the same wakin, cast again and again until a cluster comes into being — will be shown at Myokenji Temple in Kyoto.</p>
       </div>
     </div>
 
@@ -979,10 +965,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <li>
           <time>Ongoing</time>
           <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
-        </li>
-        <li>
-          <time>Nov 6 — 8, 2026</time>
-          <div><strong>"Ko&nbsp;+&nbsp;Gei" Kyoto&nbsp;2026</strong><span class="venue">Myokenji Temple (Kyoto) — showing "Vermilion Wakin Cluster"</span></div>
         </li>
         <li>
           <time>Nov 27 — 29, 2026</time>
@@ -1002,6 +984,10 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <div class="exhi-past">
       <h3>Past Exhibitions</h3>
       <ul class="exhi-list exhi-list-past">
+        <li>
+          <time>Oct 31 — Nov 3, 2026</time>
+          <div><strong>Pop-up&nbsp;Shop "MADE&nbsp;IN&nbsp;KURE"<span class="ended-tag">(Ended)</span></strong><span class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</span></div>
+        </li>
         <li>
           <time>Oct 16 — 18, 2026</time>
           <div><strong>Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026<span class="ended-tag">(Ended)</span></strong><span class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</span></div>
@@ -2207,7 +2193,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   if (exhiStatuses.length){
     var today = new Date();
     /* build:exhibition-dates */
-    var exhiDates = [['2026-10-31', '2026-11-03']];
+    var exhiDates = [['2026-11-06', '2026-11-08']];
     /* /build:exhibition-dates */
     for (var i = 0; i < exhiStatuses.length && i < exhiDates.length; i++){
       var exhiStart = new Date(exhiDates[i][0] + 'T00:00:00+09:00');
