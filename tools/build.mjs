@@ -215,11 +215,13 @@ function period(e, lang){
 const T = {
   ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'その他の展示', past: '過去の展示',
         site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
-        slider: '開催中の展示', prev: '前の展示', next: '次の展示' },
+        slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）' },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Other Exhibitions', past: 'Past Exhibitions',
         site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
-        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition' },
+        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)' },
 };
+
+const LINK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 // ---------- 生成 ----------
 function newsDate(s, lang){
@@ -274,7 +276,10 @@ function topExhibitions(c, lang, img){
       '      <div class="exhi-feature-body">',
       // 状態はHTMLに書かない（公開日によって誤表示になるため）。ページ内のスクリプトが日本時間で判定して表示する
       '        <span class="exhi-feature-status" hidden></span>',
-      `        <h3>${text(t.title)}</h3>`,
+      // url があれば見出しの横に外部リンクのアイコンを付ける
+      f.url
+        ? `        <h3>${text(t.title)}<a class="exhi-feature-link" href="${attr(f.url)}" target="_blank" rel="noopener" aria-label="${L.open}" title="${L.open}">${LINK_ICON}</a></h3>`
+        : `        <h3>${text(t.title)}</h3>`,
       `        <time>${period(f, lang)}</time>`,
       `        <p class="venue">${t.venue}</p>`,
       `        <p>${text(t.text)}</p>`,
