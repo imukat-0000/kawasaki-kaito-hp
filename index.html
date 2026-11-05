@@ -659,6 +659,11 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
   font-size:clamp(1.4rem,3vw,1.9rem); font-weight:600; letter-spacing:.1em;
 }
+.exhi-feature-link{
+  display:inline-flex; vertical-align:middle; margin-left:.5em; padding:.2em;
+  color:var(--hido); border-radius:4px; transition:color .2s, background .2s;
+}
+.exhi-feature-link:hover, .exhi-feature-link:focus-visible{ color:var(--paper); background:var(--hido); }
 .exhi-feature-body time{ font-size:.88rem; color:var(--ink-soft); letter-spacing:.06em; font-variant-numeric:tabular-nums; }
 .exhi-feature-body .venue{ font-size:.92rem; font-weight:600; }
 .exhi-feature-body p{ font-size:.88rem; line-height:1.9; color:var(--ink-soft); }
@@ -949,7 +954,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <div class="exhi-feature-dm" data-edit-slot="dm" data-edit-ratio="0.75" data-edit-path="img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" data-edit-label="展示メイン画像" data-edit-where="index.html の .exhi-feature-dm img"><img src="img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="「工＋藝」京都 2026 出品作《朱色和金群》 — 鋳金の和金の群れ" loading="lazy"></div>
       <div class="exhi-feature-body">
         <span class="exhi-feature-status" hidden></span>
-        <h3>「工＋藝」京都 2026</h3>
+        <h3>「工＋藝」京都 2026<a class="exhi-feature-link" href="https://web.pokke.in/njpbby86tz2zpr3n/" target="_blank" rel="noopener" aria-label="展示のページを開く（新しいタブ）" title="展示のページを開く（新しいタブ）"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3>
         <time>2026.11.6 — 11.8</time>
         <p class="venue">大本山 妙顕寺（京都）— 《朱色和金群》を出品</p>
         <p>群れという条件は、一匹では成立しない。反復して鋳込まれた和金が並ぶことで「群」が立ち上がる《朱色和金群》を、京都・妙顕寺で展示します。</p>

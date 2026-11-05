@@ -97,15 +97,18 @@ test('会期の切り替わり：最終日（10/20）までは注目展示、翌
 test('注目展示の選び方：開催中はすべて（終了が早い順）、なければ開催予定のうち開始が早いもの1つ（同じなら台帳の順）', (t) => {
   const dir = sandbox();
   t.after(() => rmSync(dir, { recursive: true, force: true }));
-  const feature = () => read(dir, 'index.html').match(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)<\/h3>/)?.[1];
+  const feature = () => read(dir, 'index.html').match(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)(?:<a |<\/h3>)/)?.[1];
+  const featureLink = () => read(dir, 'index.html').match(/<div class="exhi-feature">[\s\S]*?<h3>.*?<a class="exhi-feature-link" href="([^"]+)"[^>]*aria-label="[^"]+"/)?.[1];
   const prep = (e) => Object.assign(e, { featured: true, image: 'img/exhibition_dm_garari_showcase.jpg' }) &&
     ['ja', 'en'].forEach((l) => Object.assign(e[l], { text: '説明', imageAlt: 'alt', imageLabel: 'label' }));
   editData(dir, (list) => { prep(byId(list, 'kogei-art-fair-2026')); prep(byId(list, 'medel-2026')); });
   run(dir, ['--today', '2026-10-09']);
   assert.equal(feature(), '個展「うつろい、留める」', '開催中のものを優先');
+  assert.equal(featureLink(), undefined, 'url がなければアイコンを付けない');
   assert.doesNotMatch(read(dir, 'index.html'), /<div class="exhi-slider"/, '1つならスライドにしない');
   run(dir, ['--today', '2026-10-21']);
   assert.equal(feature(), 'KOGEI Art Fair Kanazawa 2026', '開催予定のうち開始が早いもの');
+  assert.equal(featureLink(), 'https://kogei-artfair.jp/', 'url があれば見出しにリンクのアイコンを付ける');
   run(dir, ['--today', '2026-11-30']);
   assert.equal(feature(), '河﨑海斗 個展');
   editData(dir, (list) => { byId(list, 'medel-2026').start = '2026-11-27'; byId(list, 'medel-2026').end = '2026-11-29'; });
@@ -113,7 +116,7 @@ test('注目展示の選び方：開催中はすべて（終了が早い順）�
   assert.equal(feature(), 'KOGEI Art Fair Kanazawa 2026', '開始日も同じなら台帳で上にあるもの');
   editData(dir, (list) => { byId(list, 'medel-2026').start = '2026-10-01'; byId(list, 'medel-2026').end = '2026-10-19'; });
   run(dir, ['--today', '2026-10-09']);
-  const all = [...read(dir, 'index.html').matchAll(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)<\/h3>/g)].map((m) => m[1]);
+  const all = [...read(dir, 'index.html').matchAll(/<div class="exhi-feature">[\s\S]*?<h3>(.*?)(?:<a |<\/h3>)/g)].map((m) => m[1]);
   assert.deepEqual(all, ['河﨑海斗 個展', '個展「うつろい、留める」'], '開催中が2つなら両方を、終了が早い順に');
   assert.match(read(dir, 'index.html'), /<div class="exhi-slider"[^>]*>\s*<div class="exhi-track">/, '2つ以上なら横にスライドする形');
   assert.match(read(dir, 'en/index.html'), /aria-label="Next exhibition"/);
