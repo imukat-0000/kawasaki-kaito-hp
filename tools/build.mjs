@@ -189,6 +189,7 @@ function classify(all, today){
     : all.filter((e) => e.featured && upcoming(e)).sort(by('start')).slice(0, 1);
   const current = all.filter((e) => !e.permanent && !ended(e)).sort(by('start'));
   return {
+    today,
     features,
     others: [...all.filter((e) => e.permanent), ...current.filter((e) => !features.includes(e))],
     past: all.filter(ended).sort(by('start', -1)),
@@ -213,12 +214,14 @@ function period(e, lang){
   return `${MON[a.m - 1]} ${a.d} — ${right}, ${b.y}`;
 }
 const T = {
-  ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'その他の展示', past: '過去の展示',
+  ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'これからの展示', moreNow: '開催中・これからの展示', past: '過去の展示',
         site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
-        slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）' },
-  en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Other Exhibitions', past: 'Past Exhibitions',
+        slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）',
+        now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る` },
+  en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Upcoming', moreNow: 'Current &amp; Upcoming', past: 'Past Exhibitions',
         site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
-        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)' },
+        slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)',
+        now: 'Now on', plannedTag: 'Planned', pastMore: (n) => `Show ${n} more past exhibition${n > 1 ? 's' : ''}` },
 };
 
 const LINK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -248,16 +251,63 @@ function newsList(news, lang){
   return ['    <ul class="news-list">', ...items, '    </ul>'].join('\n');
 }
 
-function listItem(e, lang, tag){
-  const t = e[lang];
-  const tagHtml = tag ? `<span class="ended-tag">${tag}</span>` : '';
+// 年を外した会期（年は別に出す）。年をまたぐときは終わりの側に年を付ける
+function shortPeriod(e, lang){
+  const a = ymd(e.start), b = ymd(e.end);
+  if (lang === 'ja'){
+    if (e.start === e.end) return `${a.m}.${a.d}`;
+    return a.y === b.y ? `${a.m}.${a.d} — ${b.m}.${b.d}` : `${a.m}.${a.d} — ${b.y}.${b.m}.${b.d}`;
+  }
+  if (e.start === e.end) return `${MON[a.m - 1]} ${a.d}`;
+  if (a.y !== b.y) return `${MON[a.m - 1]} ${a.d} — ${MON[b.m - 1]} ${b.d}, ${b.y}`;
+  return a.m === b.m ? `${MON[a.m - 1]} ${a.d} — ${b.d}` : `${MON[a.m - 1]} ${a.d} — ${MON[b.m - 1]} ${b.d}`;
+}
+// 会場の欄の「 — 」より後ろ（出品作・ブースなどの補足）を外した、場所だけの表記
+function placeOnly(venue){
+  let depth = 0;
+  for (let i = 0; i < venue.length; i++){
+    const ch = venue[i];
+    if (ch === '(' || ch === '（') depth++;
+    else if (ch === ')' || ch === '）') depth--;
+    else if (ch === '—' && depth === 0 && venue[i + 1] === ' ') return venue.slice(0, i).trimEnd(); // 括弧の外の「 — 」で切る
+  }
+  return venue;
+}
+
+// これからの展示（と、注目展示にしていない開催中の展示）を、日付を大きくした行で並べる
+function upcomingItem(e, lang, today){
+  const t = e[lang], L = T[lang];
+  const tag = e.start <= today ? `<span class="exhi-tag is-now">${L.now}</span>`
+    : e.planned ? `<span class="exhi-tag">${L.plannedTag}</span>` : '';
   return [
-    '        <li>',
-    `          <time>${period(e, lang)}</time>`,
-    `          <div><strong>${t.listTitle}${tagHtml}</strong><span class="venue">${t.venue}</span></div>`,
+    '        <li class="exhi-card">',
+    `          <p class="exhi-card-date"><span class="y">${ymd(e.start).y}</span><time datetime="${e.start}">${shortPeriod(e, lang)}</time></p>`,
+    '          <div class="exhi-card-body">',
+    `            <h4>${t.listTitle}${tag}</h4>`,
+    `            <p class="venue">${t.venue}</p>`,
+    ...(e.url ? [`            <a class="exhi-card-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.site}</a>`] : []),
+    '          </div>',
     '        </li>',
   ].join('\n');
 }
+// 過去の展示は年ごとに1行ずつ、場所だけを添えて詰めて並べる
+function pastYears(list, lang, indent){
+  const out = [];
+  for (const y of [...new Set(list.map((e) => ymd(e.start).y))]){
+    out.push(
+      `${indent}<div class="exhi-past-year">`,
+      `${indent}  <p class="exhi-past-y">${y}</p>`,
+      `${indent}  <ul class="exhi-past-list">`,
+      ...list.filter((e) => ymd(e.start).y === y).flatMap((e) => [
+        `${indent}    <li><time datetime="${e.start}">${shortPeriod(e, lang)}</time><span class="t">${e[lang].listTitle}</span><span class="v">${placeOnly(e[lang].venue)}</span></li>`,
+      ]),
+      `${indent}  </ul>`,
+      `${indent}</div>`,
+    );
+  }
+  return out;
+}
+const PAST_SHOWN = 6;
 
 function topExhibitions(c, lang, img){
   const L = T[lang];
@@ -297,20 +347,26 @@ function topExhibitions(c, lang, img){
     '      </div>',
     '    </div>',
   );
-  const block = (cls, ulCls, head, items) => {
-    if (!items.length) return;
+  const permanent = c.others.filter((e) => e.permanent);
+  const coming = c.others.filter((e) => !e.permanent);
+  // これからの展示と過去の展示は横に並べる（狭い画面では縦に積む）
+  const cols = [];
+  if (coming.length || permanent.length){
+    cols.push('    <div class="exhi-more">', `      <h3>${coming.some((e) => e.start <= c.today) ? L.moreNow : L.more}</h3>`);
+    if (coming.length) cols.push('      <ol class="exhi-cards">', ...coming.map((e) => upcomingItem(e, lang, c.today)), '      </ol>');
+    for (const e of permanent) cols.push(`      <p class="exhi-permanent"><span class="exhi-tag">${e[lang].listTitle}</span>${e[lang].venue}</p>`);
+    cols.push('    </div>');
+  }
+  if (c.past.length){
+    cols.push('    <div class="exhi-past">', `      <h3>${L.past}</h3>`, ...pastYears(c.past.slice(0, PAST_SHOWN), lang, '      '));
+    const rest = c.past.slice(PAST_SHOWN);
+    if (rest.length) cols.push('      <details class="exhi-past-more">', `        <summary>${L.pastMore(rest.length)}</summary>`, ...pastYears(rest, lang, '        '), '      </details>');
+    cols.push('    </div>');
+  }
+  if (cols.length){
     if (out.length) out.push('');
-    out.push(
-      `    <div class="${cls}">`,
-      `      <h3>${head}</h3>`,
-      `      <ul class="${ulCls}">`,
-      ...items,
-      '      </ul>',
-      '    </div>',
-    );
-  };
-  block('exhi-more', 'exhi-list', L.more, c.others.map((e) => listItem(e, lang, e.planned ? L.planned : '')));
-  block('exhi-past', 'exhi-list exhi-list-past', L.past, c.past.map((e) => listItem(e, lang, L.ended)));
+    out.push('    <div class="exhi-cols">', ...cols.map((l) => '  ' + l), '    </div>');
+  }
   return out.join('\n');
 }
 

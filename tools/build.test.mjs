@@ -77,7 +77,7 @@ test('会期の切り替わり：最終日（10/20）までは注目展示、翌
     const html = read(dir, f);
     assert.doesNotMatch(html, /class="exhi-feature"/, '後継がなければ注目展示の枠は出さない');
     const past = html.slice(html.indexOf('exhi-past'));
-    assert.match(past, lang === 'ja' ? /個展「うつろい、留める」<span class="ended-tag">（終了）/ : /Utsuroi, Tomeru"<span class="ended-tag">\(Ended\)/);
+    assert.match(past, lang === 'ja' ? /<span class="t">個展「うつろい、留める」<\/span>/ : /<span class="t">Solo Exhibition "Utsuroi, Tomeru"<\/span>/);
     assert.doesNotMatch(html, /"startDate": "2026-09-05"/, '構造化データから外れる');
     assert.match(html, /var exhiDates = \[\];/);
   }
@@ -195,9 +195,9 @@ test('終了日を変えると、日英トップ・日英販売情報・構造�
   const r = run(dir, ['--today', '2026-10-09']);
   assert.equal(r.code, 0, r.out);
   const expect = {
-    'index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>',
+    'index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>2026.9.5 — 10.25</time>', '<time datetime="2026-12-11">12.11 — 12.27</time>',
       "['2026-09-05', '2026-10-25']"],
-    'en/index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>',
+    'en/index.html': ['"endDate": "2026-10-25"', '"endDate": "2026-12-27"', '<time>Sep 5 — Oct 25, 2026</time>', '<time datetime="2026-12-11">Dec 11 — 27</time>',
       "['2026-09-05', '2026-10-25']"],
     'sales/index.html': ['<time>2026.9.5 — 10.25</time>', '<time>2026.12.11 — 12.27</time>'],
     'en/sales/index.html': ['<time>Sep 5 — Oct 25, 2026</time>', '<time>Dec 11 — 27, 2026</time>'],
@@ -437,7 +437,8 @@ test('お知らせ：新しい順に5件まで、月までの日付・リンク�
   const r = run(dir, ['--today', '2026-10-09']);
   assert.equal(r.code, 0, r.out);
   const ja = read(dir, 'index.html');
-  const items = [...ja.matchAll(/<time datetime="([^"]+)">([^<]+)<\/time>/g)].map((m) => `${m[1]}=${m[2]}`);
+  const news = ja.slice(ja.indexOf('<!-- build:news -->'), ja.indexOf('<!-- /build:news -->'));
+  const items = [...news.matchAll(/<time datetime="([^"]+)">([^<]+)<\/time>/g)].map((m) => `${m[1]}=${m[2]}`);
   assert.deepEqual(items, ['2026-10-02=2026.10.2', '2026-10=2026.10', '2026-09-01=2026.9.1', '2026-08-01=2026.8.1', '2026-07-01=2026.7.1']);
   assert.doesNotMatch(ja, /六月/, '6件目は出さない');
   assert.match(ja, /<a href="https:\/\/example.com\/\?a=1&amp;b=2" target="_blank" rel="noopener">A &amp; &lt;b&gt;<\/a>/);
@@ -449,4 +450,25 @@ test('お知らせの台帳の誤りで止まる', (t) => {
   expectStop(t, (dir) => editNews(dir, (list) => { list[0].date = '2026-13-01'; }), /date は YYYY-MM-DD か YYYY-MM/);
   expectStop(t, (dir) => editNews(dir, (list) => { delete list[0].en; }), /日本語・英語の両方が必要です/);
   expectStop(t, (dir) => editNews(dir, (list) => { list[0].ja.text = 'A&nbsp;B'; }), /文字参照は使えません/);
+});
+
+test('展示一覧の形：これからの展示は日付つきの行、過去の展示は年ごとに詰めて6件まで出し、残りは畳む', (t) => {
+  const dir = sandbox();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  assert.equal(run(dir, ['--today', '2026-10-09']).code, 0);
+  const ja = read(dir, 'index.html');
+  assert.match(ja, /<h3>これからの展示<\/h3>\s*<ol class="exhi-cards">/);
+  assert.match(ja, /<p class="exhi-card-date"><span class="y">2026<\/span><time datetime="2026-11-27">11\.27 — 11\.29<\/time><\/p>/);
+  assert.match(ja, /<p class="exhi-permanent"><span class="exhi-tag">常設展示<\/span>/, '常設展示は行に混ぜず、下に1行で出す');
+  assert.equal(run(dir, ['--today', '2028-01-01']).code, 0);
+  for (const page of ['index.html', 'en/index.html']){
+    const html = read(dir, page);
+    const past = html.slice(html.indexOf('<div class="exhi-past">'), html.indexOf('<!-- /build:exhibitions -->'));
+    const shown = past.slice(0, past.indexOf('<details') < 0 ? undefined : past.indexOf('<details'));
+    const all = [...past.matchAll(/<li><time datetime=/g)].length;
+    assert.equal([...shown.matchAll(/<li><time datetime=/g)].length, Math.min(all, 6), `${page}：はじめに出すのは6件まで`);
+    if (all > 6) assert.match(past, new RegExp(`<summary>[^<]*${all - 6}[^<]*</summary>`), `${page}：残りの件数を出す`);
+    assert.doesNotMatch(past, /<span class="v">[^<]*[)）]\s?— /, `${page}：過去の展示には補足を付けない`);
+  }
+  assert.match(read(dir, 'en/index.html'), /<span class="v">Garari Showcase \(Obuse, Nagano — next to the Hokusai-kan Museum\)<\/span>/, '括弧の中の「 — 」では切らない');
 });
