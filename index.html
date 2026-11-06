@@ -689,75 +689,74 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-dots button{ width:.55rem; height:.55rem; padding:0; border-radius:50%; border:0; background:var(--line); cursor:pointer; }
 .exhi-dots button[aria-current="true"]{ background:var(--hido); }
 @media (prefers-reduced-motion: reduce){ .exhi-track{ scroll-behavior:auto; } }
-/* これからの展示：日付を大きくした行で並べる */
-.exhi-more, .exhi-past{ max-width:60rem; margin-inline:auto; }
+/* これからの展示と過去の展示：横に2列で並べる（狭い画面では縦に積む） */
+.exhi-cols{
+  display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:2.4rem clamp(2rem,4vw,3.4rem);
+  max-width:60rem; margin-inline:auto; align-items:start;
+}
 .exhi-more h3, .exhi-past h3{
   display:flex; align-items:center; gap:1rem;
-  font-size:.75rem; letter-spacing:.3em; margin-bottom:1.2rem;
+  font-size:.75rem; letter-spacing:.3em; margin-bottom:1rem;
 }
 .exhi-more h3::after, .exhi-past h3::after{ content:""; flex:1; height:1px; background:var(--line); }
 .exhi-more h3{ color:var(--hido); }
-.exhi-cards{ list-style:none; display:grid; gap:.8rem; }
+.exhi-past h3{ color:var(--ink-soft); }
+/* これからの展示：日付を大きくした行 */
+.exhi-cards{ list-style:none; display:grid; grid-template-columns:max-content minmax(0,1fr); gap:.6rem 1.1rem; }
 .exhi-card{
-  display:grid; grid-template-columns:10rem minmax(0,1fr); gap:1.8rem; align-items:center;
+  grid-column:1 / -1; display:grid; grid-template-columns:subgrid; align-items:start;
   background:var(--card); border:1px solid var(--line); border-left:3px solid var(--hido);
-  padding:1.3rem 1.8rem;
+  padding:.95rem 1.15rem;
 }
-.exhi-card-date{ display:flex; flex-direction:column; gap:.2rem; }
-.exhi-card-date .y{ font-size:.72rem; letter-spacing:.24em; color:var(--ink-soft); }
+.exhi-card-date{ display:flex; flex-direction:column; gap:.1rem; }
+.exhi-card-date .y{ font-size:.66rem; letter-spacing:.22em; color:var(--ink-soft); }
 .exhi-card-date time{
-  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.4rem; line-height:1.2;
-  letter-spacing:.02em; font-variant-numeric:lining-nums; white-space:nowrap;
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.12rem; line-height:1.25;
+  letter-spacing:.01em; font-variant-numeric:lining-nums; white-space:nowrap;
 }
-.exhi-card-body h4{ font-size:1.02rem; font-weight:600; letter-spacing:.04em; line-height:1.55; }
-.exhi-card-body .venue{ margin-top:.35rem; font-size:.82rem; line-height:1.75; color:var(--ink-soft); }
+.exhi-card-body h4{ font-size:.92rem; font-weight:600; letter-spacing:.03em; line-height:1.5; }
+.exhi-card-body .venue{ margin-top:.25rem; font-size:.76rem; line-height:1.7; color:var(--ink-soft); }
 .exhi-card-link{
-  display:inline-block; margin-top:.6rem; font-size:.78rem; color:var(--hido);
+  display:inline-block; margin-top:.4rem; font-size:.74rem; color:var(--hido);
   text-decoration:none; border-bottom:1px solid currentColor;
 }
 .exhi-card-link:hover{ color:var(--hido-deep); }
 .exhi-tag{
-  display:inline-block; vertical-align:.12em; margin-left:.7em; padding:.12em .85em;
-  font-size:.66rem; font-weight:500; letter-spacing:.12em; line-height:1.6;
+  display:inline-block; vertical-align:.12em; margin-left:.6em; padding:.08em .75em;
+  font-size:.62rem; font-weight:500; letter-spacing:.12em; line-height:1.6;
   border:1px solid var(--line); border-radius:999px; color:var(--ink-soft);
 }
 .exhi-tag.is-now{ background:var(--hido); border-color:var(--hido); color:var(--paper); }
-.exhi-permanent{ margin-top:1.1rem; font-size:.8rem; line-height:1.8; color:var(--ink-soft); }
-.exhi-permanent .exhi-tag{ margin:0 .9em 0 0; }
-@media (max-width:600px){
-  .exhi-card{ grid-template-columns:1fr; gap:.55rem; padding:1.05rem 1.15rem; }
-  .exhi-card-date{ flex-direction:row; align-items:baseline; gap:.7rem; }
-  .exhi-card-date time{ font-size:1.25rem; }
-}
-/* 過去の展示：年ごとに1行ずつ詰めて並べる */
-.exhi-past{ margin-top:3.4rem; }
-.exhi-past h3{ color:var(--ink-soft); }
-.exhi-past-year{ display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:1rem; }
+.exhi-permanent{ margin-top:.9rem; font-size:.76rem; line-height:1.8; color:var(--ink-soft); }
+.exhi-permanent .exhi-tag{ margin:0 .8em 0 0; }
+/* 過去の展示：年ごとに詰めて並べる */
 .exhi-past-year + .exhi-past-year, .exhi-past-more .exhi-past-year{ margin-top:.9rem; }
 .exhi-past-y{
-  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.05rem;
-  font-variant-numeric:lining-nums; color:var(--ink-soft); padding-top:.3rem;
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:.95rem;
+  font-variant-numeric:lining-nums; color:var(--ink-soft); margin-bottom:.15rem;
 }
-.exhi-past-list{ list-style:none; display:grid; grid-template-columns:7.5em auto minmax(0,1fr); column-gap:1.2rem; }
+.exhi-past-list{ list-style:none; display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:1rem; }
 .exhi-past-list li{
-  grid-column:1 / -1; display:grid; grid-template-columns:subgrid; align-items:baseline;
-  padding:.5em 0; border-bottom:1px dotted var(--line); font-size:.8rem; color:var(--ink-soft);
+  grid-column:1 / -1; display:grid; grid-template-columns:subgrid; align-items:baseline; row-gap:.1rem;
+  padding:.45em 0; border-bottom:1px dotted var(--line); font-size:.78rem; color:var(--ink-soft);
 }
-.exhi-past-list time{ font-variant-numeric:tabular-nums; letter-spacing:.04em; white-space:nowrap; }
+.exhi-past-list time{ font-variant-numeric:tabular-nums; letter-spacing:.03em; white-space:nowrap; }
 .exhi-past-list .t{ color:var(--ink); }
-.exhi-past-list .v{ font-size:.74rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.exhi-past-list .v{ grid-column:2; font-size:.7rem; line-height:1.6; }
 .exhi-past-more summary{
-  display:inline-block; margin-top:1rem; cursor:pointer; list-style:none;
-  font-size:.78rem; color:var(--hido); border-bottom:1px solid currentColor;
+  display:inline-block; margin-top:.9rem; cursor:pointer; list-style:none;
+  font-size:.74rem; color:var(--hido); border-bottom:1px solid currentColor;
 }
 .exhi-past-more summary::-webkit-details-marker{ display:none; }
 .exhi-past-more summary::before{ content:"＋ "; }
 .exhi-past-more[open] summary::before{ content:"－ "; }
-@media (max-width:600px){
-  .exhi-past-year{ grid-template-columns:1fr; gap:.1rem; }
-  .exhi-past-list{ grid-template-columns:6.8em minmax(0,1fr); column-gap:.8rem; }
-  .exhi-past-list li{ row-gap:.15rem; }
-  .exhi-past-list .v{ grid-column:2; white-space:normal; }
+@media (max-width:860px){
+  .exhi-cols{ grid-template-columns:1fr; }
+}
+@media (max-width:420px){
+  .exhi-cards{ grid-template-columns:minmax(0,1fr); }
+  .exhi-card{ row-gap:.4rem; }
+  .exhi-card-date{ flex-direction:row; align-items:baseline; gap:.6rem; }
 }
 .news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .news-list li{
@@ -1017,10 +1016,11 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       </div>
     </div>
 
-    <div class="exhi-more">
-      <h3>これからの展示</h3>
-      <ol class="exhi-cards">
-        <li class="exhi-card">
+    <div class="exhi-cols">
+      <div class="exhi-more">
+        <h3>これからの展示</h3>
+        <ol class="exhi-cards">
+          <li class="exhi-card">
           <p class="exhi-card-date"><span class="y">2026</span><time datetime="2026-11-27">11.27 — 11.29</time></p>
           <div class="exhi-card-body">
             <h4>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</h4>
@@ -1028,7 +1028,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
             <a class="exhi-card-link" href="https://kogei-artfair.jp/" target="_blank" rel="noopener">サイトを見る →</a>
           </div>
         </li>
-        <li class="exhi-card">
+          <li class="exhi-card">
           <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-01-22">1.22 — 1.25</time></p>
           <div class="exhi-card-body">
             <h4>ART&nbsp;MIYAZAKI&nbsp;2027</h4>
@@ -1036,29 +1036,29 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
             <a class="exhi-card-link" href="https://artmiyazaki.main.jp/" target="_blank" rel="noopener">サイトを見る →</a>
           </div>
         </li>
-        <li class="exhi-card">
+          <li class="exhi-card">
           <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-03-20">3.20 — 4.18</time></p>
           <div class="exhi-card-body">
             <h4>2人展<span class="exhi-tag">予定</span></h4>
             <p class="venue">呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）</p>
           </div>
         </li>
-      </ol>
-      <p class="exhi-permanent"><span class="exhi-tag">常設展示</span>The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</p>
-    </div>
-
-    <div class="exhi-past">
-      <h3>過去の展示</h3>
-      <div class="exhi-past-year">
-        <p class="exhi-past-y">2026</p>
-        <ul class="exhi-past-list">
-          <li><time datetime="2026-10-31">10.31 — 11.3</time><span class="t">POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</span><span class="v">カグラザカヒトトハコ（東京・神楽坂）</span></li>
-          <li><time datetime="2026-10-16">10.16 — 10.18</time><span class="t">東美アートフェア2026</span><span class="v">東京美術倶楽部 3階（東京・新橋）</span></li>
-          <li><time datetime="2026-09-05">9.5 — 10.20</time><span class="t">個展「うつろい、留める」</span><span class="v">ガラリShowcase（長野・小布施、北斎館隣）</span></li>
-          <li><time datetime="2026-07-22">7.22 — 7.28</time><span class="t">河﨑海斗展</span><span class="v">新宿髙島屋 2階 特設会場（東京・新宿）</span></li>
-          <li><time datetime="2026-06-08">6.8 — 8.17</time><span class="t">3人展「MATSURI INORU」</span><span class="v">Spiral Garden 新丸ビル（東京・丸の内）</span></li>
-          <li><time datetime="2026-05-30">5.30 — 7.30</time><span class="t">個展「出藍の誉」</span><span class="v">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></li>
-        </ul>
+        </ol>
+        <p class="exhi-permanent"><span class="exhi-tag">常設展示</span>The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</p>
+      </div>
+      <div class="exhi-past">
+        <h3>過去の展示</h3>
+        <div class="exhi-past-year">
+          <p class="exhi-past-y">2026</p>
+          <ul class="exhi-past-list">
+            <li><time datetime="2026-10-31">10.31 — 11.3</time><span class="t">POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</span><span class="v">カグラザカヒトトハコ（東京・神楽坂）</span></li>
+            <li><time datetime="2026-10-16">10.16 — 10.18</time><span class="t">東美アートフェア2026</span><span class="v">東京美術倶楽部 3階（東京・新橋）</span></li>
+            <li><time datetime="2026-09-05">9.5 — 10.20</time><span class="t">個展「うつろい、留める」</span><span class="v">ガラリShowcase（長野・小布施、北斎館隣）</span></li>
+            <li><time datetime="2026-07-22">7.22 — 7.28</time><span class="t">河﨑海斗展</span><span class="v">新宿髙島屋 2階 特設会場（東京・新宿）</span></li>
+            <li><time datetime="2026-06-08">6.8 — 8.17</time><span class="t">3人展「MATSURI INORU」</span><span class="v">Spiral Garden 新丸ビル（東京・丸の内）</span></li>
+            <li><time datetime="2026-05-30">5.30 — 7.30</time><span class="t">個展「出藍の誉」</span><span class="v">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></li>
+          </ul>
+        </div>
       </div>
     </div>
     <!-- /build:exhibitions -->

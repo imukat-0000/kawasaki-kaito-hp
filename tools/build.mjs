@@ -349,19 +349,23 @@ function topExhibitions(c, lang, img){
   );
   const permanent = c.others.filter((e) => e.permanent);
   const coming = c.others.filter((e) => !e.permanent);
+  // これからの展示と過去の展示は横に並べる（狭い画面では縦に積む）
+  const cols = [];
   if (coming.length || permanent.length){
-    if (out.length) out.push('');
-    out.push('    <div class="exhi-more">', `      <h3>${coming.some((e) => e.start <= c.today) ? L.moreNow : L.more}</h3>`);
-    if (coming.length) out.push('      <ol class="exhi-cards">', ...coming.map((e) => upcomingItem(e, lang, c.today)), '      </ol>');
-    for (const e of permanent) out.push(`      <p class="exhi-permanent"><span class="exhi-tag">${e[lang].listTitle}</span>${e[lang].venue}</p>`);
-    out.push('    </div>');
+    cols.push('    <div class="exhi-more">', `      <h3>${coming.some((e) => e.start <= c.today) ? L.moreNow : L.more}</h3>`);
+    if (coming.length) cols.push('      <ol class="exhi-cards">', ...coming.map((e) => upcomingItem(e, lang, c.today)), '      </ol>');
+    for (const e of permanent) cols.push(`      <p class="exhi-permanent"><span class="exhi-tag">${e[lang].listTitle}</span>${e[lang].venue}</p>`);
+    cols.push('    </div>');
   }
   if (c.past.length){
-    if (out.length) out.push('');
-    out.push('    <div class="exhi-past">', `      <h3>${L.past}</h3>`, ...pastYears(c.past.slice(0, PAST_SHOWN), lang, '      '));
+    cols.push('    <div class="exhi-past">', `      <h3>${L.past}</h3>`, ...pastYears(c.past.slice(0, PAST_SHOWN), lang, '      '));
     const rest = c.past.slice(PAST_SHOWN);
-    if (rest.length) out.push('      <details class="exhi-past-more">', `        <summary>${L.pastMore(rest.length)}</summary>`, ...pastYears(rest, lang, '        '), '      </details>');
-    out.push('    </div>');
+    if (rest.length) cols.push('      <details class="exhi-past-more">', `        <summary>${L.pastMore(rest.length)}</summary>`, ...pastYears(rest, lang, '        '), '      </details>');
+    cols.push('    </div>');
+  }
+  if (cols.length){
+    if (out.length) out.push('');
+    out.push('    <div class="exhi-cols">', ...cols.map((l) => '  ' + l), '    </div>');
   }
   return out.join('\n');
 }
