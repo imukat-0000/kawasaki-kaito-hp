@@ -674,9 +674,22 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-feature-body .venue{ font-size:.92rem; font-weight:600; }
 .exhi-feature-body p{ font-size:.88rem; line-height:1.9; color:var(--ink-soft); }
 @media (max-width:700px){
-  .exhi-feature{ grid-template-columns:1fr; column-gap:0; }
-  .exhi-feature-body{ padding:2rem clamp(1.4rem,3vw,2.4rem); }
-  .exhi-feature-dm{ aspect-ratio:1472/2088; }
+  /* スマホ：写真を左に小さく置き、右に展示名・会期・会場、説明文はその下に全幅で */
+  .exhi-feature{
+    grid-template-columns:38% minmax(0,1fr); column-gap:1rem; row-gap:.35rem;
+    grid-template-areas:"dm status" "dm title" "dm time" "dm venue" "text text";
+    grid-template-rows:auto auto auto 1fr auto; padding:1rem; align-items:start;
+  }
+  .exhi-feature-body{ display:contents; }
+  .exhi-feature-dm{ grid-area:dm; align-self:stretch; }
+  .exhi-feature-status{ grid-area:status; justify-self:start; font-size:.62rem; padding:.25em .9em; }
+  .exhi-feature-body h3{ grid-area:title; font-size:1.12rem; letter-spacing:.06em; line-height:1.45; }
+  .exhi-feature-link{ margin-left:.2em; }
+  .exhi-feature-link svg{ width:16px; height:16px; }
+  .exhi-feature-body time{ grid-area:time; font-size:1rem; }
+  .exhi-feature-body .venue{ grid-area:venue; font-size:.76rem; line-height:1.6; }
+  .exhi-feature-body p:last-child{ grid-area:text; margin-top:.6rem; font-size:.78rem; line-height:1.8; }
+  .exhi-feature-dm{ aspect-ratio:3/4; }
 }
 /* 開催中の展示が2つ以上あるときは横にスライド */
 .exhi-slider{ max-width:60rem; margin:0 auto 3.2rem; }
@@ -760,10 +773,19 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 @media (max-width:860px){
   .exhi-cols{ grid-template-columns:1fr; }
 }
-@media (max-width:420px){
-  .exhi-cards{ grid-template-columns:minmax(0,1fr); }
-  .exhi-card{ row-gap:.4rem; }
+@media (max-width:600px){
+  .exhi-cols{ gap:2rem; }
+  .exhi-cards{ grid-template-columns:minmax(0,1fr); gap:.45rem; }
+  .exhi-card{ row-gap:.2rem; padding:.7rem .9rem; }
   .exhi-card-date{ flex-direction:row; align-items:baseline; gap:.6rem; }
+  .exhi-card-date time{ font-size:1rem; }
+  .exhi-card-body h4{ font-size:.86rem; }
+  .exhi-card-body .venue{ margin-top:.1rem; font-size:.72rem; line-height:1.6; }
+  .exhi-card-link{ margin-top:.25rem; font-size:.7rem; }
+  .exhi-permanent{ margin-top:.6rem; font-size:.72rem; }
+  /* 過去の展示は会期と展示名だけを1行で */
+  .exhi-past-list li{ padding:.35em 0; font-size:.74rem; }
+  .exhi-past-list .v{ display:none; }
 }
 .news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .news-list li{
