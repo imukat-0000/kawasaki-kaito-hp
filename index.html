@@ -664,7 +664,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   color:var(--hido); border-radius:4px; transition:color .2s, background .2s;
 }
 .exhi-feature-link:hover, .exhi-feature-link:focus-visible{ color:var(--paper); background:var(--hido); }
-.exhi-feature-body time{ font-size:.88rem; color:var(--ink-soft); letter-spacing:.06em; font-variant-numeric:tabular-nums; }
+.exhi-feature-body time{ font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.25rem; letter-spacing:.04em; font-variant-numeric:lining-nums; }
 .exhi-feature-body .venue{ font-size:.92rem; font-weight:600; }
 .exhi-feature-body p{ font-size:.88rem; line-height:1.9; color:var(--ink-soft); }
 @media (max-width:700px){
@@ -689,20 +689,76 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-dots button{ width:.55rem; height:.55rem; padding:0; border-radius:50%; border:0; background:var(--line); cursor:pointer; }
 .exhi-dots button[aria-current="true"]{ background:var(--hido); }
 @media (prefers-reduced-motion: reduce){ .exhi-track{ scroll-behavior:auto; } }
-.exhi-more h3{ font-size:.75rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
-.exhi-list{ list-style:none; max-width:60rem; margin-inline:auto; }
-.exhi-list li{
-  display:grid; grid-template-columns:13em 1fr; gap:1.4rem;
-  padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem;
+/* これからの展示：日付を大きくした行で並べる */
+.exhi-more, .exhi-past{ max-width:60rem; margin-inline:auto; }
+.exhi-more h3, .exhi-past h3{
+  display:flex; align-items:center; gap:1rem;
+  font-size:.75rem; letter-spacing:.3em; margin-bottom:1.2rem;
 }
-.exhi-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
-.exhi-list strong{ font-weight:600; }
-.exhi-list .venue{ display:block; font-size:.8rem; color:var(--ink-soft); }
-@media (max-width:600px){ .exhi-list li{ grid-template-columns:1fr; gap:.2rem; } }
-.exhi-past{ margin-top:2.2rem; }
-.exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
-.exhi-list-past{ opacity:.6; }
-.exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
+.exhi-more h3::after, .exhi-past h3::after{ content:""; flex:1; height:1px; background:var(--line); }
+.exhi-more h3{ color:var(--hido); }
+.exhi-cards{ list-style:none; display:grid; gap:.8rem; }
+.exhi-card{
+  display:grid; grid-template-columns:10rem minmax(0,1fr); gap:1.8rem; align-items:center;
+  background:var(--card); border:1px solid var(--line); border-left:3px solid var(--hido);
+  padding:1.3rem 1.8rem;
+}
+.exhi-card-date{ display:flex; flex-direction:column; gap:.2rem; }
+.exhi-card-date .y{ font-size:.72rem; letter-spacing:.24em; color:var(--ink-soft); }
+.exhi-card-date time{
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.4rem; line-height:1.2;
+  letter-spacing:.02em; font-variant-numeric:lining-nums; white-space:nowrap;
+}
+.exhi-card-body h4{ font-size:1.02rem; font-weight:600; letter-spacing:.04em; line-height:1.55; }
+.exhi-card-body .venue{ margin-top:.35rem; font-size:.82rem; line-height:1.75; color:var(--ink-soft); }
+.exhi-card-link{
+  display:inline-block; margin-top:.6rem; font-size:.78rem; color:var(--hido);
+  text-decoration:none; border-bottom:1px solid currentColor;
+}
+.exhi-card-link:hover{ color:var(--hido-deep); }
+.exhi-tag{
+  display:inline-block; vertical-align:.12em; margin-left:.7em; padding:.12em .85em;
+  font-size:.66rem; font-weight:500; letter-spacing:.12em; line-height:1.6;
+  border:1px solid var(--line); border-radius:999px; color:var(--ink-soft);
+}
+.exhi-tag.is-now{ background:var(--hido); border-color:var(--hido); color:var(--paper); }
+.exhi-permanent{ margin-top:1.1rem; font-size:.8rem; line-height:1.8; color:var(--ink-soft); }
+.exhi-permanent .exhi-tag{ margin:0 .9em 0 0; }
+@media (max-width:600px){
+  .exhi-card{ grid-template-columns:1fr; gap:.55rem; padding:1.05rem 1.15rem; }
+  .exhi-card-date{ flex-direction:row; align-items:baseline; gap:.7rem; }
+  .exhi-card-date time{ font-size:1.25rem; }
+}
+/* 過去の展示：年ごとに1行ずつ詰めて並べる */
+.exhi-past{ margin-top:3.4rem; }
+.exhi-past h3{ color:var(--ink-soft); }
+.exhi-past-year{ display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:1rem; }
+.exhi-past-year + .exhi-past-year, .exhi-past-more .exhi-past-year{ margin-top:.9rem; }
+.exhi-past-y{
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.05rem;
+  font-variant-numeric:lining-nums; color:var(--ink-soft); padding-top:.3rem;
+}
+.exhi-past-list{ list-style:none; display:grid; grid-template-columns:7.5em auto minmax(0,1fr); column-gap:1.2rem; }
+.exhi-past-list li{
+  grid-column:1 / -1; display:grid; grid-template-columns:subgrid; align-items:baseline;
+  padding:.5em 0; border-bottom:1px dotted var(--line); font-size:.8rem; color:var(--ink-soft);
+}
+.exhi-past-list time{ font-variant-numeric:tabular-nums; letter-spacing:.04em; white-space:nowrap; }
+.exhi-past-list .t{ color:var(--ink); }
+.exhi-past-list .v{ font-size:.74rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.exhi-past-more summary{
+  display:inline-block; margin-top:1rem; cursor:pointer; list-style:none;
+  font-size:.78rem; color:var(--hido); border-bottom:1px solid currentColor;
+}
+.exhi-past-more summary::-webkit-details-marker{ display:none; }
+.exhi-past-more summary::before{ content:"＋ "; }
+.exhi-past-more[open] summary::before{ content:"－ "; }
+@media (max-width:600px){
+  .exhi-past-year{ grid-template-columns:1fr; gap:.1rem; }
+  .exhi-past-list{ grid-template-columns:6.8em minmax(0,1fr); column-gap:.8rem; }
+  .exhi-past-list li{ row-gap:.15rem; }
+  .exhi-past-list .v{ grid-column:2; white-space:normal; }
+}
 .news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .news-list li{
   display:grid; grid-template-columns:8em 1fr; gap:1.4rem;
@@ -962,55 +1018,48 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </div>
 
     <div class="exhi-more">
-      <h3>その他の展示</h3>
-      <ul class="exhi-list">
-        <li>
-          <time>常設展示</time>
-          <div><strong>常設展示</strong><span class="venue">The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</span></div>
+      <h3>これからの展示</h3>
+      <ol class="exhi-cards">
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2026</span><time datetime="2026-11-27">11.27 — 11.29</time></p>
+          <div class="exhi-card-body">
+            <h4>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</h4>
+            <p class="venue">ハイアット セントリック 金沢（石川・金沢）— GALLERY&nbsp;KOGURE ブース</p>
+            <a class="exhi-card-link" href="https://kogei-artfair.jp/" target="_blank" rel="noopener">サイトを見る →</a>
+          </div>
         </li>
-        <li>
-          <time>2026.11.27 — 11.29</time>
-          <div><strong>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</strong><span class="venue">ハイアット セントリック 金沢（石川・金沢）— GALLERY&nbsp;KOGURE ブース</span></div>
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-01-22">1.22 — 1.25</time></p>
+          <div class="exhi-card-body">
+            <h4>ART&nbsp;MIYAZAKI&nbsp;2027</h4>
+            <p class="venue">みやざきアートセンター 5階 ほか（宮崎）— 22日はVIP内覧、23〜25日が一般公開</p>
+            <a class="exhi-card-link" href="https://artmiyazaki.main.jp/" target="_blank" rel="noopener">サイトを見る →</a>
+          </div>
         </li>
-        <li>
-          <time>2027.1.22 — 1.25</time>
-          <div><strong>ART&nbsp;MIYAZAKI&nbsp;2027</strong><span class="venue">みやざきアートセンター 5階 ほか（宮崎）— 22日はVIP内覧、23〜25日が一般公開</span></div>
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-03-20">3.20 — 4.18</time></p>
+          <div class="exhi-card-body">
+            <h4>2人展<span class="exhi-tag">予定</span></h4>
+            <p class="venue">呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）</p>
+          </div>
         </li>
-        <li>
-          <time>2027.3.20 — 4.18</time>
-          <div><strong>2人展<span class="ended-tag">（予定）</span></strong><span class="venue">呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）</span></div>
-        </li>
-      </ul>
+      </ol>
+      <p class="exhi-permanent"><span class="exhi-tag">常設展示</span>The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</p>
     </div>
 
     <div class="exhi-past">
       <h3>過去の展示</h3>
-      <ul class="exhi-list exhi-list-past">
-        <li>
-          <time>2026.10.31 — 11.3</time>
-          <div><strong>POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」<span class="ended-tag">（終了）</span></strong><span class="venue">カグラザカヒトトハコ（東京・神楽坂）— 呉の作り手4組による展示販売</span></div>
-        </li>
-        <li>
-          <time>2026.10.16 — 10.18</time>
-          <div><strong>東美アートフェア2026<span class="ended-tag">（終了）</span></strong><span class="venue">東京美術倶楽部 3階（東京・新橋）— 増保美術ブース（Booth&nbsp;3-4）</span></div>
-        </li>
-        <li>
-          <time>2026.9.5 — 10.20</time>
-          <div><strong>個展「うつろい、留める」<span class="ended-tag">（終了）</span></strong><span class="venue">ガラリShowcase（長野・小布施、北斎館隣）— 入場無料</span></div>
-        </li>
-        <li>
-          <time>2026.7.22 — 7.28</time>
-          <div><strong>河﨑海斗展<span class="ended-tag">（終了）</span></strong><span class="venue">新宿髙島屋 2階 特設会場（東京・新宿）— 初の百貨店個展</span></div>
-        </li>
-        <li>
-          <time>2026.6.8 — 8.17</time>
-          <div><strong>3人展「MATSURI INORU」<span class="ended-tag">（終了）</span></strong><span class="venue">Spiral Garden 新丸ビル（東京・丸の内）</span></div>
-        </li>
-        <li>
-          <time>2026.5.30 — 7.30</time>
-          <div><strong>個展「出藍の誉」<span class="ended-tag">（終了）</span></strong><span class="venue">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></div>
-        </li>
-      </ul>
+      <div class="exhi-past-year">
+        <p class="exhi-past-y">2026</p>
+        <ul class="exhi-past-list">
+          <li><time datetime="2026-10-31">10.31 — 11.3</time><span class="t">POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</span><span class="v">カグラザカヒトトハコ（東京・神楽坂）</span></li>
+          <li><time datetime="2026-10-16">10.16 — 10.18</time><span class="t">東美アートフェア2026</span><span class="v">東京美術倶楽部 3階（東京・新橋）</span></li>
+          <li><time datetime="2026-09-05">9.5 — 10.20</time><span class="t">個展「うつろい、留める」</span><span class="v">ガラリShowcase（長野・小布施、北斎館隣）</span></li>
+          <li><time datetime="2026-07-22">7.22 — 7.28</time><span class="t">河﨑海斗展</span><span class="v">新宿髙島屋 2階 特設会場（東京・新宿）</span></li>
+          <li><time datetime="2026-06-08">6.8 — 8.17</time><span class="t">3人展「MATSURI INORU」</span><span class="v">Spiral Garden 新丸ビル（東京・丸の内）</span></li>
+          <li><time datetime="2026-05-30">5.30 — 7.30</time><span class="t">個展「出藍の誉」</span><span class="v">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></li>
+        </ul>
+      </div>
     </div>
     <!-- /build:exhibitions -->
 

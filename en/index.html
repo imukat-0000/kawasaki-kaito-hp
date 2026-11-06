@@ -669,7 +669,7 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
   color:var(--hido); border-radius:4px; transition:color .2s, background .2s;
 }
 .exhi-feature-link:hover, .exhi-feature-link:focus-visible{ color:var(--paper); background:var(--hido); }
-.exhi-feature-body time{ font-size:.88rem; color:var(--ink-soft); letter-spacing:.06em; font-variant-numeric:tabular-nums; }
+.exhi-feature-body time{ font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.25rem; letter-spacing:.04em; font-variant-numeric:lining-nums; }
 .exhi-feature-body .venue{ font-size:.92rem; font-weight:600; }
 .exhi-feature-body p{ font-size:.88rem; line-height:1.9; color:var(--ink-soft); }
 @media (max-width:700px){
@@ -694,20 +694,76 @@ section{ padding:clamp(2.8rem,6.3vw,5.2rem) clamp(1.4rem,6vw,5rem); max-width:16
 .exhi-dots button{ width:.55rem; height:.55rem; padding:0; border-radius:50%; border:0; background:var(--line); cursor:pointer; }
 .exhi-dots button[aria-current="true"]{ background:var(--hido); }
 @media (prefers-reduced-motion: reduce){ .exhi-track{ scroll-behavior:auto; } }
-.exhi-more h3{ font-size:.75rem; letter-spacing:.3em; color:var(--hido); margin-bottom:1rem; }
-.exhi-list{ list-style:none; max-width:60rem; margin-inline:auto; }
-.exhi-list li{
-  display:grid; grid-template-columns:13em 1fr; gap:1.4rem;
-  padding:.95em 0; border-bottom:1px solid var(--line); font-size:.86rem;
+/* これからの展示：日付を大きくした行で並べる */
+.exhi-more, .exhi-past{ max-width:60rem; margin-inline:auto; }
+.exhi-more h3, .exhi-past h3{
+  display:flex; align-items:center; gap:1rem;
+  font-size:.75rem; letter-spacing:.3em; margin-bottom:1.2rem;
 }
-.exhi-list time{ color:var(--ink-soft); font-variant-numeric:tabular-nums; letter-spacing:.06em; }
-.exhi-list strong{ font-weight:600; }
-.exhi-list .venue{ display:block; font-size:.8rem; color:var(--ink-soft); }
-@media (max-width:600px){ .exhi-list li{ grid-template-columns:1fr; gap:.2rem; } }
-.exhi-past{ margin-top:2.2rem; }
-.exhi-past h3{ font-size:.75rem; letter-spacing:.3em; color:var(--ink-soft); margin-bottom:1rem; }
-.exhi-list-past{ opacity:.6; }
-.exhi-list-past .ended-tag{ font-size:.7rem; font-weight:400; color:var(--ink-soft); margin-left:.6em; }
+.exhi-more h3::after, .exhi-past h3::after{ content:""; flex:1; height:1px; background:var(--line); }
+.exhi-more h3{ color:var(--hido); }
+.exhi-cards{ list-style:none; display:grid; gap:.8rem; }
+.exhi-card{
+  display:grid; grid-template-columns:10rem minmax(0,1fr); gap:1.8rem; align-items:center;
+  background:var(--card); border:1px solid var(--line); border-left:3px solid var(--hido);
+  padding:1.3rem 1.8rem;
+}
+.exhi-card-date{ display:flex; flex-direction:column; gap:.2rem; }
+.exhi-card-date .y{ font-size:.72rem; letter-spacing:.24em; color:var(--ink-soft); }
+.exhi-card-date time{
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.4rem; line-height:1.2;
+  letter-spacing:.02em; font-variant-numeric:lining-nums; white-space:nowrap;
+}
+.exhi-card-body h4{ font-size:1.02rem; font-weight:600; letter-spacing:.04em; line-height:1.55; }
+.exhi-card-body .venue{ margin-top:.35rem; font-size:.82rem; line-height:1.75; color:var(--ink-soft); }
+.exhi-card-link{
+  display:inline-block; margin-top:.6rem; font-size:.78rem; color:var(--hido);
+  text-decoration:none; border-bottom:1px solid currentColor;
+}
+.exhi-card-link:hover{ color:var(--hido-deep); }
+.exhi-tag{
+  display:inline-block; vertical-align:.12em; margin-left:.7em; padding:.12em .85em;
+  font-size:.66rem; font-weight:500; letter-spacing:.12em; line-height:1.6;
+  border:1px solid var(--line); border-radius:999px; color:var(--ink-soft);
+}
+.exhi-tag.is-now{ background:var(--hido); border-color:var(--hido); color:var(--paper); }
+.exhi-permanent{ margin-top:1.1rem; font-size:.8rem; line-height:1.8; color:var(--ink-soft); }
+.exhi-permanent .exhi-tag{ margin:0 .9em 0 0; }
+@media (max-width:600px){
+  .exhi-card{ grid-template-columns:1fr; gap:.55rem; padding:1.05rem 1.15rem; }
+  .exhi-card-date{ flex-direction:row; align-items:baseline; gap:.7rem; }
+  .exhi-card-date time{ font-size:1.25rem; }
+}
+/* 過去の展示：年ごとに1行ずつ詰めて並べる */
+.exhi-past{ margin-top:3.4rem; }
+.exhi-past h3{ color:var(--ink-soft); }
+.exhi-past-year{ display:grid; grid-template-columns:4.5rem minmax(0,1fr); gap:1rem; }
+.exhi-past-year + .exhi-past-year, .exhi-past-more .exhi-past-year{ margin-top:.9rem; }
+.exhi-past-y{
+  font-family:"Didot","Bodoni 72",Georgia,serif; font-size:1.05rem;
+  font-variant-numeric:lining-nums; color:var(--ink-soft); padding-top:.3rem;
+}
+.exhi-past-list{ list-style:none; display:grid; grid-template-columns:7.5em auto minmax(0,1fr); column-gap:1.2rem; }
+.exhi-past-list li{
+  grid-column:1 / -1; display:grid; grid-template-columns:subgrid; align-items:baseline;
+  padding:.5em 0; border-bottom:1px dotted var(--line); font-size:.8rem; color:var(--ink-soft);
+}
+.exhi-past-list time{ font-variant-numeric:tabular-nums; letter-spacing:.04em; white-space:nowrap; }
+.exhi-past-list .t{ color:var(--ink); }
+.exhi-past-list .v{ font-size:.74rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.exhi-past-more summary{
+  display:inline-block; margin-top:1rem; cursor:pointer; list-style:none;
+  font-size:.78rem; color:var(--hido); border-bottom:1px solid currentColor;
+}
+.exhi-past-more summary::-webkit-details-marker{ display:none; }
+.exhi-past-more summary::before{ content:"＋ "; }
+.exhi-past-more[open] summary::before{ content:"－ "; }
+@media (max-width:600px){
+  .exhi-past-year{ grid-template-columns:1fr; gap:.1rem; }
+  .exhi-past-list{ grid-template-columns:6.8em minmax(0,1fr); column-gap:.8rem; }
+  .exhi-past-list li{ row-gap:.15rem; }
+  .exhi-past-list .v{ grid-column:2; white-space:normal; }
+}
 .news-list{ list-style:none; max-width:60rem; margin-inline:auto; }
 .news-list li{
   display:grid; grid-template-columns:8em 1fr; gap:1.4rem;
@@ -966,55 +1022,48 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     </div>
 
     <div class="exhi-more">
-      <h3>Other Exhibitions</h3>
-      <ul class="exhi-list">
-        <li>
-          <time>Ongoing</time>
-          <div><strong>Permanent Display</strong><span class="venue">The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</span></div>
+      <h3>Upcoming</h3>
+      <ol class="exhi-cards">
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2026</span><time datetime="2026-11-27">Nov 27 — 29</time></p>
+          <div class="exhi-card-body">
+            <h4>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</h4>
+            <p class="venue">Hyatt Centric Kanazawa (Kanazawa, Ishikawa) — GALLERY&nbsp;KOGURE booth</p>
+            <a class="exhi-card-link" href="https://kogei-artfair.jp/" target="_blank" rel="noopener">Visit site →</a>
+          </div>
         </li>
-        <li>
-          <time>Nov 27 — 29, 2026</time>
-          <div><strong>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</strong><span class="venue">Hyatt Centric Kanazawa (Kanazawa, Ishikawa) — GALLERY&nbsp;KOGURE booth</span></div>
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-01-22">Jan 22 — 25</time></p>
+          <div class="exhi-card-body">
+            <h4>ART&nbsp;MIYAZAKI&nbsp;2027</h4>
+            <p class="venue">Miyazaki Art Center, 5F, and other venues (Miyazaki) — VIP preview Jan 22, open to the public Jan 23–25</p>
+            <a class="exhi-card-link" href="https://artmiyazaki.main.jp/" target="_blank" rel="noopener">Visit site →</a>
+          </div>
         </li>
-        <li>
-          <time>Jan 22 — 25, 2027</time>
-          <div><strong>ART&nbsp;MIYAZAKI&nbsp;2027</strong><span class="venue">Miyazaki Art Center, 5F, and other venues (Miyazaki) — VIP preview Jan 22, open to the public Jan 23–25</span></div>
+        <li class="exhi-card">
+          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-03-20">Mar 20 — Apr 18</time></p>
+          <div class="exhi-card-body">
+            <h4>Two-person Exhibition<span class="exhi-tag">Planned</span></h4>
+            <p class="venue">Kure Municipal Museum of Art (Kure, Hiroshima)</p>
+          </div>
         </li>
-        <li>
-          <time>Mar 20 — Apr 18, 2027</time>
-          <div><strong>Two-person Exhibition<span class="ended-tag">(Planned)</span></strong><span class="venue">Kure Municipal Museum of Art (Kure, Hiroshima)</span></div>
-        </li>
-      </ul>
+      </ol>
+      <p class="exhi-permanent"><span class="exhi-tag">Permanent Display</span>The Arts Fusion by Lecrin (Ueno, Tokyo) — featuring "Vermilion Wakin"</p>
     </div>
 
     <div class="exhi-past">
       <h3>Past Exhibitions</h3>
-      <ul class="exhi-list exhi-list-past">
-        <li>
-          <time>Oct 31 — Nov 3, 2026</time>
-          <div><strong>Pop-up&nbsp;Shop "MADE&nbsp;IN&nbsp;KURE"<span class="ended-tag">(Ended)</span></strong><span class="venue">Kagurazaka Hitotohako (Kagurazaka, Tokyo) — four makers from Kure</span></div>
-        </li>
-        <li>
-          <time>Oct 16 — 18, 2026</time>
-          <div><strong>Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026<span class="ended-tag">(Ended)</span></strong><span class="venue">Tokyo Art Club, 3F (Shimbashi, Tokyo) — Masuho Bijutsu booth (Booth&nbsp;3-4)</span></div>
-        </li>
-        <li>
-          <time>Sep 5 — Oct 20, 2026</time>
-          <div><strong>Solo Exhibition "Utsuroi, Tomeru"<span class="ended-tag">(Ended)</span></strong><span class="venue">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum) — free admission</span></div>
-        </li>
-        <li>
-          <time>Jul 22 — 28, 2026</time>
-          <div><strong>Kaito Kawasaki Exhibition<span class="ended-tag">(Ended)</span></strong><span class="venue">Shinjuku Takashimaya, 2F Special Venue (Shinjuku, Tokyo) — first solo exhibition at a department store</span></div>
-        </li>
-        <li>
-          <time>Jun 8 — Aug 17, 2026</time>
-          <div><strong>Three-Person Exhibition "MATSURI INORU"<span class="ended-tag">(Ended)</span></strong><span class="venue">Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)</span></div>
-        </li>
-        <li>
-          <time>May 30 — Jul 30, 2026</time>
-          <div><strong>Solo Exhibition "Shutsuran no Homare"<span class="ended-tag">(Ended)</span></strong><span class="venue">TSUTAYA BOOKSTORE, Ebisu Garden Place (Ebisu, Tokyo)</span></div>
-        </li>
-      </ul>
+      <div class="exhi-past-year">
+        <p class="exhi-past-y">2026</p>
+        <ul class="exhi-past-list">
+          <li><time datetime="2026-10-31">Oct 31 — Nov 3</time><span class="t">Pop-up&nbsp;Shop "MADE&nbsp;IN&nbsp;KURE"</span><span class="v">Kagurazaka Hitotohako (Kagurazaka, Tokyo)</span></li>
+          <li><time datetime="2026-10-16">Oct 16 — 18</time><span class="t">Tokyo&nbsp;Art&nbsp;Club&nbsp;Fair&nbsp;2026</span><span class="v">Tokyo Art Club, 3F (Shimbashi, Tokyo)</span></li>
+          <li><time datetime="2026-09-05">Sep 5 — Oct 20</time><span class="t">Solo Exhibition "Utsuroi, Tomeru"</span><span class="v">Garari Showcase (Obuse, Nagano — next to the Hokusai-kan Museum)</span></li>
+          <li><time datetime="2026-07-22">Jul 22 — 28</time><span class="t">Kaito Kawasaki Exhibition</span><span class="v">Shinjuku Takashimaya, 2F Special Venue (Shinjuku, Tokyo)</span></li>
+          <li><time datetime="2026-06-08">Jun 8 — Aug 17</time><span class="t">Three-Person Exhibition "MATSURI INORU"</span><span class="v">Spiral Garden, Shin-Marunouchi Building (Marunouchi, Tokyo)</span></li>
+          <li><time datetime="2026-05-30">May 30 — Jul 30</time><span class="t">Solo Exhibition "Shutsuran no Homare"</span><span class="v">TSUTAYA BOOKSTORE, Ebisu Garden Place (Ebisu, Tokyo)</span></li>
+        </ul>
+      </div>
     </div>
     <!-- /build:exhibitions -->
 
