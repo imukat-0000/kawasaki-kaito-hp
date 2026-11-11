@@ -839,6 +839,100 @@ footer{
   .rise,.io{ opacity:1 !important; transform:none !important; transition:none !important; }
   .intro-name{ animation:none; opacity:1; }
 }
+
+/* ============ トップの組み直し（2026-11 試作）：区切りは見出しの型ではなく余白と写真の大きさでつくる ============ */
+#now{ padding-block:0; }
+.now-band{
+  display:grid; grid-template-columns:auto auto 1fr auto; align-items:baseline; gap:.4rem 1.6rem;
+  padding:1.3rem 0; border-bottom:1px solid var(--line);
+  text-decoration:none; color:inherit; transition:color .25s ease;
+}
+.now-band:hover{ color:var(--hido); }
+.now-label{ font-size:.7rem; letter-spacing:.24em; color:var(--hido); white-space:nowrap; }
+.now-band time{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:1.02rem; letter-spacing:.06em; white-space:nowrap; }
+.now-title{ font-size:.92rem; letter-spacing:.06em; }
+.now-title small{ display:inline-block; margin-left:1em; font-size:.76rem; color:var(--ink-soft); letter-spacing:.04em; }
+.now-arrow{ color:var(--hido); }
+@media (max-width:700px){
+  .now-band{ grid-template-columns:auto 1fr; }
+  .now-title{ grid-column:1 / -1; }
+  .now-title small{ display:block; margin-left:0; }
+  .now-arrow{ display:none; }
+}
+.quiet-head{
+  display:flex; align-items:baseline; gap:1rem; margin-bottom:2.2rem;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; font-weight:600; letter-spacing:.28em;
+}
+.quiet-head span{ font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-weight:400; font-size:.64rem; letter-spacing:.34em; color:var(--hido); }
+.more-link{ display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.6rem 2rem; margin-top:2rem; }
+.more-link a{ font-size:.82rem; letter-spacing:.12em; text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:.2em; transition:color .25s ease, border-color .25s ease; }
+.more-link a:hover{ color:var(--hido); border-color:var(--hido); }
+main > section#works, main > section#journal, main > section#artist{ padding-block:clamp(4.5rem,10vw,8rem); }
+
+/* 作品：1点を大きく、その下に3点 */
+.works-feature{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2.4vw,2rem); }
+.works-feature .zukan-card{ background:none; border:0; border-radius:0; overflow:visible; }
+.works-feature .zukan-card:hover{ transform:none; }
+.works-feature .zukan-ph{ aspect-ratio:4/5; border:0; }
+.works-feature .zukan-card:first-child{ grid-column:1 / -1; }
+.works-feature .zukan-card:first-child .zukan-ph{ aspect-ratio:16/8; }
+.works-feature .zukan-card:hover .zukan-ph img{ transform:scale(calc(var(--zoom,1) * 1.03)); }
+.works-feature .zukan-meta{ padding:.9rem 0 0; }
+.works-feature .zukan-animal{ display:none; }
+.works-feature .zukan-title{ font-size:.92rem; }
+.works-feature .zukan-title small{ display:inline-block; margin-left:.5em; }
+@media (max-width:700px){
+  .works-feature{ grid-template-columns:1fr 1fr; }
+  .works-feature .zukan-card:first-child .zukan-ph{ aspect-ratio:4/3; }
+  .works-feature .zukan-card:last-child{ grid-column:1 / -1; }
+  .works-feature .zukan-card:last-child .zukan-ph{ aspect-ratio:4/3; }
+}
+
+/* ジャーナル：記事2本＋お知らせ */
+.jn-grid{ display:grid; grid-template-columns:1fr 1fr 1.1fr; gap:clamp(1.4rem,3vw,2.6rem); align-items:start; }
+.jn-card{ display:flex; flex-direction:column; gap:.7rem; text-decoration:none; color:inherit; }
+.jn-photo{ display:block; aspect-ratio:3/2; overflow:hidden; }
+.jn-photo img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+.jn-card:hover .jn-photo img{ transform:scale(1.03); }
+.jn-card:hover .jn-title{ color:var(--hido); }
+.jn-meta{ display:flex; gap:1rem; font-size:.7rem; letter-spacing:.12em; color:var(--ink-soft); }
+.jn-cat{ color:var(--hido); }
+.jn-title{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:1rem; line-height:1.7; transition:color .25s ease; }
+.jn-news-head{ font-size:.7rem; letter-spacing:.24em; color:var(--hido); margin-bottom:.4rem; }
+.jn-news .news-list{ list-style:none; }
+.jn-news .news-list li{ display:block; padding:.85rem 0; border-bottom:1px solid var(--line); }
+.jn-news .news-list li:first-child{ border-top:1px solid var(--line); }
+.jn-news .news-list time{ display:block; font-size:.7rem; letter-spacing:.12em; color:var(--ink-soft); }
+.jn-news .news-list p{ font-size:.84rem; line-height:1.75; }
+.jn-news .news-list a{ text-decoration:none; }
+.jn-news .news-list a:hover{ color:var(--hido); }
+@media (max-width:900px){
+  .jn-grid{ grid-template-columns:1fr 1fr; }
+  .jn-news{ grid-column:1 / -1; }
+}
+@media (max-width:560px){ .jn-grid{ grid-template-columns:1fr; } .jn-news{ margin-top:1rem; } }
+
+/* 河﨑海斗：言葉と短い紹介 */
+.about{ display:grid; grid-template-columns:minmax(0,15rem) minmax(0,36rem); gap:clamp(2rem,6vw,5rem); justify-content:center; align-items:center; }
+.about-photo img{ width:100%; height:auto; display:block; }
+.about-text p{ font-size:.92rem; line-height:2.1; color:var(--ink-soft); margin-bottom:1.2rem; }
+.about-text .about-statement{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:clamp(1.15rem,2.2vw,1.45rem); line-height:2; color:var(--ink); font-weight:500; margin-bottom:2rem;
+}
+.about-text .about-bio{ font-size:.8rem; }
+.about-text .more-link{ justify-content:flex-start; margin-top:2rem; }
+@media (max-width:700px){
+  .about{ grid-template-columns:1fr; }
+  .about-photo{ max-width:11rem; }
+}
+
+/* お問い合わせはフッターに一度だけ */
+.foot-contact{ display:flex; flex-direction:column; align-items:center; gap:1.2rem; padding:clamp(2rem,5vw,3.4rem) 0 1rem; }
+.foot-contact-lead{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:1rem; letter-spacing:.12em; }
+.foot-contact-note{ font-size:.74rem; color:var(--ink-soft); letter-spacing:.06em; }
+.foot-contact-note a{ color:var(--hido); }
 </style>
 <script>
 /* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
@@ -874,14 +968,11 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 </header>
 <nav aria-label="メイン" id="mainNav">
   <ul>
-    <li><a href="#concept">コンセプト</a></li>
-    <li><a href="#exhibitions">展示情報</a></li>
-    <li><a href="#works">代表作品</a></li>
-    <li><a href="works/">作品一覧</a></li>
-    <li><a href="sales/">販売情報</a></li>
+    <li><a href="works/">作品</a></li>
+    <li><a href="sales/">展示</a></li>
     <li><a href="journal/">ジャーナル</a></li>
-    <li><a href="#artist">河﨑海斗</a></li>
-    <li><a href="#contact">コンタクト</a></li>
+    <li><a href="profile/">河﨑海斗</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
     <li><a href="/en/" hreflang="en">EN</a></li>
   </ul>
   <div class="nav-sns">
@@ -890,16 +981,9 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </div>
 </nav>
 
-<nav class="quicknav" aria-label="クイックナビゲーション">
-  <a href="#top" data-label="TOP"></a>
-  <a href="#works" data-label="WORKS"></a>
-  <a href="#artist" data-label="ARTIST"></a>
-  <a href="#contact" data-label="CONTACT"></a>
-</nav>
-
 <main id="top">
 
-  <!-- First View: KOGEI REALISM（構成案どおり） -->
+  <!-- ============ 1. ヒーロー（作品写真と名前） ============ -->
   <section class="hero" id="hero" aria-label="ヒーロー">
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-bg-item" data-edit-slot="hero1" data-edit-ratio="2.333" data-edit-path="img/goldfish-in-bag-bronze-kaito-kawasaki.jpg" data-edit-label="ヒーロー背景1（ボトルの金魚）" data-edit-where="index.html の .hero-bg 内 1枚目のimg"><img src="img/goldfish-in-bag-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した金魚作品 — 樹脂の袋に封入 | 河﨑海斗" loading="eager"></div>
@@ -915,74 +999,58 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
   </section>
 
-  <!-- 思想3セクション -->
-  <section id="concept" class="io">
-    <div class="phil-grid">
-      <span class="phil-label">Concept<small>コンセプト</small></span>
-      <div class="phil-content">
-        <p class="phil-jp">身近に潜む<wbr>小さな生命の<wbr>一瞬を見つめ、<br>移ろい続ける<wbr>自然の記憶を、<wbr>金属の中に留める。</p>
-        <p class="phil-en">Preserving fleeting life in metal.</p>
-      </div>
-    </div>
-
-    <p class="concept-lede">河﨑海斗は、金魚をつくっているのではない。金魚が金魚として存在するための――水、光、器、素材、見る者の記憶を組み直している。</p>
-
-    <details class="concept-more">
-      <summary>Read More</summary>
-      <div class="concept-block">
-        <h3>工芸リアリズム<small>KOGEI REALISM</small></h3>
-        <ul class="realism-list">
-          <li><span class="no">I</span>
-            <p>工芸とは、人間を含めた生態系を表現する営みである。</p></li>
-          <li><span class="no">II</span>
-            <p>素材・環境・身体・知覚の関係のなかで、何かが現に立ち上がる。その「現れ」をつくる。</p></li>
-          <li><span class="no">III</span>
-            <p>それは技巧による写実ではない。存在の条件そのものを組み直す態度である。</p></li>
-        </ul>
-      </div>
-    </details>
+  <!-- ============ 2. いま（開催中か次の展示を1件） ============ -->
+  <section id="now" class="now io" aria-label="いまの展示">
+    <!-- build:now -->
+    <a class="now-band" href="sales/">
+      <span class="now-label" data-start="2026-11-27" data-end="2026-11-29">次の展示</span>
+      <time datetime="2026-11-27">2026.11.27 — 11.29</time>
+      <span class="now-title">KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026<small>ハイアット セントリック 金沢（石川・金沢）</small></span>
+      <span class="now-arrow" aria-hidden="true">ほか2件の予定 →</span>
+    </a>
+    <!-- /build:now -->
   </section>
 
-  <!-- 代表作品：動物ごとに一点、図鑑のように -->
+  <!-- ============ 3. 作品 ============ -->
   <section id="works" class="io">
-    <div class="sec-head"><h2>代表作品</h2><span>REPRESENTATIVE WORKS</span></div>
-
-    <div class="zukan-grid">
+    <h2 class="quiet-head">作品<span>WORKS</span></h2>
+    <div class="works-feature">
       <a class="zukan-card" href="works/#nishikigoi">
         <div class="zukan-ph" data-edit-slot="work-nishikigoi" data-edit-ratio="0.75" data-edit-path="img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" data-edit-label="錦鯉" data-edit-where="index.html の代表作品セクション（錦鯉）"><img src="img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した錦鯉の作品「錦鯉」— 修了作品 | 河﨑海斗" loading="lazy"></div>
         <div class="zukan-meta"><span class="zukan-animal">鯉<small>KOI</small></span><span class="zukan-title">錦鯉<small>2026 / 修了作品</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#shuiro-wakin">
-        <div class="zukan-ph" data-edit-slot="work-shuiro-wakin" data-edit-ratio="0.75" data-edit-path="img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" data-edit-label="朱色和金" data-edit-where="index.html の代表作品セクション（朱色和金）"><img src="img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="鋳金で制作した金魚の作品「朱色和金」— 小学館賞受賞作 | 河﨑海斗" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">金魚<small>GOLDFISH</small></span><span class="zukan-title">朱色和金<small>2024</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#ame-kaeru">
-        <div class="zukan-ph" data-edit-slot="work-frog" data-edit-ratio="0.75" data-edit-path="img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="雨ノ蛙「狐の嫁入り」" data-edit-where="index.html の代表作品セクション（カエル）"><img src="img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="鋳金で制作したカエルの作品「雨ノ蛙『狐の嫁入り』」— 緑青仕上げ | 河﨑海斗" loading="lazy"></div>
-        <div class="zukan-meta"><span class="zukan-animal">カエル<small>FROG</small></span><span class="zukan-title">雨ノ蛙「狐の嫁入り」<small>2025</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#w08">
-        <div class="zukan-ph" data-edit-slot="work-w08" data-edit-ratio="0.75" data-edit-path="img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" data-edit-label="黄粉メダカ" data-edit-where="index.html の代表作品セクション（黄粉メダカ）"><img src="img/yellow-dusted-medaka-fish-kaito-kawasaki.jpg" alt="鋳金で制作したメダカの作品「黄粉メダカ」| 河﨑海斗" loading="lazy" style="object-position:44% 49%"></div>
-        <div class="zukan-meta"><span class="zukan-animal">メダカ<small>MEDAKA</small></span><span class="zukan-title">黄粉メダカ<small>2026</small></span></div>
-      </a>
-      <a class="zukan-card" href="works/#w07">
-        <div class="zukan-ph" data-edit-slot="work-w07" data-edit-ratio="0.75" data-edit-path="img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" data-edit-label="青海亀" data-edit-where="index.html の代表作品セクション（青海亀）"><img src="img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した海亀の作品「青海亀」| 河﨑海斗" loading="lazy" style="object-position:54% 44%"></div>
-        <div class="zukan-meta"><span class="zukan-animal">海亀<small>SEA TURTLE</small></span><span class="zukan-title">青海亀<small>2026</small></span></div>
       </a>
       <a class="zukan-card" href="works/#kouyou">
         <div class="zukan-ph" data-edit-slot="work-kouyou" data-edit-ratio="0.75" data-edit-path="img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="紅葉" data-edit-where="index.html の代表作品セクション（紅葉）"><img src="img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="紅葉 — 緋銅で赤く染めた鋳金の紅葉" loading="lazy"></div>
         <div class="zukan-meta"><span class="zukan-animal">植物<small>PLANT</small></span><span class="zukan-title">紅葉<small>2025</small></span></div>
       </a>
+      <a class="zukan-card" href="works/#ame-kaeru">
+        <div class="zukan-ph" data-edit-slot="work-frog" data-edit-ratio="0.75" data-edit-path="img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" data-edit-label="雨ノ蛙「狐の嫁入り」" data-edit-where="index.html の代表作品セクション（カエル）"><img src="img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="鋳金で制作したカエルの作品「雨ノ蛙『狐の嫁入り』」— 緑青仕上げ | 河﨑海斗" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">カエル<small>FROG</small></span><span class="zukan-title">雨ノ蛙「狐の嫁入り」<small>2025</small></span></div>
+      </a>
+      <a class="zukan-card" href="works/#shuiro-wakin">
+        <div class="zukan-ph" data-edit-slot="work-shuiro-wakin" data-edit-ratio="0.75" data-edit-path="img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" data-edit-label="朱色和金" data-edit-where="index.html の代表作品セクション（朱色和金）"><img src="img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="鋳金で制作した金魚の作品「朱色和金」— 小学館賞受賞作 | 河﨑海斗" loading="lazy"></div>
+        <div class="zukan-meta"><span class="zukan-animal">金魚<small>GOLDFISH</small></span><span class="zukan-title">朱色和金<small>2024</small></span></div>
+      </a>
     </div>
-
-    <a class="archive-banner" href="works/">
-      <span class="archive-banner-text">全作品を見る<small>ALL WORKS ARCHIVE</small></span>
-      <span class="archive-banner-icon" aria-hidden="true">→</span>
-    </a>
+    <p class="more-link"><a href="works/">すべての作品を見る<span aria-hidden="true"> →</span></a></p>
   </section>
 
-  <!-- お知らせ -->
-  <section id="news" class="io">
-    <div class="sec-head"><h2>お知らせ</h2><span>NEWS</span></div>
+  <!-- ============ 4. ジャーナル（新着） ============ -->
+  <section id="journal" class="io">
+    <h2 class="quiet-head">ジャーナル<span>JOURNAL</span></h2>
+    <div class="jn-grid">
+      <a class="jn-card" href="journal/vermilion-wakin-cluster/">
+        <span class="jn-photo"><img src="img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="鋳金で制作した朱色の和金の群れ「朱色和金群」" width="600" height="400" loading="lazy"></span>
+        <span class="jn-meta"><time datetime="2026-10-21">2026.10.21</time><span class="jn-cat">作品</span></span>
+        <span class="jn-title">祭りの夜の、持ち帰れない金魚たち ——「朱色和金群」</span>
+      </a>
+      <a class="jn-card" href="journal/kogei-realism/">
+        <span class="jn-photo"><img src="img/bronze-goldfish-resin-kaito-kawasaki.jpg" alt="樹脂に封入された鋳金の金魚" width="600" height="400" loading="lazy"></span>
+        <span class="jn-meta"><time datetime="2026-07-29">2026.7.29</time><span class="jn-cat">ことば</span></span>
+        <span class="jn-title">工芸リアリズムとは何か</span>
+      </a>
+      <div class="jn-news">
+        <p class="jn-news-head">お知らせ</p>
     <!-- build:news -->
     <ul class="news-list">
       <li>
@@ -997,148 +1065,41 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
         <time datetime="2026-10-21">2026.10.21</time>
         <p><a href="https://kogei-artfair.jp/" target="_blank" rel="noopener">KOGEI Art Fair Kanazawa 2026（11/27〜11/29、ハイアット セントリック 金沢 GALLERY KOGURE ブース）に《紅葉朱和金》を出品</a></p>
       </li>
-      <li>
-        <time datetime="2026-10-16">2026.10.16</time>
-        <p><a href="https://artfair.toobi.co.jp/" target="_blank" rel="noopener">東美アートフェア2026（10/16〜10/18、東京美術倶楽部 3階 増保美術ブース）に出品</a></p>
-      </li>
-      <li>
-        <time datetime="2026-10">2026.10</time>
-        <p>『ARTcollectors'』2026年10月号（生活の友社）に《朱色和金》が掲載</p>
-      </li>
     </ul>
     <!-- /build:news -->
-  </section>
-
-  <!-- 展示情報 -->
-  <section id="exhibitions" class="io">
-    <div class="sec-head"><h2>展示情報</h2><span>EXHIBITIONS</span></div>
-
-    <!-- build:exhibitions -->
-    <div class="exhi-cols">
-      <div class="exhi-more">
-        <h3>これからの展示</h3>
-        <ol class="exhi-cards">
-          <li class="exhi-card">
-          <p class="exhi-card-date"><span class="y">2026</span><time datetime="2026-11-27">11.27 — 11.29</time></p>
-          <div class="exhi-card-body">
-            <h4>KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</h4>
-            <p class="venue">ハイアット セントリック 金沢（石川・金沢）— GALLERY&nbsp;KOGURE ブース</p>
-            <a class="exhi-card-link" href="https://kogei-artfair.jp/" target="_blank" rel="noopener">サイトを見る →</a>
-          </div>
-        </li>
-          <li class="exhi-card">
-          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-01-22">1.22 — 1.25</time></p>
-          <div class="exhi-card-body">
-            <h4>ART&nbsp;MIYAZAKI&nbsp;2027</h4>
-            <p class="venue">みやざきアートセンター 5階 ほか（宮崎）— 22日はVIP内覧、23〜25日が一般公開</p>
-            <a class="exhi-card-link" href="https://artmiyazaki.main.jp/" target="_blank" rel="noopener">サイトを見る →</a>
-          </div>
-        </li>
-          <li class="exhi-card">
-          <p class="exhi-card-date"><span class="y">2027</span><time datetime="2027-03-20">3.20 — 4.18</time></p>
-          <div class="exhi-card-body">
-            <h4>2人展<span class="exhi-tag">予定</span></h4>
-            <p class="venue">呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）</p>
-          </div>
-        </li>
-        </ol>
-        <p class="exhi-permanent"><span class="exhi-tag">常設展示</span>The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</p>
-      </div>
-      <div class="exhi-past">
-        <h3>過去の展示</h3>
-        <div class="exhi-past-year">
-          <p class="exhi-past-y">2026</p>
-          <ul class="exhi-past-list">
-            <li><time datetime="2026-11-06">11.6 — 11.8</time><span class="t">「工＋藝」京都&nbsp;2026</span><span class="v">大本山 妙顕寺（京都）</span></li>
-            <li><time datetime="2026-10-31">10.31 — 11.3</time><span class="t">POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</span><span class="v">カグラザカヒトトハコ（東京・神楽坂）</span></li>
-            <li><time datetime="2026-10-16">10.16 — 10.18</time><span class="t">東美アートフェア2026</span><span class="v">東京美術倶楽部 3階（東京・新橋）</span></li>
-            <li><time datetime="2026-09-05">9.5 — 10.20</time><span class="t">個展「うつろい、留める」</span><span class="v">ガラリShowcase（長野・小布施、北斎館隣）</span></li>
-            <li><time datetime="2026-07-22">7.22 — 7.28</time><span class="t">河﨑海斗展</span><span class="v">新宿髙島屋 2階 特設会場（東京・新宿）</span></li>
-            <li><time datetime="2026-06-08">6.8 — 8.17</time><span class="t">3人展「MATSURI INORU」</span><span class="v">Spiral Garden 新丸ビル（東京・丸の内）</span></li>
-          </ul>
-        </div>
-        <details class="exhi-past-more">
-          <summary>さらに1件の過去の展示を見る</summary>
-          <div class="exhi-past-year">
-            <p class="exhi-past-y">2026</p>
-            <ul class="exhi-past-list">
-              <li><time datetime="2026-05-30">5.30 — 7.30</time><span class="t">個展「出藍の誉」</span><span class="v">恵比寿ガーデンプレイス TSUTAYA BOOKSTORE（東京・恵比寿）</span></li>
-            </ul>
-          </div>
-        </details>
       </div>
     </div>
-    <!-- /build:exhibitions -->
-
-    <div class="news-sns">
-      <span class="news-sns-label">最新情報はSNSでも</span>
-      <div class="news-sns-links">
-        <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
-      </div>
-    </div>
-
+    <p class="more-link"><a href="journal/">ジャーナルをすべて見る<span aria-hidden="true"> →</span></a></p>
   </section>
 
-  <!-- 河﨑海斗 -->
+  <!-- ============ 5. 河﨑海斗 ============ -->
   <section id="artist" class="io">
-    <div class="sec-head"><h2>河﨑海斗</h2><span>KAITO KAWASAKI</span></div>
-    <div class="artist-grid">
-      <div class="artist-photo" data-edit-slot="artist" data-edit-ratio="0.75" data-edit-path="img/kaito-kawasaki-artist-portrait-illustration.jpg" data-edit-label="経歴の写真" data-edit-where="index.html の .artist-photo img"><img src="img/kaito-kawasaki-artist-portrait-illustration.jpg" alt="河﨑海斗 金工作家 プロフィールイラスト（横顔）" loading="lazy"></div>
-      <div class="artist-text">
-        <div class="artist-roles"><span>金工作家</span><span>鋳金</span><span>KOGEI REALISM</span></div>
-        <p class="artist-lede">河﨑海斗は、<wbr>生命を模倣する作家ではない。<wbr>生命が立ち上がる場を、<wbr>工芸によってつくる作家である。<wbr></p>
-        <p>2000年、<wbr>広島県呉市生まれ。<wbr>金工作家（鋳金）。<wbr>2026年、<wbr>東京藝術大学大学院<wbr>美術研究科<wbr>工芸専攻<wbr>鋳金研究分野<wbr> 修士課程修了。<wbr>東京を拠点に制作する。<wbr></p>
-        <p>鋳造した金魚をアクリル樹脂の内部に置く。<wbr>樹脂は付加された素材でも、<wbr>保護のための外殻でもない。<wbr>それは環境として機能する——すなわち、<wbr>水のもうひとつの形態である。<wbr>磨き、<wbr>加熱、<wbr>酸素、<wbr>温度。<wbr>それらの条件を精密に調整することで、<wbr>色は生成される。<wbr></p>
-
-        <ul class="cv-summary">
-          <li><b>受賞</b><span>サロン・ド・プランタン賞<wbr>（2026）、<wbr>第19回<wbr> 藝大アートプラザ・アートアワード<wbr> 小学館賞<wbr>（2025）ほか</span></li>
-          <li><b>展示</b><span>個展「うつろい、留める」<wbr>（ガラリShowcase、<wbr>長野・小布施）ほか、<wbr>国内外の<wbr>アートフェアに<wbr>出展</span></li>
-          <li><b>取扱い</b><span>GALLERY&nbsp;KOGURE ／ GALLERY&nbsp;OPET ／ 藝大アートプラザ</span></li>
-          <li><b>掲載</b><span>『金工家100人 現代日本の精鋭たち』<wbr>（阿部出版）ほか</span></li>
-        </ul>
-        <a class="archive-banner" href="profile/">
-          <span class="archive-banner-text">経歴・実績を見る<small>FULL PROFILE</small></span>
-          <span class="archive-banner-icon" aria-hidden="true">→</span>
-        </a>
+    <div class="about">
+      <div class="about-photo" data-edit-slot="artist" data-edit-ratio="1" data-edit-path="img/kaito-kawasaki-artist-portrait-illustration.jpg" data-edit-label="経歴の写真" data-edit-where="index.html の .about-photo img"><img src="img/kaito-kawasaki-artist-portrait-illustration.jpg" alt="河﨑海斗 金工作家 プロフィールイラスト（横顔）" width="600" height="600" loading="lazy"></div>
+      <div class="about-text">
+        <p class="about-statement">身近に潜む<wbr>小さな生命の<wbr>一瞬を見つめ、<br>移ろい続ける<wbr>自然の記憶を、<wbr>金属の中に留める。</p>
+        <p>河﨑海斗は、<wbr>金魚をつくっているのではない。<wbr>金魚が金魚として<wbr>存在するための――<wbr>水、光、器、素材、<wbr>見る者の記憶を<wbr>組み直している。</p>
+        <p class="about-bio">2000年 広島県呉市生まれ。<wbr>金工作家（鋳金）。<wbr>東京藝術大学大学院 鋳金研究分野 修了。<wbr>東京を拠点に制作。</p>
+        <p class="more-link"><a href="profile/">河﨑海斗について<span aria-hidden="true"> →</span></a><a href="journal/kogei-realism/">工芸リアリズムとは<span aria-hidden="true"> →</span></a></p>
       </div>
-    </div>
-  </section>
-
-  <!-- 販売情報ブリッジ -->
-  <section id="sales-bridge" class="sales-bridge io">
-    <p>作品の入手についてのご相談は、取り扱いギャラリー、または販売情報ページからご覧いただけます。</p>
-    <a class="sns-btn" href="sales/">販売情報を見る</a>
-  </section>
-
-  <!-- 展示スケジュール -->
-
-  <!-- Contact -->
-  <section id="contact" class="contact io">
-    <div class="sec-head"><h2>コンタクト</h2><span>CONTACT</span></div>
-    <p class="contact-p">展覧会・作品・取材・共同プロジェクトに関するお問い合わせは、メールまたはSNSよりご連絡ください。</p>
-    <p class="contact-p">取材・掲載用の高解像度画像が必要な場合は、お問い合わせの際にその旨お知らせください。</p>
-    <div class="contact-tags">
-      <a href="mailto:akaitomato1028@gmail.com?subject=%E3%80%90%E5%B1%95%E8%A6%A7%E4%BC%9A%E3%81%AE%E3%81%94%E4%BE%9D%E9%A0%BC%E3%80%91%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A">展覧会のご依頼</a><a href="mailto:akaitomato1028@gmail.com?subject=%E3%80%90%E4%BD%9C%E5%93%81%E3%81%AE%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%80%91%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A">作品のお問い合わせ</a><a href="mailto:akaitomato1028@gmail.com?subject=%E3%80%90%E5%8F%96%E6%9D%90%E3%80%91%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A">取材</a><a href="mailto:akaitomato1028@gmail.com?subject=%E3%80%90%E5%85%B1%E5%90%8C%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%80%91%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A">共同プロジェクト</a><a href="mailto:akaitomato1028@gmail.com?subject=%E3%80%90%E6%B5%B7%E5%A4%96%E5%B1%95%E9%96%8B%E3%80%91%E5%85%AC%E5%BC%8F%E3%82%B5%E3%82%A4%E3%83%88%E3%82%88%E3%82%8A">海外展開</a>
-    </div>
-    <div class="sns-btns">
-      <a class="sns-btn primary" href="mailto:akaitomato1028@gmail.com">EMAIL</a>
-      <a class="sns-btn" href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">INSTAGRAM @kkchaki</a>
-      <a class="sns-btn" href="https://x.com/kkchaki" target="_blank" rel="noopener">X @kkchaki</a>
     </div>
   </section>
 
 </main>
 
-<footer>
+<footer id="contact">
+  <div class="foot-contact">
+    <p class="foot-contact-lead">展覧会・作品・取材のご相談は、メールでお知らせください。</p>
+    <a class="sns-btn primary" href="mailto:akaitomato1028@gmail.com">メールで問い合わせる</a>
+    <p class="foot-contact-note">取材・掲載用の高解像度画像もご用意できます。作品の取り扱い先は<a href="sales/">こちら</a>。</p>
+  </div>
   <nav class="footer-nav" aria-label="フッターナビ">
-    <a href="#concept">コンセプト</a>
-    <a href="#exhibitions">展示情報</a>
-    <a href="#works">代表作品</a>
-    <a href="works/">作品一覧</a>
-    <a href="#artist">河﨑海斗</a>
-    <a href="#contact">コンタクト</a>
+    <a href="works/">作品</a>
+    <a href="sales/">展示・取り扱い</a>
+    <a href="journal/">ジャーナル</a>
+    <a href="profile/">河﨑海斗</a>
     <a href="privacy/">プライバシーポリシー</a>
+    <a href="/en/" hreflang="en">English</a>
   </nav>
   <div class="footer-sns">
     <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
@@ -2264,6 +2225,15 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       else st.textContent = '会期終了';
       st.hidden = false;
     }
+  }
+
+  /* ---------- トップの「いま」：開催中／次の展示の文字を日本時間で決める ---------- */
+  var nowLabel = document.querySelector('.now-label[data-start]');
+  if (nowLabel){
+    var nowT = new Date();
+    var nowS = new Date(nowLabel.getAttribute('data-start') + 'T00:00:00+09:00');
+    var nowE = new Date(nowLabel.getAttribute('data-end') + 'T23:59:59+09:00');
+    nowLabel.textContent = nowT < nowS ? '次の展示' : (nowT <= nowE ? '開催中' : '会期終了');
   }
 
   /* ---------- 開催中の展示のスライド（矢印・点・スワイプ） ---------- */

@@ -217,11 +217,13 @@ const T = {
   ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'これからの展示', moreNow: '開催中・これからの展示', past: '過去の展示',
         site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
         slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）',
-        now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る` },
+        now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る`,
+        nextOne: '次の展示', nowMore: (n) => `ほか${n}件の予定` },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Upcoming', moreNow: 'Current &amp; Upcoming', past: 'Past Exhibitions',
         site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
         slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)',
-        now: 'Now on', plannedTag: 'Planned', pastMore: (n) => `Show ${n} more past exhibition${n > 1 ? 's' : ''}` },
+        now: 'Now on', plannedTag: 'Planned', pastMore: (n) => `Show ${n} more past exhibition${n > 1 ? 's' : ''}`,
+        nextOne: 'Next', nowMore: (n) => `${n} more` },
 };
 
 const LINK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -232,10 +234,10 @@ function newsDate(s, lang){
   if (lang === 'ja') return d ? `${y}.${m}.${d}` : `${y}.${m}`;
   return d ? `${MON[m - 1]} ${d}, ${y}` : `${MON[m - 1]} ${y}`;
 }
-function newsList(news, lang){
+function newsList(news, lang, max = NEWS_MAX){
   const items = news.map((n, i) => ({ n, i }))
     .sort((a, b) => (a.n.date < b.n.date ? 1 : a.n.date > b.n.date ? -1 : a.i - b.i)) // 新しい順。同じ日付なら台帳の順
-    .slice(0, NEWS_MAX)
+    .slice(0, max)
     .map(({ n }) => {
       const body = n.url
         ? `<a href="${attr(n.url)}" target="_blank" rel="noopener">${text(n[lang].text)}</a>`
@@ -370,6 +372,27 @@ function topExhibitions(c, lang, img){
   return out.join('\n');
 }
 
+// トップの「いま」：開催中の展示（終了が早いもの）か、なければ次に始まる展示を1件だけ、1行で出す。
+// 「開催中／次の展示」の文字はページ内のスクリプトが日本時間で決める（公開日によって誤表示になるため）。HTMLには既定の文字だけを書く
+const EXHI_PAGE = 'sales/'; // 展示の一覧のページ（展示のページを作ったら差し替える）
+function topNow(c, lang){
+  const L = T[lang];
+  const list = c.events; // 常設を除く、終わっていない展示（開始が早い順）
+  if (!list.length) return '';
+  const on = list.filter((e) => e.start <= c.today).sort((a, b) => (a.end < b.end ? -1 : a.end > b.end ? 1 : 0));
+  const e = on[0] || list[0];
+  const t = e[lang];
+  const rest = list.length - 1;
+  return [
+    `    <a class="now-band" href="${EXHI_PAGE}">`,
+    `      <span class="now-label" data-start="${e.start}" data-end="${e.end}">${on.length ? L.now : L.nextOne}</span>`,
+    `      <time datetime="${e.start}">${period(e, lang)}</time>`,
+    `      <span class="now-title">${t.listTitle}<small>${placeOnly(t.venue)}</small></span>`,
+    `      <span class="now-arrow" aria-hidden="true">${rest ? L.nowMore(rest) : ''} →</span>`,
+    '    </a>',
+  ].join('\n');
+}
+
 function eventsJsonld(c, lang){
   const items = c.events.map((e) => {
     const p = e.place[lang];
@@ -450,7 +473,7 @@ function salesGroup(c, lang, img){
 let works; // data/works.json（下で読み込む）
 const PAGES = [
   { file: 'index.html', kind: 'top', regions: {
-    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja'), exhibitions: (c) => topExhibitions(c, 'ja', ''), 'exhibition-dates': statusDates } },
+    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja', 3), now: (c) => topNow(c, 'ja'), 'exhibition-dates': statusDates } },
   { file: 'en/index.html', kind: 'top', regions: {
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), news: (c) => newsList(c.news, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
   { file: 'sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'ja', '../') } },
