@@ -942,6 +942,55 @@ main > section#exhibitions, main > section#works, main > section#journal, main >
 .foot-contact-lead{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:1rem; letter-spacing:.12em; }
 .foot-contact-note{ font-size:.74rem; color:var(--ink-soft); letter-spacing:.06em; }
 .foot-contact-note a{ color:var(--hido); }
+
+/* ============ 第3版：一つのグリッドと4段の文字の型（デザイン理論のまとめより） ============ */
+:root{
+  --t1:clamp(1.45rem,2.5vw,1.85rem);  /* 大：会期・言葉（明朝） */
+  --t2:1rem;                           /* 中：題名・展示名 */
+  --t3:.86rem;                         /* 本文：会場・説明 */
+  --t4:.68rem;                         /* 注記：ラベル・日付 */
+  --label-col:11rem;                   /* 左の見出しの列 */
+  --gutter:clamp(1.4rem,3vw,2.6rem);
+  --sec-gap:clamp(5rem,10vw,8.5rem);
+}
+main > section.sec-grid{
+  display:grid; grid-template-columns:minmax(0,var(--label-col)) minmax(0,1fr);
+  column-gap:var(--gutter); padding-block:var(--sec-gap);
+  border-top:1px solid var(--line);
+}
+main > section#exhibitions.sec-grid{ border-top:0; }
+.sec-grid > *{ grid-column:2; min-width:0; }
+.sec-grid > .quiet-head{
+  grid-column:1; grid-row:1 / span 6; align-self:start;
+  flex-direction:column; align-items:flex-start; gap:.5rem; margin:0;
+  position:sticky; top:7.5rem;
+  font-size:var(--t2);
+}
+.quiet-head span{ font-size:var(--t4); }
+/* 文字の型をそろえる */
+.ex-date time, .about-text .about-statement{ font-size:var(--t1); }
+.ex-title, .jn-title, .works-feature .zukan-title{ font-size:var(--t2); }
+.ex-venue, .ex-permanent, .ex-past li, .jn-news .news-list p, .about-text p, .more-link a{ font-size:var(--t3); }
+.ex-status, .ex-date .y, .jn-meta, .jn-news-head, .ex-past-head, .ex-past time, .jn-news .news-list time, .works-feature .zukan-title small, .about-text .about-bio{ font-size:var(--t4); letter-spacing:.14em; }
+.ex-past .v{ font-size:var(--t3); }
+.ex-past{ grid-template-columns:1fr; }
+.ex-past li{ grid-template-columns:11rem 1fr; }
+.ex-past li .v{ grid-column:2; }
+/* 文章は1行35〜40字まで */
+.about-text p{ max-inline-size:38em; }
+.about{ grid-template-columns:minmax(0,13rem) minmax(0,1fr); justify-content:start; align-items:start; }
+.about-text .about-statement{ margin-bottom:1.6rem; }
+.more-link{ justify-content:flex-start; }
+@media (max-width:900px){
+  main > section.sec-grid{ grid-template-columns:1fr; }
+  .sec-grid > *, .sec-grid > .quiet-head{ grid-column:1; grid-row:auto; }
+  .sec-grid > .quiet-head{ position:static; flex-direction:row; align-items:baseline; gap:1rem; margin-bottom:2rem; }
+}
+@media (max-width:700px){
+  .about{ grid-template-columns:1fr; }
+  .ex-past li{ grid-template-columns:1fr; }
+  .ex-past li .v{ grid-column:1; }
+}
 </style>
 <script>
 /* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
@@ -1009,7 +1058,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
 
   <!-- ============ 2. 展示（開催中・これから・直近の過去） ============ -->
-  <section id="exhibitions" class="io">
+  <section id="exhibitions" class="io sec-grid">
     <h2 class="quiet-head">展示<span>EXHIBITIONS</span></h2>
     <!-- build:exhibitions -->
     <ol class="ex-cards">
@@ -1048,7 +1097,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
 
   <!-- ============ 3. 作品 ============ -->
-  <section id="works" class="io">
+  <section id="works" class="io sec-grid">
     <h2 class="quiet-head">作品<span>WORKS</span></h2>
     <div class="works-feature">
       <a class="zukan-card" href="works/#nishikigoi">
@@ -1072,7 +1121,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
 
   <!-- ============ 4. ジャーナル（新着） ============ -->
-  <section id="journal" class="io">
+  <section id="journal" class="io sec-grid">
     <h2 class="quiet-head">ジャーナル<span>JOURNAL</span></h2>
     <div class="jn-grid">
       <a class="jn-card" href="journal/vermilion-wakin-cluster/">
@@ -1109,7 +1158,8 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
 
   <!-- ============ 5. 河﨑海斗 ============ -->
-  <section id="artist" class="io">
+  <section id="artist" class="io sec-grid">
+    <h2 class="quiet-head">河﨑海斗<span>ARTIST</span></h2>
     <div class="about">
       <div class="about-photo" data-edit-slot="artist" data-edit-ratio="1" data-edit-path="img/kaito-kawasaki-artist-portrait-illustration.jpg" data-edit-label="経歴の写真" data-edit-where="index.html の .about-photo img"><img src="img/kaito-kawasaki-artist-portrait-illustration.jpg" alt="河﨑海斗 金工作家 プロフィールイラスト（横顔）" width="600" height="600" loading="lazy"></div>
       <div class="about-text">
