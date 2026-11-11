@@ -218,12 +218,12 @@ const T = {
         site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
         slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）',
         now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る`,
-        nextOne: '次の展示', nowMore: (n) => `ほか${n}件の予定` },
+        soon: '開催予定', pastShort: 'これまでの展示' },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Upcoming', moreNow: 'Current &amp; Upcoming', past: 'Past Exhibitions',
         site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
         slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)',
         now: 'Now on', plannedTag: 'Planned', pastMore: (n) => `Show ${n} more past exhibition${n > 1 ? 's' : ''}`,
-        nextOne: 'Next', nowMore: (n) => `${n} more` },
+        soon: 'Upcoming', pastShort: 'Recent' },
 };
 
 const LINK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -372,25 +372,40 @@ function topExhibitions(c, lang, img){
   return out.join('\n');
 }
 
-// トップの「いま」：開催中の展示（終了が早いもの）か、なければ次に始まる展示を1件だけ、1行で出す。
-// 「開催中／次の展示」の文字はページ内のスクリプトが日本時間で決める（公開日によって誤表示になるため）。HTMLには既定の文字だけを書く
-const EXHI_PAGE = 'sales/'; // 展示の一覧のページ（展示のページを作ったら差し替える）
-function topNow(c, lang){
+// トップの展示：開催中・これからの展示をすべてカードで並べ、常設展示と、直近の過去の展示を3件添える。
+// 「開催中／開催予定」の文字はページ内のスクリプトが日本時間で決める（公開日によって誤表示になるため）。HTMLには既定の文字だけを書く
+const TOP_PAST = 3;
+function topExhibitionList(c, lang, img){
   const L = T[lang];
-  const list = c.events; // 常設を除く、終わっていない展示（開始が早い順）
-  if (!list.length) return '';
-  const on = list.filter((e) => e.start <= c.today).sort((a, b) => (a.end < b.end ? -1 : a.end > b.end ? 1 : 0));
-  const e = on[0] || list[0];
-  const t = e[lang];
-  const rest = list.length - 1;
-  return [
-    `    <a class="now-band" href="${EXHI_PAGE}">`,
-    `      <span class="now-label" data-start="${e.start}" data-end="${e.end}">${on.length ? L.now : L.nextOne}</span>`,
-    `      <time datetime="${e.start}">${period(e, lang)}</time>`,
-    `      <span class="now-title">${t.listTitle}<small>${placeOnly(t.venue)}</small></span>`,
-    `      <span class="now-arrow" aria-hidden="true">${rest ? L.nowMore(rest) : ''} →</span>`,
-    '    </a>',
-  ].join('\n');
+  const out = [];
+  const coming = c.events; // 常設を除く、終わっていない展示（開始が早い順）
+  if (coming.length){
+    out.push('    <ol class="ex-cards">');
+    for (const e of coming){
+      const t = e[lang];
+      const photo = e.featured && e.image;
+      out.push(
+        `      <li class="ex-card${photo ? ' has-photo' : ''}">`,
+        ...(photo ? [`        <span class="ex-photo"><img src="${attr(img + e.image)}" alt="${attr(t.imageAlt || '')}" loading="lazy"></span>`] : []),
+        `        <p class="ex-status" data-start="${e.start}" data-end="${e.end}">${e.start <= c.today ? L.now : L.soon}</p>`,
+        `        <p class="ex-date"><span class="y">${ymd(e.start).y}</span><time datetime="${e.start}">${shortPeriod(e, lang)}</time></p>`,
+        `        <h3 class="ex-title">${t.listTitle}${e.planned ? `<span class="exhi-tag">${L.plannedTag}</span>` : ''}</h3>`,
+        `        <p class="ex-venue">${t.venue}</p>`,
+        ...(e.url ? [`        <a class="ex-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.site}</a>`] : []),
+        '      </li>',
+      );
+    }
+    out.push('    </ol>');
+  }
+  for (const e of c.others.filter((x) => x.permanent)) out.push(`    <p class="ex-permanent"><span class="exhi-tag">${e[lang].listTitle}</span>${e[lang].venue}</p>`);
+  if (c.past.length){
+    out.push('    <div class="ex-past">', `      <p class="ex-past-head">${L.pastShort}</p>`, '      <ul>');
+    for (const e of c.past.slice(0, TOP_PAST)){
+      out.push(`        <li><time datetime="${e.start}">${period(e, lang)}</time><span class="t">${e[lang].listTitle}</span><span class="v">${placeOnly(e[lang].venue)}</span></li>`);
+    }
+    out.push('      </ul>', '    </div>');
+  }
+  return out.join('\n');
 }
 
 function eventsJsonld(c, lang){
@@ -473,7 +488,7 @@ function salesGroup(c, lang, img){
 let works; // data/works.json（下で読み込む）
 const PAGES = [
   { file: 'index.html', kind: 'top', regions: {
-    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja', 3), now: (c) => topNow(c, 'ja'), 'exhibition-dates': statusDates } },
+    'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja', 3), exhibitions: (c) => topExhibitionList(c, 'ja', ''), 'exhibition-dates': statusDates } },
   { file: 'en/index.html', kind: 'top', regions: {
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), news: (c) => newsList(c.news, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
   { file: 'sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'ja', '../') } },

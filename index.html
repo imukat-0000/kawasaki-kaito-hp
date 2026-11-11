@@ -841,23 +841,32 @@ footer{
 }
 
 /* ============ トップの組み直し（2026-11 試作）：区切りは見出しの型ではなく余白と写真の大きさでつくる ============ */
-#now{ padding-block:0; }
-.now-band{
-  display:grid; grid-template-columns:auto auto 1fr auto; align-items:baseline; gap:.4rem 1.6rem;
-  padding:1.3rem 0; border-bottom:1px solid var(--line);
-  text-decoration:none; color:inherit; transition:color .25s ease;
-}
-.now-band:hover{ color:var(--hido); }
-.now-label{ font-size:.7rem; letter-spacing:.24em; color:var(--hido); white-space:nowrap; }
-.now-band time{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:1.02rem; letter-spacing:.06em; white-space:nowrap; }
-.now-title{ font-size:.92rem; letter-spacing:.06em; }
-.now-title small{ display:inline-block; margin-left:1em; font-size:.76rem; color:var(--ink-soft); letter-spacing:.04em; }
-.now-arrow{ color:var(--hido); }
-@media (max-width:700px){
-  .now-band{ grid-template-columns:auto 1fr; }
-  .now-title{ grid-column:1 / -1; }
-  .now-title small{ display:block; margin-left:0; }
-  .now-arrow{ display:none; }
+/* 展示：これからの展示はカード、過去は直近3件だけ1行ずつ */
+.ex-cards{ list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(15rem, 1fr)); gap:clamp(1.6rem,3.4vw,3rem); }
+.ex-card{ border-top:1px solid var(--ink); padding-top:1.2rem; display:flex; flex-direction:column; gap:.45rem; }
+.ex-photo{ display:block; aspect-ratio:3/2; overflow:hidden; margin-bottom:.6rem; }
+.ex-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+.ex-status{ font-size:.68rem; letter-spacing:.24em; color:var(--ink-soft); }
+.ex-status.is-now{ color:var(--hido); }
+.ex-date{ display:flex; align-items:baseline; gap:.8rem; font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+.ex-date .y{ font-size:.8rem; color:var(--ink-soft); letter-spacing:.08em; }
+.ex-date time{ font-size:clamp(1.5rem,2.6vw,1.9rem); letter-spacing:.04em; line-height:1.3; }
+.ex-title{ font-size:1rem; font-weight:600; letter-spacing:.06em; line-height:1.6; }
+.ex-title .exhi-tag{ margin-left:.6em; }
+.ex-venue{ font-size:.82rem; line-height:1.8; color:var(--ink-soft); }
+.ex-link{ align-self:flex-start; margin-top:.3rem; font-size:.76rem; letter-spacing:.1em; color:var(--hido); text-decoration:none; border-bottom:1px solid currentColor; }
+.ex-permanent{ margin-top:2.2rem; font-size:.84rem; color:var(--ink-soft); }
+.ex-permanent .exhi-tag{ margin-right:.8em; }
+.ex-past{ margin-top:3rem; display:grid; grid-template-columns:10rem 1fr; gap:1rem 2rem; }
+.ex-past-head{ font-size:.7rem; letter-spacing:.24em; color:var(--ink-soft); padding-top:.7rem; }
+.ex-past ul{ list-style:none; }
+.ex-past li{ display:grid; grid-template-columns:12rem 1fr auto; gap:.2rem 1.4rem; padding:.7rem 0; border-bottom:1px solid var(--line); font-size:.84rem; }
+.ex-past li:first-child{ border-top:1px solid var(--line); }
+.ex-past time{ color:var(--ink-soft); font-size:.78rem; }
+.ex-past .v{ color:var(--ink-soft); font-size:.78rem; }
+@media (max-width:760px){
+  .ex-past{ grid-template-columns:1fr; gap:.4rem; }
+  .ex-past li{ grid-template-columns:1fr; }
 }
 .quiet-head{
   display:flex; align-items:baseline; gap:1rem; margin-bottom:2.2rem;
@@ -868,7 +877,7 @@ footer{
 .more-link{ display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.6rem 2rem; margin-top:2rem; }
 .more-link a{ font-size:.82rem; letter-spacing:.12em; text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:.2em; transition:color .25s ease, border-color .25s ease; }
 .more-link a:hover{ color:var(--hido); border-color:var(--hido); }
-main > section#works, main > section#journal, main > section#artist{ padding-block:clamp(4.5rem,10vw,8rem); }
+main > section#exhibitions, main > section#works, main > section#journal, main > section#artist{ padding-block:clamp(4.5rem,10vw,8rem); }
 
 /* 作品：1点を大きく、その下に3点 */
 .works-feature{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1rem,2.4vw,2rem); }
@@ -969,7 +978,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <nav aria-label="メイン" id="mainNav">
   <ul>
     <li><a href="works/">作品</a></li>
-    <li><a href="sales/">展示</a></li>
+    <li><a href="#exhibitions">展示</a></li>
     <li><a href="journal/">ジャーナル</a></li>
     <li><a href="profile/">河﨑海斗</a></li>
     <li><a href="#contact">お問い合わせ</a></li>
@@ -999,16 +1008,43 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <p class="scroll-cue" aria-hidden="true">SCROLL</p>
   </section>
 
-  <!-- ============ 2. いま（開催中か次の展示を1件） ============ -->
-  <section id="now" class="now io" aria-label="いまの展示">
-    <!-- build:now -->
-    <a class="now-band" href="sales/">
-      <span class="now-label" data-start="2026-11-27" data-end="2026-11-29">次の展示</span>
-      <time datetime="2026-11-27">2026.11.27 — 11.29</time>
-      <span class="now-title">KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026<small>ハイアット セントリック 金沢（石川・金沢）</small></span>
-      <span class="now-arrow" aria-hidden="true">ほか2件の予定 →</span>
-    </a>
-    <!-- /build:now -->
+  <!-- ============ 2. 展示（開催中・これから・直近の過去） ============ -->
+  <section id="exhibitions" class="io">
+    <h2 class="quiet-head">展示<span>EXHIBITIONS</span></h2>
+    <!-- build:exhibitions -->
+    <ol class="ex-cards">
+      <li class="ex-card">
+        <p class="ex-status" data-start="2026-11-27" data-end="2026-11-29">開催予定</p>
+        <p class="ex-date"><span class="y">2026</span><time datetime="2026-11-27">11.27 — 11.29</time></p>
+        <h3 class="ex-title">KOGEI&nbsp;Art&nbsp;Fair&nbsp;Kanazawa&nbsp;2026</h3>
+        <p class="ex-venue">ハイアット セントリック 金沢（石川・金沢）— GALLERY&nbsp;KOGURE ブース</p>
+        <a class="ex-link" href="https://kogei-artfair.jp/" target="_blank" rel="noopener">サイトを見る →</a>
+      </li>
+      <li class="ex-card">
+        <p class="ex-status" data-start="2027-01-22" data-end="2027-01-25">開催予定</p>
+        <p class="ex-date"><span class="y">2027</span><time datetime="2027-01-22">1.22 — 1.25</time></p>
+        <h3 class="ex-title">ART&nbsp;MIYAZAKI&nbsp;2027</h3>
+        <p class="ex-venue">みやざきアートセンター 5階 ほか（宮崎）— 22日はVIP内覧、23〜25日が一般公開</p>
+        <a class="ex-link" href="https://artmiyazaki.main.jp/" target="_blank" rel="noopener">サイトを見る →</a>
+      </li>
+      <li class="ex-card">
+        <p class="ex-status" data-start="2027-03-20" data-end="2027-04-18">開催予定</p>
+        <p class="ex-date"><span class="y">2027</span><time datetime="2027-03-20">3.20 — 4.18</time></p>
+        <h3 class="ex-title">2人展<span class="exhi-tag">予定</span></h3>
+        <p class="ex-venue">呉市立美術館（広島・呉）— 共同出品：寺本光希（竹）</p>
+      </li>
+    </ol>
+    <p class="ex-permanent"><span class="exhi-tag">常設展示</span>The Arts Fusion by Lecrin（東京・上野）— 朱色和金を展示</p>
+    <div class="ex-past">
+      <p class="ex-past-head">これまでの展示</p>
+      <ul>
+        <li><time datetime="2026-11-06">2026.11.6 — 11.8</time><span class="t">「工＋藝」京都&nbsp;2026</span><span class="v">大本山 妙顕寺（京都）</span></li>
+        <li><time datetime="2026-10-31">2026.10.31 — 11.3</time><span class="t">POP&nbsp;UP&nbsp;SHOP「MADE&nbsp;IN&nbsp;KURE」</span><span class="v">カグラザカヒトトハコ（東京・神楽坂）</span></li>
+        <li><time datetime="2026-10-16">2026.10.16 — 10.18</time><span class="t">東美アートフェア2026</span><span class="v">東京美術倶楽部 3階（東京・新橋）</span></li>
+      </ul>
+    </div>
+    <!-- /build:exhibitions -->
+    <p class="more-link"><a href="profile/">これまでの展示歴を見る<span aria-hidden="true"> →</span></a></p>
   </section>
 
   <!-- ============ 3. 作品 ============ -->
@@ -2227,13 +2263,14 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }
   }
 
-  /* ---------- トップの「いま」：開催中／次の展示の文字を日本時間で決める ---------- */
-  var nowLabel = document.querySelector('.now-label[data-start]');
-  if (nowLabel){
-    var nowT = new Date();
-    var nowS = new Date(nowLabel.getAttribute('data-start') + 'T00:00:00+09:00');
-    var nowE = new Date(nowLabel.getAttribute('data-end') + 'T23:59:59+09:00');
-    nowLabel.textContent = nowT < nowS ? '次の展示' : (nowT <= nowE ? '開催中' : '会期終了');
+  /* ---------- トップの展示：開催中／開催予定の文字を日本時間で決める ---------- */
+  var exStatus = document.querySelectorAll('.ex-status[data-start]');
+  for (var q = 0; q < exStatus.length; q++){
+    var exT = new Date();
+    var exS = new Date(exStatus[q].getAttribute('data-start') + 'T00:00:00+09:00');
+    var exE = new Date(exStatus[q].getAttribute('data-end') + 'T23:59:59+09:00');
+    exStatus[q].textContent = exT < exS ? '開催予定' : (exT <= exE ? '開催中' : '会期終了');
+    if (exT >= exS && exT <= exE) exStatus[q].classList.add('is-now');
   }
 
   /* ---------- 開催中の展示のスライド（矢印・点・スワイプ） ---------- */
