@@ -18,8 +18,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kaitokawasaki.com/concept/">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:image" content="https://kaitokawasaki.com/img/nishikigoi-koi-bronze-kaito-kawasaki.jpg">
-<meta property="og:image:alt" content="鋳金で制作した錦鯉の作品《錦鯉》">
+<meta property="og:image" content="https://kaitokawasaki.com/img/vermilion-wakin-goldfish-bottle-kaito-kawasaki.jpg">
+<meta property="og:image:alt" content="水のなかの、鋳金の金魚《朱色和金ボトル》">
 <meta property="og:site_name" content="河﨑海斗 | KOGEI REALISM">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@kkchaki">
@@ -187,71 +187,165 @@ body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate
   #mainNav ul{ display:grid; grid-template-columns:repeat(3, auto); justify-items:end; gap:.8rem 2rem; }
 }
 
-/* ============ コンセプト（読むページ：一列の本文と、間に置く作品） ============ */
-:root{ --t1:clamp(1.45rem,2.5vw,1.85rem); --t3:.95rem; --t4:.68rem; --gutter:clamp(1.4rem,3vw,2.6rem); }
+/* ============ コンセプト：本をめくるように読むページ ============
+   - 一画面に、ひとつのこと（見開き＝.sp）
+   - 言葉は縦に組み、文節で行を変える
+   - 写真は画面いっぱいに置き、言葉はその余白に置く
+   - 静かな紙の面と、暗い面・写真の面を交互に */
+:root{ --t3:.95rem; --t4:.68rem; --gutter:clamp(1.4rem,3vw,2.6rem); --mincho:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
 main{ position:relative; z-index:1; }
-.mincho, .cp-open h1, .cp-turn, .cp-close, .cp-sec h2, .cp-cond figcaption b{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
 
-/* 1. 扉：画面いっぱいの余白に、縦書きの一行だけ */
-.cp-open{
-  min-height:100svh; display:flex; align-items:center; justify-content:center; position:relative;
-  padding:9rem 1.4rem 5rem;
+.sp{
+  min-height:100svh; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  padding:8.5rem clamp(1.4rem,6vw,5rem) 5.5rem;
 }
-.cp-open h1{
-  writing-mode:vertical-rl; font-size:clamp(1.9rem,4.4vw,3.1rem); font-weight:500;
-  letter-spacing:.42em; line-height:1;
+/* 縦組みの言葉 */
+.v{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(1rem,1.25vw,1.14rem); font-weight:400; line-height:2.5; letter-spacing:.18em;
+  position:relative; z-index:2;
 }
-.cp-open .cp-label{
-  position:absolute; left:clamp(1.4rem,6vw,5rem); bottom:2.2rem;
-  font-size:var(--t4); letter-spacing:.34em; color:var(--hido);
+.v .ln{ display:block; }
+.v.big{ font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; line-height:2.3; letter-spacing:.24em; }
+.v .gap{ display:block; inline-size:0; margin-left:1.6em; }  /* 段落の間（縦組みでは左へ） */
+.v em{ font-style:normal; color:var(--hido); }
+
+/* ノンブル（頁の数字）と柱 */
+.folio{
+  position:absolute; left:50%; bottom:2.2rem; transform:translateX(-50%); z-index:2;
+  display:flex; align-items:center; gap:.9rem;
+  font-family:var(--mincho); font-size:.8rem; letter-spacing:.3em; color:var(--ink-soft);
 }
-.cp-open .cp-label span{ color:var(--ink-soft); margin-left:1.2em; letter-spacing:.2em; }
-.cp-open .cp-en{
-  position:absolute; right:clamp(1.4rem,6vw,5rem); bottom:2.2rem;
-  font-size:var(--t4); letter-spacing:.28em; color:var(--ink-soft);
+.folio::before, .folio::after{ content:""; width:1.6rem; height:1px; background:currentColor; opacity:.5; }
+
+/* 扉 */
+.sp-open h1{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(1.9rem,4.4vw,3.1rem); font-weight:500; letter-spacing:.42em; line-height:1;
+}
+.cp-label{ position:absolute; left:clamp(1.4rem,6vw,5rem); bottom:2.2rem; font-size:var(--t4); letter-spacing:.34em; color:var(--hido); }
+.cp-label span{ color:var(--ink-soft); margin-left:1.2em; letter-spacing:.2em; }
+.cp-en{ position:absolute; right:clamp(1.4rem,6vw,5rem); bottom:2.2rem; font-size:var(--t4); letter-spacing:.28em; color:var(--ink-soft); }
+
+/* 見開き：右が一頁目、左が二頁目（日本の本と同じ、右から左へ） */
+.sp-book{ display:grid; grid-template-columns:1fr 1fr; padding:0; align-items:stretch; }
+.pg{ position:relative; display:flex; align-items:center; justify-content:center; gap:clamp(1.6rem,4vw,3.6rem); padding:8.5rem clamp(1.4rem,4vw,4rem) 6rem; min-height:100svh; }
+.pg-1{ order:2; border-left:1px solid var(--line); }
+.pg-2{ order:1; }
+/* 大きな一文字：絵のない頁では、文字が絵になる */
+.glyph{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(6.5rem,13vw,11.5rem); font-weight:200; line-height:1; color:var(--ink);
+}
+.sp-q{ gap:clamp(2rem,6vw,5.5rem); }
+.pg, .sp-q, .sp-koyomi, .sp-gather{ flex-direction:row-reverse; }  /* 縦組みは右から左へ読む */
+.sp-short{ min-height:72svh; }
+.v .ln.b{ font-size:1.5em; font-weight:500; letter-spacing:.24em; line-height:2.1; }
+
+/* 暗い面（転） */
+.sp-dark{ background:#16181C; color:#EDE8DC; }
+.sp-dark .folio{ color:#9A968C; }
+
+/* 写真の面：写真は画面いっぱい、言葉は余白に */
+.sp-photo{ padding:0; background:#D9D7D4; }
+.sp-photo > img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.sp-photo .v{ position:absolute; }
+.sp-photo figcaption, .sp-photo .cap{
+  position:absolute; left:clamp(1.4rem,6vw,5rem); bottom:1.8rem; z-index:2;
+  font-size:var(--t4); letter-spacing:.14em; color:var(--ink-soft);
+}
+.sp-water > img{ object-position:44% 100%; }
+.sp-water .v{ right:clamp(2rem,16vw,15rem); top:clamp(8.5rem,17svh,11rem); }
+.sp-rain{ background:#DCDBD9; }
+.sp-rain > img{ object-position:50% 26%; }
+.sp-rain .v{ right:clamp(2rem,9vw,8rem); bottom:13%; font-weight:600; text-shadow:0 0 .6em #EDEDEB, 0 0 1.2em #EDEDEB, 0 0 2em #EDEDEB; }
+.sp-leaf{ background:#C6BDBA; }
+.sp-leaf > img{ object-position:50% 100%; }
+.sp-leaf .v{ left:clamp(2rem,16vw,15rem); top:clamp(8.5rem,15svh,10rem); }
+.sp-kacho{ background:#E9E8E8; }
+.sp-kacho > img{ object-position:0% 60%; }
+.sp-kacho .v{ right:clamp(2rem,10vw,9rem); top:clamp(8.5rem,14svh,10rem); }
+.sp-kinshu{ background:#0B0B0A; color:#EDE8DC; }
+.sp-kinshu > img{ width:78%; object-position:30% 78%; -webkit-mask-image:linear-gradient(to right,#000 78%,transparent); mask-image:linear-gradient(to right,#000 78%,transparent); }
+.sp-kinshu .v{ right:clamp(2rem,7vw,6.5rem); top:50%; transform:translateY(-50%); }
+.sp-kinshu .cap{ color:#B9B4A8; }
+
+/* 暦の言葉：個展の名を、短冊のように */
+.sp-koyomi{ gap:clamp(2rem,7vw,6rem); }
+.tanzaku{ display:flex; flex-direction:row-reverse; gap:clamp(1.4rem,3.5vw,3rem); }
+.tanzaku span{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; letter-spacing:.3em; line-height:1;
+  padding:1.6em .9em; border:1px solid var(--line); background:var(--card);
 }
 
-@media (max-width:700px){ .cp-open .cp-en{ right:auto; left:clamp(1.4rem,6vw,5rem); bottom:4.2rem; } }
-
-/* 2. 本文：一行38字まで。段落の間を広く */
-.cp-text{ max-inline-size:38em; margin-inline:auto; padding-inline:1.4rem; }
-.cp-text p{ font-size:var(--t3); line-height:2.25; letter-spacing:.06em; margin-bottom:2.4em; }
-.cp-text p.cp-turn{ font-size:var(--t1); line-height:1.8; letter-spacing:.08em; margin:4.5rem 0; }
-.cp-essay{ padding-block:clamp(4rem,9vw,7rem) 0; }
-.cp-turn, .cp-close{ word-break:keep-all; } /* <wbr> の位置でだけ折り返す */
-
-/* 本文の間に置く写真：本文より広く */
-.cp-figure{ margin:clamp(4rem,9vw,7rem) auto; max-width:72rem; padding-inline:clamp(1.4rem,6vw,5rem); }
-.cp-figure img{ width:100%; height:auto; display:block; }
-.cp-figure figcaption, .cp-cond figcaption{ margin-top:.8rem; font-size:var(--t4); letter-spacing:.12em; color:var(--ink-soft); }
-
-/* 金魚には水を、蛙には雨を、紅葉には冷え込む朝を：三点を並べる */
-.cp-cond{
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--gutter);
-  max-width:72rem; margin:clamp(3.5rem,8vw,6rem) auto clamp(4.5rem,10vw,8rem); padding-inline:clamp(1.4rem,6vw,5rem);
-  list-style:none;
-}
-.cp-cond img{ width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; display:block; }
-.cp-cond figcaption b{ display:block; font-size:1.05rem; font-weight:500; letter-spacing:.3em; color:var(--ink); margin-bottom:.3rem; }
-@media (max-width:700px){
-  .cp-cond{ grid-template-columns:1fr 1fr; }
-  .cp-cond li:first-child{ grid-column:1 / -1; }
+/* 呼び集める：五つの言葉が並び、一行に集まる */
+.sp-gather{ gap:clamp(2rem,6vw,5rem); }
+.five{ display:flex; flex-direction:row-reverse; gap:clamp(.9rem,2.2vw,2rem); list-style:none; }
+.five li{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(.95rem,1.2vw,1.1rem); letter-spacing:.3em; line-height:1; color:var(--ink-soft);
+  padding-top:1.4em; border-top:1px solid var(--hido);
 }
 
 /* 結び */
-.cp-close{
-  text-align:center; padding:clamp(5rem,12vw,9rem) 1.4rem;
-  font-size:var(--t1); line-height:2.1; letter-spacing:.14em;
-}
-.cp-close small{ display:block; margin-top:1.4rem; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); letter-spacing:.3em; color:var(--ink-soft); }
+.sp-close{ flex-direction:column; gap:3rem; }
+.sp-close .v.big{ font-size:clamp(1.45rem,2.8vw,2.2rem); }
 
-/* 3. 補足の区切り：左に見出し、右に中身（トップと同じ組み方） */
+/* ---- スマホ：見開きは一頁ずつ、言葉の置き場所を写真に合わせて変える ---- */
+@media (max-width:760px){
+  .sp{ padding:7.5rem 1.4rem 5rem; }
+  .v{ font-size:1rem; line-height:2.35; letter-spacing:.16em; }
+  .v.big{ font-size:1.25rem; }
+  .sp-book{ grid-template-columns:1fr; }
+  .pg{ min-height:92svh; padding:7rem 1.4rem 5.5rem; }
+  .pg-1{ order:1; border-left:0; border-bottom:1px solid var(--line); }
+  .pg-2{ order:2; }
+  .glyph{ font-size:6.2rem; }
+  .cp-en{ right:auto; left:clamp(1.4rem,6vw,5rem); bottom:4.2rem; }
+  .sp-water > img{ object-position:36% 100%; }
+  .sp-water .v{ right:1.8rem; top:7.5rem; }
+  .sp-rain .v{ right:1.8rem; bottom:16%; }
+  .sp-leaf{ background:#C4BCB9; }
+  .sp-leaf > img{ height:60%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 78%,transparent); mask-image:linear-gradient(to top,#000 78%,transparent); }
+  .sp-leaf .v{ left:1.8rem; top:7rem; }
+  .sp-kacho > img{ object-position:22% 100%; height:52%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 70%,transparent); mask-image:linear-gradient(to top,#000 70%,transparent); }
+  .sp-kacho .v{ right:1.8rem; top:7rem; }
+  .sp-kinshu > img{ width:100%; object-position:42% 100%; height:58%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
+  .sp-kinshu .v{ right:1.8rem; top:7rem; transform:none; }
+  .sp-koyomi, .sp-gather{ flex-direction:column; gap:3rem; }
+}
+
+/* ---- 現れ方：言葉は一行ずつ、写真はゆっくり ---- */
+.sp .ln, .sp .glyph, .sp .folio, .sp .tanzaku span, .sp .five li, .sp-open h1{ opacity:0; transition:opacity 1.4s ease; }
+.sp-photo > img{ opacity:0; transform:scale(1.035); transition:opacity 2.2s ease, transform 5s cubic-bezier(.2,.6,.2,1); }
+.in .ln, .in .glyph, .in .folio, .in .tanzaku span, .in .five li, .sp-open.in h1{ opacity:1; }
+.sp-photo.in > img{ opacity:1; transform:none; }
+.in .ln:nth-child(1){ transition-delay:.5s; } .in .ln:nth-child(2){ transition-delay:.85s; }
+.in .ln:nth-child(3){ transition-delay:1.2s; } .in .ln:nth-child(4){ transition-delay:1.55s; }
+.in .ln:nth-child(5){ transition-delay:1.9s; } .in .ln:nth-child(6){ transition-delay:2.25s; }
+.in .ln:nth-child(7){ transition-delay:2.6s; } .in .ln:nth-child(8){ transition-delay:2.95s; }
+.in .ln:nth-child(n+9){ transition-delay:3.3s; }
+.sp-photo.in .ln{ transition-delay:1.2s; } .sp-photo.in .ln:nth-child(2){ transition-delay:1.6s; }
+.sp-photo.in .ln:nth-child(3){ transition-delay:2s; } .sp-photo.in .ln:nth-child(4){ transition-delay:2.4s; }
+.sp-photo.in .ln:nth-child(5){ transition-delay:2.8s; } .sp-photo.in .ln:nth-child(n+6){ transition-delay:3.2s; }
+.in .five li:nth-child(2){ transition-delay:.3s; } .in .five li:nth-child(3){ transition-delay:.6s; }
+.in .five li:nth-child(4){ transition-delay:.9s; } .in .five li:nth-child(5){ transition-delay:1.2s; }
+.sp-gather.in .ln{ transition-delay:1.9s; } .sp-gather.in .ln:nth-child(2){ transition-delay:2.25s; } .sp-gather.in .ln:nth-child(3){ transition-delay:2.6s; }
+.in .tanzaku span:nth-child(2){ transition-delay:.5s; }
+.sp-koyomi.in .v .ln{ transition-delay:1.3s; } .sp-koyomi.in .v .ln:nth-child(2){ transition-delay:1.7s; }
+@media (prefers-reduced-motion:reduce){
+  .sp .ln, .sp .glyph, .sp .folio, .sp .tanzaku span, .sp .five li, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
+}
+
+/* ============ 補足の区切り：左に見出し、右に中身（トップと同じ組み方） ============ */
 .cp-sec{
   display:grid; grid-template-columns:minmax(0,11rem) minmax(0,1fr); column-gap:var(--gutter);
   max-width:1600px; margin-inline:auto; padding:clamp(4.5rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem);
   border-top:1px solid var(--line);
 }
-.cp-sec h2{ font-size:1.05rem; font-weight:600; letter-spacing:.24em; line-height:1.6; }
+.cp-sec h2{ font-family:var(--mincho); font-size:1.05rem; font-weight:600; letter-spacing:.24em; line-height:1.6; }
 .cp-sec h2 span{ display:block; margin-top:.5rem; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); font-weight:400; letter-spacing:.34em; color:var(--hido); }
 .cp-sec-body{ max-inline-size:38em; }
 .cp-sec-body p{ font-size:var(--t3); line-height:2.1; margin-bottom:1.6em; }
@@ -274,7 +368,6 @@ main{ position:relative; z-index:1; }
 }
 .more-links a:hover{ color:var(--hido); border-color:var(--hido); }
 
-/* 4. 次へ：作品へ誘う */
 .cp-next{ padding:clamp(4.5rem,9vw,7rem) clamp(1.4rem,6vw,5rem); border-top:1px solid var(--line); text-align:center; }
 .cp-next a.primary{
   display:inline-block; font-family:"Noto Serif JP",serif; font-size:1.05rem; letter-spacing:.24em;
@@ -293,7 +386,6 @@ footer{
 .footer-links a{ color:var(--ink-soft); text-decoration:none; font-size:.7rem; letter-spacing:.15em; }
 .footer-links a:hover{ color:var(--hido); }
 
-/* ふわっと出す（動きを減らす設定では出さない） */
 .io{ opacity:0; transform:translateY(14px); transition:opacity 1s ease, transform 1s ease; }
 .io.in{ opacity:1; transform:none; }
 @media (prefers-reduced-motion:reduce){ .io{ opacity:1 !important; transform:none !important; transition:none !important; } }
@@ -336,47 +428,94 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 <main id="main">
 
   <!-- 扉 -->
-  <section class="cp-open" aria-label="コンセプト">
+  <section class="sp sp-open" aria-label="コンセプト">
     <h1>動く、似る、在る。</h1>
     <p class="cp-label">CONCEPT<span>コンセプト</span></p>
     <p class="cp-en" lang="en">To move. To resemble. To be.</p>
   </section>
 
-  <!-- 本文 -->
-  <article class="cp-essay">
-    <div class="cp-text io">
-      <p>江戸の職人は、鉄の海老を動かしてみせた。<wbr>明治の名工は、象牙の筍を本物と見分けがつかなくした。<wbr>動く、似る。<wbr>日本の写実は、そのたびに世界を驚かせてきた。</p>
-      <p class="cp-turn">そして今、<wbr>似せることは<wbr>機械の仕事になった。</p>
-      <p>河﨑海斗は、三つめの問いを立てる。</p>
-      <p class="cp-turn">何がそろえば、<wbr>それは「在る」のか。</p>
-      <p>金魚は、水がなければ金魚でいられない。<wbr>だから河﨑は、金属で金魚を鋳り、樹脂で水をつくる。<wbr>蛙には雨を。<wbr>紅葉には、冷え込む朝を。<wbr>溶けた銅は、冷える一瞬に赤く色づく。<wbr>本物の紅葉が色づくのと、同じ理由で。</p>
-    </div>
+  <article>
+  <!-- 見開き：一頁目「動く」と二頁目「似る」。絵は置かず、文字を絵にする -->
+  <div class="sp sp-book">
+    <section class="pg pg-1" aria-label="一、動く">
+      <span class="glyph" aria-hidden="true">動</span>
+      <p class="v"><span class="ln">江戸の職人は、</span><span class="ln">鉄の海老を</span><span class="ln">動かしてみせた。</span></p>
+      <span class="folio">一</span>
+    </section>
+    <section class="pg pg-2" aria-label="二、似る">
+      <span class="glyph" aria-hidden="true">似</span>
+      <p class="v"><span class="ln">明治の名工は、</span><span class="ln">象牙の筍を</span><span class="ln">本物と見分けが</span><span class="ln">つかなくした。</span></p>
+      <span class="folio">二</span>
+    </section>
+  </div>
 
-    <ul class="cp-cond" aria-label="三つの作品と、それぞれの条件">
-      <li class="io"><figure>
-        <img src="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="水の入った袋のなかの、鋳金の金魚《朱色和金》" width="1400" height="933" loading="lazy">
-        <figcaption><b>水</b>《朱色和金》2024</figcaption>
-      </figure></li>
-      <li class="io"><figure>
-        <img src="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="雨粒のなかの、緑青色の鋳金の蛙《雨ノ蛙「狐の嫁入り」》" width="1192" height="1192" loading="lazy">
-        <figcaption><b>雨</b>《雨ノ蛙「狐の嫁入り」》2025</figcaption>
-      </figure></li>
-      <li class="io"><figure>
-        <img src="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="赤く色づいた、純銅の紅葉《紅葉》" width="1400" height="933" loading="lazy">
-        <figcaption><b>冷え込む朝</b>《紅葉》2025</figcaption>
-      </figure></li>
-    </ul>
+  <section class="sp sp-short">
+    <p class="v"><span class="ln">動く、似る。</span><span class="ln">日本の写実は、</span><span class="ln">そのたびに</span><span class="ln">世界を驚かせてきた。</span></p>
+  </section>
 
-    <div class="cp-text io">
-      <p>日本の絵も言葉も、もともと生きものを一匹だけでは差し出さなかった。<wbr>花鳥画は鳥を枝ごと描き、俳句は蛙を季節ごと詠んだ。<wbr>河﨑の個展の名は「カエルハジメテナク」「錦秋」。<wbr>暦の言葉である。<wbr>修了制作では、錦鯉と百匹の和金と千枚を超える紅葉を、北斎の大波の構図に並べた。<wbr>鋳金の技、現代の素材、金属の色の知識、季節の言葉、絵の構図。<wbr>使えるものはすべて、その一点のために呼び集められている。</p>
-    </div>
+  <!-- 転：暗い面 -->
+  <section class="sp sp-dark">
+    <p class="v big"><span class="ln">そして今、</span><span class="ln">似せることは</span><span class="ln">機械の仕事になった。</span></p>
+  </section>
 
-    <figure class="cp-figure io">
-      <img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した錦鯉の作品《錦鯉》" width="1200" height="800" loading="lazy">
-      <figcaption>《錦鯉》2026　修了作品</figcaption>
-    </figure>
+  <!-- 三頁目「在る」 -->
+  <section class="sp sp-q" aria-label="三、在る">
+    <span class="glyph" aria-hidden="true">在</span>
+    <p class="v"><span class="ln">河﨑海斗は、</span><span class="ln">三つめの問いを立てる。</span><span class="gap" aria-hidden="true"></span><span class="ln b">何がそろえば、</span><span class="ln b">それは「在る」のか。</span></p>
+    <span class="folio">三</span>
+  </section>
 
-    <p class="cp-close mincho io">動く、似る、在る。<br>写実の三ページ目が、<wbr>ここから始まる。</p>
+  <!-- 水 -->
+  <figure class="sp sp-photo sp-water">
+    <img src="../img/vermilion-wakin-goldfish-bottle-kaito-kawasaki.jpg" alt="水を満たしたボトルのなかを泳ぐ、鋳金の金魚" width="1400" height="933" loading="lazy">
+    <p class="v"><span class="ln">金魚は、水がなければ</span><span class="ln">金魚でいられない。</span><span class="gap" aria-hidden="true"></span><span class="ln">だから河﨑は、</span><span class="ln">金属で金魚を鋳り、</span><span class="ln">樹脂で水をつくる。</span></p>
+    <figcaption>《朱色和金ボトル》2026</figcaption>
+  </figure>
+
+  <!-- 雨 -->
+  <figure class="sp sp-photo sp-rain">
+    <img src="../img/rain-frog-fresh-leaf-rain-kaito-kawasaki.jpg" alt="一面の雨粒のなかにいる、緑青色の鋳金の蛙" width="1050" height="1400" loading="lazy">
+    <p class="v big"><span class="ln">蛙には雨を。</span></p>
+    <figcaption>《雨ノ蛙「青葉雨」》2025</figcaption>
+  </figure>
+
+  <!-- 冷え込む朝 -->
+  <figure class="sp sp-photo sp-leaf">
+    <img src="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="赤く色づいた、純銅の紅葉" width="1400" height="933" loading="lazy">
+    <p class="v"><span class="ln b">紅葉には、</span><span class="ln b">冷え込む朝を。</span><span class="gap" aria-hidden="true"></span><span class="ln">溶けた銅は、</span><span class="ln">冷える一瞬に<em>赤く</em>色づく。</span><span class="ln">本物の紅葉が色づくのと、</span><span class="ln">同じ理由で。</span></p>
+    <figcaption>《紅葉》2025</figcaption>
+  </figure>
+
+  <!-- 花鳥画と俳句 -->
+  <section class="sp sp-photo sp-kacho">
+    <img src="../img/bronze-frog-leaves-kaito-kawasaki.jpg" alt="青葉のあいだにいる、鋳金の蛙" width="2200" height="1467" loading="lazy">
+    <p class="v"><span class="ln">日本の絵も言葉も、</span><span class="ln">もともと生きものを</span><span class="ln">一匹だけでは</span><span class="ln">差し出さなかった。</span><span class="gap" aria-hidden="true"></span><span class="ln">花鳥画は</span><span class="ln">鳥を枝ごと描き、</span><span class="ln">俳句は</span><span class="ln">蛙を季節ごと詠んだ。</span></p>
+  </section>
+
+  <!-- 暦の言葉 -->
+  <section class="sp sp-koyomi">
+    <p class="v"><span class="ln">河﨑の個展の名は</span></p>
+    <p class="tanzaku"><span>カエルハジメテナク</span><span>錦秋</span></p>
+    <p class="v"><span class="ln">暦の言葉である。</span></p>
+  </section>
+
+  <!-- 錦秋 -->
+  <figure class="sp sp-photo sp-kinshu">
+    <img src="../img/g_koi_install.jpg" alt="紅葉と和金をまとった、鋳金の錦鯉。暗い展示室で" width="1500" height="1000" loading="lazy">
+    <p class="v"><span class="ln">修了制作では、</span><span class="ln">錦鯉と百匹の和金と</span><span class="ln">千枚を超える紅葉を、</span><span class="ln">北斎の大波の構図に</span><span class="ln">並べた。</span></p>
+    <figcaption class="cap">《錦鯉》2026　修了作品</figcaption>
+  </figure>
+
+  <!-- 呼び集める -->
+  <section class="sp sp-gather">
+    <ul class="five"><li>鋳金の技</li><li>現代の素材</li><li>金属の色の知識</li><li>季節の言葉</li><li>絵の構図</li></ul>
+    <p class="v"><span class="ln">使えるものはすべて、</span><span class="ln">その一点のために</span><span class="ln">呼び集められている。</span></p>
+  </section>
+
+  <!-- 結び -->
+  <section class="sp sp-close">
+    <p class="v big"><span class="ln">動く、似る、在る。</span><span class="ln">写実の三ページ目が、</span><span class="ln">ここから始まる。</span></p>
+  </section>
   </article>
 
   <!-- 工芸リアリズム -->
@@ -498,12 +637,12 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }, { passive: true });
   })();
 
-  /* ---------- 画面に入ったら、ふわっと出す ---------- */
-  var ios = document.querySelectorAll('.io');
+  /* ---------- 画面に入ったら現れる（見開きごと） ---------- */
+  var ios = document.querySelectorAll('.sp:not(.sp-book), .pg, .io');
   if ('IntersectionObserver' in window){
     var ob = new IntersectionObserver(function(es){
       es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); ob.unobserve(e.target); } });
-    }, { rootMargin:'0px 0px -8% 0px' });
+    }, { rootMargin:'0px 0px -28% 0px' });
     ios.forEach(function(el){ ob.observe(el); });
   } else {
     ios.forEach(function(el){ el.classList.add('in'); });
