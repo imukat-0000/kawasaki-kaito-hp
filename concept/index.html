@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F9HRX2EH1D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F9HRX2EH1D');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>コンセプト — 動く、似る、在る | 河﨑海斗</title>
+<meta name="description" content="江戸の職人は鉄の海老を動かし、明治の名工は象牙を本物そっくりにした。河﨑海斗は、生きものを、それが在る世界ごと鋳る。金魚には水を、蛙には雨を、紅葉には冷え込む朝を。">
+<meta property="og:title" content="コンセプト — 動く、似る、在る | 河﨑海斗">
+<meta property="og:description" content="河﨑海斗は、生きものを、それが在る世界ごと鋳る。金魚には水を、蛙には雨を、紅葉には冷え込む朝を。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kaitokawasaki.com/concept/">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://kaitokawasaki.com/img/nishikigoi-koi-bronze-kaito-kawasaki.jpg">
+<meta property="og:image:alt" content="鋳金で制作した錦鯉の作品《錦鯉》">
+<meta property="og:site_name" content="河﨑海斗 | KOGEI REALISM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@kkchaki">
+<meta name="theme-color" content="#F7F4EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171C" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://kaitokawasaki.com/concept/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "河﨑海斗", "item": "https://kaitokawasaki.com/" },
+    { "@type": "ListItem", "position": 2, "name": "コンセプト", "item": "https://kaitokawasaki.com/concept/" }
+  ]
+}
+</script>
+<style>
+@font-face{
+  font-family:"Noto Serif JP";
+  src:url("../fonts/NotoSerifJP-sub.woff2") format("woff2");
+  font-weight:200 900;
+  font-display:swap;
+}
+
+/* ============ tokens（本体 index.html と同一） ============ */
+:root{
+  --paper:#F7F4EC;
+  --ink:#1C1E22;
+  --ink-soft:#4C4D48;
+  --hido:#9C3B22;
+  --hido-deep:#7E2E1A;
+  --brass:#9A7B3F;
+  --line:#DCD5C6;
+  --card:#FFFDF7;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+    --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+    --line:#2B3037; --card:#1B1F25;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F7F4EC; --ink:#1C1E22; --ink-soft:#4C4D48;
+  --hido:#9C3B22; --hido-deep:#7E2E1A; --brass:#9A7B3F;
+  --line:#DCD5C6; --card:#FFFDF7;
+}
+:root[data-theme="dark"]{
+  --paper:#14171C; --ink:#E9E4D9; --ink-soft:#ABABA1;
+  --hido:#CE6A4A; --hido-deep:#E08767; --brass:#C2A05C;
+  --line:#2B3037; --card:#1B1F25;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; background:var(--paper); }
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-feature-settings:"palt";
+  line-height:1.9;
+  letter-spacing:0.04em;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; }
+:focus-visible{ outline:2px solid var(--hido); outline-offset:3px; }
+.skip-link{
+  position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+  z-index:100; background:var(--paper); color:var(--ink); padding:.8em 1.4em;
+  border:1px solid var(--hido); border-radius:.2rem; font-size:.85rem; text-decoration:none;
+}
+.skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; overflow:visible; }
+.mincho{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+
+/* ============ nav（本体と共通） ============ */
+/* nav はheaderの兄弟要素（headerのbackdrop-filterがposition:fixedの containing block に
+   なってしまい、モバイル全画面オーバーレイがheaderの高さ内に閉じ込められるのを防ぐため） */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:30;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:1.6rem clamp(1.2rem, 4vw, 3rem);
+  background:color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  transition:opacity .35s ease, transform .35s ease;
+}
+.brand{
+  display:flex; flex-direction:column; gap:.6rem;
+  text-decoration:none; position:relative; z-index:26;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  font-size:1.05rem; letter-spacing:.3em; font-weight:600;
+}
+.brand-tagline{
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  font-size:.6rem; letter-spacing:.1em; line-height:1.6; font-weight:400;
+  color:var(--ink-soft);
+}
+#mainNav{
+  position:fixed; top:0; height:7.75rem; right:clamp(1.2rem, 4vw, 3rem); z-index:31;
+  display:flex; align-items:center;
+  transition:opacity .35s ease;
+}
+#mainNav ul{ display:flex; flex-direction:row; align-items:center; gap:1.8rem; list-style:none; min-width:0; }
+#mainNav ul li{ min-width:0; }
+#mainNav a{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  text-decoration:none; font-size:.85rem; letter-spacing:.08em;
+  color:var(--ink-soft); transition:color .25s;
+}
+#mainNav a:hover, #mainNav a[aria-current]{ color:var(--hido); }
+
+.nav-toggle{
+  display:none; position:relative; z-index:26;
+  flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  width:2.4rem; height:2.4rem; background:none; border:0; cursor:pointer; padding:0;
+}
+.nav-toggle span{
+  display:block; width:1.4rem; height:1.5px; background:var(--ink);
+  transition:transform .25s ease, opacity .2s ease;
+}
+body.nav-open .nav-toggle span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2){ opacity:0; }
+body.nav-open .nav-toggle span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+.nav-sns{ display:none; }
+
+/* メニュー9項目を横一列に並べるとロゴに重なる幅（タブレットを含む）では、ハンバーガーメニューにする */
+@media (max-width:1100px){
+  .nav-toggle{ display:flex; }
+  #mainNav{
+    inset:0; right:auto; z-index:24;
+    width:100%; height:100%; align-items:center;
+    /* 上は固定ヘッダーの高さ(7.75rem)＋余白、下はInstagram・Xの行の分をあける。
+       収まらない画面ではメニューの中だけがスクロールする */
+    padding:8.75rem clamp(1.4rem,8vw,4rem) 4.8rem;
+    overflow-y:auto; overscroll-behavior:contain;
+    background:var(--paper);
+    justify-content:flex-end;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open #mainNav{ opacity:1; visibility:visible; }
+  /* margin:auto で余白があるときは上下中央、足りないときは上端からはみ出さずに並べる */
+  #mainNav ul{ flex-direction:column; align-items:flex-end; gap:clamp(.7rem, 2.6vh, 1.6rem); margin:auto 0; }
+  /* 文字の大きさと間隔は画面の高さに合わせて縮め、9項目が1画面に収まるようにする */
+  #mainNav li{ line-height:1.35; }
+  #mainNav a{ font-size:clamp(1.05rem, 2.9vh, 1.5rem); letter-spacing:.1em; }
+
+  .nav-sns{
+    display:flex; gap:1.4rem;
+    position:fixed; left:1.4rem; bottom:1.8rem; z-index:25;
+    opacity:0; visibility:hidden; transition:opacity .3s ease;
+  }
+  body.nav-open .nav-sns{ opacity:1; visibility:visible; }
+  .nav-sns a{
+    font-size:.72rem; letter-spacing:.14em; color:var(--ink-soft); text-decoration:none;
+  }
+  .nav-sns a:hover{ color:var(--hido); }
+}
+
+/* 横向きのスマートフォンなど高さが低い画面：項目を3列に並べて1画面に収める */
+@media (max-width:1100px) and (max-height:520px){
+  #mainNav ul{ display:grid; grid-template-columns:repeat(3, auto); justify-items:end; gap:.8rem 2rem; }
+}
+
+/* ============ コンセプト（読むページ：一列の本文と、間に置く作品） ============ */
+:root{ --t1:clamp(1.45rem,2.5vw,1.85rem); --t3:.95rem; --t4:.68rem; --gutter:clamp(1.4rem,3vw,2.6rem); }
+main{ position:relative; z-index:1; }
+.mincho, .cp-open h1, .cp-turn, .cp-close, .cp-sec h2, .cp-cond figcaption b{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+
+/* 1. 扉：画面いっぱいの余白に、縦書きの一行だけ */
+.cp-open{
+  min-height:100svh; display:flex; align-items:center; justify-content:center; position:relative;
+  padding:9rem 1.4rem 5rem;
+}
+.cp-open h1{
+  writing-mode:vertical-rl; font-size:clamp(1.9rem,4.4vw,3.1rem); font-weight:500;
+  letter-spacing:.42em; line-height:1;
+}
+.cp-open .cp-label{
+  position:absolute; left:clamp(1.4rem,6vw,5rem); bottom:2.2rem;
+  font-size:var(--t4); letter-spacing:.34em; color:var(--hido);
+}
+.cp-open .cp-label span{ color:var(--ink-soft); margin-left:1.2em; letter-spacing:.2em; }
+.cp-open .cp-en{
+  position:absolute; right:clamp(1.4rem,6vw,5rem); bottom:2.2rem;
+  font-size:var(--t4); letter-spacing:.28em; color:var(--ink-soft);
+}
+
+@media (max-width:700px){ .cp-open .cp-en{ right:auto; left:clamp(1.4rem,6vw,5rem); bottom:4.2rem; } }
+
+/* 2. 本文：一行38字まで。段落の間を広く */
+.cp-text{ max-inline-size:38em; margin-inline:auto; padding-inline:1.4rem; }
+.cp-text p{ font-size:var(--t3); line-height:2.25; letter-spacing:.06em; margin-bottom:2.4em; }
+.cp-text p.cp-turn{ font-size:var(--t1); line-height:1.8; letter-spacing:.08em; margin:4.5rem 0; }
+.cp-essay{ padding-block:clamp(4rem,9vw,7rem) 0; }
+.cp-turn, .cp-close{ word-break:keep-all; } /* <wbr> の位置でだけ折り返す */
+
+/* 本文の間に置く写真：本文より広く */
+.cp-figure{ margin:clamp(4rem,9vw,7rem) auto; max-width:72rem; padding-inline:clamp(1.4rem,6vw,5rem); }
+.cp-figure img{ width:100%; height:auto; display:block; }
+.cp-figure figcaption, .cp-cond figcaption{ margin-top:.8rem; font-size:var(--t4); letter-spacing:.12em; color:var(--ink-soft); }
+
+/* 金魚には水を、蛙には雨を、紅葉には冷え込む朝を：三点を並べる */
+.cp-cond{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--gutter);
+  max-width:72rem; margin:clamp(3.5rem,8vw,6rem) auto clamp(4.5rem,10vw,8rem); padding-inline:clamp(1.4rem,6vw,5rem);
+  list-style:none;
+}
+.cp-cond img{ width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; display:block; }
+.cp-cond figcaption b{ display:block; font-size:1.05rem; font-weight:500; letter-spacing:.3em; color:var(--ink); margin-bottom:.3rem; }
+@media (max-width:700px){
+  .cp-cond{ grid-template-columns:1fr 1fr; }
+  .cp-cond li:first-child{ grid-column:1 / -1; }
+}
+
+/* 結び */
+.cp-close{
+  text-align:center; padding:clamp(5rem,12vw,9rem) 1.4rem;
+  font-size:var(--t1); line-height:2.1; letter-spacing:.14em;
+}
+.cp-close small{ display:block; margin-top:1.4rem; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); letter-spacing:.3em; color:var(--ink-soft); }
+
+/* 3. 補足の区切り：左に見出し、右に中身（トップと同じ組み方） */
+.cp-sec{
+  display:grid; grid-template-columns:minmax(0,11rem) minmax(0,1fr); column-gap:var(--gutter);
+  max-width:1600px; margin-inline:auto; padding:clamp(4.5rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem);
+  border-top:1px solid var(--line);
+}
+.cp-sec h2{ font-size:1.05rem; font-weight:600; letter-spacing:.24em; line-height:1.6; }
+.cp-sec h2 span{ display:block; margin-top:.5rem; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); font-weight:400; letter-spacing:.34em; color:var(--hido); }
+.cp-sec-body{ max-inline-size:38em; }
+.cp-sec-body p{ font-size:var(--t3); line-height:2.1; margin-bottom:1.6em; }
+.cp-realism{ list-style:none; margin-bottom:2rem; }
+.cp-realism li{ display:grid; grid-template-columns:2.4rem 1fr; padding:1.1rem 0; border-bottom:1px solid var(--line); font-size:var(--t3); line-height:2; }
+.cp-realism li:first-child{ border-top:1px solid var(--line); }
+.cp-realism .no{ font-family:"Noto Serif JP",serif; color:var(--hido); letter-spacing:.1em; }
+.cp-hand{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,15rem); gap:var(--gutter); align-items:start; max-inline-size:none; }
+.cp-hand img{ width:100%; height:auto; display:block; }
+.cp-hand figcaption{ margin-top:.6rem; font-size:var(--t4); letter-spacing:.12em; color:var(--ink-soft); }
+@media (max-width:900px){
+  .cp-sec{ grid-template-columns:1fr; row-gap:2rem; }
+  .cp-hand{ grid-template-columns:1fr; }
+  .cp-hand figure{ max-width:20rem; }
+}
+.more-links{ display:flex; flex-wrap:wrap; gap:1rem 2.4rem; }
+.more-links a{
+  font-size:.86rem; letter-spacing:.12em; text-decoration:none; color:var(--ink);
+  border-bottom:1px solid var(--line); padding-bottom:.35rem; transition:color .25s, border-color .25s;
+}
+.more-links a:hover{ color:var(--hido); border-color:var(--hido); }
+
+/* 4. 次へ：作品へ誘う */
+.cp-next{ padding:clamp(4.5rem,9vw,7rem) clamp(1.4rem,6vw,5rem); border-top:1px solid var(--line); text-align:center; }
+.cp-next a.primary{
+  display:inline-block; font-family:"Noto Serif JP",serif; font-size:1.05rem; letter-spacing:.24em;
+  text-decoration:none; color:var(--paper); background:var(--ink); padding:1.1rem 2.6rem;
+  transition:background .25s;
+}
+.cp-next a.primary:hover{ background:var(--hido); }
+.cp-next .more-links{ justify-content:center; margin-top:2.4rem; }
+
+footer{
+  padding:2.5rem; text-align:center;
+  font-size:.7rem; letter-spacing:.3em; color:var(--ink-soft);
+  border-top:1px solid var(--line);
+}
+.footer-links{ margin-bottom:.8em; display:flex; flex-wrap:wrap; justify-content:center; gap:.4rem 1.6rem; }
+.footer-links a{ color:var(--ink-soft); text-decoration:none; font-size:.7rem; letter-spacing:.15em; }
+.footer-links a:hover{ color:var(--hido); }
+
+/* ふわっと出す（動きを減らす設定では出さない） */
+.io{ opacity:0; transform:translateY(14px); transition:opacity 1s ease, transform 1s ease; }
+.io.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .io{ opacity:1 !important; transform:none !important; transition:none !important; } }
+</style>
+<script>
+/* 公開ページでは写真編集を使えないようにし、?admin=1 を付けた管理者用URLでのみ読み込む */
+if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
+  var kkEditLoader = document.createElement("script");
+  kkEditLoader.src = "../js/edit-mode.js";
+  kkEditLoader.defer = true;
+  document.head.appendChild(kkEditLoader);
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<header>
+  <a class="brand" href="../index.html">河﨑海斗<span class="brand-tagline">金工作家<br>鋳金</span></a>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<nav aria-label="メイン" id="mainNav">
+  <ul>
+    <li><a href="../works/">作品</a></li>
+    <li><a href="./" aria-current="page">コンセプト</a></li>
+    <li><a href="../index.html#exhibitions">展示</a></li>
+    <li><a href="../journal/">ジャーナル</a></li>
+    <li><a href="../profile/">河﨑海斗</a></li>
+    <li><a href="../index.html#contact">お問い合わせ</a></li>
+    <li><a href="/en/" hreflang="en">EN</a></li>
+  </ul>
+  <div class="nav-sns">
+    <a href="https://www.instagram.com/kkchaki" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://x.com/kkchaki" target="_blank" rel="noopener">X</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- 扉 -->
+  <section class="cp-open" aria-label="コンセプト">
+    <h1>動く、似る、在る。</h1>
+    <p class="cp-label">CONCEPT<span>コンセプト</span></p>
+    <p class="cp-en" lang="en">To move. To resemble. To be.</p>
+  </section>
+
+  <!-- 本文 -->
+  <article class="cp-essay">
+    <div class="cp-text io">
+      <p>江戸の職人は、鉄の海老を動かしてみせた。<wbr>明治の名工は、象牙の筍を本物と見分けがつかなくした。<wbr>動く、似る。<wbr>日本の写実は、そのたびに世界を驚かせてきた。</p>
+      <p class="cp-turn">そして今、<wbr>似せることは<wbr>機械の仕事になった。</p>
+      <p>河﨑海斗は、三つめの問いを立てる。</p>
+      <p class="cp-turn">何がそろえば、<wbr>それは「在る」のか。</p>
+      <p>金魚は、水がなければ金魚でいられない。<wbr>だから河﨑は、金属で金魚を鋳り、樹脂で水をつくる。<wbr>蛙には雨を。<wbr>紅葉には、冷え込む朝を。<wbr>溶けた銅は、冷える一瞬に赤く色づく。<wbr>本物の紅葉が色づくのと、同じ理由で。</p>
+    </div>
+
+    <ul class="cp-cond" aria-label="三つの作品と、それぞれの条件">
+      <li class="io"><figure>
+        <img src="../img/vermilion-wakin-goldfish-kaito-kawasaki.jpg" alt="水の入った袋のなかの、鋳金の金魚《朱色和金》" width="1400" height="933" loading="lazy">
+        <figcaption><b>水</b>《朱色和金》2024</figcaption>
+      </figure></li>
+      <li class="io"><figure>
+        <img src="../img/verdigris-frog-bronze-sculpture-kaito-kawasaki.jpg" alt="雨粒のなかの、緑青色の鋳金の蛙《雨ノ蛙「狐の嫁入り」》" width="1192" height="1192" loading="lazy">
+        <figcaption><b>雨</b>《雨ノ蛙「狐の嫁入り」》2025</figcaption>
+      </figure></li>
+      <li class="io"><figure>
+        <img src="../img/autumn-leaves-bronze-sculpture-kaito-kawasaki.jpg" alt="赤く色づいた、純銅の紅葉《紅葉》" width="1400" height="933" loading="lazy">
+        <figcaption><b>冷え込む朝</b>《紅葉》2025</figcaption>
+      </figure></li>
+    </ul>
+
+    <div class="cp-text io">
+      <p>日本の絵も言葉も、もともと生きものを一匹だけでは差し出さなかった。<wbr>花鳥画は鳥を枝ごと描き、俳句は蛙を季節ごと詠んだ。<wbr>河﨑の個展の名は「カエルハジメテナク」「錦秋」。<wbr>暦の言葉である。<wbr>修了制作では、錦鯉と百匹の和金と千枚を超える紅葉を、北斎の大波の構図に並べた。<wbr>鋳金の技、現代の素材、金属の色の知識、季節の言葉、絵の構図。<wbr>使えるものはすべて、その一点のために呼び集められている。</p>
+    </div>
+
+    <figure class="cp-figure io">
+      <img src="../img/nishikigoi-koi-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した錦鯉の作品《錦鯉》" width="1200" height="800" loading="lazy">
+      <figcaption>《錦鯉》2026　修了作品</figcaption>
+    </figure>
+
+    <p class="cp-close mincho io">動く、似る、在る。<br>写実の三ページ目が、<wbr>ここから始まる。</p>
+  </article>
+
+  <!-- 工芸リアリズム -->
+  <section class="cp-sec io" aria-labelledby="h-realism">
+    <h2 id="h-realism">工芸リアリズム<span>KOGEI REALISM</span></h2>
+    <div class="cp-sec-body">
+      <ul class="cp-realism">
+        <li><span class="no">I</span><p>工芸とは、<wbr>人間を含めた生態系を<wbr>表現する営みである。</p></li>
+        <li><span class="no">II</span><p>素材・環境・身体・知覚の<wbr>関係のなかで、<wbr>何かが現に立ち上がる。<br>その「現れ」をつくる。</p></li>
+        <li><span class="no">III</span><p>それは技巧による写実ではない。<br>存在の条件そのものを<wbr>組み直す態度である。</p></li>
+      </ul>
+      <p class="more-links"><a href="../journal/kogei-realism/">工芸リアリズムとは何か（ジャーナル）<span aria-hidden="true"> →</span></a></p>
+    </div>
+  </section>
+
+  <!-- 素材と手 -->
+  <section class="cp-sec io" aria-labelledby="h-hand">
+    <h2 id="h-hand">素材と技法<span>MATERIAL &amp; CRAFT</span></h2>
+    <div class="cp-sec-body cp-hand">
+      <div>
+        <p>鋳造、着色、研磨。<wbr>日本の伝統的な鋳金の技法を土台に、<wbr>金属が酸化し硫化して変わっていく色を、<wbr>制作のなかに取り込む。</p>
+        <p>どの色をどう出すかは作家ごとに異なり、<wbr>過去の記録はほとんど残っていない。<wbr>求める一色のために、<wbr>実験が繰り返される。</p>
+      </div>
+      <figure>
+        <img src="../img/artist_studio.jpg" alt="工房で制作する河﨑海斗" width="1100" height="733" loading="lazy">
+        <figcaption>工房にて</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 次へ -->
+  <nav class="cp-next io" aria-label="次に見る">
+    <a class="primary" href="../works/">作品を見る</a>
+    <p class="more-links">
+      <a href="../profile/">河﨑海斗について・経歴<span aria-hidden="true"> →</span></a>
+      <a href="../index.html#exhibitions">展示<span aria-hidden="true"> →</span></a>
+      <a href="../journal/">ジャーナル<span aria-hidden="true"> →</span></a>
+    </p>
+  </nav>
+
+</main>
+
+<footer>
+  <p class="footer-links"><a href="../works/">作品</a><a href="../journal/">ジャーナル</a><a href="../profile/">河﨑海斗</a><a href="../privacy/">プライバシーポリシー</a></p>
+  <p>© <span id="cpyear">2026</span> KAITO KAWASAKI — KOGEI REALISM</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- ハンバーガーメニュー ---------- */
+  var navToggle = document.getElementById('navToggle');
+  var mainNav = document.getElementById('mainNav');
+  if (navToggle && mainNav){
+    var closeNav = function(){
+      document.body.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    var toggleNav = function(){
+      var open = document.body.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var isMobileNav = window.matchMedia('(max-width:1100px)').matches;
+      document.body.style.overflow = (open && isMobileNav) ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', toggleNav);
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  /* ---------- スクロール方向でヘッダーを隠す/出す ---------- */
+  (function(){
+    var headerEl = document.querySelector('header');
+    var navEl = document.getElementById('mainNav');
+    if (!headerEl) return;
+    var lastY = window.scrollY;
+    var hideThreshold = 80;
+    var hidden = false;
+    var ticking = false;
+    function setHidden(next){
+      if (next === hidden) return;
+      hidden = next;
+      if (hidden){
+        headerEl.style.opacity = '0';
+        headerEl.style.transform = 'translateY(-100%)';
+        headerEl.style.pointerEvents = 'none';
+        if (navEl){ navEl.style.opacity = '0'; navEl.style.pointerEvents = 'none'; }
+      } else {
+        headerEl.style.opacity = '';
+        headerEl.style.transform = '';
+        headerEl.style.pointerEvents = '';
+        if (navEl){ navEl.style.opacity = ''; navEl.style.pointerEvents = ''; }
+      }
+    }
+    function update(){
+      var currentY = window.scrollY;
+      if (!document.body.classList.contains('nav-open')){
+        if (currentY <= hideThreshold){
+          setHidden(false);
+        } else if (currentY > lastY){
+          setHidden(true);
+        } else if (currentY < lastY){
+          setHidden(false);
+        }
+      }
+      lastY = currentY;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  /* ---------- 画面に入ったら、ふわっと出す ---------- */
+  var ios = document.querySelectorAll('.io');
+  if ('IntersectionObserver' in window){
+    var ob = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); ob.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px' });
+    ios.forEach(function(el){ ob.observe(el); });
+  } else {
+    ios.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ©年の自動更新 */
+  var yEl = document.getElementById('cpyear');
+  if (yEl){
+    var y = new Date().getFullYear();
+    if (y > 2026) yEl.textContent = "2026–" + y;
+  }
+})();
+</script>
+</body>
+</html>
