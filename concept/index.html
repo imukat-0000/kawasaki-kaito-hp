@@ -239,7 +239,7 @@ main{ position:relative; z-index:1; }
   font-size:clamp(6.5rem,13vw,11.5rem); font-weight:200; line-height:1; color:var(--ink);
 }
 .sp-q{ gap:clamp(2rem,6vw,5.5rem); }
-.pg, .sp-q, .sp-koyomi, .sp-gather{ flex-direction:row-reverse; }  /* 縦組みは右から左へ読む */
+.pg, .sp-q, .sp-gather{ flex-direction:row-reverse; }  /* 縦組みは右から左へ読む */
 .sp-short{ min-height:72svh; }
 .v .ln.b{ font-size:1.5em; font-weight:500; letter-spacing:.24em; line-height:2.1; }
 
@@ -271,14 +271,7 @@ main{ position:relative; z-index:1; }
 .sp-kinshu .v{ right:clamp(2rem,7vw,6.5rem); top:50%; transform:translateY(-50%); }
 .sp-kinshu .cap{ color:#B9B4A8; }
 
-/* 暦の言葉：個展の名を、短冊のように */
-.sp-koyomi{ gap:clamp(2rem,7vw,6rem); }
-.tanzaku{ display:flex; flex-direction:row-reverse; gap:clamp(1.4rem,3.5vw,3rem); }
-.tanzaku span{
-  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
-  font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; letter-spacing:.3em; line-height:1;
-  padding:1.6em .9em; border:1px solid var(--line); background:var(--card);
-}
+/* 暦の言葉：個展の名は、同じ縦組みのなかで大きくするだけ（枠や地色は付けない） */
 
 /* 呼び集める：五つの言葉が並び、一行に集まる */
 .sp-gather{ gap:clamp(2rem,6vw,5rem); }
@@ -294,8 +287,9 @@ main{ position:relative; z-index:1; }
 .sp-close .v.big{ font-size:clamp(1.45rem,2.8vw,2.2rem); }
 
 /* ---- スマホ：見開きは一頁ずつ、言葉の置き場所を写真に合わせて変える ---- */
-@media (max-width:760px){
+@media (max-width:760px) and (orientation:portrait){
   .sp{ padding:7.5rem 1.4rem 5rem; }
+  .sp-book, .sp-photo{ padding:0; }
   .v{ font-size:1rem; line-height:2.35; letter-spacing:.16em; }
   .v.big{ font-size:1.25rem; }
   .sp-book{ grid-template-columns:1fr; }
@@ -314,13 +308,46 @@ main{ position:relative; z-index:1; }
   .sp-kacho .v{ right:1.8rem; top:7rem; }
   .sp-kinshu > img{ width:100%; object-position:42% 100%; height:58%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
   .sp-kinshu .v{ right:1.8rem; top:7rem; transform:none; }
-  .sp-koyomi, .sp-gather{ flex-direction:column; gap:3rem; }
+  .sp-gather{ flex-direction:column; gap:3rem; }
+}
+
+/* ---- 背の低い画面（スマホの横向きなど）：一画面を無理に詰めず、高さに下限を付けて同じ組み方を保つ ---- */
+@media (max-height:560px){
+  .sp, .pg{ min-height:max(100svh, 31rem); padding-top:6.5rem; padding-bottom:4rem; }
+  .sp-short{ min-height:24rem; }
+  .sp-photo, .sp-book{ padding:0; }
+  .sp-open{ padding-top:9.5rem; }
+  .sp-open h1{ font-size:1.7rem; letter-spacing:.34em; }
+  .glyph{ font-size:clamp(5rem,11vw,7rem); }
+  .pg{ gap:1.4rem; padding-inline:1.2rem; }
+  .v{ font-size:.98rem; line-height:2.3; }
+  .v.big{ font-size:1.25rem; }
+  .folio{ bottom:1.4rem; }
+  .sp-water .v, .sp-leaf .v, .sp-kacho .v{ top:5.5rem; }
+  .sp-water .v{ right:26vw; }
+  .sp-leaf > img{ width:74%; left:auto; object-position:28% 100%; -webkit-mask-image:linear-gradient(to left,#000 82%,transparent); mask-image:linear-gradient(to left,#000 82%,transparent); }
+  .sp-leaf .v{ left:clamp(1.4rem,5vw,4rem); }
+  .sp-kacho .v{ right:1.6rem; line-height:2; }
+  .sp-gather{ gap:2.4rem; }
+}
+
+@media (max-height:560px){ .sp-water .v{ top:4.4rem; } }
+/* 小さいスマホの横向き：写真を少し寄せ、言葉の幅を詰めて重ならないようにする */
+@media (max-height:560px) and (max-width:760px){
+  .sp-leaf > img{ width:62%; }
+  .sp-leaf .v{ font-size:.92rem; line-height:2; left:1.4rem; }
+  .sp-kacho > img{ top:auto; bottom:0; height:84%; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
+  .sp-kacho .v{ top:4.2rem; font-size:.9rem; line-height:1.9; }
+  .sp-kinshu > img{ width:68%; object-position:22% 78%; }
+  .sp-kinshu .v{ right:1.6rem; font-size:.92rem; line-height:2.1; }
 }
 
 /* ---- 現れ方：言葉は一行ずつ、写真はゆっくり ---- */
-.sp .ln, .sp .glyph, .sp .folio, .sp .tanzaku span, .sp .five li, .sp-open h1{ opacity:0; transition:opacity 1.4s ease; }
+.sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp-open h1{ opacity:0; transition:opacity 1.6s ease, transform 1.6s cubic-bezier(.2,.6,.2,1); }
+.sp .ln, .sp .five li{ transform:translateY(-.7em); }  /* 縦の行が、上から静かに降りてくる */
 .sp-photo > img{ opacity:0; transform:scale(1.035); transition:opacity 2.2s ease, transform 5s cubic-bezier(.2,.6,.2,1); }
-.in .ln, .in .glyph, .in .folio, .in .tanzaku span, .in .five li, .sp-open.in h1{ opacity:1; }
+.in .ln, .in .glyph, .in .folio, .in .five li, .sp-open.in h1{ opacity:1; }
+.in .ln, .in .five li{ transform:none; }
 .sp-photo.in > img{ opacity:1; transform:none; }
 .in .ln:nth-child(1){ transition-delay:.5s; } .in .ln:nth-child(2){ transition-delay:.85s; }
 .in .ln:nth-child(3){ transition-delay:1.2s; } .in .ln:nth-child(4){ transition-delay:1.55s; }
@@ -333,10 +360,8 @@ main{ position:relative; z-index:1; }
 .in .five li:nth-child(2){ transition-delay:.3s; } .in .five li:nth-child(3){ transition-delay:.6s; }
 .in .five li:nth-child(4){ transition-delay:.9s; } .in .five li:nth-child(5){ transition-delay:1.2s; }
 .sp-gather.in .ln{ transition-delay:1.9s; } .sp-gather.in .ln:nth-child(2){ transition-delay:2.25s; } .sp-gather.in .ln:nth-child(3){ transition-delay:2.6s; }
-.in .tanzaku span:nth-child(2){ transition-delay:.5s; }
-.sp-koyomi.in .v .ln{ transition-delay:1.3s; } .sp-koyomi.in .v .ln:nth-child(2){ transition-delay:1.7s; }
 @media (prefers-reduced-motion:reduce){
-  .sp .ln, .sp .glyph, .sp .folio, .sp .tanzaku span, .sp .five li, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
 }
 
 /* ============ 補足の区切り：左に見出し、右に中身（トップと同じ組み方） ============ */
@@ -494,9 +519,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   <!-- 暦の言葉 -->
   <section class="sp sp-koyomi">
-    <p class="v"><span class="ln">河﨑の個展の名は</span></p>
-    <p class="tanzaku"><span>カエルハジメテナク</span><span>錦秋</span></p>
-    <p class="v"><span class="ln">暦の言葉である。</span></p>
+    <p class="v"><span class="ln">河﨑の個展の名は</span><span class="ln b">「カエルハジメテナク」</span><span class="ln b">「錦秋」。</span><span class="gap" aria-hidden="true"></span><span class="ln">暦の言葉である。</span></p>
   </section>
 
   <!-- 錦秋 -->
@@ -638,15 +661,17 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   })();
 
   /* ---------- 画面に入ったら現れる（見開きごと） ---------- */
-  var ios = document.querySelectorAll('.sp:not(.sp-book), .pg, .io');
-  if ('IntersectionObserver' in window){
+  /* 見開きは4割ほど見えたところで始める。rootMargin は埋め込み表示では効かないので使わない */
+  var watch = function(sel, ratio){
+    var els = document.querySelectorAll(sel);
+    if (!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
     var ob = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); ob.unobserve(e.target); } });
-    }, { rootMargin:'0px 0px -28% 0px' });
-    ios.forEach(function(el){ ob.observe(el); });
-  } else {
-    ios.forEach(function(el){ el.classList.add('in'); });
-  }
+      es.forEach(function(e){ if (e.isIntersecting && e.intersectionRatio >= ratio){ e.target.classList.add('in'); ob.unobserve(e.target); } });
+    }, { threshold:[ratio] });
+    els.forEach(function(el){ ob.observe(el); });
+  };
+  watch('.sp:not(.sp-book), .pg', 0.38);
+  watch('.io', 0.12);
 
   /* ©年の自動更新 */
   var yEl = document.getElementById('cpyear');
