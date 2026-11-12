@@ -97,7 +97,7 @@ def main():
         f"--text-file={glyphs_file}",
         "--flavor=woff2",
         f"--output-file={out}",
-        "--layout-features=palt,kern,liga",
+        "--layout-features=palt,kern,liga,vert",  # vert：縦書きの句読点（、。）を正しい位置に
         "--no-hinting",
     ], check=True)
     print(out, out.stat().st_size // 1024, "KB,", len(text), "glyphs requested")
