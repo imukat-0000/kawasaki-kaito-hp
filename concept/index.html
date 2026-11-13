@@ -258,7 +258,7 @@ main{ position:relative; z-index:1; }
 .sp-water > img{ object-position:44% 100%; }
 .sp-water .v{ right:clamp(2rem,16vw,15rem); top:clamp(8.5rem,17svh,11rem); }
 .sp-rain{ background:#DCDBD9; }
-.sp-rain > img{ object-position:50% 26%; }
+.sp-rain > img{ object-position:50% 58%; }
 .sp-rain .v{ right:clamp(2rem,9vw,8rem); bottom:13%; font-weight:600; text-shadow:0 0 .6em #EDEDEB, 0 0 1.2em #EDEDEB, 0 0 2em #EDEDEB; }
 .sp-leaf{ background:#C6BDBA; }
 .sp-leaf > img{ object-position:50% 100%; }
@@ -327,7 +327,8 @@ main{ position:relative; z-index:1; }
   .cp-en{ right:auto; left:clamp(1.4rem,6vw,5rem); bottom:4.2rem; }
   .sp-water > img{ object-position:36% 100%; }
   .sp-water .v{ right:1.8rem; top:7.5rem; }
-  .sp-rain .v{ right:1.8rem; bottom:16%; }
+  .sp-rain > img{ top:auto; height:66%; object-position:50% 50%; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
+  .sp-rain .v{ right:1.8rem; top:7.5rem; bottom:auto; }
   .sp-leaf{ background:#C4BCB9; }
   .sp-leaf > img{ height:60%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 78%,transparent); mask-image:linear-gradient(to top,#000 78%,transparent); }
   .sp-leaf .v{ left:1.8rem; top:7rem; }
@@ -373,6 +374,7 @@ main{ position:relative; z-index:1; }
 
 @media (max-height:560px){
   .sp-water .v{ top:4.4rem; }
+  .sp-rain > img{ object-position:50% 46%; }
   .sp-name{ padding-top:6.2rem; padding-bottom:4rem; gap:clamp(1.2rem,3.4vw,2.6rem); }
   .sp-name .name .n{ font-size:2rem; }
   .sp-name .name{ margin-left:clamp(.2rem,2vw,1.6rem); }
@@ -541,9 +543,9 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
 
   <!-- 雨 -->
   <figure class="sp sp-photo sp-rain">
-    <img src="../img/rain-frog-fresh-leaf-rain-kaito-kawasaki.jpg" alt="一面の雨粒のなかにいる、緑青色の鋳金の蛙" width="1050" height="1400" loading="lazy">
+    <img src="../img/raindrop-tree-frog-evening-shower-kaito-kawasaki.jpg" alt="雨粒の広がる面に伏せる、鋳金の蛙" width="1400" height="1400" loading="lazy">
     <p class="v big"><span class="ln">蛙には雨を。</span></p>
-    <figcaption>《雨ノ蛙「青葉雨」》2025</figcaption>
+    <figcaption>《雨粒蛙 夕立》2024</figcaption>
   </figure>
 
   <!-- 冷え込む朝 -->
