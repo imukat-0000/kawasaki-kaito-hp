@@ -215,7 +215,7 @@ function period(e, lang){
 }
 const T = {
   ja: { planned: '（予定）', plannedSales: '（予定）', ended: '（終了）', more: 'これからの展示', moreNow: '開催中・これからの展示', past: '過去の展示',
-        site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
+        site: 'サイトを見る →', siteLine: 'サイトを見る<span class="ar" aria-hidden="true"></span>', salesHead: '展示中・開催予定', performer: '河﨑海斗',
         slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）',
         now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る`,
         soon: '開催予定', pastShort: 'これまでの展示', none: '次の展示は、決まり次第ここに掲載します。' },
@@ -393,7 +393,7 @@ function exCards(c, lang, img, withText = false){
       `        <h3 class="ex-title">${t.listTitle}${e.planned ? `<span class="exhi-tag">${L.plannedTag}</span>` : ''}</h3>`,
       `        <p class="ex-venue">${t.venue}</p>`,
       ...(withText && t.text ? [`        <p class="ex-text">${text(t.text)}</p>`] : []),
-      ...(e.url ? [`        <a class="ex-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.site}</a>`] : []),
+      ...(e.url ? [`        <a class="ex-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.siteLine ?? L.site}</a>`] : []),
       '      </li>',
     );
   }

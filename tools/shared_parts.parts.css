@@ -1,0 +1,90 @@
+:root{
+  --t1:clamp(1.5rem,2.6vw,2.1rem);   /* 大：言葉・記事の題 */
+  --t2:1.04rem;                       /* 中：展示名・作品名 */
+  --t3:.86rem;                        /* 本文 */
+  --t4:.68rem;                        /* 注記：ラベル・日付 */
+  --date-col:clamp(11.5rem,18vw,15.5rem);
+  --mincho:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --didot:"Didot","Bodoni 72","Bodoni MT","Noto Serif JP",serif;
+}
+/* ---- 展示：予定表（1展示1行。左に会期、中央に展示名と会場、右にリンク） ---- */
+.ex-cards{ list-style:none; display:block; border-top:1px solid var(--ink); }
+.ex-card{
+  display:grid; grid-template-columns:var(--date-col) minmax(0,1fr) minmax(8.5rem,auto);
+  grid-template-areas:"status title link" "date venue link";
+  column-gap:var(--col-gap); row-gap:.1rem; align-items:baseline;
+  padding:.9rem 0 1rem; border:0; border-bottom:1px solid var(--line);
+}
+.ex-status{ grid-area:status; font-size:var(--t4); letter-spacing:.24em; color:var(--ink-soft); }
+.ex-status.is-now{ color:var(--hido); }
+.ex-status.is-now::before{ content:""; display:inline-block; width:5px; height:5px; margin-right:.7em; border-radius:50%; background:var(--hido); vertical-align:.12em; }
+.ex-date{ grid-area:date; display:flex; align-items:baseline; gap:.7rem; font-family:var(--didot); white-space:nowrap; }
+.ex-date .y{ font-size:.74rem; letter-spacing:.1em; color:var(--ink-soft); }
+.ex-date time{ font-size:clamp(1.3rem,1.9vw,1.62rem); letter-spacing:.04em; line-height:1.25; }
+.ex-title{ grid-area:title; font-family:var(--mincho); font-size:var(--t2); font-weight:500; letter-spacing:.08em; line-height:1.6; }
+.ex-venue{ grid-area:venue; font-size:.82rem; line-height:1.75; color:var(--ink-soft); }
+.ex-card .ex-link{ grid-area:link; justify-self:end; align-self:center; white-space:nowrap; }
+.exhi-tag, .ex-title .exhi-tag, .ex-permanent .exhi-tag{
+  display:inline; padding:0; border:0; border-radius:0; background:none;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); font-weight:400; letter-spacing:.2em; color:var(--ink-soft);
+}
+.ex-title .exhi-tag{ margin-left:.9em; }
+.ex-title .exhi-tag::before{ content:"（"; } .ex-title .exhi-tag::after{ content:"）"; }
+.ex-permanent{
+  display:grid; grid-template-columns:var(--date-col) minmax(0,1fr); column-gap:var(--col-gap); align-items:baseline;
+  margin:0; padding:.95rem 0; border-bottom:1px solid var(--line); font-size:var(--t3); line-height:1.75; color:var(--ink);
+}
+.ex-permanent .exhi-tag{ margin:0; letter-spacing:.24em; }
+.ex-past{ display:block; margin-top:clamp(2.4rem,5vw,3.6rem); }
+.ex-past-head{ padding:0 0 .8rem; font-size:var(--t4); letter-spacing:.24em; color:var(--ink-soft); border-bottom:1px solid var(--line); }
+.ex-past ul{ list-style:none; }
+.ex-past li{
+  display:grid; grid-template-columns:var(--date-col) minmax(0,1fr) minmax(0,1fr); column-gap:var(--col-gap); align-items:baseline;
+  padding:.7rem 0; border:0; border-bottom:1px solid var(--line); font-size:var(--t3); line-height:1.7;
+}
+.ex-past li:first-child{ border-top:0; }
+.ex-past time{ font-family:var(--didot); font-size:.84rem; letter-spacing:.08em; color:var(--ink-soft); }
+.ex-past .t{ font-family:var(--mincho); letter-spacing:.06em; }
+.ex-past .v{ grid-column:auto; font-size:.8rem; color:var(--ink-soft); }
+@media (max-width:760px){
+  .ex-card{ grid-template-columns:minmax(0,1fr); grid-template-areas:"status" "date" "title" "venue" "link"; row-gap:.25rem; padding:1.15rem 0 1rem; }
+  .ex-card .ex-link{ justify-self:start; }
+  .ex-date time{ font-size:1.5rem; }
+  .ex-permanent{ grid-template-columns:minmax(0,1fr); row-gap:.2rem; }
+  .ex-past li{ grid-template-columns:minmax(0,1fr); row-gap:0; }
+}
+
+/* ---- ジャーナル：記事は1本1行（日付・題・小さな写真）。お知らせも同じ列で続ける ---- */
+.jr-list{ list-style:none; border-top:1px solid var(--ink); }
+.jr{
+  display:grid; grid-template-columns:var(--date-col) minmax(0,1fr) clamp(7rem,13vw,11.5rem); column-gap:var(--col-gap); align-items:center;
+  padding:clamp(1.1rem,2vw,1.6rem) 0; border-bottom:1px solid var(--line); color:var(--ink); text-decoration:none;
+}
+.jr-meta{ display:flex; flex-direction:column; gap:.5rem; align-self:start; padding-top:.5rem; }
+.jr-meta time{ font-family:var(--didot); font-size:.9rem; letter-spacing:.08em; color:var(--ink); }
+.jr-cat{ font-size:var(--t4); letter-spacing:.24em; color:var(--ink-soft); }
+.jr-title{ font-family:var(--mincho); font-size:var(--t1); font-weight:500; letter-spacing:.06em; line-height:1.6; transition:color .25s ease; word-break:keep-all; overflow-wrap:anywhere; }
+.jr-photo{ display:block; aspect-ratio:3/2; overflow:hidden; }
+.jr-photo img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+.jr:hover .jr-title{ color:var(--hido); }
+.jr:hover .jr-photo img{ transform:scale(1.04); }
+.jn-news{ margin-top:clamp(2.4rem,5vw,3.6rem); }
+.jn-news-head{ margin:0; padding:0 0 .8rem; font-size:var(--t4); letter-spacing:.24em; color:var(--ink-soft); border-bottom:1px solid var(--line); }
+.jn-news .news-list{ list-style:none; margin:0; padding:0; max-width:none; }
+.jn-news .news-list li{
+  display:grid; grid-template-columns:var(--date-col) minmax(0,1fr); column-gap:var(--col-gap); align-items:baseline;
+  padding:.75rem 0; border:0; border-bottom:1px solid var(--line);
+}
+.jn-news .news-list li:first-child{ border-top:0; }
+.jn-news .news-list time{ display:block; font-family:var(--didot); font-size:.84rem; letter-spacing:.08em; color:var(--ink-soft); }
+.jn-news .news-list p{ font-size:var(--t3); line-height:1.8; max-inline-size:46em; }
+.jn-news .news-list a{ color:var(--ink); text-decoration:none; transition:color .25s ease; }
+.jn-news .news-list a:hover{ color:var(--hido); }
+@media (max-width:760px){
+  .jr{ grid-template-columns:minmax(0,1fr) 5.6rem; grid-template-areas:"meta meta" "title photo"; row-gap:.5rem; align-items:start; }
+  .jr-meta{ grid-area:meta; flex-direction:row; align-items:baseline; gap:1.2rem; padding:0; }
+  .jr-title{ grid-area:title; font-size:1.15rem; line-height:1.7; }
+  .jr-photo{ grid-area:photo; aspect-ratio:1/1; margin-top:.3rem; }
+  .jn-news .news-list li{ grid-template-columns:minmax(0,1fr); row-gap:.1rem; }
+}
+
