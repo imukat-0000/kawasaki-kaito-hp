@@ -289,17 +289,16 @@ main{ position:relative; z-index:1; }
   position:relative; z-index:2;
 }
 
-/* 緋銅赤の頁：工芸リアリズムの言葉は、いつもこの色の頁に置く（物語は生成り、作品は写真） */
-.sp-name, .sp-prop{ background:#9C3B22; color:#F7F0E4; }
-.sp-name .name{ display:flex; flex-direction:row-reverse; gap:clamp(1.1rem,2.4vw,2rem); font-family:var(--mincho); font-feature-settings:normal; font-weight:500; }
-.sp-name .name .ln{ writing-mode:vertical-rl; line-height:1; letter-spacing:.3em; font-size:clamp(1rem,1.5vw,1.25rem); }
-.sp-name .name .n{ font-size:clamp(2.2rem,5.2vw,3.9rem); letter-spacing:.28em; }
+/* 緋銅赤の頁：名前と三つの言葉。物語は生成り、作品は写真、工芸リアリズムの言葉だけがこの色 */
+.sp-name{ background:#9C3B22; color:#F7F0E4; flex-direction:row-reverse; align-items:flex-start; gap:clamp(1.6rem,4.2vw,4rem); padding-top:clamp(8.5rem,22svh,13rem); padding-bottom:6rem; }
+.sp-name .name{ display:flex; flex-direction:row-reverse; gap:clamp(.9rem,1.8vw,1.6rem); margin-left:clamp(.6rem,3vw,3.4rem); font-family:var(--mincho); font-feature-settings:normal; font-weight:500; position:relative; z-index:2; }
+.sp-name .name .ln{ writing-mode:vertical-rl; line-height:1; letter-spacing:.3em; font-size:clamp(1rem,1.4vw,1.2rem); }
+.sp-name .name .n{ font-size:clamp(2.2rem,4.8vw,3.6rem); letter-spacing:.28em; }
 .sp-name .name .s2{ align-self:flex-end; }
 .sp-name .cp-label{ color:#F7F0E4; opacity:.75; }
-.sp-prop{ min-height:72svh; padding-top:clamp(5rem,12svh,7rem); padding-bottom:clamp(5rem,12svh,7rem); }
-.prop-in{ display:flex; flex-direction:row-reverse; align-items:flex-start; gap:clamp(1.4rem,3vw,2.6rem); position:relative; z-index:2; }
-.sp-prop .v{ font-size:clamp(1.15rem,1.9vw,1.5rem); font-weight:500; line-height:2.3; letter-spacing:.22em; }
-.pn{ font-family:"Didot","Bodoni 72","Bodoni MT","Times New Roman",serif; font-size:clamp(1.3rem,2.2vw,1.8rem); letter-spacing:.14em; line-height:1; min-width:2.6em; text-align:center; padding-bottom:.9rem; border-bottom:1px solid currentColor; opacity:.85; position:relative; z-index:2; }
+.prop-in{ display:flex; flex-direction:column; align-items:flex-end; gap:1.5rem; position:relative; z-index:2; }
+.sp-name .v{ line-height:2.3; }
+.pn{ font-family:"Didot","Bodoni 72","Bodoni MT","Times New Roman",serif; font-size:clamp(1.15rem,1.7vw,1.45rem); letter-spacing:.14em; line-height:1; min-width:2.5em; text-align:center; padding-bottom:.8rem; border-bottom:1px solid currentColor; }
 
 /* 素材と技法：色の違う和金が並ぶ帯を下に、言葉を上に */
 .sp-craft{ background:#C9C7C8; }
@@ -337,9 +336,8 @@ main{ position:relative; z-index:1; }
   .sp-kinshu > img{ width:100%; object-position:42% 100%; height:58%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
   .sp-kinshu .v{ right:1.8rem; top:7rem; transform:none; }
   .sp-gather{ flex-direction:column; gap:3rem; }
-  .sp-prop{ min-height:64svh; padding-top:5rem; padding-bottom:5rem; }
-  .prop-in{ gap:1.3rem; }
-  .sp-prop .v{ font-size:1.12rem; }
+  .sp-name{ flex-direction:column; align-items:center; gap:3.4rem; padding-top:8rem; padding-bottom:6.5rem; }
+  .sp-name .name{ margin-left:0; margin-bottom:.6rem; }
   .sp-craft{ display:flex; flex-direction:column; justify-content:flex-start; align-items:stretch; }
   .sp-craft > img{ position:relative; order:2; align-self:flex-start; width:170%; max-width:none; margin-left:-50%; height:38svh; margin-top:auto; object-position:50% 50%; -webkit-mask-image:linear-gradient(to top,#000 70%,transparent); mask-image:linear-gradient(to top,#000 70%,transparent); }
   .craft-text{ position:relative; order:1; left:auto; top:auto; transform:none; display:grid; grid-template-columns:auto auto; justify-content:center; gap:2.4rem 1.8rem; padding:6.5rem 1.4rem 1rem; }
@@ -370,9 +368,11 @@ main{ position:relative; z-index:1; }
 
 @media (max-height:560px){
   .sp-water .v{ top:4.4rem; }
+  .sp-name{ padding-top:6.2rem; padding-bottom:4rem; gap:clamp(1.2rem,3.4vw,2.6rem); }
   .sp-name .name .n{ font-size:2rem; }
-  .sp-prop{ min-height:22rem; padding-top:3.6rem; padding-bottom:3.6rem; }
-  .sp-prop .v{ font-size:1.1rem; line-height:2.1; }
+  .sp-name .name{ margin-left:clamp(.2rem,2vw,1.6rem); }
+  .sp-name .v{ font-size:.92rem; line-height:2.05; }
+  .prop-in{ gap:1rem; }
   .sp-craft > img{ top:0; bottom:auto; height:100%; width:54%; object-position:36% 50%; -webkit-mask-image:linear-gradient(to right,#000 70%,transparent); mask-image:linear-gradient(to right,#000 70%,transparent); }
   .craft-text{ left:auto; right:1.8rem; top:50%; transform:translateY(-44%); gap:1.4rem; }
   .sp-craft .v{ font-size:.92rem; line-height:2; }
@@ -385,6 +385,10 @@ main{ position:relative; z-index:1; }
   .sp-kacho .v{ top:4.2rem; font-size:.9rem; line-height:1.9; }
   .sp-kinshu > img{ width:68%; object-position:22% 78%; }
   .sp-kinshu .v{ right:1.6rem; font-size:.92rem; line-height:2.1; }
+  .sp-name{ gap:1rem; padding-inline:1rem; }
+  .sp-name .name{ gap:.6rem; margin-left:0; }
+  .sp-name .v{ font-size:.86rem; line-height:1.85; letter-spacing:.14em; }
+  .pn{ font-size:1.05rem; min-width:2em; }
   .sp-craft > img{ width:40%; }
   .sp-craft .v{ font-size:.88rem; line-height:1.9; }
   .craft-text{ right:1.2rem; gap:1.1rem; }
@@ -408,6 +412,9 @@ main{ position:relative; z-index:1; }
 .in .five li:nth-child(2){ transition-delay:.3s; } .in .five li:nth-child(3){ transition-delay:.6s; }
 .in .five li:nth-child(4){ transition-delay:.9s; } .in .five li:nth-child(5){ transition-delay:1.2s; }
 .sp-gather.in .ln{ transition-delay:1.9s; } .sp-gather.in .ln:nth-child(2){ transition-delay:2.25s; } .sp-gather.in .ln:nth-child(3){ transition-delay:2.6s; }
+.sp-name.in .prop-in:nth-of-type(1) .pn{ transition-delay:1.7s; } .sp-name.in .prop-in:nth-of-type(1) .ln{ transition-delay:1.9s; }
+.sp-name.in .prop-in:nth-of-type(2) .pn{ transition-delay:2.5s; } .sp-name.in .prop-in:nth-of-type(2) .ln{ transition-delay:2.7s; }
+.sp-name.in .prop-in:nth-of-type(3) .pn{ transition-delay:3.3s; } .sp-name.in .prop-in:nth-of-type(3) .ln{ transition-delay:3.5s; }
 @media (prefers-reduced-motion:reduce){
   .sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp .vh, .sp .pn, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
 }
@@ -419,22 +426,27 @@ main{ position:relative; z-index:1; }
 }
 .more-links a:hover{ color:var(--hido); border-color:var(--hido); }
 
+/* 出口：頁を移る「リンク」なので、塗りのボタンにしない。主役は一つだけ、縦組みの言葉と一本の線。ほかは小さな文字のリンク */
 .cp-next{ text-align:center; }
 .cp-next .strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
 .cp-next .strip img{ display:block; width:100%; height:clamp(13rem,46svh,27rem); object-fit:cover; transition:opacity .4s; }
 .cp-next .strip:hover img{ opacity:.9; }
-.cp-next-in{ padding:clamp(3.2rem,7vw,5rem) clamp(1.4rem,6vw,5rem) clamp(4.5rem,9vw,7rem); }
+.cp-next-in{ padding:clamp(3.4rem,7vw,5.2rem) clamp(1.4rem,6vw,5rem) clamp(4rem,8vw,6rem); }
+.go{ display:inline-flex; flex-direction:column; align-items:center; text-decoration:none; color:var(--ink); padding:.4rem 2rem; transition:color .3s ease; }
+.go-t{ writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal; font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; letter-spacing:.42em; line-height:1; }
+.go-line{ width:1px; height:3.4rem; margin-top:.5rem; background:currentColor; transform-origin:top; transition:transform .5s cubic-bezier(.2,.6,.2,1); }
+.go-en{ margin-top:1.9rem; font-size:var(--t4); letter-spacing:.34em; color:var(--hido); }
+.go-en i{ font-style:normal; display:inline-block; margin-left:.3em; font-size:1.25em; line-height:1; transition:transform .4s ease; }
+.go:hover, .go:focus-visible{ color:var(--hido); }
+.go:hover .go-line, .go:focus-visible .go-line{ transform:scaleY(1.35); }
+.go:hover .go-en i, .go:focus-visible .go-en i{ transform:translateX(.35em); }
+.cp-next .more-links{ justify-content:center; margin-top:clamp(3.4rem,7vw,5rem); padding-top:2rem; border-top:1px solid var(--line); gap:1rem 2.4rem; }
+.cp-next .more-links a{ font-size:.82rem; padding-bottom:.2em; }
 @media (max-width:760px) and (orientation:portrait){
   .cp-next .strip{ grid-template-columns:repeat(2,1fr); }
   .cp-next .strip img{ height:24svh; }
 }
-.cp-next a.primary{
-  display:inline-block; font-family:"Noto Serif JP",serif; font-size:1.05rem; letter-spacing:.24em;
-  text-decoration:none; color:var(--paper); background:var(--ink); padding:1.1rem 2.6rem;
-  transition:background .25s;
-}
-.cp-next a.primary:hover{ background:var(--hido); }
-.cp-next .more-links{ justify-content:center; margin-top:2.4rem; }
+@media (prefers-reduced-motion:reduce){ .go-line, .go-en i{ transition:none; } }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -545,15 +557,13 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <figcaption>《紅葉》2025</figcaption>
   </figure>
 
-  <!-- 名前：ここで頁の色が変わる。緋銅赤の頁は、工芸リアリズムの言葉 -->
+  <!-- 名前：頁の色が緋銅赤に変わる。名前と三つの言葉を、ひとつの見開きに並べる（右から左へ） -->
   <section class="sp sp-name" aria-labelledby="h-realism">
     <h2 class="name" id="h-realism"><span class="ln s1">これを、</span><span class="ln n">工芸リアリズム</span><span class="ln s2">と呼ぶ。</span></h2>
-    <p class="cp-label" lang="en">KOGEI REALISM</p>
-  </section>
-
-  <!-- 工芸リアリズム I：このあとの「季節」の場面の扉 -->
-  <section class="sp sp-prop" aria-label="工芸リアリズム 一">
     <div class="prop-in"><span class="pn" aria-hidden="true">I</span><p class="v"><span class="ln">工芸とは、</span><span class="ln">人間を含めた生態系を</span><span class="ln">表現する営みである。</span></p></div>
+    <div class="prop-in"><span class="pn" aria-hidden="true">II</span><p class="v"><span class="ln">素材・環境・身体・知覚の</span><span class="ln">関係のなかで、</span><span class="ln">何かが現に立ち上がる。</span><span class="ln">その「現れ」をつくる。</span></p></div>
+    <div class="prop-in"><span class="pn" aria-hidden="true">III</span><p class="v"><span class="ln">それは</span><span class="ln">技巧による写実ではない。</span><span class="ln">存在の条件そのものを</span><span class="ln">組み直す態度である。</span></p></div>
+    <p class="cp-label" lang="en">KOGEI REALISM</p>
   </section>
 
   <!-- 花鳥画と俳句 -->
@@ -574,11 +584,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     <figcaption class="cap">《錦鯉》2026　修了作品</figcaption>
   </figure>
 
-  <!-- 工芸リアリズム II：このあとの「素材と技法」の扉 -->
-  <section class="sp sp-prop" aria-label="工芸リアリズム 二">
-    <div class="prop-in"><span class="pn" aria-hidden="true">II</span><p class="v"><span class="ln">素材・環境・身体・知覚の</span><span class="ln">関係のなかで、</span><span class="ln">何かが現に立ち上がる。</span><span class="ln">その「現れ」をつくる。</span></p></div>
-  </section>
-
   <!-- 素材と技法：赤に至る途中の色が並ぶ作品を、帯として置く -->
   <section class="sp sp-photo sp-craft" aria-labelledby="h-craft">
     <img src="../img/colors-of-thought-wakin-goldfish-kaito-kawasaki.jpg" alt="透明な樹脂の帯のなかに並ぶ、朱から金へ色の違う鋳金の和金" width="1400" height="1050" loading="lazy">
@@ -588,11 +593,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <p class="v"><span class="ln">どの色をどう出すかは</span><span class="ln">作家ごとに異なり、</span><span class="ln">過去の記録は</span><span class="ln">ほとんど残っていない。</span><span class="ln">求める一色のために、</span><span class="ln">実験が繰り返される。</span></p>
     </div>
     <p class="cap">《思色和金》2025</p>
-  </section>
-
-  <!-- 工芸リアリズム III：結びの扉 -->
-  <section class="sp sp-prop" aria-label="工芸リアリズム 三">
-    <div class="prop-in"><span class="pn" aria-hidden="true">III</span><p class="v"><span class="ln">それは</span><span class="ln">技巧による写実ではない。</span><span class="ln">存在の条件そのものを</span><span class="ln">組み直す態度である。</span></p></div>
   </section>
 
   <!-- 呼び集める -->
@@ -616,7 +616,7 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
       <img src="../img/g_leaves_blue.jpg" alt="板の上に重なる、緑青色の鋳金の紅葉" width="1500" height="1000" loading="lazy" style="object-position:50% 40%">
     </a>
     <div class="cp-next-in io">
-      <a class="primary" href="../works/">作品を見る</a>
+      <a class="go" href="../works/"><span class="go-t">作品を見る</span><span class="go-line" aria-hidden="true"></span><span class="go-en" lang="en" aria-hidden="true">WORKS<i> →</i></span></a>
       <p class="more-links">
         <a href="../journal/kogei-realism/">工芸リアリズムとは何か<span aria-hidden="true"> →</span></a>
         <a href="../profile/">河﨑海斗について・経歴<span aria-hidden="true"> →</span></a>
