@@ -282,6 +282,33 @@ main{ position:relative; z-index:1; }
   padding-top:1.4em; border-top:1px solid var(--hido);
 }
 
+/* 見開きの見出し（縦）と、番号 */
+.vh{
+  writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal;
+  font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; letter-spacing:.3em; line-height:1;
+  position:relative; z-index:2;
+}
+.v .num{ font-style:normal; color:var(--hido); letter-spacing:0; -webkit-text-combine:horizontal; text-combine-upright:all; }
+.sp-link{
+  position:absolute; left:50%; bottom:2.2rem; transform:translateX(-50%); z-index:2; white-space:nowrap;
+  font-size:.8rem; letter-spacing:.12em; text-decoration:none; color:var(--ink-soft);
+  border-bottom:1px solid var(--line); padding-bottom:.35rem; transition:color .25s, border-color .25s;
+}
+.sp-link:hover{ color:var(--hido); border-color:var(--hido); }
+
+/* 工芸リアリズム：三つの言葉を右から左へ */
+.sp-realism{ flex-direction:row-reverse; gap:clamp(2rem,5vw,4.6rem); padding-bottom:7rem; }
+.sp-realism .vh{ margin-left:clamp(.4rem,2vw,2rem); }
+
+/* 素材と技法：左に手のなかの作品、右に言葉 */
+.sp-craft{ background:var(--paper); }
+.sp-craft > img{ width:56%; object-position:24% 50%; -webkit-mask-image:linear-gradient(to right,#000 52%,transparent); mask-image:linear-gradient(to right,#000 52%,transparent); }
+.craft-text{
+  position:absolute; right:clamp(1.6rem,6vw,5.5rem); top:50%; transform:translateY(-50%); z-index:2;
+  display:flex; flex-direction:row-reverse; gap:clamp(1.6rem,3.2vw,3rem);
+}
+.sp-craft .v{ position:relative; }
+
 /* 結び */
 .sp-close{ flex-direction:column; gap:3rem; }
 .sp-close .v.big{ font-size:clamp(1.45rem,2.8vw,2.2rem); }
@@ -309,6 +336,14 @@ main{ position:relative; z-index:1; }
   .sp-kinshu > img{ width:100%; object-position:42% 100%; height:58%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
   .sp-kinshu .v{ right:1.8rem; top:7rem; transform:none; }
   .sp-gather{ flex-direction:column; gap:3rem; }
+  .sp-realism{ flex-direction:column; gap:2.8rem; padding-bottom:7rem; }
+  .sp-realism .vh{ margin-left:0; }
+  .sp-craft{ display:flex; flex-direction:column; justify-content:flex-start; align-items:stretch; }
+  .sp-craft > img{ position:relative; order:2; width:100%; height:46svh; margin-top:auto; object-position:30% 50%; -webkit-mask-image:linear-gradient(to top,#000 62%,transparent); mask-image:linear-gradient(to top,#000 62%,transparent); }
+  .craft-text{ position:relative; order:1; right:auto; top:auto; transform:none; display:grid; grid-template-columns:auto auto; justify-content:center; gap:2.6rem 1.8rem; padding:7rem 1.4rem 2.4rem; }
+  .craft-text .vh{ grid-column:2; grid-row:1; }
+  .craft-text .v{ grid-column:1; grid-row:1; }
+  .craft-text .v:last-child{ grid-column:1 / -1; grid-row:2; justify-self:center; }
 }
 
 /* ---- 背の低い画面（スマホの横向きなど）：一画面を無理に詰めず、高さに下限を付けて同じ組み方を保つ ---- */
@@ -331,7 +366,14 @@ main{ position:relative; z-index:1; }
   .sp-gather{ gap:2.4rem; }
 }
 
-@media (max-height:560px){ .sp-water .v{ top:4.4rem; } }
+@media (max-height:560px){
+  .sp-water .v{ top:4.4rem; }
+  .sp-realism{ gap:1.8rem; padding-bottom:5rem; }
+  .sp-link{ bottom:1.3rem; }
+  .sp-craft > img{ width:46%; }
+  .craft-text{ right:1.6rem; gap:1.4rem; }
+  .sp-craft .v{ font-size:.92rem; line-height:2; }
+}
 /* 小さいスマホの横向き：写真を少し寄せ、言葉の幅を詰めて重ならないようにする */
 @media (max-height:560px) and (max-width:760px){
   .sp-leaf > img{ width:62%; }
@@ -340,13 +382,18 @@ main{ position:relative; z-index:1; }
   .sp-kacho .v{ top:4.2rem; font-size:.9rem; line-height:1.9; }
   .sp-kinshu > img{ width:68%; object-position:22% 78%; }
   .sp-kinshu .v{ right:1.6rem; font-size:.92rem; line-height:2.1; }
+  .sp-realism{ gap:1.2rem; padding-inline:1rem; }
+  .sp-realism .v{ font-size:.92rem; line-height:2.05; }
+  .sp-craft > img{ width:36%; }
+  .sp-craft .v{ font-size:.88rem; line-height:1.9; }
+  .craft-text{ right:1.2rem; gap:1.1rem; }
 }
 
 /* ---- 現れ方：言葉は一行ずつ、写真はゆっくり ---- */
-.sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp-open h1{ opacity:0; transition:opacity 1.6s ease, transform 1.6s cubic-bezier(.2,.6,.2,1); }
+.sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp .vh, .sp-open h1{ opacity:0; transition:opacity 1.6s ease, transform 1.6s cubic-bezier(.2,.6,.2,1); }
 .sp .ln, .sp .five li{ transform:translateY(-.7em); }  /* 縦の行が、上から静かに降りてくる */
 .sp-photo > img{ opacity:0; transform:scale(1.035); transition:opacity 2.2s ease, transform 5s cubic-bezier(.2,.6,.2,1); }
-.in .ln, .in .glyph, .in .folio, .in .five li, .sp-open.in h1{ opacity:1; }
+.in .ln, .in .glyph, .in .folio, .in .five li, .in .vh, .sp-open.in h1{ opacity:1; }
 .in .ln, .in .five li{ transform:none; }
 .sp-photo.in > img{ opacity:1; transform:none; }
 .in .ln:nth-child(1){ transition-delay:.5s; } .in .ln:nth-child(2){ transition-delay:.85s; }
@@ -361,31 +408,9 @@ main{ position:relative; z-index:1; }
 .in .five li:nth-child(4){ transition-delay:.9s; } .in .five li:nth-child(5){ transition-delay:1.2s; }
 .sp-gather.in .ln{ transition-delay:1.9s; } .sp-gather.in .ln:nth-child(2){ transition-delay:2.25s; } .sp-gather.in .ln:nth-child(3){ transition-delay:2.6s; }
 @media (prefers-reduced-motion:reduce){
-  .sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
+  .sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp .vh, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
 }
 
-/* ============ 補足の区切り：左に見出し、右に中身（トップと同じ組み方） ============ */
-.cp-sec{
-  display:grid; grid-template-columns:minmax(0,11rem) minmax(0,1fr); column-gap:var(--gutter);
-  max-width:1600px; margin-inline:auto; padding:clamp(4.5rem,9vw,7.5rem) clamp(1.4rem,6vw,5rem);
-  border-top:1px solid var(--line);
-}
-.cp-sec h2{ font-family:var(--mincho); font-size:1.05rem; font-weight:600; letter-spacing:.24em; line-height:1.6; }
-.cp-sec h2 span{ display:block; margin-top:.5rem; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif; font-size:var(--t4); font-weight:400; letter-spacing:.34em; color:var(--hido); }
-.cp-sec-body{ max-inline-size:38em; }
-.cp-sec-body p{ font-size:var(--t3); line-height:2.1; margin-bottom:1.6em; }
-.cp-realism{ list-style:none; margin-bottom:2rem; }
-.cp-realism li{ display:grid; grid-template-columns:2.4rem 1fr; padding:1.1rem 0; border-bottom:1px solid var(--line); font-size:var(--t3); line-height:2; }
-.cp-realism li:first-child{ border-top:1px solid var(--line); }
-.cp-realism .no{ font-family:"Noto Serif JP",serif; color:var(--hido); letter-spacing:.1em; }
-.cp-hand{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,15rem); gap:var(--gutter); align-items:start; max-inline-size:none; }
-.cp-hand img{ width:100%; height:auto; display:block; }
-.cp-hand figcaption{ margin-top:.6rem; font-size:var(--t4); letter-spacing:.12em; color:var(--ink-soft); }
-@media (max-width:900px){
-  .cp-sec{ grid-template-columns:1fr; row-gap:2rem; }
-  .cp-hand{ grid-template-columns:1fr; }
-  .cp-hand figure{ max-width:20rem; }
-}
 .more-links{ display:flex; flex-wrap:wrap; gap:1rem 2.4rem; }
 .more-links a{
   font-size:.86rem; letter-spacing:.12em; text-decoration:none; color:var(--ink);
@@ -541,31 +566,22 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
   </article>
 
-  <!-- 工芸リアリズム -->
-  <section class="cp-sec io" aria-labelledby="h-realism">
-    <h2 id="h-realism">工芸リアリズム<span>KOGEI REALISM</span></h2>
-    <div class="cp-sec-body">
-      <ul class="cp-realism">
-        <li><span class="no">I</span><p>工芸とは、<wbr>人間を含めた生態系を<wbr>表現する営みである。</p></li>
-        <li><span class="no">II</span><p>素材・環境・身体・知覚の<wbr>関係のなかで、<wbr>何かが現に立ち上がる。<br>その「現れ」をつくる。</p></li>
-        <li><span class="no">III</span><p>それは技巧による写実ではない。<br>存在の条件そのものを<wbr>組み直す態度である。</p></li>
-      </ul>
-      <p class="more-links"><a href="../journal/kogei-realism/">工芸リアリズムとは何か（ジャーナル）<span aria-hidden="true"> →</span></a></p>
-    </div>
+  <!-- 工芸リアリズム：三つの言葉（上の見開きと同じ縦組み） -->
+  <section class="sp sp-realism" aria-labelledby="h-realism">
+    <h2 class="vh" id="h-realism">工芸リアリズム</h2>
+    <p class="v"><span class="ln"><i class="num">I</i></span><span class="ln">工芸とは、</span><span class="ln">人間を含めた生態系を</span><span class="ln">表現する営みである。</span></p>
+    <p class="v"><span class="ln"><i class="num">II</i></span><span class="ln">素材・環境・身体・知覚の</span><span class="ln">関係のなかで、</span><span class="ln">何かが現に立ち上がる。</span><span class="ln">その「現れ」をつくる。</span></p>
+    <p class="v"><span class="ln"><i class="num">III</i></span><span class="ln">それは</span><span class="ln">技巧による写実ではない。</span><span class="ln">存在の条件そのものを</span><span class="ln">組み直す態度である。</span></p>
+    <a class="sp-link" href="../journal/kogei-realism/">工芸リアリズムとは何か（ジャーナル）<span aria-hidden="true"> →</span></a>
   </section>
 
-  <!-- 素材と手 -->
-  <section class="cp-sec io" aria-labelledby="h-hand">
-    <h2 id="h-hand">素材と技法<span>MATERIAL &amp; CRAFT</span></h2>
-    <div class="cp-sec-body cp-hand">
-      <div>
-        <p>鋳造、着色、研磨。<wbr>日本の伝統的な鋳金の技法を土台に、<wbr>金属が酸化し硫化して変わっていく色を、<wbr>制作のなかに取り込む。</p>
-        <p>どの色をどう出すかは作家ごとに異なり、<wbr>過去の記録はほとんど残っていない。<wbr>求める一色のために、<wbr>実験が繰り返される。</p>
-      </div>
-      <figure>
-        <img src="../img/artist_studio.jpg" alt="工房で制作する河﨑海斗" width="1100" height="733" loading="lazy">
-        <figcaption>工房にて</figcaption>
-      </figure>
+  <!-- 素材と技法：手のなかの作品の写真と、同じ縦組みの言葉 -->
+  <section class="sp sp-photo sp-craft" aria-labelledby="h-craft">
+    <img src="../img/g_process_hand.jpg" alt="手のなかの、樹脂に封じた鋳金の金魚" width="1500" height="1000" loading="lazy">
+    <div class="craft-text">
+      <h2 class="vh" id="h-craft">素材と技法</h2>
+      <p class="v"><span class="ln">鋳造、着色、研磨。</span><span class="ln">日本の伝統的な</span><span class="ln">鋳金の技法を土台に、</span><span class="ln">金属が酸化し硫化して</span><span class="ln">変わっていく色を、</span><span class="ln">制作のなかに取り込む。</span></p>
+      <p class="v"><span class="ln">どの色をどう出すかは</span><span class="ln">作家ごとに異なり、</span><span class="ln">過去の記録は</span><span class="ln">ほとんど残っていない。</span><span class="ln">求める一色のために、</span><span class="ln">実験が繰り返される。</span></p>
     </div>
   </section>
 
