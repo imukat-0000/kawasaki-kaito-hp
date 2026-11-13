@@ -218,12 +218,12 @@ const T = {
         site: 'サイトを見る →', salesHead: '展示中・開催予定', performer: '河﨑海斗',
         slider: '開催中の展示', prev: '前の展示', next: '次の展示', open: '展示のページを開く（新しいタブ）',
         now: '開催中', plannedTag: '予定', pastMore: (n) => `さらに${n}件の過去の展示を見る`,
-        soon: '開催予定', pastShort: 'これまでの展示' },
+        soon: '開催予定', pastShort: 'これまでの展示', none: '次の展示は、決まり次第ここに掲載します。' },
   en: { planned: '(Planned)', plannedSales: ' (Planned)', ended: '(Ended)', more: 'Upcoming', moreNow: 'Current &amp; Upcoming', past: 'Past Exhibitions',
         site: 'Visit site →', salesHead: 'Current &amp; Upcoming Exhibitions', performer: 'Kaito Kawasaki',
         slider: 'Current exhibitions', prev: 'Previous exhibition', next: 'Next exhibition', open: 'Open the exhibition page (new tab)',
         now: 'Now on', plannedTag: 'Planned', pastMore: (n) => `Show ${n} more past exhibition${n > 1 ? 's' : ''}`,
-        soon: 'Upcoming', pastShort: 'Recent' },
+        soon: 'Upcoming', pastShort: 'Recent', none: 'The next exhibition will be listed here once it is confirmed.' },
 };
 
 const LINK_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -375,37 +375,57 @@ function topExhibitions(c, lang, img){
 // トップの展示：開催中・これからの展示をすべてカードで並べ、常設展示と、直近の過去の展示を3件添える。
 // 「開催中／開催予定」の文字はページ内のスクリプトが日本時間で決める（公開日によって誤表示になるため）。HTMLには既定の文字だけを書く
 const TOP_PAST = 3;
-function topExhibitionList(c, lang, img){
+// 開催中・これからの展示のカード。withText: 紹介文（text）がある展示はカードに添える（展示ページ用）
+function exCards(c, lang, img, withText = false){
   const L = T[lang];
   const out = [];
   const coming = c.events; // 常設を除く、終わっていない展示（開始が早い順）
-  if (coming.length){
-    out.push('    <ol class="ex-cards">');
-    for (const e of coming){
-      const t = e[lang];
-      const photo = e.featured && e.image;
-      out.push(
-        `      <li class="ex-card${photo ? ' has-photo' : ''}">`,
-        ...(photo ? [`        <span class="ex-photo"><img src="${attr(img + e.image)}" alt="${attr(t.imageAlt || '')}" loading="lazy"></span>`] : []),
-        `        <p class="ex-status" data-start="${e.start}" data-end="${e.end}">${e.start <= c.today ? L.now : L.soon}</p>`,
-        `        <p class="ex-date"><span class="y">${ymd(e.start).y}</span><time datetime="${e.start}">${shortPeriod(e, lang)}</time></p>`,
-        `        <h3 class="ex-title">${t.listTitle}${e.planned ? `<span class="exhi-tag">${L.plannedTag}</span>` : ''}</h3>`,
-        `        <p class="ex-venue">${t.venue}</p>`,
-        ...(e.url ? [`        <a class="ex-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.site}</a>`] : []),
-        '      </li>',
-      );
-    }
-    out.push('    </ol>');
+  if (!coming.length) return out;
+  out.push('    <ol class="ex-cards">');
+  for (const e of coming){
+    const t = e[lang];
+    const photo = e.featured && e.image;
+    out.push(
+      `      <li class="ex-card${photo ? ' has-photo' : ''}">`,
+      ...(photo ? [`        <span class="ex-photo"><img src="${attr(img + e.image)}" alt="${attr(t.imageAlt || '')}" loading="lazy"></span>`] : []),
+      `        <p class="ex-status" data-start="${e.start}" data-end="${e.end}">${e.start <= c.today ? L.now : L.soon}</p>`,
+      `        <p class="ex-date"><span class="y">${ymd(e.start).y}</span><time datetime="${e.start}">${shortPeriod(e, lang)}</time></p>`,
+      `        <h3 class="ex-title">${t.listTitle}${e.planned ? `<span class="exhi-tag">${L.plannedTag}</span>` : ''}</h3>`,
+      `        <p class="ex-venue">${t.venue}</p>`,
+      ...(withText && t.text ? [`        <p class="ex-text">${text(t.text)}</p>`] : []),
+      ...(e.url ? [`        <a class="ex-link" href="${attr(e.url)}" target="_blank" rel="noopener">${L.site}</a>`] : []),
+      '      </li>',
+    );
   }
+  out.push('    </ol>');
+  return out;
+}
+// 過去の展示の1行（会期・展示名・場所）
+function pastRow(e, lang){
+  return `        <li><time datetime="${e.start}">${period(e, lang)}</time><span class="t">${e[lang].listTitle}</span><span class="v">${placeOnly(e[lang].venue)}</span></li>`;
+}
+function topExhibitionList(c, lang, img){
+  const L = T[lang];
+  const out = exCards(c, lang, img);
   for (const e of c.others.filter((x) => x.permanent)) out.push(`    <p class="ex-permanent"><span class="exhi-tag">${e[lang].listTitle}</span>${e[lang].venue}</p>`);
   if (c.past.length){
     out.push('    <div class="ex-past">', `      <p class="ex-past-head">${L.pastShort}</p>`, '      <ul>');
-    for (const e of c.past.slice(0, TOP_PAST)){
-      out.push(`        <li><time datetime="${e.start}">${period(e, lang)}</time><span class="t">${e[lang].listTitle}</span><span class="v">${placeOnly(e[lang].venue)}</span></li>`);
-    }
+    for (const e of c.past.slice(0, TOP_PAST)) out.push(pastRow(e, lang));
     out.push('      </ul>', '    </div>');
   }
   return out.join('\n');
+}
+
+// 展示ページ：開催中・これからの展示をすべてカードで（紹介文つき）。1件もないときは一言だけ出す
+function pageExhibitionCards(c, lang, img){
+  const out = exCards(c, lang, img, true);
+  if (!out.length) out.push(`    <p class="ex-none">${T[lang].none}</p>`);
+  return out.join('\n');
+}
+// 展示ページ：台帳にある過去の展示をすべて、新しい順に並べる
+function pageExhibitionPast(c, lang){
+  if (!c.past.length) return '';
+  return ['    <div class="ex-past">', '      <ul>', ...c.past.map((e) => pastRow(e, lang)), '      </ul>', '    </div>'].join('\n');
 }
 
 function eventsJsonld(c, lang){
@@ -484,13 +504,15 @@ function salesGroup(c, lang, img){
   ].join('\n');
 }
 
-// どのページのどの目印に何を入れるか。kind: top=トップ / sales=販売情報 / works=作品一覧（sitemap の更新日の判定に使う）
+// どのページのどの目印に何を入れるか。kind: top=トップ / exhibitions=展示 / sales=販売情報 / works=作品一覧（sitemap の更新日の判定に使う）
 let works; // data/works.json（下で読み込む）
 const PAGES = [
   { file: 'index.html', kind: 'top', regions: {
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'ja'), news: (c) => newsList(c.news, 'ja', 3), exhibitions: (c) => topExhibitionList(c, 'ja', ''), 'exhibition-dates': statusDates } },
   { file: 'en/index.html', kind: 'top', regions: {
     'exhibitions-jsonld': (c) => eventsJsonld(c, 'en'), news: (c) => newsList(c.news, 'en'), exhibitions: (c) => topExhibitions(c, 'en', '../'), 'exhibition-dates': statusDates } },
+  { file: 'exhibitions/index.html', kind: 'exhibitions', regions: {
+    exhibitions: (c) => pageExhibitionCards(c, 'ja', '../'), 'exhibitions-past': (c) => pageExhibitionPast(c, 'ja') } },
   { file: 'sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'ja', '../') } },
   { file: 'en/sales/index.html', kind: 'sales', regions: { exhibitions: (c) => salesGroup(c, 'en', '../../') } },
   { file: 'works/index.html', kind: 'works', get regions(){ return worksRegions(works, 'ja'); } },
@@ -559,7 +581,7 @@ function render(html, file, gens, c){
 }
 
 // ---------- sitemap の更新日 ----------
-// 6ページ（日英トップ・日英販売情報・日英作品一覧）の更新日は、次のうち最も新しい日にする。
+// 7ページ（日英トップ・展示・日英販売情報・日英作品一覧）の更新日は、次のうち最も新しい日にする。
 //   ・今回のビルドでページの中身が変わったら、その日（基準日）
 //   ・展示の切り替わり日のうち基準日までに来たもの（展示が終わった翌日、注目展示の開始日。作品一覧にはない）
 //   ・今 sitemap に書いてある日

@@ -14,7 +14,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const FILES = ['index.html', 'en/index.html', 'sales/index.html', 'en/sales/index.html', 'works/index.html', 'en/works/index.html',
+const FILES = ['index.html', 'en/index.html', 'exhibitions/index.html', 'sales/index.html', 'en/sales/index.html', 'works/index.html', 'en/works/index.html',
   'works/shuiro-wakin/index.html', 'sitemap.xml', 'data/exhibitions.json', 'data/news.json', 'data/works.json', 'tools/build.mjs', 'tools/works.mjs'];
 
 function sandbox(){
@@ -183,7 +183,7 @@ test('--check は、台帳とHTMLが食い違うと終了コード1で止まり�
   const before = snapshot(dir);
   const r = run(dir, ['--check', '--today', '2026-10-21']);
   assert.equal(r.code, 1);
-  assert.match(r.out, /食い違っています: index.html, en\/index.html, sales\/index.html, en\/sales\/index.html, sitemap.xml/);
+  assert.match(r.out, /食い違っています: index.html, en\/index.html, exhibitions\/index.html, sales\/index.html, en\/sales\/index.html, sitemap.xml/);
   assert.deepEqual(snapshot(dir), before);
 });
 
