@@ -300,6 +300,44 @@ main > section.sec-grid::before{ content:none; }
   .ex-past .v{ grid-column:1; }
   .rows a{ justify-self:start; margin-top:.2rem; }
 }
+/* ============ 第5版（トップと同じ型）：12列・広い余白・縦組みの柱・明朝は500・札と色つきの線をやめる ============ */
+:root{ --pm:clamp(1.4rem,7vw,7.5rem); --col-gap:clamp(1rem,2vw,2rem); --t1:clamp(1.6rem,2.8vw,2.2rem); --sec-gap:clamp(4.5rem,9vw,8rem); }
+.pg-head{ max-width:1560px; padding-inline:var(--pm); }
+.sec-head h1{ font-weight:500; }
+main > section.sec-grid{ max-width:1560px; padding-inline:var(--pm); grid-template-columns:repeat(12, minmax(0,1fr)); column-gap:var(--col-gap); border-top:0; }
+.sec-grid > *{ grid-column:3 / -1; }
+.sec-grid > .quiet-head{
+  grid-column:1 / 3; grid-row:1 / span 8; justify-self:start;
+  display:block; writing-mode:vertical-rl; position:sticky; top:3rem;
+  font-size:1.15rem; font-weight:500; letter-spacing:.5em; line-height:1.2; white-space:nowrap;
+}
+.sec-grid > .quiet-head span{ display:inline-block; margin-top:1.8em; font-size:.62rem; letter-spacing:.42em; }
+.ex-card, .place{ padding-top:1.1rem; gap:.5rem; }
+.ex-date time{ font-weight:400; }
+.ex-title, .place-name{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:500; font-size:1.02rem; letter-spacing:.08em; }
+.ex-title .exhi-tag{
+  border:0; border-radius:0; padding:0; background:none; vertical-align:baseline;
+  font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  font-size:var(--t4); font-weight:400; letter-spacing:.14em; color:var(--ink-soft);
+}
+.ex-title .exhi-tag::before{ content:"（"; }
+.ex-title .exhi-tag::after{ content:"）"; }
+.ex-link, .place-link, .rows a{ color:var(--ink-soft); border-bottom-color:var(--line); transition:color .25s ease, border-color .25s ease; }
+.ex-link:hover, .place-link:hover, .rows a:hover{ color:var(--hido); border-color:var(--hido); }
+.ex-past .t, .rows .n{ font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-weight:500; letter-spacing:.06em; }
+.places{ grid-template-columns:repeat(10, minmax(0,1fr)); column-gap:var(--col-gap); row-gap:3rem; align-items:start; }
+.places .place:first-child{ grid-column:1 / 7; }
+.places .place:nth-child(2){ grid-column:8 / 11; margin-top:clamp(2rem,6vw,5rem); }
+.places .place:nth-child(2) .place-photo{ aspect-ratio:4/5; }
+@media (max-width:900px){
+  main > section.sec-grid{ grid-template-columns:repeat(6, minmax(0,1fr)); }
+  .sec-grid > *, .sec-grid > .quiet-head{ grid-column:1 / -1; grid-row:auto; }
+  .sec-grid > .quiet-head{ writing-mode:horizontal-tb; position:static; display:flex; flex-direction:row; align-items:baseline; gap:1rem; letter-spacing:.3em; margin-bottom:2.2rem; }
+  .sec-grid > .quiet-head span{ margin-top:0; letter-spacing:.34em; }
+  .places{ grid-template-columns:repeat(6, minmax(0,1fr)); }
+  .places .place:first-child{ grid-column:1 / -1; }
+  .places .place:nth-child(2){ grid-column:2 / 7; margin-top:0; }
+}
 /* shared:foot（全ページ共通：次に見る・お問い合わせ・フッター。tools/shared_parts.py が書く。手で直さない） */
 .next-links{
   position:relative; z-index:1;
