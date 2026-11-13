@@ -399,29 +399,19 @@ main{ position:relative; z-index:1; }
   .craft-text{ right:1.2rem; gap:1.1rem; }
 }
 
-/* ---- 現れ方：言葉は一行ずつ、写真はゆっくり ---- */
-.sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp .vh, .sp .pn, .sp-open h1{ opacity:0; transition:opacity 1.6s ease, transform 1.6s cubic-bezier(.2,.6,.2,1); }
-.sp .ln, .sp .five li{ transform:translateY(-.7em); }  /* 縦の行が、上から静かに降りてくる */
-.sp-photo > img{ opacity:0; transform:scale(1.035); transition:opacity 2.2s ease, transform 5s cubic-bezier(.2,.6,.2,1); }
-.in .ln, .in .glyph, .in .folio, .in .five li, .in .vh, .in .pn, .sp-open.in h1{ opacity:1; }
-.in .ln, .in .five li{ transform:none; }
-.sp-photo.in > img{ opacity:1; transform:none; }
-.in .ln:nth-child(1){ transition-delay:.5s; } .in .ln:nth-child(2){ transition-delay:.85s; }
-.in .ln:nth-child(3){ transition-delay:1.2s; } .in .ln:nth-child(4){ transition-delay:1.55s; }
-.in .ln:nth-child(5){ transition-delay:1.9s; } .in .ln:nth-child(6){ transition-delay:2.25s; }
-.in .ln:nth-child(7){ transition-delay:2.6s; } .in .ln:nth-child(8){ transition-delay:2.95s; }
-.in .ln:nth-child(n+9){ transition-delay:3.3s; }
-.sp-photo.in .ln{ transition-delay:1.2s; } .sp-photo.in .ln:nth-child(2){ transition-delay:1.6s; }
-.sp-photo.in .ln:nth-child(3){ transition-delay:2s; } .sp-photo.in .ln:nth-child(4){ transition-delay:2.4s; }
-.sp-photo.in .ln:nth-child(5){ transition-delay:2.8s; } .sp-photo.in .ln:nth-child(n+6){ transition-delay:3.2s; }
-.in .five li:nth-child(2){ transition-delay:.3s; } .in .five li:nth-child(3){ transition-delay:.6s; }
-.in .five li:nth-child(4){ transition-delay:.9s; } .in .five li:nth-child(5){ transition-delay:1.2s; }
-.sp-gather.in .ln{ transition-delay:1.9s; } .sp-gather.in .ln:nth-child(2){ transition-delay:2.25s; } .sp-gather.in .ln:nth-child(3){ transition-delay:2.6s; }
-.sp-name.in .prop-in:nth-of-type(1) .pn{ transition-delay:1.7s; } .sp-name.in .prop-in:nth-of-type(1) .ln{ transition-delay:1.9s; }
-.sp-name.in .prop-in:nth-of-type(2) .pn{ transition-delay:2.5s; } .sp-name.in .prop-in:nth-of-type(2) .ln{ transition-delay:2.7s; }
-.sp-name.in .prop-in:nth-of-type(3) .pn{ transition-delay:3.3s; } .sp-name.in .prop-in:nth-of-type(3) .ln{ transition-delay:3.5s; }
-@media (prefers-reduced-motion:reduce){
-  .sp .ln, .sp .glyph, .sp .folio, .sp .five li, .sp .vh, .sp .pn, .sp-open h1, .sp-photo > img{ opacity:1 !important; transform:none !important; transition:none !important; }
+/* ---- 現れ方：スクロールの進みに合わせる。見開きが画面に入るほど、言葉が右から一行ずつ現れ、写真が澄んでいく ----
+   --p は見開きごとの進み具合（0〜1、スクリプトが入れる）、--s は一行ごとの出はじめ。
+   時間で待たせない。速くめくれば速く、ゆっくりめくればゆっくり現れる。html に .rv が付いたときだけ働く（スクリプトなし・動きを減らす設定では最初から全部見える） */
+.rv .sp-open h1{ opacity:0; transition:opacity 1.4s ease; }
+.rv .sp-open.in h1{ opacity:1; }
+.rv .sp:not(.sp-open) .ln, .rv .sp .glyph, .rv .sp .folio, .rv .sp .five li, .rv .sp .vh, .rv .sp .pn{
+  --o:clamp(0, calc((var(--p,0) - var(--s,0)) * 8), 1);
+  opacity:var(--o); transition:opacity .3s linear, transform .3s ease-out;
+}
+.rv .sp:not(.sp-open) .ln, .rv .sp .five li{ transform:translateY(calc((1 - var(--o)) * -.7em)); }  /* 縦の行が、上から静かに降りてくる */
+.rv .sp-photo > img{
+  --o:clamp(0, calc((var(--p,0) - var(--s,0)) * 2.5), 1);
+  opacity:var(--o); transform:scale(calc(1.04 - var(--o) * .04)); transition:opacity .4s linear, transform .6s ease-out;
 }
 
 .more-links{ display:flex; flex-wrap:wrap; gap:1rem 2.4rem; }
@@ -441,7 +431,7 @@ main{ position:relative; z-index:1; }
 .sp-door .go-en{ font-size:var(--t4); letter-spacing:.34em; color:var(--hido); }
 .go-en i{ font-style:normal; display:inline-block; margin-left:.3em; font-size:1.25em; line-height:1; transition:transform .4s ease; }
 .sp-door:hover .door-w, .sp-door:focus-visible .door-w{ color:var(--hido); }
-.sp-door.in:hover > img, .sp-door.in:focus-visible > img{ transform:scale(1.025); }
+.rv .sp.sp-door:hover > img, .rv .sp.sp-door:focus-visible > img{ transform:scale(1.025); transition:opacity .4s linear, transform 1.6s cubic-bezier(.2,.6,.2,1); }
 .sp-door:hover .go-en i, .sp-door:focus-visible .go-en i{ transform:translateX(.35em); }
 .cp-next-in{ padding:clamp(2.4rem,5vw,3.4rem) clamp(1.4rem,6vw,5rem) clamp(3.4rem,7vw,5rem); }
 .cp-next .more-links{ justify-content:center; gap:1rem 2.4rem; }
@@ -711,8 +701,61 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }, { passive: true });
   })();
 
-  /* ---------- 画面に入ったら現れる（見開きごと） ---------- */
-  /* 見開きは4割ほど見えたところで始める。rootMargin は埋め込み表示では効かないので使わない */
+  /* ---------- 現れ方：スクロールの進みに合わせる ----------
+     見開きが画面に入った割合を「進み具合」にして、CSS の --p に入れる。
+     一度現れたものは消さない。
+     rootMargin や scroll イベントは埋め込み表示で効かないことがあるので、細かい threshold だけで測る */
+  var root = document.documentElement;
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canClamp = window.CSS && CSS.supports && CSS.supports('width','clamp(1px, 2px, 3px)');
+  if (!calm && canClamp && 'IntersectionObserver' in window){
+    root.classList.add('rv');
+    var spreads = document.querySelectorAll('.sp:not(.sp-book):not(.sp-open), .pg');
+    /* 一行ごとの出はじめ（--s）を、見開きのなかの高さから決める。
+       上にある言葉は早く、下にある言葉は遅く。どれも画面の下から上がってくる途中で現れる。
+       同じ高さに並ぶ言葉は、右から左へ（書いてある順に）少しずつずらす */
+    var place = function(){
+      spreads.forEach(function(sp){
+        var box = sp.getBoundingClientRect(), H = box.height || 1;
+        var items = [].slice.call(sp.querySelectorAll('.glyph, .vh, .pn, .ln, .five li, .folio'));
+        var bands = [];
+        items.forEach(function(el){
+          var blk = el.closest('.v, .name, .five, .prop-in, .door-w') || el;
+          var y = (blk.getBoundingClientRect().top - box.top) / H, band = null;
+          for (var i = 0; i < bands.length; i++){ if (Math.abs(bands[i].y - y) < 0.1){ band = bands[i]; break; } }
+          if (!band){ band = { y:y, els:[] }; bands.push(band); }
+          band.els.push(el);
+        });
+        bands.forEach(function(band){
+          var n = band.els.length, span = Math.min(0.36, 0.07 * (n - 1));
+          var base = Math.max(0.05, Math.min(band.y + 0.08, 0.875 - span));
+          band.els.forEach(function(el, i){ el.style.setProperty('--s', (base + (n > 1 ? span * i / (n - 1) : 0)).toFixed(3)); });
+        });
+        var img = sp.querySelector(':scope > img');
+        if (img){ img.style.setProperty('--s', Math.max(0, Math.min((img.getBoundingClientRect().top - box.top) / H + 0.02, 0.5)).toFixed(3)); }
+        if (sp._p === undefined){ sp._p = 0; }
+      });
+    };
+    place();
+    window.addEventListener('load', place);
+    if (document.fonts && document.fonts.ready){ document.fonts.ready.then(place); }
+    var rz; window.addEventListener('resize', function(){ clearTimeout(rz); rz = setTimeout(place, 200); });
+    var steps = []; for (var t = 0; t <= 50; t++){ steps.push(t / 50); }
+    var pob = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var el = e.target, h = e.boundingClientRect.height || 1;
+        var most = Math.min(1, (window.innerHeight || h) / h);   /* 画面より背の高い見開きは、見える割合の上限で割る */
+        var p = Math.max(0, Math.min(1, e.intersectionRatio / most / 0.94));   /* ほぼ全部見えたら、そろったことにする */
+        if (e.boundingClientRect.top < 0 && e.intersectionRatio > 0){ p = 1; }   /* 上へ抜けていく見開きは、全部出しておく */
+        if (p > el._p){ el._p = p; el.style.setProperty('--p', p.toFixed(3)); if (p >= 1){ pob.unobserve(el); } }
+      });
+    }, { threshold:steps });
+    spreads.forEach(function(sp){ pob.observe(sp); });
+    var open = document.querySelector('.sp-open');
+    if (open){ requestAnimationFrame(function(){ open.classList.add('in'); }); }
+  }
+
+  /* 出口のリンクの列だけは、見えたら一度ふわりと出す */
   var watch = function(sel, ratio){
     var els = document.querySelectorAll(sel);
     if (!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
@@ -721,7 +764,6 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
     }, { threshold:[ratio] });
     els.forEach(function(el){ ob.observe(el); });
   };
-  watch('.sp:not(.sp-book), .pg', 0.38);
   watch('.io', 0.12);
 
   /* ©年の自動更新 */
