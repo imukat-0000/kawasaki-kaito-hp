@@ -336,8 +336,13 @@ main{ position:relative; z-index:1; }
   .sp-kinshu > img{ width:100%; object-position:42% 100%; height:58%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 80%,transparent); mask-image:linear-gradient(to top,#000 80%,transparent); }
   .sp-kinshu .v{ right:1.8rem; top:7rem; transform:none; }
   .sp-gather{ flex-direction:column; gap:3rem; }
-  .sp-name{ flex-direction:column; align-items:center; gap:3.4rem; padding-top:8rem; padding-bottom:6.5rem; }
-  .sp-name .name{ margin-left:0; margin-bottom:.6rem; }
+  /* スマホ縦：名前を上に、三つの言葉はその下に横並び（右から I・II・III） */
+  .sp-name{ display:grid; grid-template-columns:repeat(3,auto); justify-content:center; align-content:center; align-items:start; gap:3rem 1.05rem; padding:7.5rem 1rem 5.5rem; }
+  .sp-name .name{ grid-column:1 / -1; grid-row:1; justify-self:center; margin-left:0; }
+  .sp-name .prop-in{ grid-row:2; gap:1.1rem; }
+  .sp-name .prop-in:nth-of-type(1){ grid-column:3; } .sp-name .prop-in:nth-of-type(2){ grid-column:2; } .sp-name .prop-in:nth-of-type(3){ grid-column:1; }
+  .sp-name .v{ font-size:.88rem; line-height:1.85; letter-spacing:.14em; }
+  .pn{ font-size:1.05rem; min-width:2.2em; padding-bottom:.6rem; }
   .sp-craft{ display:flex; flex-direction:column; justify-content:flex-start; align-items:stretch; }
   .sp-craft > img{ position:relative; order:2; align-self:flex-start; width:170%; max-width:none; margin-left:-50%; height:38svh; margin-top:auto; object-position:50% 50%; -webkit-mask-image:linear-gradient(to top,#000 70%,transparent); mask-image:linear-gradient(to top,#000 70%,transparent); }
   .craft-text{ position:relative; order:1; left:auto; top:auto; transform:none; display:grid; grid-template-columns:auto auto; justify-content:center; gap:2.4rem 1.8rem; padding:6.5rem 1.4rem 1rem; }
@@ -426,27 +431,28 @@ main{ position:relative; z-index:1; }
 }
 .more-links a:hover{ color:var(--hido); border-color:var(--hido); }
 
-/* 出口：頁を移る「リンク」なので、塗りのボタンにしない。主役は一つだけ、縦組みの言葉と一本の線。ほかは小さな文字のリンク */
+/* 出口：頁を移る「リンク」なので、塗りのボタンにしない。最後の写真の余白に、縦組みの言葉と一本の線。写真全体が入口。ほかは小さな文字のリンク */
 .cp-next{ text-align:center; }
-.cp-next .strip{ display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
-.cp-next .strip img{ display:block; width:100%; height:clamp(13rem,46svh,27rem); object-fit:cover; transition:opacity .4s; }
-.cp-next .strip:hover img{ opacity:.9; }
-.cp-next-in{ padding:clamp(3.4rem,7vw,5.2rem) clamp(1.4rem,6vw,5rem) clamp(4rem,8vw,6rem); }
-.go{ display:inline-flex; flex-direction:column; align-items:center; text-decoration:none; color:var(--ink); padding:.4rem 2rem; transition:color .3s ease; }
-.go-t{ writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal; font-size:clamp(1.3rem,2.3vw,1.85rem); font-weight:500; letter-spacing:.42em; line-height:1; }
-.go-line{ width:1px; height:3.4rem; margin-top:.5rem; background:currentColor; transform-origin:top; transition:transform .5s cubic-bezier(.2,.6,.2,1); }
-.go-en{ margin-top:1.9rem; font-size:var(--t4); letter-spacing:.34em; color:var(--hido); }
+.sp-door{ min-height:88svh; background:#E6E5E3; color:var(--ink); text-decoration:none; }
+.sp-door > img{ width:84%; left:auto; right:0; object-position:50% 50%; -webkit-mask-image:linear-gradient(to left,#000 80%,transparent); mask-image:linear-gradient(to left,#000 80%,transparent); }
+.door-w{ position:absolute; left:clamp(1.8rem,11vw,10rem); top:50%; transform:translateY(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; transition:color .3s ease; }
+.go-t{ writing-mode:vertical-rl; font-family:var(--mincho); font-feature-settings:normal; font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:500; letter-spacing:.42em; line-height:1; }
+.go-line{ width:1px; height:4rem; margin-top:.6rem; background:currentColor; transform-origin:top; }
+.sp-door .go-en{ font-size:var(--t4); letter-spacing:.34em; color:var(--hido); }
 .go-en i{ font-style:normal; display:inline-block; margin-left:.3em; font-size:1.25em; line-height:1; transition:transform .4s ease; }
-.go:hover, .go:focus-visible{ color:var(--hido); }
-.go:hover .go-line, .go:focus-visible .go-line{ transform:scaleY(1.35); }
-.go:hover .go-en i, .go:focus-visible .go-en i{ transform:translateX(.35em); }
-.cp-next .more-links{ justify-content:center; margin-top:clamp(3.4rem,7vw,5rem); padding-top:2rem; border-top:1px solid var(--line); gap:1rem 2.4rem; }
+.sp-door:hover .door-w, .sp-door:focus-visible .door-w{ color:var(--hido); }
+.sp-door.in:hover > img, .sp-door.in:focus-visible > img{ transform:scale(1.025); }
+.sp-door:hover .go-en i, .sp-door:focus-visible .go-en i{ transform:translateX(.35em); }
+.cp-next-in{ padding:clamp(2.4rem,5vw,3.4rem) clamp(1.4rem,6vw,5rem) clamp(3.4rem,7vw,5rem); }
+.cp-next .more-links{ justify-content:center; gap:1rem 2.4rem; }
 .cp-next .more-links a{ font-size:.82rem; padding-bottom:.2em; }
 @media (max-width:760px) and (orientation:portrait){
-  .cp-next .strip{ grid-template-columns:repeat(2,1fr); }
-  .cp-next .strip img{ height:24svh; }
+  .sp-door{ min-height:80svh; }
+  .sp-door > img{ width:100%; object-position:74% 100%; height:62%; top:auto; -webkit-mask-image:linear-gradient(to top,#000 78%,transparent); mask-image:linear-gradient(to top,#000 78%,transparent); }
+  .door-w{ left:auto; right:2.2rem; top:3.6rem; transform:none; }
 }
-@media (prefers-reduced-motion:reduce){ .go-line, .go-en i{ transition:none; } }
+@media (max-height:560px){ .sp-door{ min-height:max(100svh,26rem); } .go-t{ font-size:1.4rem; } .go-line{ height:2.6rem; } }
+@media (prefers-reduced-motion:reduce){ .go-en i{ transition:none; } }
 
 footer{
   padding:2.5rem; text-align:center;
@@ -607,16 +613,14 @@ if (/(?:^|[?&])admin=1(?:&|$)/.test(location.search)){
   </section>
   </article>
 
-  <!-- 出口：作品へ -->
+  <!-- 出口：最後の一枚の写真が、そのまま作品への入口になる（写真の余白に言葉を置く、上の見開きと同じ組み方） -->
   <nav class="cp-next" aria-label="次に見る">
-    <a class="strip io" href="../works/" aria-label="作品を見る">
-      <img src="../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="鋳金で制作した金魚の作品「朱色和金群」" width="1400" height="933" loading="lazy" style="object-position:25% 42%">
-      <img src="../img/g_frog_brick.jpg" alt="煉瓦の上にいる、緑青色の鋳金の蛙" width="1500" height="1000" loading="lazy" style="object-position:62% 50%">
-      <img src="../img/blue-sea-turtle-bronze-kaito-kawasaki.jpg" alt="鋳金で制作した亀の作品「青海亀」" width="1400" height="933" loading="lazy" style="object-position:59% 35%">
-      <img src="../img/g_leaves_blue.jpg" alt="板の上に重なる、緑青色の鋳金の紅葉" width="1500" height="1000" loading="lazy" style="object-position:50% 40%">
+    <a class="sp sp-photo sp-door" href="../works/">
+      <img src="../img/vermilion-wakin-goldfish-group-kaito-kawasaki.jpg" alt="鋳金で制作した金魚の作品「朱色和金群」" width="1400" height="933" loading="lazy">
+      <span class="door-w"><span class="go-t ln">作品を見る</span><span class="go-line ln" aria-hidden="true"></span></span>
+      <span class="cap go-en" lang="en" aria-hidden="true">WORKS<i> →</i></span>
     </a>
     <div class="cp-next-in io">
-      <a class="go" href="../works/"><span class="go-t">作品を見る</span><span class="go-line" aria-hidden="true"></span><span class="go-en" lang="en" aria-hidden="true">WORKS<i> →</i></span></a>
       <p class="more-links">
         <a href="../journal/kogei-realism/">工芸リアリズムとは何か<span aria-hidden="true"> →</span></a>
         <a href="../profile/">河﨑海斗について・経歴<span aria-hidden="true"> →</span></a>
